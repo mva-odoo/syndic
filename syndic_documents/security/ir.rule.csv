@@ -1,0 +1,6 @@
+id,model_id/id,name,groups/id,domain_force,perm_read,perm_write,perm_create,perm_unlink
+rule_employe_doc,model_syndic_documents,document employe,syndic_management.syndic_employe,"[(1,'=',1)]",1,1,1,1
+rule_manager_doc,model_syndic_documents,document manager,syndic_management.syndic_manager,"[(1,'=',1)]",1,1,1,1
+rule_client_doc,model_syndic_documents,document client,syndic_management.syndic_client,"[('user_ids','in',user.id)]",1,0,0,0
+rule_client_owner,model_syndic_owner,owner client,syndic_management.syndic_client,"[('user_id','=',user.id)]",1,0,0,0
+all_rule_client_owner,model_syndic_owner,owner all,syndic_management.syndic_employe,"[]",1,1,1,1

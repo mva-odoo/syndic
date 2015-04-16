@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"syndic_documents","syndic syndic.documents","model_syndic_documents","syndic_management.syndic_manager",1,1,1,1
+"syndic_documents_employe","syndic syndic.documents","model_syndic_documents","syndic_management.syndic_employe",1,1,1,0
+"syndic_documents_client","client syndic.documents","model_syndic_documents","syndic_management.syndic_client",1,0,0,0
+"syndic_type_documents_client","client type syndic.documents","model_syndic_type_document","syndic_management.syndic_client",1,0,0,0
+"syndic_type_documents_employe","employe type syndic.documents","model_syndic_type_document","syndic_management.syndic_employe",1,1,1,1

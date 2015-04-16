@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!--search -->
+		<record model="ir.ui.view" id="search_rapport_ag">
+			<field name="name">Rapport AG search</field>
+			<field name="model">rapport.ag</field>
+			<field name="arch" type="xml">
+				<search string="Rapport AG">
+                    <field name="name"/>
+				</search>
+			</field>
+		</record>
+		
+		<!--tree view -->
+		<record model="ir.ui.view" id="tree_rapport_ag">
+			<field name="name">Rapport AG tree view</field>
+			<field name="model">rapport.ag</field>
+			<field name="arch" type="xml">
+				<tree string="Rapport AG">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+
+		<!--form -->
+		<record model="ir.ui.view" id="form_rapport_ag">
+			<field name="name">Rapport AG form view</field>
+			<field name="model">rapport.ag</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Letter" version="7.0">
+					 <sheet string="Letter" layout="auto">
+						<group>
+							<field name="name" />
+							<field name="rapport_point_ids" />									
+		                </group>
+		            </sheet>
+                </form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="form_rapport_point">
+			<field name="name">Rapport point form view</field>
+			<field name="model">rapport.point</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Letter" version="7.0">
+					 <sheet string="Letter" layout="auto">
+						<group>
+							<field name="name" />
+							<field name="num" />
+							<field name="descriptif" />									
+		                </group>
+		            </sheet>
+                </form>
+			</field>
+		</record>
+	   
+
+		<!--action -->
+
+		<record model="ir.actions.act_window" id="rapport_ag_model">
+			<field name="name">Rapport AG</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">rapport.ag</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="rapport_type_model">
+			<field name="name">Type de rapport</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">reunion.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="avis_type_model">
+			<field name="name">Type d'avis</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">type.avis</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!--menu -->		
+		<menuitem name="Type de rapport" id="menu_rapport_type" parent="menu_configuration_letter" action="rapport_type_model" />
+		<menuitem name="Type d'avis" id="menu_avis_type" parent="menu_configuration_letter" action="avis_type_model" />
+
+	</data>
+</openerp>

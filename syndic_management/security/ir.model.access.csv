@@ -1,0 +1,77 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"syndic_building","syndic immeuble","model_syndic_building","syndic_manager",1,1,1,1
+"syndic_signalitic","syndic signalitic","model_building_signalitic","syndic_manager",1,1,1,1
+"syndic_lot","syndic lot","model_syndic_lot","syndic_manager",1,1,1,1
+"syndic_type_lot","syndic type lot","model_syndic_type_lot","syndic_manager",1,1,1,1
+"syndic_mutation","syndic mutation","model_syndic_mutation","syndic_manager",1,1,1,1
+"syndic_building_desamientage","syndic building desamientage","model_building_desamientage","syndic_manager",1,1,1,1
+"syndic_building_diu","syndic building.diu","model_building_diu","syndic_manager",1,1,1,1
+"syndic_building_facade","syndicbuilding.facade","model_building_facade","syndic_manager",1,1,1,1
+"syndic_facade_repair","syndic facade.repair","model_facade_repair","syndic_manager",1,1,1,1
+"syndic_building_terasse","syndic building.terasse","model_building_terasse","syndic_manager",1,1,1,1
+"syndic_building_repeir_terasse","syndic building.repeir.terasse","model_building_repeir_terasse","syndic_manager",1,1,1,1
+"syndic_observation_toiture","syndic observation.toiture","model_observation_toiture","syndic_manager",1,1,1,1
+"syndic_repeir_toiture","syndic repeir.toiture","model_repeir_toiture","syndic_manager",1,1,1,1
+"syndic_observation_jardin","syndic observation_jardin","model_jardin_observation","syndic_manager",1,1,1,1
+"syndic_ascensseur","syndic ascensseur","model_ascensseurs","syndic_manager",1,1,1,1
+"syndic_repeir_ascensseur","syndic repeir_ascensseur","model_repeir_ascensseur","syndic_manager",1,1,1,1
+"syndic_piece_chauffage","syndic piece_chauffage","model_piece_chauffage","syndic_manager",1,1,1,1
+"syndic_repeir_chaudiere","syndic repeir_chaudiere","model_repeir_chaudiere","syndic_manager",1,1,1,1
+"syndic_observation_egoutage","syndic observation_egoutage","model_egoutage_observation","syndic_manager",1,1,1,1
+"syndic_extincteur","syndic extincteur","model_extincteur","syndic_manager",1,1,1,1
+"syndic_repeir_garage","syndic repeir_garage","model_repeir_garage","syndic_manager",1,1,1,1
+"syndic_repeir_general","syndic repeir_general","model_repeir_general","syndic_manager",1,1,1,1
+"syndic_syndic_supplier","syndic syndic.supplier","model_syndic_supplier","syndic_manager",1,1,1,1
+"syndic_syndic_owner","syndic syndic.owner","model_syndic_owner","syndic_manager",1,1,1,1
+"syndic_syndic_client","client syndic.owner","model_syndic_owner","syndic_client",1,0,0,0
+"syndic_syndic_loaner","syndic syndic.loaner","model_syndic_loaner","syndic_manager",1,1,1,1
+"syndic_res_partner_job","syndic res_partner_job","model_res_partner_job","syndic_manager",1,1,1,1
+"syndic_res_old_owner","syndic res_old_owner","model_syndic_old_owner","syndic_manager",1,1,1,1
+"syndic_res_partner","syndic res.partner","model_res_partner","syndic_manager",1,1,1,1
+"syndic_export","syndic export","base.model_ir_exports","syndic_manager",1,1,1,1
+"syndic_import","syndic import","base_import.model_base_import_import","syndic_manager",1,1,1,1
+"syndic_ir_model_data","syndic ir.model.data","base.model_ir_model_data","syndic_manager",1,1,1,1
+"syndic_res_user","syndic res_user","base.model_res_users","syndic_manager",1,1,1,1
+"syndic_partner_address","syndic partner address","model_partner_address","syndic_manager",1,1,1,1
+"syndic_city","syndic city","model_city","syndic_manager",1,1,1,1
+"syndic_other","syndic other","model_syndic_other","syndic_manager",1,1,1,1
+"syndic_building_employe","syndic immeuble","model_syndic_building","syndic_employe",1,1,1,0
+"syndic_signalitic_employe","syndic signalitic","model_building_signalitic","syndic_employe",1,1,1,0
+"syndic_lot_employe","syndic lot","model_syndic_lot","syndic_employe",1,1,1,0
+"syndic_type_lot_employe","syndic type lot","model_syndic_type_lot","syndic_employe",1,1,1,0
+"syndic_mutation_employe","syndic mutation","model_syndic_mutation","syndic_employe",1,1,1,1
+"syndic_building_desamientage_employe","syndic building desamientage","model_building_desamientage","syndic_employe",1,1,1,1
+"syndic_building_diu_employe","syndic building.diu","model_building_diu","syndic_employe",1,1,1,1
+"syndic_building_facade_employe","syndicbuilding.facade","model_building_facade","syndic_employe",1,1,1,1
+"syndic_facade_repair_employe","syndic facade.repair","model_facade_repair","syndic_employe",1,1,1,1
+"syndic_building_terasse_employe","syndic building.terasse","model_building_terasse","syndic_employe",1,1,1,1
+"syndic_building_repeir_terasse_employe","syndic building.repeir.terasse","model_building_repeir_terasse","syndic_employe",1,1,1,1
+"syndic_observation_toiture_employe","syndic observation.toiture","model_observation_toiture","syndic_employe",1,1,1,1
+"syndic_repeir_toiture_employe","syndic repeir.toiture","model_repeir_toiture","syndic_employe",1,1,1,1
+"syndic_observation_jardin_employe","syndic observation_jardin","model_jardin_observation","syndic_employe",1,1,1,1
+"syndic_ascensseur_employe","syndic ascensseur","model_ascensseurs","syndic_employe",1,1,1,1
+"syndic_repeir_ascensseur_employe","syndic repeir_ascensseur","model_repeir_ascensseur","syndic_employe",1,1,1,1
+"syndic_piece_chauffage_employe","syndic piece_chauffage","model_piece_chauffage","syndic_employe",1,1,1,1
+"syndic_repeir_chaudiere_employe","syndic repeir_chaudiere","model_repeir_chaudiere","syndic_employe",1,1,1,1
+"syndic_observation_egoutage_employe","syndic observation_egoutage","model_egoutage_observation","syndic_employe",1,1,1,1
+"syndic_extincteur_employe","syndic extincteur","model_extincteur","syndic_employe",1,1,1,1
+"syndic_repeir_garage_employe","syndic repeir_garage","model_repeir_garage","syndic_employe",1,1,1,1
+"syndic_repeir_general_employe","syndic repeir_general","model_repeir_general","syndic_employe",1,1,1,1
+"syndic_syndic_supplier_employe","syndic syndic.supplier","model_syndic_supplier","syndic_employe",1,1,1,1
+"syndic_syndic_owner_employe","syndic syndic.owner","model_syndic_owner","syndic_employe",1,1,1,1
+"syndic_syndic_loaner_employe","syndic syndic.loaner","model_syndic_loaner","syndic_employe",1,1,1,1
+"syndic_res_partner_job_employe","syndic res_partner_job","model_res_partner_job","syndic_employe",1,1,1,1
+"syndic_res_old_owner_employe","syndic res_old_owner","model_syndic_old_owner","syndic_employe",1,1,1,1
+"syndic_res_partner_employe","syndic res.partner","model_res_partner","syndic_employe",1,1,1,1
+"syndic_export_employe","syndic export","base.model_ir_exports","syndic_employe",1,1,1,1
+"syndic_export_line_employe","syndic export line","base.model_ir_exports_line","syndic_employe",1,1,1,1
+"syndic_import_employe","syndic import","base_import.model_base_import_import","syndic_employe",1,1,1,1
+"syndic_ir_model_data_employe","syndic ir.model.data","base.model_ir_model_data","syndic_employe",1,1,1,1
+"syndic_res_user_employe","syndic res_user","base.model_res_users","syndic_employe",1,1,1,1
+"syndic_partner_address_employe","syndic partner address","model_partner_address","syndic_employe",1,1,1,1
+"syndic_city_employe","syndic city","model_city","syndic_employe",1,0,1,0
+"syndic_other_employe","syndic other","model_syndic_other","syndic_employe",1,1,1,1
+"syndic_country_employe","syndic country","base.model_res_country","syndic_employe",1,0,0,0
+"syndic_group_employe","syndic res group","base.model_res_groups","syndic_employe",1,1,1,0
+"syndic_mail_group_employe","syndic mail group","mail.model_mail_group","syndic_employe",1,1,1,0
+"syndic_building_client","syndic client immeuble","model_syndic_building","syndic_client",1,0,0,0

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        
+		<!--tree view -->
+		<record model="ir.ui.view" id="tree_metier">
+			<field name="name">Metier tree view</field>
+			<field name="model">res.partner.job</field>
+			<field name="arch" type="xml">
+				<tree string="métier" editable="top">
+                    <field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+               
+		<!--action -->
+		<record model="ir.actions.act_window" id="action_metier">
+			<field name="name">Métiers</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.job</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="tree_metier" />
+		</record>
+
+	</data>
+</openerp>

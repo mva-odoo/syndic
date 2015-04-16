@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+			<!--search -->
+		<record model="ir.ui.view" id="search_supplier">
+			<field name="name">supplier search</field>
+			<field name="model">syndic.supplier</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Fournisseur">
+                    <field name="name" string="Nom du fournisseur"/>
+                    <field name="job_ids" />
+					<field name="street" string="Adresse"/>
+					<field name="city_id"/>
+					<field name="zip" string="Code postal"/>
+					<field name="country_id" string="Pays"/>
+					<field name="phone" string="Téléphone"/>
+					<field name="email"/>
+				</search>
+			</field>
+		</record>
+        
+		<!--tree view -->
+		<record model="ir.ui.view" id="tree_supplier">
+			<field name="name">supplier tree view</field>
+			<field name="model">syndic.supplier</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Fournisseur">
+					<field name="name" string="Nom du fournisseur"/>
+					<field name="job_ids" colspan="2" widget="many2many_tags"/>
+					<field name="street" string="Adresse"/>
+					<field name="city_id"/>
+					<field name="zip" string="Code postal"/>
+					<field name="country_id" string="Pays"/>
+					<field name="phone" string="Téléphone"/>
+					<field name="email"/>
+				</tree>
+			</field>
+		</record>
+		
+		
+		<!--form -->
+		<record model="ir.ui.view" id="form_supplier">
+			<field name="name">supplier form view</field>
+			<field name="model">syndic.supplier</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Fournisseur" layout="manual" version="7.0"> 
+				<sheet string="Partner" layout="auto"  >
+				<group colspan="4" col="4">
+					<separator string="Informations sur le fournisseur" colspan="4"/>
+					<field name="name" colspan="2" string="Nom du fournisseur"/>
+					<field name="title" colspan="2" string="Titre"/>
+					<field name="job_ids" colspan="2" widget="many2many_tags"/>
+				</group>
+				<notebook colspan="4">
+                    <page string="Contact">
+						<group colspan="4" col="4">
+							<separator string="Contact principal" colspan="4"/>Contact principal
+							<field name="street" colspan="2" string="Adresse"/>
+							<field name="zip" colspan="2" string="Code postal"/>
+							<field name="city_id" colspan="2"/>
+							<field name="country_id" colspan="2" string="Pays"/>
+							<field name="phone" string="Téléphone"/>
+							<field name="fax"/>
+							<field name="gsm"/>
+							<field name="email"/>
+							<separator string="Autres contacts" colspan="4"/>
+							<field name="address_ids" colspan="4" nolabel="1">
+								<tree string="Autres contacts" editable="top">
+									<field name="name" required="1"/>
+									<field name="title"/>
+									<field name="street"/>
+									<field name="zip"/>
+									<field name="city_id"/>
+									<field name="country_id" string="Pays"/>
+									<field name="phone" string="Téléphone"/>
+									<field name="fax" string="Fax"/>
+									<field name="mobile" string="GSM"/>
+									<field name="email"/>
+									<field name="is_letter"/>
+								</tree>
+							</field>
+						</group>
+                    </page>
+                </notebook>
+                </sheet>
+                </form>
+			</field>
+		</record>
+               
+              
+               
+		<!--action -->
+		<record model="ir.actions.act_window" id="action_supplier_syndic">
+			<field name="name">Fournisseurs</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">syndic.supplier</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="tree_supplier" />
+			<field name="search_view_id" ref="search_supplier" />
+		</record>
+
+		
+		
+		
+    </data>
+</openerp>

@@ -1,0 +1,1 @@
+import syndic_document

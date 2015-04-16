@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+			<!--search -->
+		<record model="ir.ui.view" id="search_loaner">
+			<field name="name">loaner search</field>
+			<field name="model">syndic.loaner</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Fournisseur">
+                    <field name="name" string="Nom du locataire"/>
+					<field name="street" string="Adresse"/>
+					<field name="city_id"/>
+					<field name="zip" string="Code postal"/>
+					<field name="country_id" string="Pays"/>
+					<field name="phone" string="Téléphone"/>
+					<field name="email"/>
+				</search>
+			</field>
+		</record>
+        
+		<!--tree view -->
+		<record model="ir.ui.view" id="tree_loaner">
+			<field name="name">loaner tree view</field>
+			<field name="model">syndic.loaner</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Fournisseur">
+					<field name="name" string="Nom du locataire"/>
+					<field name="street" string="Adresse"/>
+					<field name="city_id"/>
+					<field name="zip" string="Code postal"/>
+					<field name="country_id" string="Pays"/>
+					<field name="phone" string="Téléphone"/>
+					<field name="email"/>
+					<field name="building_ids"/>
+				</tree>
+			</field>
+		</record>
+		
+		
+		<!--form -->
+		<record model="ir.ui.view" id="form_loaner">
+			<field name="name">loaner form view</field>
+			<field name="model">syndic.loaner</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Fournisseur" layout="manual" version="7.0"> 
+				<sheet string="Partner" layout="auto"  >
+				<group colspan="4" col="4">
+					<separator string="Information sur le locataire" colspan="4"/>
+					<field name="name" colspan="2" string="Nom du locataire"/>
+					<field name="title" colspan="2" string="Titre"/>
+				</group>
+				<notebook colspan="4">
+                    <page string="Contact">
+						<group colspan="4" col="4">
+							<separator string="Contact principal" colspan="4"/>
+							<field name="street" colspan="2" string="Adresse"/>
+							<field name="zip" colspan="2" string="Code postal"/>
+							<field name="city_id" colspan="2"/>
+							<field name="country_id" colspan="2" string="Pays"/>
+							<field name="phone" string="Téléphone"/>
+							<field name="fax"/>
+							<field name="gsm"/>
+							<field name="email"/>
+							<separator string="Autres contacts" colspan="4"/>
+							<field name="address_ids" colspan="4" nolabel="1">
+								<tree string="Autres contacts" editable="top">
+									<field name="name" required="1"/>
+                                    <field name="title"/>
+									<field name="street"/>
+									<field name="zip"/>
+									<field name="city_id"/>
+									<field name="country_id" string="Pays"/>
+									<field name="phone" string="Téléphone"/>
+									<field name="fax" string="Fax"/>
+									<field name="mobile" string="GSM"/>
+									<field name="email"/>
+									<field name="is_letter"/>
+								</tree>
+							</field>
+						</group>
+                    </page>
+                    <page string="Lots">
+						<group colspan="4" col="4">
+							<field name="loaner_lot_ids" nolabel="1">
+								<tree string="Lots">
+									<field name="name"/>
+									<field name="proprio_id" widget="many2many_tags"/>
+									<field name="building_id"/>
+								</tree>
+							</field>
+						</group>
+                    </page>
+                </notebook>
+                </sheet>
+                </form>
+			</field>
+		</record>
+               
+              
+               
+		<!--action -->
+		<record model="ir.actions.act_window" id="action_loaner_syndic">
+			<field name="name">Locataires</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">syndic.loaner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="tree_loaner" />
+			<field name="search_view_id" ref="search_loaner" />
+		</record>
+
+		
+		
+		
+    </data>
+</openerp>

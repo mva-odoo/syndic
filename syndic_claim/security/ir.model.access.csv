@@ -1,0 +1,13 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"syndic_claim","syndic syndic.claim","model_syndic_claim","syndic_management.syndic_manager",1,1,1,1
+"syndic_claim_status","syndic claim_status","model_claim_status","syndic_management.syndic_manager",1,1,1,1
+"syndic_comment_history","syndic comment_history","model_comment_history","syndic_management.syndic_manager",1,1,1,1
+"syndic_type","syndic type","model_claim_type","syndic_management.syndic_manager",1,1,1,1
+"syndic_claim_employe","syndic syndic.claim","model_syndic_claim","syndic_management.syndic_employe",1,1,1,0
+"syndic_claim_status_employe","syndic claim_status","model_claim_status","syndic_management.syndic_employe",1,1,1,0
+"syndic_comment_history_employe","syndic comment_history","model_comment_history","syndic_management.syndic_employe",1,1,1,0
+"syndic_type_employe","syndic type","model_claim_type","syndic_management.syndic_employe",1,1,1,0
+"syndic_offre_contrat_employe","syndic offre contrat","model_offre_contrat","syndic_management.syndic_employe",1,1,1,1
+"syndic_offre_contrat_manager","syndic offre contrat manager","model_offre_contrat","syndic_management.syndic_manager",1,1,1,1
+"syndic_bon_commande_manager","syndic bon commande manager","model_bon_commande","syndic_management.syndic_manager",1,1,1,1
+"syndic_bon_commande_employe","syndic bon commande employe","model_bon_commande","syndic_management.syndic_employe",1,1,1,1

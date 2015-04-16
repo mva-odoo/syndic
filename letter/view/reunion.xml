@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="tree_rapport_reunion">
+			<field name="name">Rapport Reunion tree view</field>
+			<field name="model">letter.reunion</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Reunion" version="7.0">
+					<field name="name" />									
+					<field name="immeuble_id" />									
+					<field name="type_id" />
+					<field name="create_date" />								
+                </tree>
+			</field>
+		</record>
+
+
+		<!--form -->
+		<record model="ir.ui.view" id="form_rapport_reunion">
+			<field name="name">Rapport Reunion form view</field>
+			<field name="model">letter.reunion</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Reunion" version="7.0">
+					 <sheet string="Rapport reunion" layout="auto">
+						<group>
+							<field name="name" />
+                            <field name="date" />
+                            <field name="date_fr" />
+							<field name="immeuble_id" />
+							<field name="type_id" />									
+							<field name="descriptif" />									
+							<field name="point_ids" />									
+		                </group>
+		            </sheet>
+                </form>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="form_rapport_reunion_point">
+			<field name="name">Rapport Reunion form point view</field>
+			<field name="model">reunion.point</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Reunion" version="7.0">
+					 <sheet string="Rapport reunion" layout="auto">
+						<group>
+							<field name="name" />									
+							<field name="sequence" />																	
+							<field name="descriptif" />																	
+		                </group>
+		            </sheet>
+                </form>
+			</field>
+		</record>
+		
+		<!--action -->
+
+		<record model="ir.actions.act_window" id="rapport_reunion">
+			<field name="name">Réunion</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">letter.reunion</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+
+
+		<!--menu -->		
+		<menuitem name="Rapports de réunions" id="menu_rapport_reunion" parent="menu_sub_letter" action="rapport_reunion" sequence="4"/>
+
+	</data>
+</openerp>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+                <menuitem name="Syndic" id="syndic_main" groups="syndic_management.syndic_employe,syndic_management.syndic_manager"/>
+                <menuitem name="Gestion de Syndic" id="syndic" parent="syndic_main" sequence="1"/> 
+                <menuitem name="Immeubles" id="simpl_immeubles" parent="syndic" action="action_simpl_building"/>
+                <menuitem name="Fiche signalitique immeuble" id="simpl_immeubles_signalitic" parent="syndic" action="action_building_signalitic"/>
+                
+                <menuitem name="Contact" id="res_partner"  parent="syndic_main" sequence="2"/> 
+                <menuitem name="Fournisseurs" id="supplier" parent="res_partner"  action="action_supplier_syndic"/>
+                <menuitem name="Propriétaires" id="owner" parent="res_partner"  action="action_owner_syndic"/>
+                <menuitem name="Anciens propriétaires" id="old_owner" parent="res_partner"  action="action_owner_old_syndic"/>
+                <menuitem name="Locataires" id="loaner" parent="res_partner"  action="action_loaner_syndic"/>
+                <menuitem name="Divers" id="other" parent="res_partner"  action="action_other_syndic"/>
+                <menuitem name="Mutation" id="mutation" parent="res_partner" action="action_mutation"/>
+                
+                <menuitem name="Configuration" id="configuration_syndic"  parent="syndic_main" sequence="3" groups="syndic_management.syndic_manager"/> 
+                <menuitem name="Métiers" id="jobs" parent="configuration_syndic" action="action_metier"/>
+                <menuitem name="Titres" id="title_menu" parent="configuration_syndic" action="res_partner_title_action"/>
+                <menuitem name="Type de lots" id="type_lot_menu" parent="configuration_syndic" action="syndic_type_lot_action"/>
+                <menuitem name="Lots" id="lot_menu" parent="configuration_syndic" action="syndic_lot_action"/>
+                <menuitem name="Villes" id="ville_menu" parent="configuration_syndic" action="ville_action"/>
+                <menuitem name="Pays" id="pays_menu" parent="configuration_syndic" action="pays_action"/>
+	</data>
+</openerp>

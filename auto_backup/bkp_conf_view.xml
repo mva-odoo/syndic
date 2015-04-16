@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <record model="ir.ui.view" id="view_backup_conf_form">
+            <field name="name">Configure Backup</field>
+            <field name="model">db.backup</field>
+            <field name="arch" type="xml">
+                <form string="backup">
+                    <group>
+                        <field name="name" />
+                        <field name="bkp_dir" />
+                    </group>
+                    <button string="Backup" type="object" name="backup"/>
+                </form>
+            </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_backup_conf_tree">
+        <field name="name">Configure Backup</field>
+        <field name="model">db.backup</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="backup">
+                <field name='name'/>
+                <field name='bkp_dir'/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_backup_conf_form">
+        <field name="name">Configure Backup</field>
+        <field name="res_model">db.backup</field>
+        <field name="view_type">form</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='view_id' ref='view_backup_conf_tree'/>
+    </record>
+
+</data>
+</openerp>

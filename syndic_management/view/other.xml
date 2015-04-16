@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<!--form -->
+		<record model="ir.ui.view" id="tree_other">
+			<field name="name">divers form view</field>
+			<field name="model">syndic.other</field>
+			<field name="arch" type="xml">
+				<tree string="Divers"> 
+					<field name="name" string="Nom"/>
+					<field name="street" string="Adresse"/>
+					<field name="city_id" string="Ville"/>
+					<field name="zip" string="Code Postal"/>
+					<field name="country_id" string="Pays"/>
+					<field name="phone" string="Téléphone"/>
+					<field name="email"/>
+                </tree>
+			</field>
+		</record>
+
+		<!--form -->
+		<record model="ir.ui.view" id="form_other">
+			<field name="name">divers form view</field>
+			<field name="model">syndic.other</field>
+			<field name="arch" type="xml">
+				<form string="Divers" layout="manual" version="7.0"> 
+				<sheet string="Partner" layout="auto"  >
+				<group colspan="4" col="4">
+					<separator string="Informations" colspan="4"/>
+					<field name="name" colspan="2" string="Nom"/>
+					<field name="title" colspan="2" string="Titre"/>
+				</group>
+				<notebook colspan="4">
+                    <page string="Contact">
+						<group colspan="4" col="4">
+							<separator string="Contact principal" colspan="4"/>Contact principal
+							<field name="street" colspan="2" string="Rue"/>
+							<field name="zip" colspan="2" string="Code postal"/>
+							<field name="city_id" colspan="2"/>
+							<field name="country_id" colspan="2" string="pays"/>
+							<field name="phone" string="Téléphone"/>
+							<field name="fax"/>
+							<field name="gsm"/>
+							<field name="email"/>
+						</group>
+                    </page>
+                </notebook>
+                </sheet>
+                </form>
+			</field>
+		</record>
+           
+		<!--action -->
+		<record model="ir.actions.act_window" id="action_other_syndic">
+			<field name="name">Divers</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">syndic.other</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		
+		
+    </data>
+</openerp>

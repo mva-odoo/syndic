@@ -1,0 +1,10 @@
+.announcement_bar {
+  display: none;
+  visibility: hidden;
+ }
+.pull-right {
+  display : none;
+}
+.openerp .oe_topbar_item.oe_topbar_compose_full_email {
+	display: none;
+}

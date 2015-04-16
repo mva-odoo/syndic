@@ -1,0 +1,35 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"syndic_lettre","syndic lettre","model_letter_create","syndic_management.syndic_manager",1,1,1,1
+"syndic_lettre_begin","syndic lettre debut","model_letter_begin","syndic_management.syndic_manager",1,1,1,1
+"syndic_lettre_end","syndic lettre fin","model_letter_end","syndic_management.syndic_manager",1,1,1,1
+"syndic_lettre_type","syndic lettre type","model_letter_type","syndic_management.syndic_manager",1,1,1,1
+"syndic_lettre_model","syndic lettre model","model_letter_model","syndic_management.syndic_manager",1,1,1,1
+"syndic_avis_model","syndic lettre avis","model_letter_avis","syndic_management.syndic_manager",1,1,1,1
+"syndic_avis_type","syndic type avis","model_type_avis","syndic_management.syndic_manager",1,1,1,1
+"syndic_reunion","syndic reunion","model_letter_reunion","syndic_management.syndic_manager",1,1,1,1
+"syndic_reunion_point","syndic point reunion","model_reunion_point","syndic_management.syndic_manager",1,1,1,1
+"syndic_lettre_employe","syndic lettre","model_letter_create","syndic_management.syndic_employe",1,1,1,0
+"syndic_lettre_begin_employe","syndic lettre debut","model_letter_begin","syndic_management.syndic_employe",1,1,1,0
+"syndic_lettre_end_employe","syndic lettre fin","model_letter_end","syndic_management.syndic_employe",1,1,1,0
+"syndic_lettre_type_employe","syndic lettre type","model_letter_type","syndic_management.syndic_employe",1,0,1,0
+"syndic_lettre_model_employe","syndic lettre model","model_letter_model","syndic_management.syndic_employe",1,1,1,0
+"syndic_avis_model_employe","syndic lettre avis","model_letter_avis","syndic_management.syndic_employe",1,1,1,0
+"syndic_avis_modele_employe","syndic lettre model avis","model_letter_avis_model","syndic_management.syndic_employe",1,1,1,0
+"syndic_avis_modele_manager","syndic lettre model avis manager","model_letter_avis_model","syndic_management.syndic_manager",1,1,1,0
+"syndic_avis_type_employe","syndic type avis","model_type_avis","syndic_management.syndic_employe",1,1,1,0
+"syndic_reunion_employe","syndic reunion","model_letter_reunion","syndic_management.syndic_employe",1,1,1,0
+"syndic_reunion_point_employe","syndic point reunion","model_reunion_point","syndic_management.syndic_employe",1,1,1,0
+"syndic_reunion_type","syndic type reunion","model_reunion_type","syndic_management.syndic_employe",1,1,1,0
+"syndic_reunion_type_employe","syndic type reunion","model_reunion_type","syndic_management.syndic_manager",1,1,1,1
+"syndic_mail","syndic type reunion","mail.model_mail_mail","syndic_management.syndic_employe",1,1,1,0
+"syndic_mail_employe","syndic type reunion","mail.model_mail_mail","syndic_management.syndic_manager",1,1,1,1
+"syndic_mail_message","syndic type reunion","mail.model_mail_message","syndic_management.syndic_employe",1,1,1,0
+"syndic_mail_message_employe","syndic type reunion","mail.model_mail_message","syndic_management.syndic_manager",1,1,1,1
+"syndic_mail_serveur_employe","syndic type reunion","base.model_ir_mail_server","syndic_management.syndic_employe",1,1,1,0
+"syndic_mail_serveur_manager","syndic type reunion","base.model_ir_mail_server","syndic_management.syndic_manager",1,1,1,1
+"syndic_mail_alias","mail_alias","mail.model_mail_alias","syndic_management.syndic_employe",1,1,1,1
+"syndic_mail_alias_manager","mail_alias_manager","mail.model_mail_alias","syndic_management.syndic_manager",1,1,1,1
+"syndic_piece_jointe_employe","syndic piece jointe employe","model_piece_jointe","syndic_management.syndic_employe",1,1,1,0
+"syndic_rapport_ag_employe","syndic rapport_ag employe","model_rapport_ag","syndic_management.syndic_employe",1,1,1,0
+"syndic_rapport_point_employe","syndic rapport_point employe","model_rapport_point","syndic_management.syndic_employe",1,1,1,0
+"syndic_piece_jointe_manager","syndic piece jointe manager","model_piece_jointe","syndic_management.syndic_manager",1,1,1,1

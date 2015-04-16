@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!--search -->
+		<record model="ir.ui.view" id="search_lot">
+			<field name="name">Letter search</field>
+			<field name="model">syndic.lot</field>
+			<field name="arch" type="xml">
+				<search string="Lot">
+                    <field name="name"/>
+                    <field name="building_id"/>
+                    <field name="proprio_id"/>
+                    <field name="locataire_id"/>
+                    <group expand="0" string="Group By...">
+						<filter string="Immeuble" domain="[]" name="group_immeuble" context="{'group_by':'building_id'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="tree_lot">
+			<field name="name">Letter tree</field>
+			<field name="model">syndic.lot</field>
+			<field name="arch" type="xml">
+				<tree string="Lot">
+                    <field name="name"/>
+                    <field name="building_id"/>
+                    <field name="proprio_id" widget="many2many_tags"/>
+                    <field name="locataire_id"  widget="many2many_tags"/>
+				</tree>
+			</field>
+		</record>
+
+        <record model="ir.ui.view" id="form_lot">
+			<field name="name">Letter form</field>
+			<field name="model">syndic.lot</field>
+			<field name="arch" type="xml">
+				<form string="Lot">
+                    <field name="name"/>
+                    <field name="building_id"/>
+                    <field name="proprio_id" widget="many2many_tags"/>
+                    <field name="locataire_id"  widget="many2many_tags"/>
+				</form>
+			</field>
+		</record>
+        
+
+	</data>
+</openerp>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+			<!--search -->
+		<record model="ir.ui.view" id="search_old_owner">
+			<field name="name">owner search</field>
+			<field name="model">syndic.old.owner</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Fournisseur">
+					<field name="proprio_id" colspan="2"/>
+					<field name="lot_ids" colspan="2"/>
+					<field name="date_close" colspan="2"/>
+				</search>
+			</field>
+		</record>
+        
+		<!--tree view -->
+		<record model="ir.ui.view" id="tree_old_owner">
+			<field name="name">owner tree view</field>
+			<field name="model">syndic.old.owner</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Fournisseur">
+					<field name="proprio_id" />
+					<field name="date_close" />
+					<field name="lot_ids" />
+				</tree>
+			</field>
+		</record>
+		
+		
+		<!--form -->
+		<record model="ir.ui.view" id="form_old_owner">
+			<field name="name">owner form view</field>
+			<field name="model">syndic.old.owner</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Fournisseur" layout="manual" version="7.0"> 
+				<sheet string="Partner" layout="auto"  >
+				<group colspan="4" col="4">
+					<separator string="Partner Informations" colspan="4"/>
+					<field name="proprio_id" colspan="2"/>
+					<field name="date_close" colspan="2"/>
+					<separator string="Lot modifié" colspan="4"/>
+					<field name="lot_ids" colspan="4" nolabel="1"/>
+				</group>
+                </sheet>
+                </form>
+			</field>
+		</record>
+               
+              
+               
+		<!--action -->
+		<record model="ir.actions.act_window" id="action_owner_old_syndic">
+			<field name="name">Anciens propriétaires</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">syndic.old.owner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="tree_old_owner" />
+			<field name="search_view_id" ref="search_old_owner" />
+		</record>
+
+		
+		
+		
+    </data>
+</openerp>

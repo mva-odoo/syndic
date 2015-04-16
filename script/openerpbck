@@ -1,0 +1,4 @@
+# m h dom mon dow user command
+30 3 * * * root /home/openerp/weeklybackupscript.sh
+35 3 2 * * root /home/openerp/monthlybackupscript.sh
+35 3 17 * * root /home/openerp/monthlybackupscript.sh 
