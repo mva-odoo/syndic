@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="syndic_facture_form">
+            <field name="name">Syndic Facture Form</field>
+            <field name="model">syndic.facture</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="validate_facture" type="object" string="Validé" states="draft"/>
+                        <button name="reset_draft" type="object" string="Remettre en brouillon" states="validate"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="immeuble_id" attrs="{'readonly':[('state', '!=','draft')]}"/>
+                        <field name="invoice_date" attrs="{'readonly':[('state', '!=','draft')]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Ligne de facture">
+                            <field name="facture_line_ids" attrs="{'readonly':[('state', '!=','draft')]}">
+                                <tree editable="top">
+                                    <field name="name"/>
+                                    <field name="amount"/>
+                                    <field name="invoice_line_date"/>
+                                    <field name="fournisseur_id"/>
+                                    <field name="account_id"/>
+                                    <field name="repartition_lot_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Detail de la facture">
+                            <field name="facture_detail_ids" readonly="1">
+                                <tree>
+                                    <field name="facture_line_id"/>
+                                    <field name="aumout"/>
+                                    <field name="lot_id"/>
+                                    <field name="account_id"/>
+                                    <field name="proprietaire_id"/>
+                                    <field name="fournisseur_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="syndic_repartition_lot_form">
+            <field name="name">Syndic repartition lot Form</field>
+            <field name="model">syndic.repartition.lot</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="create_normal_repartition" string="Créer la repartition normale" type="object"/>
+                    </header>
+                    <group>
+                        <field name="name"/>
+                        <field name="repart_detail_ids"/>
+                        <field name="immeuble_id"/>
+                        <field name="percentage_lot" widget="progressbar"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="syndic_repartition_lot_detail_form">
+            <field name="name">Syndic repartition lot detail Form</field>
+            <field name="model">syndic.repartition.lot.detail</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="lot_id"/>
+                        <field name="value"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="syndic_repartition_lot_detail_tree">
+            <field name="name">Syndic repartition lot detail Tree</field>
+            <field name="model">syndic.repartition.lot.detail</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="lot_id"/>
+                    <field name="value"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="syndic_facture_detail_graph">
+            <field name="name">Syndic repartition lot detail graph</field>
+            <field name="model">syndic.facture.detail</field>
+            <field name="arch" type="xml">
+                <graph string="Details comptabilité" type="bar">
+                    <field name="fournisseur_id"/>
+                    <field name="aumout" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_facture">
+            <field name="name">Syndic Facture</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.facture</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem name="Comptabilité" id="compta"/>
+        <menuitem name="Factures" id="facture" parent="compta"/>
+        <menuitem name="Factures" id="facture_encode" parent="facture" action="action_facture"/>
+
+
+        <record model="ir.actions.act_window" id="action_detail_facture">
+            <field name="name">Syndic details factures</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.facture.detail</field>
+            <field name="view_mode">tree,form,graph</field>
+        </record>
+
+        <menuitem name="Details de factures" id="detail_facture"
+                  parent="facture" action="action_detail_facture"/>
+
+
+        <record model="ir.actions.act_window" id="action_repartition">
+            <field name="name">Syndic repartition quotite</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.repartition.lot</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Repartitions des quotités" id="repartition" parent="compta"/>
+        <menuitem name="Repartitions des quotités" id="repartition_quotite"
+                  parent="repartition" action="action_repartition"/>
+    </data>
+</openerp>

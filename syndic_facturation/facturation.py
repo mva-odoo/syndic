@@ -18,7 +18,7 @@ class SyndicFacturation(models.Model):
             date_fr = now.strftime("%A %d %B %Y")
             self.date_fr = date_fr
 
-    name = fields.Char('Facture',readonly=True)
+    name = fields.Char('Facture', readonly=True)
     immeuble_id = fields.Many2one('syndic.building', string='Immeuble', required=True)
     line_ids = fields.One2many('syndic.facturation.line', 'facture_id', string='Lignes de facture')
     total = fields.Float(string='Total', compute='_compute_total', store=True)
