@@ -10,6 +10,7 @@ class Facture(models.Model):
     state = fields.Selection([('draft', 'Brouillon'), ('validate', 'Validé'), ('close', 'Fermé')],
                              'Etat', default='draft')
     facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
+    payment_ids = fields.One2many('syndic.payment', 'facture_id', 'Detail de payement')
 
     @api.one
     def validate_facture(self):
@@ -112,3 +113,24 @@ class RepartitionLotDetail(models.Model):
     value = fields.Float('Valeur')
     lot_id = fields.Many2one('syndic.lot', 'Lots')
 
+class PaymentFacture(models.Model):
+    _name = 'syndic.payment'
+    lot_id = fields.Many2one('syndic.lot', 'Lots')
+    facture_id = fields.Many2one('syndic.facture', 'origine facture', required=True)
+    type = fields.Selection([('fond_reserve', 'fond de réserves'), ('fond_roulement', 'fond de roulement')])
+
+class ExerciceCompta(models.Model):
+    _name = 'syndic.exercice'
+    name = fields.Char('Nom de l\'exercice')
+    immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
+    start_date = fields.Date('Date debut')
+    end_date = fields.Date('Date fin')
+    ligne_ids = fields.One2many('syndic.exercice.ligne', 'exercice_id', 'Ligne d\'exercice')
+
+class ExerciceComptaLigne(models.Model):
+    _name = 'syndic.exercice.ligne'
+    exercice_id = fields.Many2one('syndic.exercice', 'Exercice')
+    debit = fields.Float('Debit')
+    credit = fields.Float('Credit')
+    compte = fields.Float('Compte')
+    facture_origin_id = fields.Many2one('syndic.facture.ligne', 'ligne de facture d\'origine')
