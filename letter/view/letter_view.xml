@@ -32,7 +32,8 @@
                 <form>
                     <group>
                         <field name="name"/>
-                        <field name="datas"/>
+                        <field name="datas" filename="datas_fname" />
+                        <field name="datas_fname" invisible="1"/>
                     </group>
                 </form>
             </field>

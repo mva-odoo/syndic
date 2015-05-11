@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
-import random
+from random import randint
 
 class res_users(models.Model):
     _inherit = 'res.users'
@@ -119,8 +119,8 @@ class Owner(models.Model):
 
     address_ids = fields.One2many('partner.address', 'add_parent_id_owner',string='Address')
     lot_ids = fields.Many2many('syndic.lot', string='Lot')
-    login = fields.Char('login', readonly=True)
-    password = fields.Char('Mot de passe', readonly=True)
+    login = fields.Char('login', related='user_id.login')
+    password = fields.Char('Mot de passe', related='user_id.password')
     building_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble')
     # building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble', store={
     #     'syndic.lot': (_get_name_building, ['name'], 10),
@@ -132,15 +132,26 @@ class Owner(models.Model):
     building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble', store=True)
     user_id = fields.Many2one('res.users', string="User")
 
+    def pass_generator(self):
+        alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        pw_length = 8
+        mypw = ""
+
+        for i in range(pw_length):
+            next_index = random.randrange(len(alphabet))
+            mypw = mypw + alphabet[next_index]
+
+        return mypw
+
     @api.model
     def create(self, vals):
-        vals['login'] = vals['name']+str(int(random.random()*100))
-        vals['password'] = vals['name']+str(int(random.random()*100000))
         res_id = super(Owner, self).create(vals)
-
+        login = vals['name'].replace(' ', '')
+        login = login.replace('-', '')
+        rand = str(randint(0, 99))
         dict_users = {}
-        dict_users['login'] = vals['login']
-        dict_users['password'] = vals['password']
+        dict_users['login'] = login[:8]+rand
+        dict_users['password'] = self.pass_generator()
         dict_users['name'] = vals['name']
         dict_users['proprio_id'] = res_id.id
 
