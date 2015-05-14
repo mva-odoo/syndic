@@ -143,8 +143,8 @@ class create_letter(models.Model):
             header = header + str(self.immeuble_id.zip_building) + ' ' + str(self.immeuble_id.city_building.name)
 
         footer = "<br/>L'&eacute;quipe SG IMMO<br/>"
-        footer += "Rue Veydt 64/3<br/>"
-        footer += "1050 Bruxelles<br/>"
+        footer += "Rue François Vander Elst, 38/1<br/>"
+        footer += "1950 Kraainem<br/>"
         footer +='<img src="https://lh6.googleusercontent.com/-7QA8bP7oscU/UUrXkQ1-rHI/AAAAAAAAAAk/WhbiGpLAUCQ/s270/Logo_SG%2520immo.JPG" width="96" height="61"/>'
 
         if self.ps:
