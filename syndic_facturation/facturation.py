@@ -51,10 +51,10 @@ class SyndicFacturationLine(models.Model):
     prix = fields.Float('Prix', required=True)
     type_id = fields.Many2one('syndic.facturation.type', string='Type de frais', required=True)
     facture_id = fields.Many2one('syndic.facturation', string='facture')
-    nombre = fields.Integer('Nombre')
+    nombre = fields.Float('Nombre')
     prix = fields.Float('Prix de la prestation', required=True)
     prix_tot = fields.Float('Prix de la prestation', compute='_compute_tot_hours', store=True)
-    qty_id = fields.Many2one('syndic.qty.type', 'type')
+    qty_id = fields.Many2one('syndic.qty.type', 'Unité')
 
     @api.onchange('type_id')
     def _onchange_price(self):
