@@ -1,4 +1,21 @@
+
+install local
+---------------
+Generate the locales for french:
+
+sudo locale-gen fr_FR
+sudo locale-gen fr_FR.UTF-8
+Also, try regenerating the supported locale list by running:
+
+sudo dpkg-reconfigure locales
+And update/change the current default locale:
+
+sudo update-locale LANG=fr_FR.UTF-8
+
+
+
 install wkhtmltopdf
+---------------------
 $ sudo wget http://jaist.dl.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb
 $ sudo dpkg -i wkhtmltox-0.12.1_linux-trusty-amd64.deb
 $ sudo cp /usr/local/bin/wkhtmltopdf /usr/bin
@@ -14,6 +31,7 @@ Groupes
 
 
 nginx
+------
 
 server {
     server_name ks301308.kimsufi.com;
@@ -44,7 +62,7 @@ server {
 
 
 mount bind
-
+------------
 vim /etc/fstab
 add this line
 /home/var /var none bind 0 0
@@ -53,6 +71,7 @@ mount /var
 ps:(bg run background)
 
 crontab
+--------
 crontab -l (list)
 crontab -e (edit)
 47 23 * * * python /home/bkp.py everyday a 23h47
