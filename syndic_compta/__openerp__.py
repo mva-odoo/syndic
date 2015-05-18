@@ -12,7 +12,8 @@
     'depends': ['syndic_management'],
     'website': 'http://www.openerp.com',
     'data': [
-        'views/compta.xml'
+        'views/compta.xml',
+        'views/fournisseurs.xml',
     ],
     'installable': True,
     'active': False,

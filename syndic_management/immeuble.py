@@ -78,6 +78,7 @@ class building(models.Model):
     active = fields.Boolean(default=True)
 
     _order = 'name asc'
+
     @api.multi
     def go_export_model(self):
         return {
@@ -85,7 +86,7 @@ class building(models.Model):
                 'view_type': 'form',
                 'view_mode': 'form',
                 'res_model': 'export.fiche.tech',
-                'type' : 'ir.actions.act_window',
-                'target' : 'new',
-                'context' : self._context,
+                'type': 'ir.actions.act_window',
+                'target': 'new',
+                'context': self._context,
                 }
