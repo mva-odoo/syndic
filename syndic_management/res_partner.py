@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
 from random import randint
+import random
 
 class res_users(models.Model):
     _inherit = 'res.users'
