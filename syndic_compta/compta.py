@@ -293,7 +293,7 @@ class ExerciceCompta(models.Model):
 
     @api.one
     def compute_amortissement(self):
-        for facture in self.env['syndic.facture'].search([('exercice_id', '=', self.exercice_id.id)]):
+        for facture in self.env['syndic.facture'].search([('exercice_id', '=', self.id)]):
             for detail in facture.facture_detail_ids:
                 if detail.is_amortissement:
                     for amortissement in detail.amortissement_ids:
@@ -302,13 +302,13 @@ class ExerciceCompta(models.Model):
                                 'name': 'amortissement',
                                 'credit': amortissement.amount,
                                 'account_id': amortissement.credit_account_id.id,
-                                'exercice_id': self.exercice_id.id,
+                                'exercice_id': self.id,
                             })
                             self.env['syndic.bilan.ligne'].create({
                                 'name': 'amortissement',
                                 'debit': amortissement.amount,
                                 'account_id': amortissement.debit_account_id.id,
-                                'exercice_id': self.exercice_id.id,
+                                'exercice_id': self.id,
                             })
                             amortissement.active = False
                             break
