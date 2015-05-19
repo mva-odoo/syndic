@@ -40,8 +40,11 @@
                                     <field name="proprietaire_ids" widget='many2many_tags'/>
                                     <field name="fournisseur_id"/>
                                     <field name='is_paid'/>
+                                    <field name='is_amortissement'/>
                                     <button name='pay_all' string="Payé totalité" type="object"
                                             attrs="{'invisible':[('is_paid', '=', True)]}"/>
+                                    <button name='amortissement_wizard' string="Amortir" type="object"
+                                            attrs="{'invisible':[('is_amortissement', '=', True)]}"/>
                                 </tree>
                             </field>
                         </page>
@@ -130,7 +133,27 @@
                         <field name="start_date"/>
                         <field name="end_date"/>
                     </group>
+                    <button string="Voir compte regroupé" type="object" name="open_group_exercice"/>
                     <field name="ligne_ids"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="syndic_amortissement_compta_wizard">
+            <field name="name">Syndic amortissement compta wizard</field>
+            <field name="model">syndic.amortissement.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="duration"/>
+                        <field name="split_amount"/>
+                        <field name="debit_account_id"/>
+                        <field name="credit_account_id"/>
+                    </group>
+                    <footer>
+                        <button string="Amortir" type="object" name="amortir"/>
+                    </footer>
                 </form>
             </field>
         </record>
@@ -140,11 +163,13 @@
             <field name="model">syndic.bilan.ligne</field>
             <field name="arch" type="xml">
                 <form>
-                    <field name="name"/>
-                    <field name="debit"/>
-                    <field name="credit"/>
-                    <field name="total"/>
-                    <field name="account_id"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="debit"/>
+                        <field name="credit"/>
+                        <field name="total"/>
+                        <field name="account_id"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -172,6 +197,7 @@
                     <field name="debit"/>
                     <field name="credit"/>
                     <field name="account_id"/>
+                    <field name="exercice_id"/>
                     <filter string="Facture" domain="[]" name="group_facture" context="{'group_by':'facture_id'}"/>
                     <filter string="Compte" domain="[]" name="group_account" context="{'group_by':'account_id'}"/>
                     <filter string="Exercice" domain="[]" name="group_exercice" context="{'group_by':'exercice_id'}"/>
@@ -186,15 +212,75 @@
                 <form>
                     <group>
                         <field name="exercice_id"/>
-                        <field name="roulement_product_id"/>
+                        <field name="immeuble_id" invisible="1"/>
+                        <field name="roulement_product_id" domain="[('account_product', '=', True)]"/>
                         <field name="roulement"/>
-                        <field name="reserve_product_id"/>
+                        <field name="reserve_product_id" domain="[('account_product', '=', True)]"/>
                         <field name="reserve"/>
                         <field name="repartition_lot_id"/>
                     </group>
                     <footer>
-                        <button string="Cloture" name="open_exercice" type="object"/>
+                        <button string="Ouverture" name="open_exercice" type="object"/>
                     </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="syndic_close_exerice_wizard">
+            <field name="name">Syndic close exercice wizard</field>
+            <field name="model">syndic.close.exercice.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="exercice_id"/>
+                        <field name="compte_rapporter"/>
+                        <field name="immeuble_id" invisible="1"/>
+                        <group>
+                            <field name="roulement_valeur_rapporter"/>
+                            <field name="roulement_compte_rapporter"/>
+                        </group>
+                        <group>
+                            <field name="reserve_valeur_rapporter"/>
+                            <field name="reserve_compte_rapporter"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Cloture" name="close_exercice" type="object"/>
+                        <button string="Cloture et reouvrir" name="close_exercice_reopen" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="syndic_pcmn_tree">
+            <field name="name">Syndic pcmn tree</field>
+            <field name="model">syndic.pcmn</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="syndic_product_form">
+            <field name="name">Syndic product form</field>
+            <field name="model">syndic.product</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="payable_compte_id"/>
+                        <field name="receive_compte_id"/>
+                        <field name="account_product"/>
+                        <field name="etablissement_fond" attrs="{'invisible': [('account_product', '=', False)]}"/>
+                        <field name="accompte_fond_id" attrs="{'invisible': [('account_product', '=', False)]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Detail">
+                            <field name="detail"/>
+                        </page>
+                    </notebook>
                 </form>
             </field>
         </record>
@@ -253,6 +339,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+
         <menuitem name="Exercice comptable" id="syndic_exercice_compta" parent="compta"/>
         <menuitem name="Exercice comptable" id="syndic_exercice_compta_detail"
                   parent="syndic_exercice_compta" action="action_syndic_exercice_compta"/>
@@ -265,5 +352,34 @@
 
         <menuitem name="Repartitions des quotités" id="repartition_quotite"
                   parent="syndic_configuration_compta" action="action_repartition"/>
+
+
+        <record model="ir.actions.act_window" id="action_product">
+            <field name="name">Syndic Produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.product</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Produit" id="syndic_product"
+                  parent="syndic_configuration_compta" action="action_product" />
+
+        <record model="ir.actions.act_window" id="action_setting">
+            <field name="name">Syndic Setting</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.compta.setting</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Parametres" id="syndic_setting"
+                  parent="syndic_configuration_compta" action="action_setting" />
+
+        <record model="ir.actions.act_window" id="action_amortissement">
+            <field name="name">Syndic Amortissement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.compta.amortissement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+         <menuitem name="Amortissement" id="syndic_amortissement"
+                  parent="syndic_configuration_compta" action="action_amortissement" />
     </data>
 </openerp>
