@@ -277,7 +277,7 @@ class ExerciceCompta(models.Model):
     start_date = fields.Date('Date debut')
     end_date = fields.Date('Date fin')
     ligne_ids = fields.One2many('syndic.bilan.ligne', 'exercice_id', 'Ligne d\'exercice')
-    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('close', 'Cloturer')])
+    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('amortissement', 'Amortissement'), ('close', 'Cloturer')])
 
     @api.multi
     def open_exercice_wizard(self):
@@ -290,6 +290,30 @@ class ExerciceCompta(models.Model):
             'target': 'new',
             'context': self._context,
         }
+
+    @api.one
+    def compute_amortissement(self):
+        for facture in self.env['syndic.facture'].search([('exercice_id', '=', self.exercice_id.id)]):
+            for detail in facture.facture_detail_ids:
+                if detail.is_amortissement:
+                    for amortissement in detail.amortissement_ids:
+                        if amortissement.active == True:
+                            self.env['syndic.bilan.ligne'].create({
+                                'name': 'amortissement',
+                                'credit': amortissement.amount,
+                                'account_id': amortissement.credit_account_id.id,
+                                'exercice_id': self.exercice_id.id,
+                            })
+                            self.env['syndic.bilan.ligne'].create({
+                                'name': 'amortissement',
+                                'debit': amortissement.amount,
+                                'account_id': amortissement.debit_account_id.id,
+                                'exercice_id': self.exercice_id.id,
+                            })
+                            amortissement.active = False
+                            break
+        self.state = 'amortissement'
+
 
     @api.multi
     def close_exercice_wizard(self):
@@ -443,26 +467,6 @@ class CloseExerciceWizard(models.TransientModel):
     @api.multi
     def close_exercice_reopen(self):
         for wizard in self:
-            for facture in self.env['syndic.facture'].search([('exercice_id', '=', wizard.exercice_id.id)]):
-                for detail in facture.facture_detail_ids:
-                    if detail.is_amortissement:
-                        for amortissement in detail.amortissement_ids:
-                            if amortissement.active == True:
-                                self.env['syndic.bilan.ligne'].create({
-                                    'name': 'amortissement',
-                                    'credit': amortissement.amount,
-                                    'account_id': amortissement.credit_account_id.id,
-                                    'exercice_id': wizard._context['active_id'],
-                                })
-                                self.env['syndic.bilan.ligne'].create({
-                                    'name': 'amortissement',
-                                    'debit': amortissement.amount,
-                                    'account_id': amortissement.debit_account_id.id,
-                                    'exercice_id': wizard._context['active_id'],
-                                })
-                                amortissement.active = False
-                                break
-
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (fond de roulement)',
                 'credit': wizard.roulement_valeur_rapporter,
@@ -502,26 +506,6 @@ class CloseExerciceWizard(models.TransientModel):
     @api.multi
     def close_exercice(self):
         for wizard in self:
-            for facture in self.env['syndic.facture'].search([('exercice_id', '=', wizard.exercice_id.id)]):
-                for detail in facture.facture_detail_ids:
-                    if detail.is_amortissement:
-                        for amortissement in detail.amortissement_ids:
-                            if amortissement.active == True:
-                                self.env['syndic.bilan.ligne'].create({
-                                    'name': 'amortissement',
-                                    'credit': amortissement.amount,
-                                    'account_id': amortissement.credit_account_id.id,
-                                    'exercice_id': wizard._context['active_id'],
-                                })
-                                self.env['syndic.bilan.ligne'].create({
-                                    'name': 'amortissement',
-                                    'debit': amortissement.amount,
-                                    'account_id': amortissement.debit_account_id.id,
-                                    'exercice_id': wizard._context['active_id'],
-                                })
-                                amortissement.active = False
-                                break
-
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (fond de roulement)',
                 'credit': wizard.roulement_valeur_rapporter,

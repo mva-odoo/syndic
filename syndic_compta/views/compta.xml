@@ -124,6 +124,7 @@
                     <header>
                         <button string="Ouverture" type="object" name="open_exercice_wizard"/>
                         <button string="Cloture" type="object" name="close_exercice_wizard"/>
+                        <button string="Amortissement" type="object" name="compute_amortissement"/>
                         <button string="Appel complementaire" type="object" name="open_exercice_wizard"/>
                         <field name="state" widget="statusbar"/>
                     </header>
