@@ -253,10 +253,17 @@ class RepartitionLot(models.Model):
 
 class BilanLigne(models.Model):
     _name = 'syndic.bilan.ligne'
+
+    @api.depends('debit', 'credit')
+    @api.multi
+    def _compute_total(self):
+        for bilan_ligne in self:
+            bilan_ligne.total = bilan_ligne.debit - bilan_ligne.credit
+
     name = fields.Char('Description')
     debit = fields.Float('Debit')
     credit = fields.Float('Credit')
-    total = fields.Float('Total')
+    total = fields.Float('Total', compute=_compute_total, store=True)
     account_id = fields.Many2one('syndic.pcmn', 'Compte')
     facture_id = fields.Many2one('syndic.facture', 'Facture')
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice')
