@@ -15,7 +15,7 @@
                         <field name="name" readonly="1"/>
                         <field name="immeuble_id" attrs="{'readonly':[('state', '!=','draft')]}"/>
                         <field name="invoice_date" attrs="{'readonly':[('state', '!=','draft')]}"/>
-                        <field name="exercice_id"/>
+                        <field name="exercice_id" domain="[('immeuble_id', '=', immeuble_id)]"/>
                     </group>
                     <notebook>
                         <page string="Ligne de facture">
@@ -44,7 +44,8 @@
                                     <button name='pay_all' string="Payé totalité" type="object"
                                             attrs="{'invisible':[('is_paid', '=', True)]}"/>
                                     <button name='amortissement_wizard' string="Amortir" type="object"
-                                            attrs="{'invisible':[('is_amortissement', '=', True)]}"/>
+                                            attrs="{'invisible':['|',('is_amortissement', '=', True),
+                                            ('is_paid', '!=', True)]}"/>
                                 </tree>
                             </field>
                         </page>
@@ -116,6 +117,27 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="syndic_facture_detail_form">
+            <field name="name">Syndic repartition lot detail form</field>
+            <field name="model">syndic.facture.detail</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="facture_id"/>
+                        <field name="facture_line_id"/>
+                        <field name="amount"/>
+                        <field name="lot_id"/>
+                        <field name="product_id"/>
+                        <field name="proprietaire_ids"/>
+                        <field name="fournisseur_id"/>
+                        <field name="is_paid"/>
+                        <field name="is_amortissement"/>
+                        <field name="amortissement_ids"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="syndic_exercice_compta_form">
             <field name="name">Syndic exercice compta From</field>
             <field name="model">syndic.exercice</field>
@@ -136,6 +158,9 @@
                     </group>
                     <button string="Voir compte regroupé" type="object" name="open_group_exercice"/>
                     <field name="ligne_ids"/>
+                    <group>
+                        <field name="amount_amortissement"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -147,6 +172,7 @@
                 <form>
                     <group>
                         <field name="product_id"/>
+                        <field name="amount"/>
                         <field name="duration"/>
                         <field name="split_amount"/>
                         <field name="debit_account_id"/>
@@ -170,6 +196,7 @@
                         <field name="credit"/>
                         <field name="total"/>
                         <field name="account_id"/>
+                        <field name="facture_id"/>
                     </group>
                 </form>
             </field>

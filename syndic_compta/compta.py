@@ -85,7 +85,7 @@ class FactureLigne(models.Model):
 
     name = fields.Char('Description', required=True)
     amount = fields.Float('Montant', required=True)
-    invoice_line_date = fields.Date('Date d\'echéhance', required=True)
+    invoice_line_date = fields.Date('Date d\'echéhance')
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
     product_id = fields.Many2one('syndic.product', 'Produit', required=True)
     repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
@@ -145,6 +145,9 @@ class SyndicAmortissementWizard(models.TransientModel):
     def _default_product(self):
         return self.env['syndic.facture.detail'].browse(self._context.get('active_id')).product_id
 
+    def _default_amount(self):
+        return self.env['syndic.facture.detail'].browse(self._context.get('active_id')).amount
+
     @api.depends('duration')
     @api.one
     def _compute_split_amount(self):
@@ -154,6 +157,7 @@ class SyndicAmortissementWizard(models.TransientModel):
             self.split_amount = 0.00
 
     product_id = fields.Many2one('syndic.product', 'Produit', default=_default_product)
+    amount = fields.Float('Montant', default=_default_amount)
     duration = fields.Integer('Durée')
     split_amount = fields.Float('Montant Divisé', compute=_compute_split_amount)
     debit_account_id = fields.Many2one('syndic.pcmn', 'Compte de Debis pour l\'amortissement')
@@ -161,19 +165,18 @@ class SyndicAmortissementWizard(models.TransientModel):
 
     @api.one
     def amortir(self):
-        i = 0
         detail = self.env['syndic.facture.detail'].browse(self._context.get('active_id'))
-        while i < self.duration:
-            i += 1
-            self.env['syndic.compta.amortissement'].create({
-                'product_id': self.product_id.id,
-                'amount': self.split_amount,
-                'number': i,
-                'immeuble_id': detail.facture_id.immeuble_id.id,
-                'facture_detail_id': detail.id,
-                'debit_account_id': self.debit_account_id.id,
-                'credit_account_id': self.credit_account_id.id,
-            })
+        self.env['syndic.compta.amortissement'].create({
+            'product_id': self.product_id.id,
+            'amount': self.split_amount,
+            'number': self.duration,
+            'immeuble_id': detail.facture_id.immeuble_id.id,
+            'facture_detail_id': detail.id,
+            'debit_account_id': self.debit_account_id.id,
+            'credit_account_id': self.credit_account_id.id,
+            'stay_pay': self.amount,
+            'counter': self.duration,
+        })
         detail.is_amortissement = True
 
 class ComptaAmortissement(models.Model):
@@ -188,6 +191,9 @@ class ComptaAmortissement(models.Model):
     facture_detail_id = fields.Many2one('syndic.facture.detail', 'Detail de facture')
     debit_account_id = fields.Many2one('syndic.pcmn', 'Compte de Debis pour l\'amortissement')
     credit_account_id = fields.Many2one('syndic.pcmn', 'Compte de Credit pour l\'amortissement')
+    stay_pay = fields.Float('Reste à payer')
+    counter = fields.Integer('Compteur')
+
 
 class Pcmn(models.Model):
     _name = 'syndic.pcmn'
@@ -279,12 +285,22 @@ class RepartitionLotDetail(models.Model):
 
 class ExerciceCompta(models.Model):
     _name = 'syndic.exercice'
+
+    def _compute_amortissement(self):
+        detail_ids = self.env['syndic.facture.detail'].search([('facture_id.exercice_id', '=', self.id)]).ids
+        amount = 0.00
+        for amortissement in self.env['syndic.compta.amortissement'].search([('facture_detail_id', 'in', detail_ids)]):
+            amount += amortissement.stay_pay
+        self.amount_amortissement = amount
+
     name = fields.Char('Nom de l\'exercice')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
     start_date = fields.Date('Date debut')
     end_date = fields.Date('Date fin')
     ligne_ids = fields.One2many('syndic.bilan.ligne', 'exercice_id', 'Ligne d\'exercice')
-    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('amortissement', 'Amortissement'), ('close', 'Cloturer')])
+    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('amortissement', 'Amortissement'),
+                      ('close', 'Cloturer')])
+    amount_amortissement = fields.Float('Amortissement', compute=_compute_amortissement)
 
     @api.multi
     def open_exercice_wizard(self):
@@ -304,7 +320,7 @@ class ExerciceCompta(models.Model):
             for detail in facture.facture_detail_ids:
                 if detail.is_amortissement:
                     for amortissement in detail.amortissement_ids:
-                        if amortissement.active == True:
+                        if amortissement.counter != 0:
                             self.env['syndic.bilan.ligne'].create({
                                 'name': 'amortissement',
                                 'credit': amortissement.amount,
@@ -317,7 +333,9 @@ class ExerciceCompta(models.Model):
                                 'account_id': amortissement.debit_account_id.id,
                                 'exercice_id': self.id,
                             })
-                            amortissement.active = False
+                            amortissement.counter = amortissement.counter-1
+                            amortissement.stay_pay = amortissement.stay_pay - amortissement.amount
+
                             break
         self.state = 'amortissement'
 
@@ -385,7 +403,7 @@ class OpenExerciceWizard(models.TransientModel):
     reserve_product_id = fields.Many2one('syndic.product', 'Produit fond de reserve',
                                          default=_default_product_reserve)
     reserve = fields.Float('Fond de reserve')
-    repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots', required=True)
+    repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble', default=_default_immeuble)
 
     @api.one
@@ -407,7 +425,7 @@ class OpenExerciceWizard(models.TransientModel):
         if self.reserve:
             self.env['syndic.facture.ligne'].create({
                 'name': 'Etablissement de fonds de reserve',
-                'amount': self.reserve,
+                'amount': self.reserve+self.amo,
                 'invoice_line_date': datetime.date.today(),
                 'repartition_lot_id': self.repartition_lot_id.id,
                 'product_id': self.reserve_product_id.id,
@@ -448,15 +466,16 @@ class CloseExerciceWizard(models.TransientModel):
         return amount
 
     def _default_report_reserve_value(self):
-        exercice_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).id
+        exercice_id = self.env['syndic.exercice'].browse(self._context.get('active_id'))
         immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id.id
         account_fond = self.env['syndic.compta.setting'].search([
             ('immeuble_id', '=', immeuble_id)]).reserve_product_id.etablissement_fond.id
         amount = 0.00
-        for compte in self.env['syndic.bilan.ligne'].search([('exercice_id', '=', exercice_id),
+        for compte in self.env['syndic.bilan.ligne'].search([('exercice_id', '=', exercice_id.id),
                                                              ('account_id', '=', account_fond)]):
             amount += compte.debit-compte.credit
-        return amount
+        import ipdb;ipdb.set_trace()
+        return amount+exercice_id.amount_amortissement
 
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice', default=_default_exercice)
     roulement_valeur_rapporter = fields.Float('Valeur de fond de roulement à reporter',
