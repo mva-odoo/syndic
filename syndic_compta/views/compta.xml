@@ -144,10 +144,10 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button string="Ouverture" type="object" name="open_exercice_wizard"/>
-                        <button string="Cloture" type="object" name="close_exercice_wizard"/>
-                        <button string="Amortissement" type="object" name="compute_amortissement"/>
-                        <button string="Appel complementaire" type="object" name="open_exercice_wizard"/>
+                        <button string="Ouverture" type="object" name="open_exercice_wizard" states='draft'/>
+                        <button string="Cloture" type="object" name="close_exercice_wizard" states='amortissement'/>
+                        <button string="Amortissement" type="object" name="compute_amortissement" states='open'/>
+                        <button string="Appel complementaire" type="object" name="open_exercice_wizard" states='open'/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <group>
