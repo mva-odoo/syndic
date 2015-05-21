@@ -4,6 +4,12 @@ import datetime
 
 class Facture(models.Model):
     _name = 'syndic.facture'
+
+    @api.depends('immeuble_id')
+    @api.one
+    def _compute_exercice(self):
+        self.exercice_id = self.immeuble_id.current_exercice_id
+
     name = fields.Char('Facture numeros')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble', required=True)
     invoice_date = fields.Date('Date de facture')
@@ -12,7 +18,7 @@ class Facture(models.Model):
                              'Etat', default='draft')
     facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
     bilan_ids = fields.One2many('syndic.bilan.ligne', 'facture_id', 'Lignes du bilan')
-    exercice_id = fields.Many2one('syndic.exercice', 'Exercice')
+    exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute=_compute_exercice, required=True)
 
     @api.one
     def validate_facture(self):
@@ -383,18 +389,18 @@ class OpenExerciceWizard(models.TransientModel):
         return self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
 
     def _default_product_reserve(self):
-        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id.id
+        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
         if self._context.get('reopen'):
-            return self.env['syndic.compta.setting'].search([('immeuble_id', '=', immeuble_id)]).open_report_reserve_compte
+            return immeuble_id.open_report_reserve_compte
         else:
-            return self.env['syndic.compta.setting'].search([('immeuble_id', '=', immeuble_id)]).reserve_product_id
+            return immeuble_id.reserve_product_id
 
     def _default_product_roulement(self):
-        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id.id
+        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
         if self._context.get('reopen'):
-            return self.env['syndic.compta.setting'].search([('immeuble_id', '=', immeuble_id)]).open_report_roulement_compte
+            return immeuble_id.open_report_roulement_compte
         else:
-            return self.env['syndic.compta.setting'].search([('immeuble_id', '=', immeuble_id)]).roulement_product_id
+            return immeuble_id.roulement_product_id
 
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice', default=_default_exercice)
     roulement_product_id = fields.Many2one('syndic.product', 'Produit fond de roulement',
@@ -425,13 +431,15 @@ class OpenExerciceWizard(models.TransientModel):
         if self.reserve:
             self.env['syndic.facture.ligne'].create({
                 'name': 'Etablissement de fonds de reserve',
-                'amount': self.reserve+self.amo,
+                'amount': self.reserve+self.exercice_id.amount_amortissement,
                 'invoice_line_date': datetime.date.today(),
                 'repartition_lot_id': self.repartition_lot_id.id,
                 'product_id': self.reserve_product_id.id,
                 'facture_id': facture.id,
             })
 
+
+        self.exercice_id.immeuble_id.current_exercice_id = self.exercice_id
 
 class CloseExerciceWizard(models.TransientModel):
     _name = 'syndic.close.exercice.wizard'
@@ -443,22 +451,21 @@ class CloseExerciceWizard(models.TransientModel):
         return self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
 
     def _default_report_roulement(self):
-        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id.id
-        return self.env['syndic.compta.setting'].search([('immeuble_id', '=', immeuble_id)]).report_roulement_compte
+        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
+        return immeuble_id.report_roulement_compte
 
     def _default_report_reserve(self):
-        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id.id
-        return self.env['syndic.compta.setting'].search([('immeuble_id', '=', immeuble_id)]).report_reserve_compte
+        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
+        return immeuble_id.report_reserve_compte
 
     def _default_report(self):
-        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id.id
-        return self.env['syndic.compta.setting'].search([('immeuble_id', '=', immeuble_id)]).compte_rapporter
+        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
+        return immeuble_id.compte_rapporter
 
     def _default_report_roulement_value(self):
         exercice_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).id
-        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id.id
-        account_fond = self.env['syndic.compta.setting'].search([
-            ('immeuble_id', '=', immeuble_id)]).roulement_product_id.etablissement_fond.id
+        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
+        account_fond = immeuble_id.roulement_product_id.etablissement_fond.id
         amount = 0.00
         for compte in self.env['syndic.bilan.ligne'].search([('exercice_id', '=', exercice_id),
                                                              ('account_id', '=', account_fond)]):
@@ -467,14 +474,12 @@ class CloseExerciceWizard(models.TransientModel):
 
     def _default_report_reserve_value(self):
         exercice_id = self.env['syndic.exercice'].browse(self._context.get('active_id'))
-        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id.id
-        account_fond = self.env['syndic.compta.setting'].search([
-            ('immeuble_id', '=', immeuble_id)]).reserve_product_id.etablissement_fond.id
+        immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
+        account_fond = immeuble_id.reserve_product_id.etablissement_fond.id
         amount = 0.00
         for compte in self.env['syndic.bilan.ligne'].search([('exercice_id', '=', exercice_id.id),
                                                              ('account_id', '=', account_fond)]):
             amount += compte.debit-compte.credit
-        import ipdb;ipdb.set_trace()
         return amount+exercice_id.amount_amortissement
 
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice', default=_default_exercice)
@@ -553,9 +558,9 @@ class CloseExerciceWizard(models.TransientModel):
             wizard.exercice_id.state = 'close'
 
 
+
 class SyndicComptaSetting(models.Model):
-    _name = 'syndic.compta.setting'
-    _rec_name = 'immeuble_id'
+    _inherit = 'syndic.building'
 
     roulement_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (roulement)')
     reserve_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (resrve)')
@@ -564,4 +569,5 @@ class SyndicComptaSetting(models.Model):
     report_roulement_compte = fields.Many2one('syndic.pcmn', 'Compte de fond de roulement à reporter')
     open_report_reserve_compte = fields.Many2one('syndic.product', 'Produit de fond de reserve à reporter pour reouverture')
     open_report_roulement_compte = fields.Many2one('syndic.product', 'Produit de fond de roulement à reporter pour reouverture')
-    immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
+    # immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
+    current_exercice_id = fields.Many2one('syndic.exercice', 'Exercice courant')

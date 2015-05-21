@@ -14,6 +14,7 @@
     'data': [
         'views/compta.xml',
         'views/fournisseurs.xml',
+        'views/immeubles.xml',
     ],
     'installable': True,
     'active': False,

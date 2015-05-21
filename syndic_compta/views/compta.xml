@@ -392,15 +392,6 @@
         <menuitem name="Produit" id="syndic_product"
                   parent="syndic_configuration_compta" action="action_product" />
 
-        <record model="ir.actions.act_window" id="action_setting">
-            <field name="name">Syndic Setting</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">syndic.compta.setting</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <menuitem name="Parametres" id="syndic_setting"
-                  parent="syndic_configuration_compta" action="action_setting" />
-
         <record model="ir.actions.act_window" id="action_amortissement">
             <field name="name">Syndic Amortissement</field>
             <field name="type">ir.actions.act_window</field>
