@@ -304,9 +304,9 @@ class ExerciceCompta(models.Model):
     start_date = fields.Date('Date debut')
     end_date = fields.Date('Date fin')
     ligne_ids = fields.One2many('syndic.bilan.ligne', 'exercice_id', 'Ligne d\'exercice')
-    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('amortissement', 'Amortissement'),
-                      ('close', 'Cloturer')])
     amount_amortissement = fields.Float('Amortissement', compute=_compute_amortissement)
+    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('amortissement', 'Amortissement'), 
+        ('close', 'Cloturer')], 'Etat', default='draft')
 
     @api.multi
     def open_exercice_wizard(self):
