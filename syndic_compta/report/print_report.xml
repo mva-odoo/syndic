@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="syndic_report_compta_form">
+            <field name="name">Syndic imprimer le bilan</field>
+            <field name="model">syndic.bilan.report.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <button name="print_bilan" type="object" string="Imprimer"/>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

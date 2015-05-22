@@ -19,6 +19,7 @@ class Facture(models.Model):
     facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
     bilan_ids = fields.One2many('syndic.bilan.ligne', 'facture_id', 'Lignes du bilan')
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute=_compute_exercice, required=True)
+    proprietaire_ids = fields.Many2many('syndic.owner', string='Proprietaires')
 
     @api.one
     def validate_facture(self):
@@ -30,7 +31,8 @@ class Facture(models.Model):
                         amount = line.amount * (repartition_line.value/1000)
                         proprio_ids = False
                         if repartition_line.lot_id.proprio_id:
-                            proprio_ids = [proprio_id.id for proprio_id in repartition_line.lot_id.proprio_id]
+                            # proprio_ids = [proprio_id.id for proprio_id in repartition_line.lot_id.proprio_id]
+                            proprio_ids = repartition_line.lot_id.proprio_id
                         self.env['syndic.facture.detail'].create({
                             'facture_id': self.id,
                             'facture_line_id': line.id,
@@ -292,6 +294,7 @@ class RepartitionLotDetail(models.Model):
 class ExerciceCompta(models.Model):
     _name = 'syndic.exercice'
 
+    @api.one
     def _compute_amortissement(self):
         detail_ids = self.env['syndic.facture.detail'].search([('facture_id.exercice_id', '=', self.id)]).ids
         amount = 0.00
@@ -305,8 +308,12 @@ class ExerciceCompta(models.Model):
     end_date = fields.Date('Date fin')
     ligne_ids = fields.One2many('syndic.bilan.ligne', 'exercice_id', 'Ligne d\'exercice')
     amount_amortissement = fields.Float('Amortissement', compute=_compute_amortissement)
-    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('amortissement', 'Amortissement'), 
+    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('amortissement', 'Amortissement'),
         ('close', 'Cloturer')], 'Etat', default='draft')
+
+    @api.one
+    def reset(self):
+        self.state = 'draft'
 
     @api.multi
     def open_exercice_wizard(self):
@@ -319,6 +326,35 @@ class ExerciceCompta(models.Model):
             'target': 'new',
             'context': self._context,
         }
+
+    @api.multi
+    def print_bilan(self):
+        return {
+            'name': 'Imprimer le bilan',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'syndic.bilan.report.wizard',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': self._context,
+        }
+
+    @api.multi
+    def compte_resultat(self):
+        for exercice in self:
+            view_id = exercice.env.ref('syndic_compta.syndic_compte_resultat_compta_tree').id
+            print view_id
+            return {
+                'name': 'Ouverture de vue regroupée ',
+                'view_type': 'form',
+                'view_mode': 'tree',
+                'res_model': 'syndic.bilan.ligne',
+                'type': 'ir.actions.act_window',
+                'view_id': view_id,
+                'domain': ['|', ('account_id.code', '=ilike', '6%'), ('account_id.code', '=ilike', '7%')],
+                'context': self.with_context(self._context, search_default_exercice_id=exercice.id,
+                                             search_default_group_account=1)._context,
+            }
 
     @api.one
     def compute_amortissement(self):

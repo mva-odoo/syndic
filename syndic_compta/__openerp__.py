@@ -15,6 +15,8 @@
         'views/compta.xml',
         'views/fournisseurs.xml',
         'views/immeubles.xml',
+        'report/print_report.xml',
+        'report/bilan.xml',
     ],
     'installable': True,
     'active': False,

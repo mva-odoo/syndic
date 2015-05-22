@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <report
+          id="compta_bilan"
+          string="Bilan"
+          model="syndic.exercice"
+          name="syndic_compta.syndic_compta_bilan"
+          file="name"
+          report_type="qweb-pdf"
+        />
+
+        <template id="syndic_compta_bilan">
+            <t t-call="report.html_container">
+                <t t-name="avis_qweb">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="report.external_layout">
+                            <div class="page">
+                                <h1>
+                                   BILAN: <span t-field="o.name"/>
+                                </h1>
+                                <table>
+                                <t t-foreach="o.ligne_ids" t-as="ligne_id">
+                                    <tr>
+                                        <td><span t-field="ligne_id.name"/></td>
+                                        <td><span t-field="ligne_id.account_id.name"/></td>
+                                        <td><span t-field="ligne_id.debit"/></td>
+                                        <td><span t-field="ligne_id.credit"/></td>
+                                        <td><span t-field="ligne_id.total"/></td>
+                                    </tr>
+                                </t>
+                                </table>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
