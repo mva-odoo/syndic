@@ -50,6 +50,7 @@
                             </field>
                         </page>
                     </notebook>
+                    <separator colspan="4" string="Ecritures comptables"/>
                     <field name="bilan_ids">
                         <tree editable="top">
                             <field name="name"/>
@@ -242,12 +243,35 @@
                     <field name="credit"/>
                     <field name="account_id"/>
                     <field name="exercice_id"/>
-                    <filter string="Facture" domain="[]" name="group_facture" context="{'group_by':'facture_id'}"/>
-                    <filter string="Compte" domain="[]" name="group_account" context="{'group_by':'account_id'}"/>
-                    <filter string="Exercice" domain="[]" name="group_exercice" context="{'group_by':'exercice_id'}"/>
-                    <!--<filter string="Compte Resultat"-->
-                            <!--domain="['|', ('account_id.code', '=ilike', '6%'), ('account_id.code', '=ilike', '7%')]"-->
-                            <!--name="compte_resultat"/>-->
+                    <group expand="0" string="Group By...">
+                        <filter string="Facture" domain="[]" name="group_facture" context="{'group_by':'facture_id'}"/>
+                        <filter string="Compte" domain="[]" name="group_account" context="{'group_by':'account_id'}"/>
+                        <filter string="Exercice" domain="[]" name="group_exercice" context="{'group_by':'exercice_id'}"/>
+                    </group>
+
+                    <filter string="Les dettes de plus d'un an (1)"
+                            domain="[ ('account_id.code', '=ilike', '1%')]"
+                            name="compte_1"/>
+
+                    <filter string="immobilisation (2)"
+                            domain="[ ('account_id.code', '=ilike', '2%')]"
+                            name="compte_2"/>
+
+                    <filter string="Les créances de plus d'un an (4)"
+                            domain="[ ('account_id.code', '=ilike', '4%')]"
+                            name="compte_4"/>
+
+                    <filter string="Les fonds disponibles (5)"
+                            domain="[ ('account_id.code', '=ilike', '5%')]"
+                            name="compte_5"/>
+
+                    <filter string="Compte charge (6)"
+                            domain="[ ('account_id.code', '=ilike', '6%')]"
+                            name="compte_6"/>
+
+                    <filter string="Compte produit (7)"
+                            domain="[ ('account_id.code', '=ilike', '7%')]"
+                            name="compte_7"/>
                 </search>
             </field>
         </record>
@@ -259,12 +283,14 @@
                 <form>
                     <group>
                         <field name="exercice_id"/>
+                        <field name="repartition_lot_id"/>
                         <field name="immeuble_id" invisible="1"/>
+                        <separator colspan="4" string="Fond de roulement"/>
                         <field name="roulement_product_id" domain="[('account_product', '=', True)]"/>
                         <field name="roulement"/>
+                        <separator colspan="4" string="Fond de reserve"/>
                         <field name="reserve_product_id" domain="[('account_product', '=', True)]"/>
                         <field name="reserve"/>
-                        <field name="repartition_lot_id"/>
                     </group>
                     <footer>
                         <button string="Ouverture" name="open_exercice" type="object"/>
@@ -283,10 +309,12 @@
                         <field name="compte_rapporter"/>
                         <field name="immeuble_id" invisible="1"/>
                         <group>
+                            <separator colspan="4" string="Fond de roulement"/>
                             <field name="roulement_valeur_rapporter"/>
                             <field name="roulement_compte_rapporter"/>
                         </group>
                         <group>
+                            <separator colspan="4" string="Fond de reserve"/>
                             <field name="reserve_valeur_rapporter"/>
                             <field name="reserve_compte_rapporter"/>
                         </group>
