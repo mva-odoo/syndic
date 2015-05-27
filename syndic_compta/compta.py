@@ -31,14 +31,13 @@ class Facture(models.Model):
                         amount = line.amount * (repartition_line.value/1000)
                         proprio_ids = False
                         if repartition_line.lot_id.proprio_id:
-                            # proprio_ids = [proprio_id.id for proprio_id in repartition_line.lot_id.proprio_id]
-                            proprio_ids = repartition_line.lot_id.proprio_id
+                            proprio_ids = [prop_id.id for prop_id in repartition_line.lot_id.proprio_id]
                         self.env['syndic.facture.detail'].create({
                             'facture_id': self.id,
                             'facture_line_id': line.id,
                             'amount': amount,
                             'lot_id': repartition_line.lot_id.id,
-                            'proprietaire_ids': proprio_ids,
+                            'proprietaire_ids': [(6, 0, proprio_ids)],
                             'product_id': line.product_id.id,
                             'fournisseur_id': line.fournisseur_id.id,
                         })
@@ -122,8 +121,12 @@ class FactureDetail(models.Model):
 
     @api.one
     def pay_all(self):
+        prop_name = ''
+        proprio_name = [proprio.name for proprio in self.proprietaire_ids]
+        if proprio_name:
+            prop_name = ', '.join(proprio_name)
         self.env['syndic.bilan.ligne'].create({
-            'name': 'payement '+self.product_id.name+' par ',
+            'name': 'payement '+self.product_id.name+' par '+prop_name,
             'facture_id': self.facture_id.id,
             'account_id': self.product_id.payable_compte_id.id,
             'exercice_id': self.facture_id.exercice_id.id,
