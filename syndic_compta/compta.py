@@ -131,6 +131,7 @@ class FactureDetail(models.Model):
             'account_id': self.product_id.payable_compte_id.id,
             'exercice_id': self.facture_id.exercice_id.id,
             'credit': self.amount,
+            'immeuble_id': self.facture_id.immeuble_id.id,
         })
         self.env['syndic.bilan.ligne'].create({
             'name': 'payement '+self.product_id.name,
@@ -138,6 +139,7 @@ class FactureDetail(models.Model):
             'account_id': self.fournisseur_id.account_id.id or self.product_id.etablissement_fond.id,
             'exercice_id': self.facture_id.exercice_id.id,
             'debit': self.amount,
+            'immeuble_id': self.facture_id.immeuble_id.id,
         })
 
         self.is_paid = True
@@ -289,6 +291,7 @@ class BilanLigne(models.Model):
     account_id = fields.Many2one('syndic.pcmn', 'Compte')
     facture_id = fields.Many2one('syndic.facture', 'Facture')
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice')
+    immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
 
 
 class RepartitionLotDetail(models.Model):
@@ -351,7 +354,6 @@ class ExerciceCompta(models.Model):
     def compte_resultat(self):
         for exercice in self:
             view_id = exercice.env.ref('syndic_compta.syndic_compte_resultat_compta_tree').id
-            print view_id
             return {
                 'name': 'Ouverture de vue regroupée ',
                 'view_type': 'form',
@@ -376,12 +378,14 @@ class ExerciceCompta(models.Model):
                                 'credit': amortissement.amount,
                                 'account_id': amortissement.credit_account_id.id,
                                 'exercice_id': self.id,
+                                'immeuble_id': facture.immeuble_id.id,
                             })
                             self.env['syndic.bilan.ligne'].create({
                                 'name': 'amortissement',
                                 'debit': amortissement.amount,
                                 'account_id': amortissement.debit_account_id.id,
                                 'exercice_id': self.id,
+                                'immeuble_id': facture.immeuble_id.id,
                             })
                             amortissement.counter = amortissement.counter-1
                             amortissement.stay_pay = amortissement.stay_pay - amortissement.amount
@@ -542,23 +546,27 @@ class CloseExerciceWizard(models.TransientModel):
     @api.multi
     def close_exercice_reopen(self):
         for wizard in self:
+            exercice = self.env['syndic.exercice'].browse(wizard._context['active_id'])
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (fond de roulement)',
                 'credit': wizard.roulement_valeur_rapporter,
                 'account_id': wizard.roulement_compte_rapporter.id,
                 'exercice_id': wizard._context['active_id'],
+                'immeuble_id': exercice.immeuble_id.id,
             })
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (fond de reserve)',
                 'credit': wizard.reserve_valeur_rapporter,
                 'account_id': wizard.reserve_compte_rapporter.id,
                 'exercice_id': wizard._context['active_id'],
+                'immeuble_id': exercice.immeuble_id.id,
             })
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (valeur à reporter)',
                 'debit': wizard.reserve_valeur_rapporter + wizard.roulement_valeur_rapporter,
                 'account_id': wizard.compte_rapporter.id,
                 'exercice_id': wizard._context['active_id'],
+                'immeuble_id': exercice.immeuble_id.id,
             })
             wizard.exercice_id.state = 'close'
 
@@ -581,23 +589,27 @@ class CloseExerciceWizard(models.TransientModel):
     @api.multi
     def close_exercice(self):
         for wizard in self:
+            exercice = self.env['syndic.exercice'].browse(wizard._context['active_id'])
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (fond de roulement)',
                 'credit': wizard.roulement_valeur_rapporter,
                 'account_id': wizard.roulement_compte_rapporter.id,
                 'exercice_id': wizard._context['active_id'],
+                'immeuble_id': exercice.immeuble_id.id,
             })
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (fond de reserve)',
                 'credit': wizard.reserve_valeur_rapporter,
                 'account_id': wizard.reserve_compte_rapporter.id,
                 'exercice_id': wizard._context['active_id'],
+                'immeuble_id': exercice.immeuble_id.id,
             })
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (valeur à reporter)',
                 'debit': wizard.reserve_valeur_rapporter + wizard.roulement_valeur_rapporter,
                 'account_id': wizard.compte_rapporter.id,
                 'exercice_id': wizard._context['active_id'],
+                'immeuble_id': exercice.immeuble_id.id,
             })
             wizard.exercice_id.state = 'close'
 
@@ -615,6 +627,7 @@ class SyndicComptaSetting(models.Model):
     open_report_roulement_compte = fields.Many2one('syndic.product', 'Produit de fond de roulement à reporter pour reouverture')
     # immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
     current_exercice_id = fields.Many2one('syndic.exercice', 'Exercice courant')
+    detail_ids = fields.Many2many('syndic.bilan.ligne', string='Lignes comptable')
 
 
 class SyndicLot(models.Model):
