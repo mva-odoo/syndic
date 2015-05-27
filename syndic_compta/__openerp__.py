@@ -15,6 +15,7 @@
         'views/compta.xml',
         'views/fournisseurs.xml',
         'views/immeubles.xml',
+        'views/lot.xml',
         'report/print_report.xml',
         'report/bilan.xml',
     ],

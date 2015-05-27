@@ -64,6 +64,23 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="syndic_detail_lot_tree">
+            <field name="name">Syndic detail TREE</field>
+            <field name="model">syndic.facture.detail</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="facture_line_id"/>
+                    <field name="amount"/>
+                    <field name="lot_id"/>
+                    <field name="product_id"/>
+                    <field name="proprietaire_ids" widget='many2many_tags'/>
+                    <field name="fournisseur_id"/>
+                    <field name='is_paid'/>
+                    <field name='is_amortissement'/>
+                </tree>
+            </field>
+        </record>
+
 
         <record model="ir.ui.view" id="syndic_repartition_lot_form">
             <field name="name">Syndic repartition lot Form</field>

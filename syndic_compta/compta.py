@@ -615,3 +615,9 @@ class SyndicComptaSetting(models.Model):
     open_report_roulement_compte = fields.Many2one('syndic.product', 'Produit de fond de roulement à reporter pour reouverture')
     # immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
     current_exercice_id = fields.Many2one('syndic.exercice', 'Exercice courant')
+
+
+class SyndicLot(models.Model):
+    _inherit = 'syndic.lot'
+
+    line_facture_ids = fields.One2many('syndic.facture.detail', 'lot_id', string="Lignes de facture")

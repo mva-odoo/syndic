@@ -78,6 +78,7 @@
                             <field name="date" />
                             <field name="all_immeuble"/>
                             <field name="is_mail"/>
+                            <field name="mail_server" attrs="{'required':[('is_mail', '=', True)], 'invisible':[('is_mail', '=', False)]}"/>
                             <field name="is_fax"/>
                             <field name="date_fr"/>
                             <field name="piece_jointe_ids" attrs="{'invisible':[('is_mail','=',False)]}">

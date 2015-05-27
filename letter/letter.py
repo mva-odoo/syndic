@@ -52,6 +52,7 @@ class create_letter(models.Model):
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     partner_address_ids = fields.Many2many('partner.address', String="Personne Jointe")
     state = fields.Selection([('not_send', 'Pas envoyé'), ('send', 'Envoyé')], string='State', default='not_send')
+    mail_server = fields.Many2one('ir.mail_server', 'Serveur email')
 
     _order = 'create_date desc'
 
@@ -133,7 +134,7 @@ class create_letter(models.Model):
     def send_email_lettre(self):
         mail = {}
         header = ''
-        mail['mail_server_id'] = self.env['ir.mail_server'].search([('name', '=', 'localhost')])[0].id
+        mail['mail_server_id'] = self.mail_server.id
         mail['email_from'] = self.env.user.email
         mail['reply_to'] = self.env.user.email
 

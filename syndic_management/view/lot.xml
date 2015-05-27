@@ -36,10 +36,12 @@
 			<field name="model">syndic.lot</field>
 			<field name="arch" type="xml">
 				<form string="Lot">
-                    <field name="name"/>
-                    <field name="building_id"/>
-                    <field name="proprio_id" widget="many2many_tags"/>
-                    <field name="locataire_id"  widget="many2many_tags"/>
+					<group>
+	                    <field name="name"/>
+	                    <field name="building_id"/>
+	                    <field name="proprio_id" widget="many2many_tags"/>
+	                    <field name="locataire_id"  widget="many2many_tags"/>
+	                </group>
 				</form>
 			</field>
 		</record>
