@@ -26,7 +26,8 @@
                                     <field name="invoice_line_date"/>
                                     <field name="fournisseur_id"/>
                                     <field name="product_id"/>
-                                    <field name="repartition_lot_id"/>
+                                    <field name="repartition_lot_id" domain="[('immeuble_id', '=', immeuble_id)]"/>
+                                    <field name="immeuble_id" invisible="1"/>
                                 </tree>
                             </field>
                         </page>

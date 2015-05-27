@@ -91,6 +91,10 @@ class Facture(models.Model):
 class FactureLigne(models.Model):
     _name = 'syndic.facture.ligne'
 
+    @api.onchange('name', 'amount', 'invoice_line_date', 'prodcut_id')
+    def _compute_immeuble(self):
+        self.immeuble_id = self.facture_id.immeuble_id.id
+
     name = fields.Char('Description', required=True)
     amount = fields.Float('Montant', required=True)
     invoice_line_date = fields.Date('Date d\'echéhance')
@@ -98,6 +102,7 @@ class FactureLigne(models.Model):
     product_id = fields.Many2one('syndic.product', 'Produit', required=True)
     repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
     facture_id = fields.Many2one('syndic.facture', 'Facture')
+    immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
 
 
 class FactureDetail(models.Model):
