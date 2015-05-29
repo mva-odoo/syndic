@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.actions.act_window" id="action_product">
+            <field name="name">Syndic Produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('account_product', '=', False)]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_product_financier">
+            <field name="name">Syndic Produit Financier</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('account_product', '=', True)]</field>
+        </record>
+
+        <menuitem name="Produit" id="syndic_product"
+                  parent="syndic_configuration_compta" action="action_product" />
+
+        <menuitem name="Produit Financier" id="syndic_product_financier"
+                  parent="syndic_configuration_compta" action="action_product_financier" />
+    </data>
+</openerp>

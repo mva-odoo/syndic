@@ -1,2 +1,2 @@
-import compta
+import models
 import report

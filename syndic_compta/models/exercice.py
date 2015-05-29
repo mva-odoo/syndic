@@ -2,279 +2,6 @@
 from openerp import models, fields, api, exceptions
 import datetime
 
-class Facture(models.Model):
-    _name = 'syndic.facture'
-
-    @api.depends('immeuble_id')
-    @api.one
-    def _compute_exercice(self):
-        self.exercice_id = self.immeuble_id.current_exercice_id
-
-    name = fields.Char('Facture numeros')
-    immeuble_id = fields.Many2one('syndic.building', 'Immeuble', required=True)
-    invoice_date = fields.Date('Date de facture')
-    facture_line_ids = fields.One2many('syndic.facture.ligne', 'facture_id', 'Ligne de facture')
-    state = fields.Selection([('draft', 'Brouillon'), ('validate', 'Validé'), ('close', 'Fermé')],
-                             'Etat', default='draft')
-    facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
-    bilan_ids = fields.One2many('syndic.bilan.ligne', 'facture_id', 'Lignes du bilan')
-    exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute=_compute_exercice, required=True)
-    proprietaire_ids = fields.Many2many('syndic.owner', string='Proprietaires')
-
-    @api.one
-    def validate_facture(self):
-        if self.state != 'validate':
-            for line in self.facture_line_ids:
-                check_amount = 0.00
-                if line.repartition_lot_id:
-                    for repartition_line in line.repartition_lot_id.repart_detail_ids:
-                        amount = line.amount * (repartition_line.value/1000)
-                        proprio_ids = False
-                        if repartition_line.lot_id.proprio_id:
-                            proprio_ids = [prop_id.id for prop_id in repartition_line.lot_id.proprio_id]
-                        self.env['syndic.facture.detail'].create({
-                            'facture_id': self.id,
-                            'facture_line_id': line.id,
-                            'amount': amount,
-                            'lot_id': repartition_line.lot_id.id,
-                            'proprietaire_ids': [(6, 0, proprio_ids)],
-                            'product_id': line.product_id.id,
-                            'fournisseur_id': line.fournisseur_id.id,
-                        })
-
-                        check_amount += amount
-                else:
-                    self.env['syndic.facture.detail'].create({
-                            'facture_id': self.id,
-                            'facture_line_id': line.id,
-                            'amount': line.amount,
-                            'product_id': line.product_id.id,
-                            'fournisseur_id': line.fournisseur_id.id,
-                        })
-
-                self.env['syndic.bilan.ligne'].create({
-                        'name': line.product_id.name,
-                        'facture_id': self.id,
-                        'account_id': line.product_id.receive_compte_id.id,
-                        'debit': line.amount,
-                        'exercice_id': line.facture_id.exercice_id.id,
-                    })
-
-                self.env['syndic.bilan.ligne'].create({
-                        'name': line.product_id.name,
-                        'facture_id': self.id,
-                        'account_id': line.fournisseur_id.account_id.id or line.product_id.accompte_fond_id.id,
-                        'credit': line.amount,
-                        'exercice_id': line.facture_id.exercice_id.id,
-                    })
-                if check_amount != line.amount and line.repartition_lot_id:
-                    raise exceptions.Warning("La totalité de la somme n'a pas été facturé. "
-                                             "Vérifié la répartition des quotités")
-
-            self.state = 'validate'
-
-    @api.one
-    def reset_draft(self):
-        self.facture_detail_ids.unlink()
-        self.bilan_ids.unlink()
-        self.state = 'draft'
-
-    @api.model
-    def create(self, vals):
-        new_id = super(Facture, self).create(vals)
-        building = self.env['syndic.building'].search([('id', '=', vals['immeuble_id'])])
-        new_id.name = '%s/%i' %(building.name, new_id)
-        return new_id
-
-
-class FactureLigne(models.Model):
-    _name = 'syndic.facture.ligne'
-
-    @api.onchange('name', 'amount', 'invoice_line_date', 'prodcut_id')
-    def _compute_immeuble(self):
-        self.immeuble_id = self.facture_id.immeuble_id.id
-
-    name = fields.Char('Description', required=True)
-    amount = fields.Float('Montant', required=True)
-    invoice_line_date = fields.Date('Date d\'echéhance')
-    fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
-    product_id = fields.Many2one('syndic.product', 'Produit', required=True)
-    repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
-    facture_id = fields.Many2one('syndic.facture', 'Facture')
-    immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
-
-
-class FactureDetail(models.Model):
-    _name = 'syndic.facture.detail'
-    _rec_name ='facture_id'
-
-    facture_id = fields.Many2one('syndic.facture', 'origine facture', required=True)
-    facture_line_id = fields.Many2one('syndic.facture.ligne', 'origine ligne', required=True)
-    amount = fields.Float('Montant', required=True)
-    lot_id = fields.Many2one('syndic.lot', 'Lot')
-    product_id = fields.Many2one('syndic.product', 'Produit')
-    proprietaire_ids = fields.Many2many('syndic.owner', string='Propriétaire')
-    fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
-    is_paid = fields.Boolean('Payé', readonly=True)
-    is_amortissement = fields.Boolean('Amorti', readonly=True)
-    amortissement_ids = fields.One2many('syndic.compta.amortissement', 'facture_detail_id', 'Amorrtissements')
-
-    @api.one
-    def pay_all(self):
-        prop_name = ''
-        proprio_name = [proprio.name for proprio in self.proprietaire_ids]
-        if proprio_name:
-            prop_name = ', '.join(proprio_name)
-        self.env['syndic.bilan.ligne'].create({
-            'name': 'payement '+self.product_id.name+' par '+prop_name,
-            'facture_id': self.facture_id.id,
-            'account_id': self.product_id.payable_compte_id.id,
-            'exercice_id': self.facture_id.exercice_id.id,
-            'credit': self.amount,
-            'immeuble_id': self.facture_id.immeuble_id.id,
-        })
-        self.env['syndic.bilan.ligne'].create({
-            'name': 'payement '+self.product_id.name,
-            'facture_id': self.facture_id.id,
-            'account_id': self.fournisseur_id.account_id.id or self.product_id.etablissement_fond.id,
-            'exercice_id': self.facture_id.exercice_id.id,
-            'debit': self.amount,
-            'immeuble_id': self.facture_id.immeuble_id.id,
-        })
-
-        self.is_paid = True
-
-    @api.multi
-    def amortissement_wizard(self):
-        return {
-            'name': 'Amortissement',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'syndic.amortissement.wizard',
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-            'context': self._context,
-        }
-
-
-class SyndicAmortissementWizard(models.TransientModel):
-    _name = 'syndic.amortissement.wizard'
-
-    def _default_product(self):
-        return self.env['syndic.facture.detail'].browse(self._context.get('active_id')).product_id
-
-    def _default_amount(self):
-        return self.env['syndic.facture.detail'].browse(self._context.get('active_id')).amount
-
-    @api.depends('duration')
-    @api.one
-    def _compute_split_amount(self):
-        if self.duration > 0:
-            self.split_amount = self.env['syndic.facture.detail'].browse(self._context.get('active_id')).amount / self.duration
-        else:
-            self.split_amount = 0.00
-
-    product_id = fields.Many2one('syndic.product', 'Produit', default=_default_product)
-    amount = fields.Float('Montant', default=_default_amount)
-    duration = fields.Integer('Durée')
-    split_amount = fields.Float('Montant Divisé', compute=_compute_split_amount)
-    debit_account_id = fields.Many2one('syndic.pcmn', 'Compte de Debis pour l\'amortissement')
-    credit_account_id = fields.Many2one('syndic.pcmn', 'Compte de Credit pour l\'amortissement')
-
-    @api.one
-    def amortir(self):
-        detail = self.env['syndic.facture.detail'].browse(self._context.get('active_id'))
-        self.env['syndic.compta.amortissement'].create({
-            'product_id': self.product_id.id,
-            'amount': self.split_amount,
-            'number': self.duration,
-            'immeuble_id': detail.facture_id.immeuble_id.id,
-            'facture_detail_id': detail.id,
-            'debit_account_id': self.debit_account_id.id,
-            'credit_account_id': self.credit_account_id.id,
-            'stay_pay': self.amount,
-            'counter': self.duration,
-        })
-        detail.is_amortissement = True
-
-class ComptaAmortissement(models.Model):
-    _name = 'syndic.compta.amortissement'
-    _rec_name = 'product_id'
-
-    product_id = fields.Many2one('syndic.product', 'Produit')
-    active = fields.Boolean('Actif', default=True)
-    amount = fields.Float('Montant')
-    number = fields.Integer('Numeros de l\'accompte')
-    immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
-    facture_detail_id = fields.Many2one('syndic.facture.detail', 'Detail de facture')
-    debit_account_id = fields.Many2one('syndic.pcmn', 'Compte de Debis pour l\'amortissement')
-    credit_account_id = fields.Many2one('syndic.pcmn', 'Compte de Credit pour l\'amortissement')
-    stay_pay = fields.Float('Reste à payer')
-    counter = fields.Integer('Compteur')
-
-
-class Pcmn(models.Model):
-    _name = 'syndic.pcmn'
-    _rec_name = 'code'
-    name = fields.Char('Nom du compte', required=True)
-    code = fields.Char('Code du compte', required=True)
-    parent_id = fields.Many2one('syndic.pcmn', 'Compte parent')
-    main_compte = fields.Boolean('Compte Général')
-    type_account = fields.Selection([('roulement', 'Roulement'), ('reserve', 'Reserve')])
-
-    @api.multi
-    def name_get(self):
-        res = []
-        for pcmn in self:
-            name = "%s-%s" % (pcmn.code, pcmn.name)
-            res += [(pcmn.id, name)]
-        return res
-
-    @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
-        args = args or []
-        if name:
-            args = ['|', ('name', operator, name), ('code', operator, name)] + args
-        pcmn = self.search(args, limit=limit)
-        return pcmn.name_get()
-
-class Prodcut(models.Model):
-    _name = 'syndic.product'
-    name = fields.Char('Produit')
-    detail = fields.Text('Detail')
-    payable_compte_id = fields.Many2one('syndic.pcmn', 'Compte payé')
-    receive_compte_id = fields.Many2one('syndic.pcmn', 'Compte Reçu')
-    etablissement_fond = fields.Many2one('syndic.pcmn', 'etabblissement de fond')
-    accompte_fond_id = fields.Many2one('syndic.pcmn', 'accompte de fond')
-    account_product = fields.Boolean('Produit comptable')
-
-class RepartitionLot(models.Model):
-    _name = 'syndic.repartition.lot'
-    name = fields.Char('Description', required=True)
-    repart_detail_ids = fields.One2many('syndic.repartition.lot.detail', 'repartition_id', 'Detail de repartition')
-    percentage_lot = fields.Float('Pourcentage des quotités', compute='compute_percentage_quot')
-    immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
-
-    @api.one
-    def compute_percentage_quot(self):
-        amount = 0.00
-        for detail in self.repart_detail_ids:
-            amount += detail.value
-        self.percentage_lot = amount/10
-
-    @api.one
-    def create_normal_repartition(self):
-        if not self.repart_detail_ids:
-            for lot in self.immeuble_id.lot_ids:
-                self.env['syndic.repartition.lot.detail'].create({
-                    'lot_id': lot.id,
-                    'value': lot.quotities,
-                    'repartition_id': self.id,
-                })
-        else:
-            raise exceptions.Warning('Il y a déjà des quotités.')
-
-
 class BilanLigne(models.Model):
     _name = 'syndic.bilan.ligne'
 
@@ -292,15 +19,6 @@ class BilanLigne(models.Model):
     facture_id = fields.Many2one('syndic.facture', 'Facture')
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
-
-
-class RepartitionLotDetail(models.Model):
-    _name = 'syndic.repartition.lot.detail'
-    _rec_name = 'lot_id'
-    repartition_id = fields.Many2one('syndic.repartition.lot', 'Repartition Lot')
-    value = fields.Float('Valeur')
-    lot_id = fields.Many2one('syndic.lot', 'Lots')
-
 
 class ExerciceCompta(models.Model):
     _name = 'syndic.exercice'
@@ -393,7 +111,6 @@ class ExerciceCompta(models.Model):
                             break
         self.state = 'amortissement'
 
-
     @api.multi
     def close_exercice_wizard(self):
         return {
@@ -418,11 +135,6 @@ class ExerciceCompta(models.Model):
                 'context': self.with_context(self._context, search_default_exercice_id=exercice.id,
                                              search_default_group_account=1)._context,
             }
-
-class Fournisseur(models.Model):
-    _inherit = 'syndic.supplier'
-    account_id = fields.Many2one('syndic.pcmn', 'account')
-
 
 class OpenExerciceWizard(models.TransientModel):
     _name = 'syndic.open.exercice.wizard'
@@ -574,8 +286,6 @@ class CloseExerciceWizard(models.TransientModel):
                                         default_roulement=wizard.roulement_valeur_rapporter,
                                         reopen=1)._context
 
-
-
         return {
             'name': 'Ouverture d\'exercice',
             'view_type': 'form',
@@ -612,25 +322,3 @@ class CloseExerciceWizard(models.TransientModel):
                 'immeuble_id': exercice.immeuble_id.id,
             })
             wizard.exercice_id.state = 'close'
-
-
-
-class SyndicComptaSetting(models.Model):
-    _inherit = 'syndic.building'
-
-    roulement_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (roulement)')
-    reserve_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (resrve)')
-    compte_rapporter = fields.Many2one('syndic.pcmn', 'Compte à reporter')
-    report_reserve_compte = fields.Many2one('syndic.pcmn', 'Compte de fond de reserve à reporter')
-    report_roulement_compte = fields.Many2one('syndic.pcmn', 'Compte de fond de roulement à reporter')
-    open_report_reserve_compte = fields.Many2one('syndic.product', 'Produit de fond de reserve à reporter pour reouverture')
-    open_report_roulement_compte = fields.Many2one('syndic.product', 'Produit de fond de roulement à reporter pour reouverture')
-    # immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
-    current_exercice_id = fields.Many2one('syndic.exercice', 'Exercice courant')
-    detail_ids = fields.Many2many('syndic.bilan.ligne', string='Lignes comptable')
-
-
-class SyndicLot(models.Model):
-    _inherit = 'syndic.lot'
-
-    line_facture_ids = fields.One2many('syndic.facture.detail', 'lot_id', string="Lignes de facture")
