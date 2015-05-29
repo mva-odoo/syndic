@@ -15,7 +15,7 @@
         'views/compta.xml',
         'views/fournisseurs.xml',
         'views/immeubles.xml',
-        # 'views/lot.xml',
+        'views/lot.xml',
         'views/facture.xml',
         'views/amortissement.xml',
         'views/exercice.xml',
