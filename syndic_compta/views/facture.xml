@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="syndic_facture_search">
+            <field name="name">Syndic Facture Search</field>
+            <field name="model">syndic.facture</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="payé"
+                            domain="[ ('state', '=', 'close')]"
+                            name="facture_close"/>
+                    <filter string="Brouillon"
+                            domain="[ ('state', '=', 'draft')]"
+                            name="facture_draft"/>
+                    <filter string="Validé"
+                            domain="[ ('state', '=', 'validate')]"
+                            name="facture_validate"/>
+                </search>
+            </field>
+        </record>
+
          <record model="ir.ui.view" id="syndic_facture_form">
             <field name="name">Syndic Facture Form</field>
             <field name="model">syndic.facture</field>

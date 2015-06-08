@@ -183,18 +183,12 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record model="ir.actions.act_window" id="action_syndic_plan_compte_compta">
-            <field name="name">Syndic plan comptable</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">syndic.pcmn</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+
 
         <menuitem name="Exercice comptable" id="syndic_exercice_compta_detail"
                   parent="syndic_exercice_compta" action="action_syndic_exercice_compta"/>
         <menuitem name="Ligne Exercice comptable" id="syndic_exercice_compta_ligne_detail"
                   parent="syndic_exercice_compta" action="action_syndic_exercice_ligne_compta"/>
-        <menuitem name="Plan de compte" id="syndic_plan_compte_compta_detail"
-                  parent="syndic_configuration_compta" action="action_syndic_plan_compte_compta"/>
+
     </data>
 </openerp>

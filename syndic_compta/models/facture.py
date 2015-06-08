@@ -23,6 +23,9 @@ class Facture(models.Model):
 
         self.pay_percentage = total
 
+        if total >= 100.0:
+            self.write({'state': 'close'})
+
     name = fields.Char('Facture numeros')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble', required=True)
     invoice_date = fields.Date('Date de création', default=lambda *a: fields.date.today())
@@ -31,7 +34,7 @@ class Facture(models.Model):
                              'Etat', default='draft')
     facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
     bilan_ids = fields.One2many('syndic.bilan.ligne', 'facture_id', 'Lignes du bilan')
-    exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute=_compute_exercice, required=True)
+    exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute=_compute_exercice, required=True, store=True)
     proprietaire_ids = fields.Many2many('syndic.owner', string='Proprietaires')
     pay_percentage = fields.Float('Pourcentage de payement', compute=_compute_percentage)
 

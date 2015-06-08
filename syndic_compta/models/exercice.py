@@ -113,6 +113,11 @@ class ExerciceCompta(models.Model):
 
     @api.multi
     def close_exercice_wizard(self):
+        not_close_facture = self.env['syndic.facture'].search([('exercice_id', '=', self.id), ('state', '!=', 'close')])
+        if not_close_facture:
+            names = [facture.name for facture in not_close_facture]
+            raise exceptions.Warning('Toutes les factures ne sont pas cloturés %s'%names)
+
         return {
             'name': 'Cloture d\'exercice',
             'view_type': 'form',
