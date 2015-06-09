@@ -25,7 +25,7 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="validate_facture" type="object" string="Validé" states="draft"/>
+                        <button name="validate_facture" type="object" string="Validé" states="draft,report"/>
                         <button name="reset_draft" type="object" string="Remettre en brouillon" states="validate"/>
                         <button name="pay_all_facture" type="object"
                                 string="Payer toute la facture" states="validate"/>
@@ -62,12 +62,19 @@
                                     <field name="proprietaire_ids" widget='many2many_tags'/>
                                     <field name="fournisseur_id"/>
                                     <field name='is_paid'/>
-                                    <field name='is_amortissement'/>
+                                    <field name='is_report' invisible="1"/>
+                                    <field name='is_amortissement' attrs="{'invisible':[('is_paid', '!=', True)]}"/>
+                                    <field name='already_pay'/>
                                     <button name='pay_all' string="Payé totalité" type="object"
-                                            attrs="{'invisible':[('is_paid', '=', True)]}"/>
+                                            attrs="{'invisible':['|', ('is_paid', '=', True), '|', ('is_report', '=', True), ('already_pay', '>', 0.00)]}"/>
+                                    <button name='split_pay_wizard' string="Payé partiel" type="object"
+                                            attrs="{'invisible':['|',('is_paid', '=', True), ('is_report', '=', True)]}"/>
+                                    <button name='report_pay' string="report Payement" type="object"
+                                            attrs="{'invisible':['|', ('is_report', '=', True), ('is_paid', '=', True)]}"/>
+                                    <field name="report_facture_id" attrs="{'invisible':[('is_report', '!=', True)]}"/>
                                     <button name='amortissement_wizard' string="Amortir" type="object"
                                             attrs="{'invisible':['|',('is_amortissement', '=', True),
-                                            ('is_paid', '!=', True)]}"/>
+                                            '|',('is_paid', '!=', True),'|', ('is_report', '=', True)]}"/>
                                 </tree>
                             </field>
                         </page>
@@ -128,8 +135,43 @@
                         <field name="fournisseur_id"/>
                         <field name="is_paid"/>
                         <field name="is_amortissement"/>
+                        <field name='already_pay'/>
+                        <field name='report_facture_id'/>
                         <field name="amortissement_ids"/>
                     </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="syndic_facture_detail_search">
+            <field name="name">Syndic repartition lot detail search</field>
+            <field name="model">syndic.facture.detail</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="facture_id"/>
+                    <field name="facture_line_id"/>
+                    <field name="amount"/>
+                    <field name="lot_id"/>
+                    <field name="product_id"/>
+                    <field name="proprietaire_ids"/>
+                    <field name="fournisseur_id"/>
+                    <field name="is_paid"/>
+                    <field name="is_amortissement"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="syndic_split_pay_wizard">
+            <field name="name">Syndic split pay wizard</field>
+            <field name="model">syndic.compta.split.pay.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="amount"/>
+                    </group>
+                    <footer>
+                        <button name="split_pay" string="payement partiel" type="object"/>
+                    </footer>
                 </form>
             </field>
         </record>

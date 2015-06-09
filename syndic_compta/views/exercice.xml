@@ -125,7 +125,7 @@
                 <form>
                     <group>
                         <field name="exercice_id"/>
-                        <field name="repartition_lot_id"/>
+                        <field name="repartition_lot_id" domain="[('immeuble_id', '=', immeuble_id)]"/>
                         <field name="immeuble_id" invisible="1"/>
                         <separator colspan="4" string="Fond de roulement"/>
                         <field name="roulement_product_id" domain="[('account_product', '=', True)]"/>

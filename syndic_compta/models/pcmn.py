@@ -37,3 +37,4 @@ class Prodcut(models.Model):
     etablissement_fond = fields.Many2one('syndic.pcmn', 'etabblissement de fond')
     accompte_fond_id = fields.Many2one('syndic.pcmn', 'accompte de fond')
     account_product = fields.Boolean('Produit comptable')
+    is_amortissable = fields.Boolean('Est amortissable')

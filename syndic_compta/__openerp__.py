@@ -24,6 +24,7 @@
         'views/repartition.xml',
         'report/print_report.xml',
         'report/bilan.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'active': False,

@@ -54,6 +54,7 @@
                         <field name="receive_compte_id"/>
                         <field name="payable_compte_id"/>
                         <field name="account_product"/>
+                        <field name="is_amortissable"/>
                         <field name="etablissement_fond" attrs="{'invisible': [('account_product', '=', False)]}"/>
                         <field name="accompte_fond_id" attrs="{'invisible': [('account_product', '=', False)]}"/>
                     </group>
