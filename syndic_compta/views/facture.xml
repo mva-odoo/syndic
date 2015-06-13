@@ -62,7 +62,8 @@
                                     <field name="proprietaire_ids" widget='many2many_tags'/>
                                     <field name="fournisseur_id"/>
                                     <field name='is_paid'/>
-                                    <field name='is_report' invisible="1"/>
+                                    <field name='is_amortissable' />
+                                    <field name='is_report' />
                                     <field name='is_amortissement' attrs="{'invisible':[('is_paid', '!=', True)]}"/>
                                     <field name='already_pay'/>
                                     <button name='pay_all' string="Payé totalité" type="object"
@@ -73,8 +74,7 @@
                                             attrs="{'invisible':['|', ('is_report', '=', True), ('is_paid', '=', True)]}"/>
                                     <field name="report_facture_id" attrs="{'invisible':[('is_report', '!=', True)]}"/>
                                     <button name='amortissement_wizard' string="Amortir" type="object"
-                                            attrs="{'invisible':['|',('is_amortissement', '=', True),
-                                            '|',('is_paid', '!=', True),'|', ('is_report', '=', True)]}"/>
+                                            attrs="{'invisible':['|', ('is_report', '=', False), ('is_paid', '=', False), ('is_amortissable', '=', False)]}"/>
                                 </tree>
                             </field>
                         </page>

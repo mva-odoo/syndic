@@ -147,6 +147,7 @@ class FactureDetail(models.Model):
     amortissement_ids = fields.One2many('syndic.compta.amortissement', 'facture_detail_id', 'Amorrtissements')
     already_pay = fields.Float('Deja payé')
     report_facture_id = fields.Many2one('syndic.facture', 'Facture reportée')
+    is_amortissable = fields.Boolean('est amortissable', related='product_id.is_amortissable')
 
     @api.one
     def pay_all(self):
