@@ -189,7 +189,7 @@ class FactureDetail(models.Model):
             'state': 'report',
             'facture_line_ids': [(6, 0, [ligne.id])]
         })
-        import ipdb;ipdb.set_trace()
+
         self.write({'report_facture_id': facture_id.id, 'is_report': True})
 
     @api.multi
