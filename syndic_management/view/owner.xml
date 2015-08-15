@@ -45,7 +45,6 @@
 			<field name="model">syndic.owner</field>
 			<field name="arch" type="xml">
 				<form string="Propriétaires" layout="manual" version="7.0"> 
-				<sheet string="Partner" layout="auto">
 				<group colspan="4" col="4">
 					<separator string="Informations sur le propriétaire" colspan="4"/>
 					<field name="name" colspan="2" string="Nom"/>
@@ -102,7 +101,6 @@
 						</group>
                     </page>
                 </notebook>
-                </sheet>
                 </form>
 			</field>
 		</record>

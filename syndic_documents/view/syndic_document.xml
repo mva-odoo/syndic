@@ -65,7 +65,7 @@
 	            <field name="type">form</field>
 	            <field name="inherit_id" ref="syndic_management.form_owner" />
 	            <field name="arch" type="xml">
-	                <xpath expr="/form/sheet/notebook/page[@string='Lots']" position="after">
+	                <xpath expr="//page[@string='Lots']" position="after">
 	                    <page string="Documents">
 	                    	<group colspan="4" col="4">
 	                        	<field name="document_ids" nolabel="1" colspan="4"/>
