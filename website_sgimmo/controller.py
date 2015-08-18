@@ -8,12 +8,13 @@ class WebsiteDocument(http.Controller):
         types = []
         immeubles = []
         uid = http.request.uid
-        domain = [('proprio_ids', 'in', uid)]
+        prop_uid = http.request.env['syndic.owner'].search([('user_id', '=', uid)]).id
+        domain = [('proprio_ids', 'in', prop_uid)]
         
         docs = http.request.env['syndic.documents'].search(domain)
 
         buildings = [lot.building_id for lot in http.request.env['syndic.lot'].search([
-            ('proprio_id', '=', uid)])]
+            ('proprio_id', 'in', prop_uid)])]
         building_ids = set(buildings)
 
         doc_types = http.request.env['syndic.type.document'].search([])
