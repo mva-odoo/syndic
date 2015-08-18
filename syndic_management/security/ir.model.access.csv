@@ -75,3 +75,4 @@
 "syndic_group_employe","syndic res group","base.model_res_groups","syndic_employe",1,1,1,0
 "syndic_mail_group_employe","syndic mail group","mail.model_mail_group","syndic_employe",1,1,1,0
 "syndic_building_client","syndic client immeuble","model_syndic_building","syndic_client",1,0,0,0
+"syndic_lot_client","syndic lot client","model_syndic_lot","syndic_client",1,1,1,0

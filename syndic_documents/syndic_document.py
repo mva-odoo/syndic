@@ -33,7 +33,7 @@ class claim(models.Model):
                     password = proprio_id.name+str(int(random.random()*100000))
                     dict_users = {}
                     dict_users['login'] = login
-                    dict_users['password'] =  password
+                    dict_users['password'] = password
                     dict_users['name'] = proprio_id.name
                     group_ids = self.env['res.groups'].search(['|', ('name', 'ilike', 'Syndic/Client'),
                                                                ('name', 'ilike', 'Portal')])

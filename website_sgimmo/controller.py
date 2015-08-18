@@ -2,20 +2,28 @@ from openerp import http
 import openerp
 from openerp.http import request
 
-class Academy(http.Controller):
+class WebsiteDocument(http.Controller):
     @http.route('/documents/', auth='user', website=True)
     def index(self, **kwargs):
         types = []
         immeubles = []
-        domain = []
-
+        uid = http.request.uid
+        domain = [('proprio_ids', 'in', uid)]
+        
         docs = http.request.env['syndic.documents'].search(domain)
+
+        buildings = [lot.building_id for lot in http.request.env['syndic.lot'].search([
+            ('proprio_id', '=', uid)])]
+        building_ids = set(buildings)
+
+        doc_types = http.request.env['syndic.type.document'].search([])
 
         for doc in docs:
             if doc.type_id:
                 types.append(doc.type_id)
             elif doc.immeuble_id:
                 immeubles.append(doc.immeuble_id)
+
         if kwargs:
             if int(kwargs.get('immeubles')):
                 domain.append(('immeuble_id', '=', int(kwargs.get('immeubles'))))
@@ -24,7 +32,9 @@ class Academy(http.Controller):
 
         docs = http.request.env['syndic.documents'].search(domain)
 
-        return http.request.render('website_sgimmo.index', {'documents': docs, 'types': types, 'immeubles': immeubles})
+        return http.request.render('website_sgimmo.index', {'documents': docs,
+                                                            'types': doc_types,
+                                                            'immeubles': building_ids})
 
 
 class Website(openerp.addons.web.controllers.main.Home):
