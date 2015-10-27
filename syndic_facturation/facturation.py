@@ -3,8 +3,17 @@ from openerp import models, fields, api, exceptions
 import datetime
 import locale
 
+
 class SyndicFacturation(models.Model):
     _name = 'syndic.facturation'
+
+    name = fields.Char('Facture', readonly=True)
+    immeuble_id = fields.Many2one('syndic.building', string='Immeuble', required=True)
+    line_ids = fields.One2many('syndic.facturation.line', 'facture_id', string='Lignes de facture')
+    total = fields.Float(string='Total', compute='_compute_total', store=True)
+    date = fields.Date('Date de création', default=lambda *a: fields.date.today())
+    date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
+    object = fields.Char('Objet')
 
     @api.one
     @api.depends('date')
@@ -18,18 +27,10 @@ class SyndicFacturation(models.Model):
             date_fr = now.strftime("%A %d %B %Y")
             self.date_fr = date_fr
 
-    name = fields.Char('Facture', readonly=True)
-    immeuble_id = fields.Many2one('syndic.building', string='Immeuble', required=True)
-    line_ids = fields.One2many('syndic.facturation.line', 'facture_id', string='Lignes de facture')
-    total = fields.Float(string='Total', compute='_compute_total', store=True)
-    date = fields.Date('Date de création', default=lambda *a: fields.date.today())
-    date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
-    object = fields.Char('Objet')
-
     @api.model
     def create(self, vals):
         new_id = super(SyndicFacturation, self).create(vals)
-        new_id.name = 'Facture %i' %new_id
+        new_id.name = 'Facture %i' % new_id
         return new_id
 
     @api.one
@@ -45,10 +46,11 @@ class SyndicFacturation(models.Model):
         for proprietaire_id in self.proprietaire_ids:
             proprietaire_id.prix_unitaire = self.total*(proprietaire_id.pourcentage/100)
 
+
 class SyndicFacturationLine(models.Model):
     _name = 'syndic.facturation.line'
+
     name = fields.Char('Ligne de facturation')
-    prix = fields.Float('Prix', required=True)
     type_id = fields.Many2one('syndic.facturation.type', string='Type de frais', required=True)
     facture_id = fields.Many2one('syndic.facturation', string='facture')
     nombre = fields.Float('Nombre')
@@ -68,10 +70,12 @@ class SyndicFacturationLine(models.Model):
 
 class SyndicFacturationType(models.Model):
     _name = 'syndic.facturation.type'
+
     name = fields.Char('Type de facture', required=True)
     prix = fields.Float('Prix de la prestation', required=True)
 
+
 class SyndicqtyType(models.Model):
     _name = 'syndic.qty.type'
-    name = fields.Char('Quantité', required=True)
 
+    name = fields.Char('Quantité', required=True)
