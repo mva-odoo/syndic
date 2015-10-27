@@ -7,9 +7,9 @@ class Claim(models.Model):
     _rec_name = 'subject'
     _order = 'create_date desc'
 
+    subject = fields.Char('Sujet', required=True)
     email = fields.Char('Email')
     phone = fields.Char('Telephone')
-    subject = fields.Char('Sujet', required=True)
     create_date = fields.Datetime(string='Date de création', readonly=True)
     write_date = fields.Datetime(string='Update Date', readonly=True)
     create_uid = fields.Many2one('res.users', string="Createur", readonly=True)
@@ -80,7 +80,7 @@ class OffreContrats(models.Model):
     _name = 'offre.contrat'
     _order = 'date_envoi desc'
 
-    name = fields.Char('Type')
+    name = fields.Char('Type', required=True)
     fournisseur_id = fields.Many2one('syndic.supplier', string='Nom du fournisseur', required=True)
     immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble', required=True)
     demande = fields.Selection([('offre', 'Offre'), ('contrat', 'Contrat')], string='Demande')
@@ -136,9 +136,9 @@ class BonCommande(models.Model):
     _name = 'bon.commande'
     _order = 'date_demande desc'
 
-    name = fields.Char('Type')
-    immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble',required=True)
-    fournisseur_id = fields.Many2one('syndic.supplier', string='Nom du fournisseur',required=True)
+    name = fields.Char('Type', required=True)
+    immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble', required=True)
+    fournisseur_id = fields.Many2one('syndic.supplier', string='Nom du fournisseur', required=True)
     date_demande = fields.Date('Date demande')
     cloture = fields.Boolean('Cloture')
     date_cloture = fields.Date('Date cloture')

@@ -92,14 +92,14 @@ class LetterReunion(models.Model):
 class ReunionType(models.Model):
     _name = 'reunion.type'
 
-    name = fields.Char('Type')
+    name = fields.Char('Type', required=True)
 
 
 class ReunionPoint(models.Model):
     _name = 'reunion.point'
     _order = 'create_date desc'
 
-    name = fields.Char('Point')
+    name = fields.Char('Point', required=True)
     sequence = fields.Integer('Numéros de point')
     reunion_id = fields.Many2one('letter.reunion', 'Reunion')
     descriptif = fields.Html('Point')
