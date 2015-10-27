@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
-from random import randint
-import random
+from openerp.addons.syndic_tools.syndic_tools import UCLTools
+
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
@@ -41,9 +41,11 @@ class ResPartnerAddress(models.Model):
 
 class Person(models.Model):
     _name = 'syndic.personne'
+    _inherits = {
+        'res.users': 'user_id',
+    }
 
-    name = fields.Char('Nom', required=True, select=True)
-    date = fields.Date('Date', select=1)
+    name_address = fields.Char('Nom', select=1)# because need name for the inherits owner
     title = fields.Many2one('res.partner.title', 'Title')
     active = fields.Boolean('Active', default=True)
     street = fields.Char('Street')
@@ -56,25 +58,23 @@ class Person(models.Model):
     phone = fields.Char('Phone')
     fax = fields.Char('Fax')
     mobile = fields.Char('Mobile')
-    birthdate = fields.Char('Birthdate')
     city_id = fields.Many2one('city', 'Ville')
     prenom = fields.Char('Prenom')
-    image_medium = fields.Binary('medium')
-    image_small = fields.Binary('small')
     gsm = fields.Char('GSM')
+    user_id = fields.Many2one('res.users', string="User", ondelete="cascade", required=True)
 
 
 # fournisseur
 class Supplier(models.Model):
     _inherit = 'syndic.personne'
-    _name='syndic.supplier'
+    _name = 'syndic.supplier'
 
     job_ids = fields.Many2many('res.partner.job', string='Métier')
     address_ids = fields.One2many('partner.address', 'supplier_id', string='Address')
 
 
 #divers
-#TODO aucune utilité ???
+#TODO aucune utilité ??? à retiré besoin d un script
 class Other(models.Model):
     _inherit ='syndic.personne'
     _name = 'syndic.other'
@@ -85,8 +85,8 @@ class Loaner(models.Model):
     _inherit = 'syndic.personne'
     _name = 'syndic.loaner'
 
-    address_ids = fields.One2many('partner.address','add_parent_id_loaner',string='Address')
-    loaner_lot_ids = fields.Many2many('syndic.lot',string='Lot')
+    address_ids = fields.One2many('partner.address', 'add_parent_id_loaner', string='Address')
+    loaner_lot_ids = fields.Many2many('syndic.lot', string='Lot')
     login = fields.Char('login')
     passcode = fields.Char('passcode')
     building_ids = fields.Many2one('syndic.building', related='loaner_lot_ids.building_id', string='Immeuble')
@@ -94,10 +94,10 @@ class Loaner(models.Model):
                                          string='Immeuble', store=True)
 
 
-#propriétaire
 class Owner(models.Model):
     _inherit = 'syndic.personne'
     _name = 'syndic.owner'
+
 
     #TODO enlever ???
     # @api.model
@@ -108,10 +108,10 @@ class Owner(models.Model):
     #         result.add(el.id)
     #     return list(result)
 
-    address_ids = fields.One2many('partner.address', 'add_parent_id_owner',string='Address')
+    address_ids = fields.One2many('partner.address', 'add_parent_id_owner', string='Address')
     lot_ids = fields.Many2many('syndic.lot', string='Lot')
-    login = fields.Char('login', related='user_id.login')
-    password = fields.Char('Mot de passe', related='user_id.password')
+    # login = fields.Char('login', related='user_id.login')
+    # password = fields.Char('Mot de passe', related='user_id.password')
     building_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble')
     # building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble', store={
     #     'syndic.lot': (_get_name_building, ['name'], 10),
@@ -120,41 +120,27 @@ class Owner(models.Model):
     convocation = fields.Selection([('recommende', 'Par recommandé'),
                                     ('courrier_simple', 'Par courrier simple'),
                                     ('email', 'Par Email')], string='Convocation')
-    building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble', store=True)
-    user_id = fields.Many2one('res.users', string="User")
+    building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id',
+                                         string='Immeuble', store=True)
 
-    #TODO: deplacer dans un module à part comme utils
-    def pass_generator(self):
-        alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        pw_length = 8
-        mypw = ""
-
-        for i in range(pw_length):
-            next_index = random.randrange(len(alphabet))
-            mypw = mypw + alphabet[next_index]
-
-        return mypw
 
     @api.model
     def create(self, vals):
         res_id = super(Owner, self).create(vals)
-        login = vals['name'].replace(' ', '')
-        login = login.replace('-', '')
-        rand = str(randint(0, 99))
-        dict_users = {}
-        dict_users['login'] = login[:8]+rand
-        dict_users['password'] = self.pass_generator()
-        dict_users['name'] = vals['name']
-        dict_users['proprio_id'] = res_id.id
-
-        group_ids = self.env['res.groups'].search(['|',
-                                                   ('name', 'ilike', 'Syndic/Client'),
-                                                   ('name', 'ilike', 'Portal')
-                                                   ])
-
-        dict_users['groups_id'] = [(4, group_id.id) for group_id in group_ids]
-        self.env.uid = 1
-        res_id.user_id = self.env['res.users'].create(dict_users)
+        # group_ids = self.env['res.groups'].search(['|',
+        #                                            ('name', 'ilike', 'Syndic/Client'),
+        #                                            ('name', 'ilike', 'Portal')
+        #                                            ])
+        #
+        # dict_users = {
+        #     'name': vals['name'],
+        #     'login': UCLTools().login_generator(vals['name']),
+        #     'password': UCLTools().pass_generator(),
+        #     'proprio_id': res_id.id,
+        #     'groups_id': [(4, group_id.id) for group_id in group_ids],
+        # }
+        #
+        # res_id.user_id = self.env['res.users'].sudo().create(dict_users)
         return res_id
 
     @api.one
