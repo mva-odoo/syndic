@@ -55,14 +55,14 @@ class ExportFicheTech(models.TransientModel):
 #immeuble
 class Building(models.Model):
     _name = 'syndic.building'
+    _order = 'name asc'
 
     @api.one
     def _get_total_quotites(self):
         total_quotites = 0.00
-        for building in self:
-            for lot in building.lot_ids:
-                total_quotites += lot.quotities
-            self.total_quotites = total_quotites
+        for lot in self.lot_ids:
+            total_quotites += lot.quotities
+        self.total_quotites = total_quotites
 
     name = fields.Char('Immeuble', required=True)
     lot_ids = fields.One2many('syndic.lot', 'building_id', 'Lots')
@@ -75,8 +75,6 @@ class Building(models.Model):
     compte = fields.Char('Compte en banque')
     total_quotites = fields.Float(compute=_get_total_quotites, string='Total Quotites')
     active = fields.Boolean(default=True)
-
-    _order = 'name asc'
 
     @api.multi
     def go_export_model(self):

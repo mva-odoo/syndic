@@ -27,7 +27,6 @@
 "syndic_syndic_loaner","syndic syndic.loaner","model_syndic_loaner","syndic_manager",1,1,1,1
 "syndic_res_partner_job","syndic res_partner_job","model_res_partner_job","syndic_manager",1,1,1,1
 "syndic_res_old_owner","syndic res_old_owner","model_syndic_old_owner","syndic_manager",1,1,1,1
-"syndic_res_partner","syndic res.partner","model_res_partner","syndic_manager",1,1,1,1
 "syndic_export","syndic export","base.model_ir_exports","syndic_manager",1,1,1,1
 "syndic_import","syndic import","base_import.model_base_import_import","syndic_manager",1,1,1,1
 "syndic_ir_model_data","syndic ir.model.data","base.model_ir_model_data","syndic_manager",1,1,1,1
@@ -62,7 +61,6 @@
 "syndic_syndic_loaner_employe","syndic syndic.loaner","model_syndic_loaner","syndic_employe",1,1,1,1
 "syndic_res_partner_job_employe","syndic res_partner_job","model_res_partner_job","syndic_employe",1,1,1,1
 "syndic_res_old_owner_employe","syndic res_old_owner","model_syndic_old_owner","syndic_employe",1,1,1,1
-"syndic_res_partner_employe","syndic res.partner","model_res_partner","syndic_employe",1,1,1,1
 "syndic_export_employe","syndic export","base.model_ir_exports","syndic_employe",1,1,1,1
 "syndic_export_line_employe","syndic export line","base.model_ir_exports_line","syndic_employe",1,1,1,1
 "syndic_import_employe","syndic import","base_import.model_base_import_import","syndic_employe",1,1,1,1

@@ -41,11 +41,8 @@ class ResPartnerAddress(models.Model):
 
 class Person(models.Model):
     _name = 'syndic.personne'
-    _inherits = {
-        'res.users': 'user_id',
-    }
 
-    name_address = fields.Char('Nom', select=1)# because need name for the inherits owner
+    name = fields.Char('Nom', select=1, required=True)
     title = fields.Many2one('res.partner.title', 'Title')
     active = fields.Boolean('Active', default=True)
     street = fields.Char('Street')
@@ -61,7 +58,7 @@ class Person(models.Model):
     city_id = fields.Many2one('city', 'Ville')
     prenom = fields.Char('Prenom')
     gsm = fields.Char('GSM')
-    user_id = fields.Many2one('res.users', string="User", ondelete="cascade", required=True)
+    user_id = fields.Many2one('res.users', string="User", ondelete="cascade")
 
 
 # fournisseur
@@ -98,25 +95,23 @@ class Owner(models.Model):
     _inherit = 'syndic.personne'
     _name = 'syndic.owner'
 
-
-    #TODO enlever ???
-    # @api.model
-    # def _get_name_building(self):
-    #     result = set()
-    #     building_ids = self.env['syndic.owner'].search([])
-    #     for el in building_ids:
-    #         result.add(el.id)
-    #     return list(result)
+    @api.model
+    def _get_name_building(self):
+        result = set()
+        building_ids = self.env['syndic.owner'].search([])
+        for el in building_ids:
+            result.add(el.id)
+        return list(result)
 
     address_ids = fields.One2many('partner.address', 'add_parent_id_owner', string='Address')
     lot_ids = fields.Many2many('syndic.lot', string='Lot')
-    # login = fields.Char('login', related='user_id.login')
-    # password = fields.Char('Mot de passe', related='user_id.password')
+    login = fields.Char('login', related='user_id.login', required=False)
+    password = fields.Char('Mot de passe', related='user_id.password')
     building_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble')
-    # building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble', store={
-    #     'syndic.lot': (_get_name_building, ['name'], 10),
-    #     'syndic.owner': (lambda self, cr, uid, ids, c=None: ids, [], 10),
-    # }, select=True)
+    building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble', store={
+        'syndic.lot': (_get_name_building, ['name'], 10),
+        'syndic.owner': (lambda self, cr, uid, ids, c=None: ids, [], 10),
+    }, select=True)
     convocation = fields.Selection([('recommende', 'Par recommandé'),
                                     ('courrier_simple', 'Par courrier simple'),
                                     ('email', 'Par Email')], string='Convocation')
@@ -127,27 +122,25 @@ class Owner(models.Model):
     @api.model
     def create(self, vals):
         res_id = super(Owner, self).create(vals)
-        # group_ids = self.env['res.groups'].search(['|',
-        #                                            ('name', 'ilike', 'Syndic/Client'),
-        #                                            ('name', 'ilike', 'Portal')
-        #                                            ])
-        #
-        # dict_users = {
-        #     'name': vals['name'],
-        #     'login': UCLTools().login_generator(vals['name']),
-        #     'password': UCLTools().pass_generator(),
-        #     'proprio_id': res_id.id,
-        #     'groups_id': [(4, group_id.id) for group_id in group_ids],
-        # }
-        #
-        # res_id.user_id = self.env['res.users'].sudo().create(dict_users)
+        group_ids = self.env['res.groups'].search(['|',
+                                                   ('name', 'ilike', 'Syndic/Client'),
+                                                   ('name', 'ilike', 'Portal')
+                                                   ])
+
+        dict_users = {
+            'name': vals['name'],
+            'login': UCLTools().login_generator(vals['name']),
+            'password': UCLTools().pass_generator(),
+            'proprio_id': res_id.id,
+            'groups_id': [(4, group_id.id) for group_id in group_ids],
+        }
+
+        res_id.user_id = self.env['res.users'].sudo().create(dict_users)
         return res_id
 
     @api.one
     def unlink(self):
-        #TODO louche de boucler sur self avec api.one
-        for prop in self:
-            prop.user_id.unlink()
+        self.user_id.unlink()
         return super(Owner, self).unlink()
 
 
