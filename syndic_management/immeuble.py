@@ -4,9 +4,12 @@ from xlwt import Workbook
 import StringIO
 import base64
 
-
-class export_fiche_tech(models.TransientModel):
+#TODO: mettre dans utils
+class ExportFicheTech(models.TransientModel):
     _name ='export.fiche.tech'
+
+    xls_file = fields.Binary("cliquez ici", readonly=True, default='_get_export_fiche_technique')
+    datas_fname = fields.Char("Fichier", readonly=True, default='export.xls')
 
     @api.model
     def _get_export_fiche_technique(self):
@@ -48,12 +51,9 @@ class export_fiche_tech(models.TransientModel):
 
         return encode_text
 
-    xls_file = fields.Binary("cliquez ici", readonly=True, default=_get_export_fiche_technique)
-    datas_fname = fields.Char("Fichier", readonly=True, default='export.xls')
-
 
 #immeuble
-class building(models.Model):
+class Building(models.Model):
     _name = 'syndic.building'
 
     @api.one
@@ -63,7 +63,6 @@ class building(models.Model):
             for lot in building.lot_ids:
                 total_quotites += lot.quotities
             self.total_quotites = total_quotites
-
 
     name = fields.Char('Immeuble', required=True)
     lot_ids = fields.One2many('syndic.lot', 'building_id', 'Lots')
@@ -82,7 +81,7 @@ class building(models.Model):
     @api.multi
     def go_export_model(self):
         return {
-                'name' : 'Export ficher technique',
+                'name': 'Export ficher technique',
                 'view_type': 'form',
                 'view_mode': 'form',
                 'res_model': 'export.fiche.tech',
