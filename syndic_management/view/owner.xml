@@ -67,7 +67,7 @@
 							<separator string="Autres contacts" colspan="4"/>
 							<field name="address_ids" colspan="4" nolabel="1">
 								<tree string="Autres contacts" editable="top">
-									<field name="name" required="1"/>
+									<field name="name"/>
                                     <field name="title"/>
 									<field name="street"/>
 									<field name="zip"/>

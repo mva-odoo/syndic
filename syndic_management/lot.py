@@ -6,7 +6,7 @@ class Lot(models.Model):
     _name = 'syndic.lot'
     _order = 'building_id asc,name'
 
-    name = fields.Char('Nom du lot')
+    name = fields.Char('Nom du lot', required=True)
     building_id = fields.Many2one('syndic.building', 'Immeuble')
     proprio_id = fields.Many2many('syndic.owner', string='Propriétaire')
     locataire_id = fields.Many2many('syndic.loaner', string='Locataire')
@@ -18,5 +18,7 @@ class Lot(models.Model):
 
 class TypeLot(models.Model):
     _name = 'syndic.type_lot'
-    name = fields.Char('Type de lot')
     _order = 'name'
+
+    name = fields.Char('Type de lot')
+

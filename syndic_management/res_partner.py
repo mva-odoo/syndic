@@ -18,15 +18,9 @@ class City(models.Model):
 class ResPartnerAddress(models.Model):
     _name = 'partner.address'
 
-    city_id = fields.Many2one('city','Ville')
-    partner_id = fields.Many2one('res.partner', 'Partner Name', ondelete='set null')
-    type = fields.Selection([('default', 'Default'), ('invoice', 'Invoice'), (
-        'delivery', 'Delivery'), ('contact', 'Contact'), ('other', 'Other')],
-        string='Address Type',
-        help="Used to select automatically the right address according to the context in sales and purchases documents.")
-    function = fields.Char('Function')
+    name = fields.Char('Nom', select=1, required=True)
+    city_id = fields.Many2one('city', 'Ville')
     title = fields.Many2one('res.partner.title', 'Title')
-    name = fields.Char('Nom', select=1)
     street = fields.Char('Rue')
     street2 = fields.Char('Rue2')
     zip = fields.Char('Code Postal', change_default=True)
@@ -37,12 +31,7 @@ class ResPartnerAddress(models.Model):
     phone = fields.Char('Phone')
     fax = fields.Char('Fax')
     mobile = fields.Char('Mobile')
-    birthdate = fields.Char('Birthdate')
-    is_customer_add = fields.Boolean(related='partner_id.customer', string='Customer')
-    is_supplier_add = fields.Boolean(related='partner_id.supplier', string='Supplier')
     active = fields.Boolean('Active', help="Uncheck the active field to hide the contact.", default=True)
-    company_id = fields.Many2one('res.company', 'Company', select=1)
-    color = fields.Integer('Color Index')
     add_parent_id_owner = fields.Many2one('syndic.owner', 'Proprietaire')
     add_parent_id_supplier = fields.Many2one('syndic.owner', 'Fournisseur')
     supplier_id = fields.Many2one('syndic.supplier', 'Fournisseur')
@@ -74,18 +63,8 @@ class Person(models.Model):
     image_small = fields.Binary('small')
     gsm = fields.Char('GSM')
 
-#TODO: res partner utilisé?
-class ResPartner(models.Model):
-    _inherit = 'res.partner'
 
-    city_id = fields.Many2one('city', 'Ville')
-    prenom = fields.Char('Prenom')
-    image_medium = fields.Binary('medium')
-    image_small = fields.Binary('small')
-    gsm = fields.Char('GSM')
-
-
-#fournisseur
+# fournisseur
 class Supplier(models.Model):
     _inherit = 'syndic.personne'
     _name='syndic.supplier'
