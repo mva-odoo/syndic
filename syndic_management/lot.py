@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
 
-class lot(models.Model):
+
+class Lot(models.Model):
     _name = 'syndic.lot'
+    _order = 'building_id asc,name'
 
     name = fields.Char('Nom du lot')
     building_id = fields.Many2one('syndic.building', 'Immeuble')
@@ -10,12 +12,11 @@ class lot(models.Model):
     locataire_id = fields.Many2many('syndic.loaner', string='Locataire')
     quotities = fields.Float('Quotitées')
     lot_id = fields.Many2one('syndic.lot', string='Lot')
-    lot_ids = fields.One2many('syndic.lot', 'lot_id', string='Lots')#recuresivité
+    lot_ids = fields.One2many('syndic.lot', 'lot_id', string='sous-lots')
     type_id = fields.Many2one('syndic.type_lot', 'Type de lot')
 
-    _order = 'building_id asc,name'
 
-class type_lot(models.Model):
+class TypeLot(models.Model):
     _name = 'syndic.type_lot'
     name = fields.Char('Type de lot')
     _order = 'name'

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
 
-class mutation(models.Model):
+
+class Mutation(models.Model):
     _name = 'syndic.mutation'
     mutation_date = fields.Date('Date de mutation')
     old_owner_id = fields.Many2one('syndic.owner', 'Ancien Propriétaire', required=True)
