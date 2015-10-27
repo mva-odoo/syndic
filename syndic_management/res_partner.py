@@ -3,18 +3,21 @@ from openerp import models, fields, api, exceptions
 from random import randint
 import random
 
-class res_users(models.Model):
+class ResUsers(models.Model):
     _inherit = 'res.users'
     proprio_id = fields.Many2one('syndic.owner', string='ref proprio')
 
 
-class city(models.Model):
+class City(models.Model):
     _name = 'city'
-    name = fields.Char('Ville')
     _order = 'name'
 
-class res_partner_address(models.Model):
+    name = fields.Char('Ville', required=True)
+
+
+class ResPartnerAddress(models.Model):
     _name = 'partner.address'
+
     city_id = fields.Many2one('city','Ville')
     partner_id = fields.Many2one('res.partner', 'Partner Name', ondelete='set null')
     type = fields.Selection([('default', 'Default'), ('invoice', 'Invoice'), (
@@ -47,33 +50,34 @@ class res_partner_address(models.Model):
     is_letter = fields.Boolean('Lettre')
 
 
-class personne(models.Model):
-    _name='syndic.personne'
-    name = fields.Char('Nom', size=128, required=True, select=True)
+class Person(models.Model):
+    _name = 'syndic.personne'
+
+    name = fields.Char('Nom', required=True, select=True)
     date = fields.Date('Date', select=1)
     title = fields.Many2one('res.partner.title', 'Title')
     active = fields.Boolean('Active', default=True)
-    street = fields.Char('Street', size=128)
-    street2 = fields.Char('Street2', size=128)
-    zip = fields.Char('Zip', change_default=True, size=24)
-    city = fields.Char('City', size=128)
+    street = fields.Char('Street')
+    street2 = fields.Char('Street2')
+    zip = fields.Char('Zip', change_default=True)
+    city = fields.Char('City')
     state_id = fields.Many2one("res.country.state", 'State', ondelete='restrict')
     country_id = fields.Many2one('res.country', 'Country', ondelete='restrict')
-    email = fields.Char('Email', size=240)
-    phone = fields.Char('Phone', size=64)
-    fax = fields.Char('Fax', size=64)
-    mobile = fields.Char('Mobile', size=64)
-    birthdate = fields.Char('Birthdate', size=64)
+    email = fields.Char('Email')
+    phone = fields.Char('Phone')
+    fax = fields.Char('Fax')
+    mobile = fields.Char('Mobile')
+    birthdate = fields.Char('Birthdate')
     city_id = fields.Many2one('city', 'Ville')
     prenom = fields.Char('Prenom')
     image_medium = fields.Binary('medium')
     image_small = fields.Binary('small')
     gsm = fields.Char('GSM')
 
-
-class res_partner(models.Model):
+#TODO: res partner utilisé?
+class ResPartner(models.Model):
     _inherit = 'res.partner'
-    _name = 'res.partner'
+
     city_id = fields.Many2one('city', 'Ville')
     prenom = fields.Char('Prenom')
     image_medium = fields.Binary('medium')
@@ -81,22 +85,27 @@ class res_partner(models.Model):
     gsm = fields.Char('GSM')
 
 
-#fournisseur   
+#fournisseur
 class Supplier(models.Model):
     _inherit = 'syndic.personne'
     _name='syndic.supplier'
+
     job_ids = fields.Many2many('res.partner.job', string='Métier')
     address_ids = fields.One2many('partner.address', 'supplier_id', string='Address')
 
+
 #divers
+#TODO aucune utilité ???
 class Other(models.Model):
     _inherit ='syndic.personne'
     _name = 'syndic.other'
 
+
 #locataire
 class Loaner(models.Model):
     _inherit = 'syndic.personne'
-    _name='syndic.loaner'
+    _name = 'syndic.loaner'
+
     address_ids = fields.One2many('partner.address','add_parent_id_loaner',string='Address')
     loaner_lot_ids = fields.Many2many('syndic.lot',string='Lot')
     login = fields.Char('login')
@@ -105,11 +114,13 @@ class Loaner(models.Model):
     building_store_ids = fields.Many2one('syndic.building', related='loaner_lot_ids.building_id',
                                          string='Immeuble', store=True)
 
+
 #propriétaire
 class Owner(models.Model):
     _inherit = 'syndic.personne'
     _name = 'syndic.owner'
 
+    #TODO enlever ???
     # @api.model
     # def _get_name_building(self):
     #     result = set()
@@ -133,6 +144,7 @@ class Owner(models.Model):
     building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble', store=True)
     user_id = fields.Many2one('res.users', string="User")
 
+    #TODO: deplacer dans un module à part comme utils
     def pass_generator(self):
         alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         pw_length = 8
@@ -156,7 +168,11 @@ class Owner(models.Model):
         dict_users['name'] = vals['name']
         dict_users['proprio_id'] = res_id.id
 
-        group_ids = self.env['res.groups'].search(['|', ('name', 'ilike', 'Syndic/Client'), ('name', 'ilike', 'Portal')])
+        group_ids = self.env['res.groups'].search(['|',
+                                                   ('name', 'ilike', 'Syndic/Client'),
+                                                   ('name', 'ilike', 'Portal')
+                                                   ])
+
         dict_users['groups_id'] = [(4, group_id.id) for group_id in group_ids]
         self.env.uid = 1
         res_id.user_id = self.env['res.users'].create(dict_users)
@@ -164,29 +180,34 @@ class Owner(models.Model):
 
     @api.one
     def unlink(self):
+        #TODO louche de boucler sur self avec api.one
         for prop in self:
             prop.user_id.unlink()
         return super(Owner, self).unlink()
 
+
 #metier  
-class res_partner_job(models.Model):
+class ResPartnerJob(models.Model):
     _name = 'res.partner.job'
-    name = fields.Char('Métier')
     _order = 'name'
 
-class res_old_owner(models.Model):
+    name = fields.Char('Métier', requiered=True)
+
+
+class ResOldOwner(models.Model):
     _name = 'syndic.old.owner'
     _rec_name = 'proprio_id'
-    proprio_id = fields.Many2one('syndic.owner', 'Ancien propriétaire')
+
+    proprio_id = fields.Many2one('syndic.owner', 'Ancien propriétaire', required=True)
     lot_ids = fields.Many2many('syndic.lot', string='Lot modifié')
     date_close = fields.Date('Date de fin')
 
 
-class country(models.Model):
+class Country(models.Model):
     _inherit = 'res.country'
     _order = 'name asc'
 
 
-class title(models.Model):
+class Title(models.Model):
     _inherit = 'res.partner.title'
     _order = 'name'
