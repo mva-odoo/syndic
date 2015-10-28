@@ -5,6 +5,7 @@ from openerp.addons.syndic_tools.syndic_tools import UCLTools
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
+
     proprio_id = fields.Many2one('syndic.owner', string='ref proprio')
 
 
