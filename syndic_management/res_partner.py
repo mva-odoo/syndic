@@ -70,14 +70,14 @@ class Supplier(models.Model):
     address_ids = fields.One2many('partner.address', 'supplier_id', string='Address')
 
 
-#divers
-#TODO aucune utilité ??? à retiré besoin d un script
+# divers
+# TODO aucune utilité ??? à retiré besoin d un script
 class Other(models.Model):
     _inherit ='syndic.personne'
     _name = 'syndic.other'
 
 
-#locataire
+# locataire
 class Loaner(models.Model):
     _inherit = 'syndic.personne'
     _name = 'syndic.loaner'
@@ -95,29 +95,16 @@ class Owner(models.Model):
     _inherit = 'syndic.personne'
     _name = 'syndic.owner'
 
-    @api.model
-    def _get_name_building(self):
-        result = set()
-        building_ids = self.env['syndic.owner'].search([])
-        for el in building_ids:
-            result.add(el.id)
-        return list(result)
-
     address_ids = fields.One2many('partner.address', 'add_parent_id_owner', string='Address')
     lot_ids = fields.Many2many('syndic.lot', string='Lot')
     login = fields.Char('login', related='user_id.login', required=False)
     password = fields.Char('Mot de passe', related='user_id.password')
     building_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble')
-    building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble', store={
-        'syndic.lot': (_get_name_building, ['name'], 10),
-        'syndic.owner': (lambda self, cr, uid, ids, c=None: ids, [], 10),
-    }, select=True)
+    building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id',
+                                         string='Immeuble', store=True)
     convocation = fields.Selection([('recommende', 'Par recommandé'),
                                     ('courrier_simple', 'Par courrier simple'),
                                     ('email', 'Par Email')], string='Convocation')
-    building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id',
-                                         string='Immeuble', store=True)
-
 
     @api.model
     def create(self, vals):
@@ -144,7 +131,7 @@ class Owner(models.Model):
         return super(Owner, self).unlink()
 
 
-#metier  
+# metier
 class ResPartnerJob(models.Model):
     _name = 'res.partner.job'
     _order = 'name'

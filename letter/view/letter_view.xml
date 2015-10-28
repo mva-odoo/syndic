@@ -24,21 +24,6 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="attachement_form">
-            <field name="name">ir.attachment</field>
-            <field name="model">ir.attachment</field>
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <form>
-                    <group>
-                        <field name="name"/>
-                        <field name="datas" filename="datas_fname" />
-                        <field name="datas_fname" invisible="1"/>
-                    </group>
-                </form>
-            </field>
-        </record>
-
         <record model="ir.ui.view" id="search_model">
             <field name="name">Model search</field>
             <field name="model">letter.model</field>
@@ -82,9 +67,16 @@
                             <field name="is_fax"/>
                             <field name="date_fr"/>
                             <field name="piece_jointe_ids" attrs="{'invisible':[('is_mail','=',False)]}">
-                                <tree editable="top">
-                                    <field name="attachement_id"/>
+                                <tree>
+                                    <field name="datas_fname"/>
                                 </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="datas" filename="datas_fname"/>
+                                        <field name="datas_fname" invisible="1"/>
+                                    </group>
+                                </form>
                             </field>
                             <notebook colspan="4">
                                 <page string="propriétaires">

@@ -29,7 +29,5 @@
 "syndic_mail_serveur_manager","syndic type reunion","base.model_ir_mail_server","syndic_management.syndic_manager",1,1,1,1
 "syndic_mail_alias","mail_alias","mail.model_mail_alias","syndic_management.syndic_employe",1,1,1,1
 "syndic_mail_alias_manager","mail_alias_manager","mail.model_mail_alias","syndic_management.syndic_manager",1,1,1,1
-"syndic_piece_jointe_employe","syndic piece jointe employe","model_piece_jointe","syndic_management.syndic_employe",1,1,1,0
 "syndic_rapport_ag_employe","syndic rapport_ag employe","model_rapport_ag","syndic_management.syndic_employe",1,1,1,0
 "syndic_rapport_point_employe","syndic rapport_point employe","model_rapport_point","syndic_management.syndic_employe",1,1,1,0
-"syndic_piece_jointe_manager","syndic piece jointe manager","model_piece_jointe","syndic_management.syndic_manager",1,1,1,1

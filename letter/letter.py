@@ -3,15 +3,13 @@ from openerp import models, fields, api, exceptions
 from openerp.addons.syndic_tools.syndic_tools import UCLTools
 
 
-class piece_jointe(models.Model):
-    _name = 'piece.jointe'
-    _rec_name = 'attachement_id'
+class PieceJointe(models.Model):
+    _inherit = 'ir.attachment'
 
-    attachement_id = fields.Many2one('ir.attachment', string='attachement', required=True)
     letter_id = fields.Many2one('letter.create', string='Lettre')
 
 
-class create_letter(models.Model):
+class CreateLetter(models.Model):
     _name = 'letter.create'
     _rec_name = 'sujet'
     _inherit = 'mail.thread'
@@ -36,11 +34,12 @@ class create_letter(models.Model):
     name_template = fields.Char('Nom du modèle de lettre')
     is_mail = fields.Boolean('Envoi par email')
     is_fax = fields.Boolean('Envoi par fax')
-    piece_jointe_ids = fields.One2many('piece.jointe', 'letter_id', string='Piece Jointe')
+    piece_jointe_ids = fields.One2many('ir.attachment', 'letter_id', string='Piece Jointe')
     create_date = fields.Datetime('Date de création')
     date = fields.Date('Date de création', default=lambda *a: fields.date.today())
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
-    partner_address_ids = fields.Many2many('partner.address', String="Personne Jointe")
+    partner_address_ids = fields.Many2many('partner.address', String="Personne Jointe",
+                                           compute='_compute_join_address')
     state = fields.Selection([('not_send', 'Pas envoyé'), ('send', 'Envoyé')], string='State', default='not_send')
     mail_server = fields.Many2one('ir.mail_server', 'Serveur email')
 
@@ -58,22 +57,27 @@ class create_letter(models.Model):
     @api.one
     def copy(self, default=None):
         default['date'] = fields.date.today()
-        return super(create_letter, self).copy(default)
+        return super(CreateLetter, self).copy(default)
 
     @api.model
     def create(self, vals):
-        values = {}
-        res = super(create_letter, self).create(vals)
+        res = super(CreateLetter, self).create(vals)
 
+        # create letter template
         if res.save_letter:
                 res.env['letter.model'].create({'name': res.name_template, 'text': res.contenu})
 
+        # check if building is set
+        if not res.immeuble_id.id:
+            raise Exception("Il faut un immeuble pour créer un bon de commande ou une offre")
+
         for supplier_id in res.fourn_ids:
-            values['name'] = res.sujet
-            values['fournisseur_id'] = supplier_id.id
-            if not res.immeuble_id.id:
-                raise Exception("Il faut un immeuble pour créer un bon de commande ou une offre")
-            values['immeuble_id'] = res.immeuble_id.id
+            values = {
+                'name': res.sujet,
+                'fournisseur_id': supplier_id.id,
+                'immeuble_id': res.immeuble_id.id,
+            }
+
             if res.letter_type_id.name in ['Demande de devis', 'Demande d\'offre', 'Demande de contrat']:
                 values['date_envoi'] = res.date
                 self.env['offre.contrat'].create(values)
@@ -92,12 +96,10 @@ class create_letter(models.Model):
                 for prop in lot.proprio_id:
                     if prop.id not in prop_list:
                         prop_list.append(prop.id)
-            self.propr_ids = prop_list
-        else:
-            self.propr_ids = prop_list
+        self.propr_ids = prop_list
 
-    @api.onchange('propr_ids', 'fourn_ids', 'loc_ids')
-    def onchange_partner(self):
+    @api.depends('propr_ids', 'fourn_ids', 'loc_ids')
+    def _compute_join_address(self):
         partner_address_ids = []
         partner_address_env = self.env['partner.address']
 
@@ -120,16 +122,22 @@ class create_letter(models.Model):
 
     @api.one
     def send_email_lettre(self):
-        mail = {}
         header = ''
-        mail['mail_server_id'] = self.mail_server.id
-        mail['email_from'] = self.env.user.email
-        mail['reply_to'] = self.env.user.email
+
+        mail = {
+            'mail_server_id': self.mail_server.id,
+            'email_from': self.env.user.email,
+            'reply_to': self.env.user.email,
+            'attachment_ids': [(6, 0, self.piece_jointe_ids.ids)],
+        }
 
         if self.immeuble_id:
-            header = header + 'Concerne ' + self.immeuble_id.name + '<br/>'
-            header = header + self.immeuble_id.address_building + '<br/>'
-            header = header + str(self.immeuble_id.zip_building) + ' ' + str(self.immeuble_id.city_building.name)
+            header = "Concerne %s<br/>%s<br/>%s %s<br/><br/>" % (self.immeuble_id.name,
+                                                                 self.immeuble_id.address_building,
+                                                                 str(self.immeuble_id.zip_building),
+                                                                 str(self.immeuble_id.city_building.name))
+
+        body = "%s<br/>%s<br/>Cordialement.<br/><br/>" % (self.begin_letter_id.name, self.contenu)
 
         footer = """<br/>L'&eacute;quipe SG IMMO<br/>
 Rue Fran&ccedil;ois Vander Elst, 38/1<br/>
@@ -137,20 +145,14 @@ Rue Fran&ccedil;ois Vander Elst, 38/1<br/>
 '<img src="https://lh6.googleusercontent.com/-7QA8bP7oscU/UUrXkQ1-rHI/AAAAAAAAAAk/WhbiGpLAUCQ/s270/Logo_SG%2520immo.JPG" width="96" height="61"/>'"""
 
         if self.ps:
-            mail['body_html'] = header + '<br/><br/>' + self.begin_letter_id.name + '<br/>' + self.contenu + '<br/>Cordialement.<br/><br/>' + self.ps + '<br/>'+footer
+            mail['body_html'] = header + body + self.ps + '<br/>'+footer
         else:
-            mail['body_html'] = header + '<br/><br/>' + self.begin_letter_id.name + '<br/>' + self.contenu + '<br/>Cordialement.<br/><br/>'+footer
+            mail['body_html'] = header + body + footer
 
         if self.immeuble_id:
             mail['subject'] = self.immeuble_id.name + '-' + self.sujet
         else:
             mail['subject'] = self.sujet
-
-        attachment_ids = []
-        for piece_jointe_id in self.piece_jointe_ids:
-            attachment_ids.append((4, piece_jointe_id.attachement_id.id))
-
-        mail['attachment_ids'] = attachment_ids
 
         for prop in self.propr_ids:
             if prop.email:
