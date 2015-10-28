@@ -4,7 +4,7 @@
     	<!--form -->
 		<record model="ir.ui.view" id="tree_other">
 			<field name="name">divers form view</field>
-			<field name="model">syndic.other</field>
+			<field name="model">syndic.personne</field>
 			<field name="arch" type="xml">
 				<tree string="Divers"> 
 					<field name="name" string="Nom"/>
@@ -21,7 +21,7 @@
 		<!--form -->
 		<record model="ir.ui.view" id="form_other">
 			<field name="name">divers form view</field>
-			<field name="model">syndic.other</field>
+			<field name="model">syndic.personne</field>
 			<field name="arch" type="xml">
 				<form string="Divers" layout="manual" version="7.0"> 
 				<sheet string="Partner" layout="auto"  >
@@ -54,7 +54,7 @@
 		<record model="ir.actions.act_window" id="action_other_syndic">
 			<field name="name">Divers</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">syndic.other</field>
+			<field name="res_model">syndic.personne</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>

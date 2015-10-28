@@ -71,13 +71,6 @@ class Supplier(models.Model):
     address_ids = fields.One2many('partner.address', 'supplier_id', string='Address')
 
 
-# divers
-# TODO aucune utilité ??? à retiré besoin d un script
-class Other(models.Model):
-    _inherit ='syndic.personne'
-    _name = 'syndic.other'
-
-
 # locataire
 class Loaner(models.Model):
     _inherit = 'syndic.personne'
@@ -110,20 +103,21 @@ class Owner(models.Model):
     @api.model
     def create(self, vals):
         res_id = super(Owner, self).create(vals)
-        group_ids = self.env['res.groups'].search(['|',
-                                                   ('name', 'ilike', 'Syndic/Client'),
-                                                   ('name', 'ilike', 'Portal')
-                                                   ])
+        if res_id.user_id:
+            group_ids = self.env['res.groups'].search(['|',
+                                                       ('name', 'ilike', 'Syndic/Client'),
+                                                       ('name', 'ilike', 'Portal')
+                                                       ])
 
-        dict_users = {
-            'name': vals['name'],
-            'login': UCLTools().login_generator(vals['name']),
-            'password': UCLTools().pass_generator(),
-            'proprio_id': res_id.id,
-            'groups_id': [(4, group_id.id) for group_id in group_ids],
-        }
+            dict_users = {
+                'name': vals['name'],
+                'login': UCLTools().login_generator(vals['name']),
+                'password': UCLTools().pass_generator(),
+                'proprio_id': res_id.id,
+                'groups_id': [(4, group_id.id) for group_id in group_ids],
+            }
 
-        res_id.user_id = self.env['res.users'].sudo().create(dict_users)
+            res_id.user_id = self.env['res.users'].sudo().create(dict_users)
         return res_id
 
     @api.one

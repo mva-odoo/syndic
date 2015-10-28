@@ -33,7 +33,7 @@
 "syndic_res_user","syndic res_user","base.model_res_users","syndic_manager",1,1,1,1
 "syndic_partner_address","syndic partner address","model_partner_address","syndic_manager",1,1,1,1
 "syndic_city","syndic city","model_city","syndic_manager",1,1,1,1
-"syndic_other","syndic other","model_syndic_other","syndic_manager",1,1,1,1
+"syndic_personne","syndic personne","model_syndic_personne","syndic_manager",1,1,1,1
 "syndic_building_employe","syndic immeuble","model_syndic_building","syndic_employe",1,1,1,0
 "syndic_signalitic_employe","syndic signalitic","model_building_signalitic","syndic_employe",1,1,1,0
 "syndic_lot_employe","syndic lot","model_syndic_lot","syndic_employe",1,1,1,0
@@ -68,7 +68,7 @@
 "syndic_res_user_employe","syndic res_user","base.model_res_users","syndic_employe",1,1,1,1
 "syndic_partner_address_employe","syndic partner address","model_partner_address","syndic_employe",1,1,1,1
 "syndic_city_employe","syndic city","model_city","syndic_employe",1,0,1,0
-"syndic_other_employe","syndic other","model_syndic_other","syndic_employe",1,1,1,1
+"syndic_personne_employe","syndic personne","model_syndic_personne","syndic_employe",1,1,1,1
 "syndic_country_employe","syndic country","base.model_res_country","syndic_employe",1,0,0,0
 "syndic_group_employe","syndic res group","base.model_res_groups","syndic_employe",1,1,1,0
 "syndic_mail_group_employe","syndic mail group","mail.model_mail_group","syndic_employe",1,1,1,0
