@@ -24,7 +24,7 @@ class Document(models.Model):
             if proprio_id.user_id:
                 user_ids.append(proprio_id.user_id.id)
             else:
-                #TODO: remove and replace with a script
+                # TODO: remove and replace with a script
                 search_user = self.env['res.users'].search([('login', '=', proprio_id.login)])
                 if search_user:
                     user_ids.append(search_user[0])

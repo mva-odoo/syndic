@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
-import datetime
-import locale
+from openerp.addons.syndic_tools.syndic_tools import UCLTools
 
 
 class SyndicFacturation(models.Model):
@@ -19,13 +18,7 @@ class SyndicFacturation(models.Model):
     @api.depends('date')
     def _compute_date(self):
         if self.date:
-            now = datetime.datetime.strptime(self.date, '%Y-%m-%d')
-            try:
-                locale.setlocale(locale.LC_ALL, 'fr_FR.utf8')
-            except Exception:
-                locale.setlocale(locale.LC_ALL, 'fr_BE.UTF-8')
-            date_fr = now.strftime("%A %d %B %Y")
-            self.date_fr = date_fr
+            self.date_fr = UCLTools().french_date(self.date)
 
     @api.model
     def create(self, vals):

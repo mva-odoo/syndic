@@ -4,7 +4,7 @@ from xlwt import Workbook
 import StringIO
 import base64
 
-#TODO: mettre dans utils
+
 class ExportFicheTech(models.TransientModel):
     _name ='export.fiche.tech'
 
@@ -13,46 +13,43 @@ class ExportFicheTech(models.TransientModel):
 
     @api.model
     def _get_export_fiche_technique(self):
-        id = False
-        xls = Workbook()
-        # sheet 1 creation
-        feuil1 = xls.add_sheet('sheet 1')
-
-        # add header
-        row = 0
-        feuil1.write(row, 0, 'Nom du fournisseur')
-        feuil1.write(row, 1, 'Metier')
-        feuil1.write(row, 2, 'Adresse')
-        feuil1.write(row, 3, 'Ville')
-        feuil1.write(row, 4, 'Code Postal')
-        feuil1.write(row, 5, 'Pays')
-        feuil1.write(row, 6, 'Telephone')
-        feuil1.write(row, 7, 'Email')
-
         if self._context:
-            id = self._context.get('active_id')
+            active_id = self._context.get('active_id')
+            xls = Workbook()
+            # sheet 1 creation
+            feuil1 = xls.add_sheet('sheet 1')
 
-        for fournisseur_id in self.env['syndic.building'].search([('id', '=', id)]).supplier_ids:
-            row += 1
-            metier_ids = ','.join([job_id.name for job_id in fournisseur_id.job_ids])
+            # add header
+            row = 0
+            feuil1.write(row, 0, 'Nom du fournisseur')
+            feuil1.write(row, 1, 'Metier')
+            feuil1.write(row, 2, 'Adresse')
+            feuil1.write(row, 3, 'Ville')
+            feuil1.write(row, 4, 'Code Postal')
+            feuil1.write(row, 5, 'Pays')
+            feuil1.write(row, 6, 'Telephone')
+            feuil1.write(row, 7, 'Email')
 
-            feuil1.write(row, 0, fournisseur_id.name)
-            feuil1.write(row, 1, metier_ids)
-            feuil1.write(row, 2, fournisseur_id.street)
-            feuil1.write(row, 3, fournisseur_id.city_id.name)
-            feuil1.write(row, 4, fournisseur_id.zip)
-            feuil1.write(row, 5, fournisseur_id.country_id.name)
-            feuil1.write(row, 6, fournisseur_id.phone)
-            feuil1.write(row, 7, fournisseur_id.email)
+            for fournisseur_id in self.env['syndic.building'].search([('id', '=', active_id)]).supplier_ids:
+                row += 1
+                metier_ids = ','.join([job_id.name for job_id in fournisseur_id.job_ids])
 
-        output = StringIO.StringIO()
-        xls.save(output)
-        encode_text = base64.encodestring(output.getvalue())
+                feuil1.write(row, 0, fournisseur_id.name)
+                feuil1.write(row, 1, metier_ids)
+                feuil1.write(row, 2, fournisseur_id.street)
+                feuil1.write(row, 3, fournisseur_id.city_id.name)
+                feuil1.write(row, 4, fournisseur_id.zip)
+                feuil1.write(row, 5, fournisseur_id.country_id.name)
+                feuil1.write(row, 6, fournisseur_id.phone)
+                feuil1.write(row, 7, fournisseur_id.email)
 
-        return encode_text
+            output = StringIO.StringIO()
+            xls.save(output)
+            encode_text = base64.encodestring(output.getvalue())
+
+            return encode_text
 
 
-#immeuble
 class Building(models.Model):
     _name = 'syndic.building'
     _order = 'name asc'
@@ -79,11 +76,12 @@ class Building(models.Model):
     @api.multi
     def go_export_model(self):
         return {
-                'name': 'Export ficher technique',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'export.fiche.tech',
-                'type': 'ir.actions.act_window',
-                'target': 'new',
-                'context': self._context,
-                }
+            'name': 'Export ficher technique',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'export.fiche.tech',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': self._context,
+        }
+

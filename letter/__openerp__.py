@@ -6,10 +6,10 @@
     "category": 'Event',
     'complexity': "easy",
     'description': """
-    creating event
+    Syndic Lettre
     """,
     'author': 'OpenERP SA',
-    'depends': ['syndic_management', 'mail', 'report_webkit', 'syndic_claim'],
+    'depends': ['syndic_management', 'mail', 'syndic_claim', 'syndic_tools'],
     'website': 'http://www.openerp.com',
     'data': [
         'view/letter_view.xml',
@@ -21,8 +21,5 @@
         'security/ir.model.access.csv',
     ],
     'installable': True,
-    'active': False,
-    'application' : False,
-    'certificate': '',
-    'images': [],
+    'application': False,
 }

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
-import datetime
-import locale
+from openerp.addons.syndic_tools.syndic_tools import UCLTools
+
 
 class piece_jointe(models.Model):
     _name = 'piece.jointe'
     _rec_name = 'attachement_id'
+
     attachement_id = fields.Many2one('ir.attachment', string='attachement', required=True)
     letter_id = fields.Many2one('letter.create', string='Lettre')
 
@@ -14,18 +15,7 @@ class create_letter(models.Model):
     _name = 'letter.create'
     _rec_name = 'sujet'
     _inherit = 'mail.thread'
-
-    @api.one
-    @api.depends('date')
-    def _compute_date(self):
-        if self.date:
-            now = datetime.datetime.strptime(self.date, '%Y-%m-%d')
-            try:
-                locale.setlocale(locale.LC_ALL, 'fr_FR.utf8')
-            except Exception:
-                locale.setlocale(locale.LC_ALL, 'fr_BE.UTF-8')
-            date_fr = now.strftime("%A %d %B %Y")
-            self.date_fr = date_fr
+    _order = 'create_date desc'
 
     name = fields.Char('ID de la lettre', readonly=True)
     sujet = fields.Char('Sujet', required=True)
@@ -54,18 +44,16 @@ class create_letter(models.Model):
     state = fields.Selection([('not_send', 'Pas envoyé'), ('send', 'Envoyé')], string='State', default='not_send')
     mail_server = fields.Many2one('ir.mail_server', 'Serveur email')
 
-    _order = 'create_date desc'
+    @api.one
+    @api.depends('date')
+    def _compute_date(self):
+        if self.date:
+            self.date_fr = UCLTools().french_date(self.date)
 
     @api.onchange('date')
     def onchange_date(self):
         if self.date:
-            now = datetime.datetime.strptime(self.date, '%Y-%m-%d')
-            try:
-                locale.setlocale(locale.LC_ALL, 'fr_FR.utf8')
-            except Exception:
-                locale.setlocale(locale.LC_ALL, 'fr_BE.UTF-8')
-            date_fr = now.strftime("%A %d %B %Y")
-            self.date_fr = date_fr
+            self.date_fr = UCLTools().french_date(self.date)
 
     @api.one
     def copy(self, default=None):
@@ -106,10 +94,10 @@ class create_letter(models.Model):
                         prop_list.append(prop.id)
             self.propr_ids = prop_list
         else:
-            self.propr_ids = []
+            self.propr_ids = prop_list
 
     @api.onchange('propr_ids', 'fourn_ids', 'loc_ids')
-    def onchange_partner(self, context=None):
+    def onchange_partner(self):
         partner_address_ids = []
         partner_address_env = self.env['partner.address']
 
@@ -118,7 +106,7 @@ class create_letter(models.Model):
                                                                ('is_letter', '=', True)])
         for supplier_id in self.fourn_ids:
             partner_address_ids += partner_address_env.search([('add_parent_id_supplier', '=', supplier_id['id']),
-                                                               ('is_letter', '=', True)], context=context)
+                                                               ('is_letter', '=', True)])
         for loaner_id in self.loc_ids:
             partner_address_ids += partner_address_env.search([('add_parent_id_loaner', '=', loaner_id['id']),
                                                                ('is_letter', '=', True)])
@@ -143,10 +131,10 @@ class create_letter(models.Model):
             header = header + self.immeuble_id.address_building + '<br/>'
             header = header + str(self.immeuble_id.zip_building) + ' ' + str(self.immeuble_id.city_building.name)
 
-        footer = "<br/>L'&eacute;quipe SG IMMO<br/>"
-        footer += "Rue Fran&ccedil;ois Vander Elst, 38/1<br/>"
-        footer += "1950 Kraainem<br/>"
-        footer +='<img src="https://lh6.googleusercontent.com/-7QA8bP7oscU/UUrXkQ1-rHI/AAAAAAAAAAk/WhbiGpLAUCQ/s270/Logo_SG%2520immo.JPG" width="96" height="61"/>'
+        footer = """<br/>L'&eacute;quipe SG IMMO<br/>
+Rue Fran&ccedil;ois Vander Elst, 38/1<br/>
+1950 Kraainem<br/>
+'<img src="https://lh6.googleusercontent.com/-7QA8bP7oscU/UUrXkQ1-rHI/AAAAAAAAAAk/WhbiGpLAUCQ/s270/Logo_SG%2520immo.JPG" width="96" height="61"/>'"""
 
         if self.ps:
             mail['body_html'] = header + '<br/><br/>' + self.begin_letter_id.name + '<br/>' + self.contenu + '<br/>Cordialement.<br/><br/>' + self.ps + '<br/>'+footer
@@ -192,28 +180,33 @@ class create_letter(models.Model):
         self.contenu = self.letter_model_id.text
 
 
-class end_letter(models.Model):
+class EndLetter(models.Model):
     _name = 'letter.end'
+
     name = fields.Char('Fin de lettre', required=True)
 
 
-class begin_letter(models.Model):
+class BeginLetter(models.Model):
     _name = 'letter.begin'
+
     name = fields.Char('Debut de lettre', required=True)
 
 
-class letter_type(models.Model):
+class LetterType(models.Model):
     _name = 'letter.type'
+
     name = fields.Char('Type Letter', required=True)
 
 
-class letter_model(models.Model):
+class LetterModel(models.Model):
     _name = 'letter.model'
+
     name = fields.Char('Model Letter', required=True)
     text = fields.Html('Text', required=True)
 
 
-class letter_model_avis(models.Model):
+class LetterModelAvis(models.Model):
     _name = 'letter.avis.model'
-    name = fields.Char('Nom du modèle')
+
+    name = fields.Char('Nom du modèle', required=True)
     text = fields.Html('Avis')

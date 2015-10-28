@@ -1,6 +1,7 @@
 from random import randint
 import random
-
+import datetime
+import locale
 
 class UCLTools:
     def pass_generator(self):
@@ -19,3 +20,12 @@ class UCLTools:
         login = login.replace('-', '')
         rand = str(randint(0, 99))
         return login[:8]+rand
+
+    def french_date(self, tr_date):
+        date = datetime.datetime.strptime(tr_date, '%Y-%m-%d')
+        try:
+            locale.setlocale(locale.LC_ALL, 'fr_FR.utf8')
+        except ValueError:
+            'print Local not settable'
+
+        return date.strftime("%A %d %B %Y")
