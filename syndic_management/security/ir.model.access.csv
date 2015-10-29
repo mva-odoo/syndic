@@ -28,7 +28,6 @@
 "syndic_res_partner_job","syndic res_partner_job","model_res_partner_job","syndic_manager",1,1,1,1
 "syndic_res_old_owner","syndic res_old_owner","model_syndic_old_owner","syndic_manager",1,1,1,1
 "syndic_export","syndic export","base.model_ir_exports","syndic_manager",1,1,1,1
-"syndic_import","syndic import","base_import.model_base_import_import","syndic_manager",1,1,1,1
 "syndic_ir_model_data","syndic ir.model.data","base.model_ir_model_data","syndic_manager",1,1,1,1
 "syndic_res_user","syndic res_user","base.model_res_users","syndic_manager",1,1,1,1
 "syndic_partner_address","syndic partner address","model_partner_address","syndic_manager",1,1,1,1
@@ -63,7 +62,6 @@
 "syndic_res_old_owner_employe","syndic res_old_owner","model_syndic_old_owner","syndic_employe",1,1,1,1
 "syndic_export_employe","syndic export","base.model_ir_exports","syndic_employe",1,1,1,1
 "syndic_export_line_employe","syndic export line","base.model_ir_exports_line","syndic_employe",1,1,1,1
-"syndic_import_employe","syndic import","base_import.model_base_import_import","syndic_employe",1,1,1,1
 "syndic_ir_model_data_employe","syndic ir.model.data","base.model_ir_model_data","syndic_employe",1,1,1,1
 "syndic_res_user_employe","syndic res_user","base.model_res_users","syndic_employe",1,1,1,1
 "syndic_partner_address_employe","syndic partner address","model_partner_address","syndic_employe",1,1,1,1
@@ -71,6 +69,5 @@
 "syndic_personne_employe","syndic personne","model_syndic_personne","syndic_employe",1,1,1,1
 "syndic_country_employe","syndic country","base.model_res_country","syndic_employe",1,0,0,0
 "syndic_group_employe","syndic res group","base.model_res_groups","syndic_employe",1,1,1,0
-"syndic_mail_group_employe","syndic mail group","mail.model_mail_group","syndic_employe",1,1,1,0
 "syndic_building_client","syndic client immeuble","model_syndic_building","syndic_client",1,0,0,0
 "syndic_lot_client","syndic lot client","model_syndic_lot","syndic_client",1,1,1,0
