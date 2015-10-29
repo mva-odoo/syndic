@@ -21,7 +21,7 @@ class Claim(models.Model):
     owner_ids = fields.Many2many('syndic.owner', string='Autres propriétaires')
     supplier_ids = fields.Many2many('syndic.supplier', string='Fournisseurs')
     loaner_ids = fields.Many2many('syndic.loaner', string='Locataires')
-    other_ids = fields.Many2many('syndic.other', string='Divers')
+    other_ids = fields.Many2many('syndic.personne', string='Divers')
     lot_ids = fields.Many2many('syndic.lot', string='Lot')
     claim_status_id = fields.Many2one('claim.status', string='Status')
     description_ids = fields.One2many('comment.history', 'claim_ids', string='historique')

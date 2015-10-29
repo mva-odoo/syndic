@@ -2,28 +2,28 @@
 <openerp>
 	<data>
         <!--fix for v7 and v8 migration-->
-		<record id="user_syndic" model="ir.ui.view">
-	        <field name="name">Remove user form part</field>
-	        <field name="model">res.users</field>
-	        <field name="inherit_id" ref="mail.view_users_form_simple_modif_mail"/>
-	        <field name="arch" type="xml">
-               <xpath expr="//field[@name='notify_email']" position="replace">
+		<!--<record id="user_syndic" model="ir.ui.view">-->
+	        <!--<field name="name">Remove user form part</field>-->
+	        <!--<field name="model">res.users</field>-->
+	        <!--<field name="inherit_id" ref="mail.view_users_form_simple_modif_mail"/>-->
+	        <!--<field name="arch" type="xml">-->
+               <!--<xpath expr="//field[@name='notify_email']" position="replace">-->
 
-               </xpath>
-	        </field>
-    	</record>
+               <!--</xpath>-->
+	        <!--</field>-->
+    	<!--</record>-->
 
 
-        <record id="user_syndic1" model="ir.ui.view">
-	        <field name="name">Remove user form</field>
-	        <field name="model">res.users</field>
-	        <field name="inherit_id" ref="mail.view_users_form_mail"/>
-	        <field name="arch" type="xml">
-               <xpath expr="//field[@name='notify_email']" position="replace">
+        <!--<record id="user_syndic1" model="ir.ui.view">-->
+	        <!--<field name="name">Remove user form</field>-->
+	        <!--<field name="model">res.users</field>-->
+	        <!--<field name="inherit_id" ref="mail.view_users_form_mail"/>-->
+	        <!--<field name="arch" type="xml">-->
+               <!--<xpath expr="//field[@name='notify_email']" position="replace">-->
 
-               </xpath>
-	        </field>
-    	</record>
+               <!--</xpath>-->
+	        <!--</field>-->
+    	<!--</record>-->
 
 	</data>
 </openerp>

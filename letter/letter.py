@@ -21,7 +21,7 @@ class CreateLetter(models.Model):
     all_immeuble = fields.Boolean('Immeuble entier')
     propr_ids = fields.Many2many('syndic.owner', string='Propriétaire')
     fourn_ids = fields.Many2many('syndic.supplier', string='Fournisseurs')
-    divers_ids = fields.Many2many('syndic.other', string='Divers')
+    divers_ids = fields.Many2many('syndic.personne', string='Divers')
     old_ids = fields.Many2many('syndic.old.owner', string='Fournisseurs')
     loc_ids = fields.Many2many('syndic.loaner', string='Locataires')
     end_letter_id = fields.Many2one('letter.end', 'Fin de lettre', required=True)
