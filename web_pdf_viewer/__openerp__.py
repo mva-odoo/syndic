@@ -22,5 +22,5 @@ https://chrome.google.com/webstore/detail/chrome-office-viewer/gbkeegbaiigmenfmj
     "depends": ["web","report"],
     "data":["views/pdf_viewer_assets.xml", "views/res_config.xml"],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
 }
