@@ -68,8 +68,8 @@ class CreateLetter(models.Model):
                 res.env['letter.model'].create({'name': res.name_template, 'text': res.contenu})
 
         # check if building is set
-        if not res.immeuble_id.id:
-            raise Exception("Il faut un immeuble pour créer un bon de commande ou une offre")
+        #if not res.immeuble_id.id:
+        #    raise Exception("Il faut un immeuble pour créer un bon de commande ou une offre")
 
         for supplier_id in res.fourn_ids:
             values = {
