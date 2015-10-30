@@ -3,9 +3,8 @@
     'name': 'Syndic Management',
     'version': '0.1',
     "category": 'Syndic',
-    'complexity': "easy",
     'description': """
-    Syndic management
+    Syndic management:
     """,
     'author': 'SGIMMO',
     'depends': ['base', 'mail', 'syndic_tools'],
@@ -28,9 +27,5 @@
             # 'view/remove_menu.xml',
             'security/ir.model.access.csv',
         ],
-    'installable': True,
-    'active': False,
-    'application': False,
-    'certificate': '',
-    'images': [],
+    'application': True,
 }

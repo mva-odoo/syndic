@@ -13,7 +13,6 @@
     'website': 'http://www.openerp.com',
     'data': [
         'view/letter_view.xml',
-        'view/rapport_view.xml',
         'view/reunion.xml',
         'report/letter.xml',
         'report/avis.xml',

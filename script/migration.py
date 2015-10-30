@@ -243,8 +243,3 @@ export_import('syndic.facturation.line', ['prix_tot',
 # --------------------------------
 # letter
 # --------------------------------
-export_import('letter.avis.model')
-export_import('letter.model')
-export_import('letter.type')
-export_import('letter.begin')
-export_import('letter.end')

@@ -29,8 +29,6 @@
             <!--<field name="groups" eval="[(4, ref('syndic_employe'))]"/>-->
         <!--</record>-->
 
-        <!--"syndic_mail_group_employe","syndic mail group","mail.model_mail_group","syndic_employe",1,1,1,0-->
-        <!--"syndic_import_employe","syndic import","base_import.model_base_import_import","syndic_employe",1,1,1,1-->
         <!--"syndic_import","syndic import","base_import.model_base_import_import","syndic_manager",1,1,1,1-->
 
     </data>

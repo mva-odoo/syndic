@@ -65,6 +65,26 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 		
+		<record model="ir.actions.act_window" id="rapport_type_model">
+			<field name="name">Type de rapport</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">reunion.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="avis_type_model">
+			<field name="name">Type d'avis</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">type.avis</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!--menu -->
+		<menuitem name="Type de rapport" id="menu_rapport_type" parent="menu_configuration_letter" action="rapport_type_model" />
+		<menuitem name="Type d'avis" id="menu_avis_type" parent="menu_configuration_letter" action="avis_type_model" />
 
 
 		<!--menu -->		
