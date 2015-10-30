@@ -2,6 +2,9 @@ from random import randint
 import random
 import datetime
 import locale
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class UCLTools:
     def pass_generator(self):
@@ -25,7 +28,7 @@ class UCLTools:
         date = datetime.datetime.strptime(tr_date, '%Y-%m-%d')
         try:
             locale.setlocale(locale.LC_ALL, 'fr_FR.utf8')
-        except ValueError:
-            'print Local not settable'
+        except locale.Error:
+            _logger.error('Local not settable')
 
         return date.strftime("%A %d %B %Y")

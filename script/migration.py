@@ -64,6 +64,8 @@ def export_import(model, fields=[], normal_field=True, domain=[]):
     print model
     print import_model(model, export_datas['datas'], fields, normal_field)
 
+
+
 export_import('res.groups', ['name'], False)
 user_fields = ['name',
                'login',
@@ -243,3 +245,37 @@ export_import('syndic.facturation.line', ['prix_tot',
 # --------------------------------
 # letter
 # --------------------------------
+export_import('letter.avis.model')
+export_import('letter.model')
+export_import('letter.type')
+export_import('letter.begin')
+export_import('letter.end')
+
+
+letter = ['begin_letter_id/id', 'create_date', 'save_letter', 'write_uid/id', 'is_fax',
+          'name_template', 'create_uid/id',
+          'immeuble_id/id', 'letter_type_id/id', 'contenu', 'state', 'ps',
+          'letter_model_id/id', 'loc_ids/id', 'write_date', 'date', 'date_fr', 'end_letter_id/id',
+          'name', 'partner_address_ids/id', 'all_immeuble', 'mail_server/id', 'sujet', 'is_mail',
+          'divers_ids/id', 'old_ids/id', 'fourn_ids/id', 'propr_ids/id',
+          ]
+
+export_import('letter.create', letter, False)
+
+export_import('reunion.type')
+export_import('letter.reunion', ['name', 'immeuble_id/id', 'descriptif',
+                                 'create_date', 'write_date', 'type_id/id', 'date', 'date_fr'], False)
+export_import('reunion.point', ['name', 'sequence',
+                                'reunion_id/id', 'descriptif'], False)
+export_import('type.avis')
+export_import('letter.avis', ['name',
+                              'text',
+                              'immeuble_id/id',
+                              'create_date',
+                              'write_date',
+                              'date',
+                              'date_fr',
+                              'type_id/id',
+                              'avis_model_id/id',
+                              ], False)
+
