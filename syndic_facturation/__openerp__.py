@@ -9,7 +9,6 @@
     'website': 'http://openerp.com',
     'depends': ['syndic_management'],
     'data': [
-        # 'security/groups.xml',
         'views/facturation.xml',
         'report/facture.xml',
         'security/ir.model.access.csv',

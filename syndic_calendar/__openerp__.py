@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Appel',
+    'name': 'Syndic calendar',
     'version': '0.1',
     "category": 'Syndic',
-    'complexity': "easy",
     'description': """
-    Gestion des appels
+    calendar
     """,
-    'author': 'SGImmo',
+    'author': 'OpenERP SA',
     'depends': ['syndic_management'],
     'website': 'http://www.openerp.com',
     'data': [
-        'views/claim_view.xml',
+        'view/syndic_document.xml',
         'security/ir.model.access.csv',
+        'security/ir.rule.csv',
         ],
     'installable': True,
 }

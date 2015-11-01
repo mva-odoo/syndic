@@ -1,1 +1,1 @@
-import syndic_document
+import models

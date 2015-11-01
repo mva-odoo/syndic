@@ -65,7 +65,6 @@ def export_import(model, fields=[], normal_field=True, domain=[]):
     print import_model(model, export_datas['datas'], fields, normal_field)
 
 
-
 export_import('res.groups', ['name'], False)
 user_fields = ['name',
                'login',
@@ -253,10 +252,10 @@ export_import('letter.end')
 
 
 letter = ['begin_letter_id/id', 'create_date', 'save_letter', 'write_uid/id', 'is_fax',
-          'name_template', 'create_uid/id',
-          'immeuble_id/id', 'letter_type_id/id', 'contenu', 'state', 'ps',
-          'letter_model_id/id', 'loc_ids/id', 'write_date', 'date', 'date_fr', 'end_letter_id/id',
-          'name', 'partner_address_ids/id', 'all_immeuble', 'mail_server/id', 'sujet', 'is_mail',
+          'name_template', 'create_uid/id', 'end_letter_id/id', 'state', 'sujet',
+          'immeuble_id/id', 'date', 'id', 'name', 'contenu', 'letter_type_id/id', 'ps',
+          'letter_model_id/id', 'loc_ids/id', 'write_date', 'date_fr',
+          'partner_address_ids/id', 'all_immeuble', 'mail_server/id', 'is_mail',
           'divers_ids/id', 'old_ids/id', 'fourn_ids/id', 'propr_ids/id',
           ]
 
