@@ -10,9 +10,8 @@
     'depends': ['syndic_management'],
     'website': 'http://www.openerp.com',
     'data': [
-        'view/syndic_document.xml',
+        'views/calendar.xml',
         'security/ir.model.access.csv',
-        'security/ir.rule.csv',
         ],
     'installable': True,
 }
