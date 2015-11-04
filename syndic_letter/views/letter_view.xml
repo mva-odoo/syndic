@@ -4,7 +4,7 @@
         <!--search -->
         <record model="ir.ui.view" id="search_letter">
             <field name="name">Letter search</field>
-            <field name="model">letter.create</field>
+            <field name="model">letter.letter</field>
             <field name="arch" type="xml">
                 <search string="letter">
                     <field name="sujet"/>
@@ -26,7 +26,7 @@
 
         <record model="ir.ui.view" id="search_model">
             <field name="name">Model search</field>
-            <field name="model">letter.model</field>
+            <field name="model">letter.letter</field>
             <field name="arch" type="xml">
                 <search string="Model">
                     <field name="name"/>
@@ -48,7 +48,7 @@
         <!--form -->
         <record model="ir.ui.view" id="form_new_letter">
             <field name="name">Letter form view</field>
-            <field name="model">letter.create</field>
+            <field name="model">letter.letter</field>
             <field name="arch" type="xml">
                 <form string="Letter" version="7.0">
                         <header>
@@ -129,7 +129,7 @@
         </record>
         <record model="ir.ui.view" id="tree_new_letter">
             <field name="name">Letter tree view</field>
-            <field name="model">letter.create</field>
+            <field name="model">letter.letter</field>
             <field name="arch" type="xml">
                 <tree string="Letter" version="7.0">
                     <field name="create_date"/>
@@ -248,7 +248,7 @@
         <record model="ir.actions.act_window" id="action_new_letter">
             <field name="name">lettres</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">letter.create</field>
+            <field name="res_model">letter.letter</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="target">current</field>
