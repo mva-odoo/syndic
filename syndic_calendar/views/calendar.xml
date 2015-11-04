@@ -37,7 +37,7 @@
             <field name="name">Syndic Calendar</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">syndic.calendar</field>
-            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_mode">calendar,tree,form</field>
         </record>
 
         <menuitem name="Calendrier"

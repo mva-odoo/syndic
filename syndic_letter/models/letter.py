@@ -6,11 +6,11 @@ from openerp.addons.syndic_tools.syndic_tools import UCLTools
 class PieceJointe(models.Model):
     _inherit = 'ir.attachment'
 
-    letter_id = fields.Many2one('letter.create', string='Lettre')
+    letter_id = fields.Many2one('letter.letter', string='Lettre')
 
 
 class CreateLetter(models.Model):
-    _name = 'letter.create'
+    _name = 'letter.letter'
     _rec_name = 'sujet'
     _inherit = 'mail.thread'
     _order = 'create_date desc'
@@ -22,7 +22,7 @@ class CreateLetter(models.Model):
     propr_ids = fields.Many2many('syndic.owner', string='Propriétaire')
     fourn_ids = fields.Many2many('syndic.supplier', string='Fournisseurs')
     divers_ids = fields.Many2many('syndic.personne', string='Divers')
-    old_ids = fields.Many2many('syndic.old.owner', string='Fournisseurs')
+    old_ids = fields.Many2many('syndic.old.owner', string='Ancien Propriétaire')
     loc_ids = fields.Many2many('syndic.loaner', string='Locataires')
     end_letter_id = fields.Many2one('letter.end', 'Fin de lettre', required=True)
     begin_letter_id = fields.Many2one('letter.begin', 'Début de lettre', required=True)

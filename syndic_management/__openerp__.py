@@ -24,7 +24,7 @@
             'security/groups.xml',
             'views/menu.xml',
             'views/res_users.xml',
-            # 'view/remove_menu.xml',
+            'views/remove_menu.xml',
             'security/ir.model.access.csv',
         ],
     'application': True,

@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <delete id="portal.portal_messages" model="ir.ui.menu"/>
-        <delete id="portal.portal_menu" model="ir.ui.menu"/>
-        <delete id="mail.mail_inboxfeeds" model="ir.ui.menu"/>
-        <delete id="portal.portal_inbox" model="ir.ui.menu"/>
-        <delete id="portal.portal_mail_archivesfeeds" model="ir.ui.menu"/>
-        <delete id="portal.portal_mail_starfeeds" model="ir.ui.menu"/>
-        <delete id="knowledge.menu_document_configuration" model="ir.ui.menu"/>
-        <delete id="mail.mail_feeds" model="ir.ui.menu"/>
-        <delete id="mail.mail_tomefeeds" model="ir.ui.menu"/>
-        <delete id="mail.mail_starfeeds" model="ir.ui.menu"/>
-        <delete id="mail.mail_archivesfeeds" model="ir.ui.menu"/>
-        <delete id="mail.mail_feeds_main" model="ir.ui.menu"/>
-        <delete id="mail.mail_group_root" model="ir.ui.menu"/>
-        <delete id="mail.mail_my_stuff" model="ir.ui.menu"/>
-        <delete id="mail.mail_allgroups" model="ir.ui.menu"/>
-        <delete id="document.menu_document_management_configuration" model="ir.ui.menu"/>
-        <delete id="document.menu_document_directories_tree" model="ir.ui.menu"/>
-        <delete id="document.menu_document_directories" model="ir.ui.menu"/>
+        <delete id="mail.mail_channel_menu_root_chat" model="ir.ui.menu"/>
+        <delete id="mail.menu_contacts" model="ir.ui.menu"/>
     </data>
 </openerp>

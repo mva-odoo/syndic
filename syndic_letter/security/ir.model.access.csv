@@ -1,5 +1,5 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"syndic_lettre","syndic lettre","model_letter_create","syndic_management.syndic_manager",1,1,1,1
+"syndic_lettre","syndic lettre","model_letter_letter","syndic_management.syndic_manager",1,1,1,1
 "syndic_lettre_begin","syndic lettre debut","model_letter_begin","syndic_management.syndic_manager",1,1,1,1
 "syndic_lettre_end","syndic lettre fin","model_letter_end","syndic_management.syndic_manager",1,1,1,1
 "syndic_lettre_type","syndic lettre type","model_letter_type","syndic_management.syndic_manager",1,1,1,1
@@ -8,7 +8,7 @@
 "syndic_avis_type","syndic type avis","model_type_avis","syndic_management.syndic_manager",1,1,1,1
 "syndic_reunion","syndic reunion","model_letter_reunion","syndic_management.syndic_manager",1,1,1,1
 "syndic_reunion_point","syndic point reunion","model_reunion_point","syndic_management.syndic_manager",1,1,1,1
-"syndic_lettre_employe","syndic lettre","model_letter_create","syndic_management.syndic_employe",1,1,1,0
+"syndic_lettre_employe","syndic lettre","model_letter_letter","syndic_management.syndic_employe",1,1,1,0
 "syndic_lettre_begin_employe","syndic lettre debut","model_letter_begin","syndic_management.syndic_employe",1,1,1,0
 "syndic_lettre_end_employe","syndic lettre fin","model_letter_end","syndic_management.syndic_employe",1,1,1,0
 "syndic_lettre_type_employe","syndic lettre type","model_letter_type","syndic_management.syndic_employe",1,0,1,0
