@@ -8,7 +8,11 @@ Site web SGImmo
     'author': 'OpenERP SA',
     'website': 'http://openerp.com',
     'depends': ['website', 'syndic_documents'],
-    'data' : ['templates.xml','views/res_users.xml'],
+    'data': [
+        'pages/document.xml',
+        'pages/homepage.xml',
+        'views/res_users.xml'
+    ],
     'auto_install': False,
     'installable': True,
 }

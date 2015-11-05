@@ -7,7 +7,7 @@
 """,
     'author': 'OpenERP SA',
     'website': 'http://openerp.com',
-    'depends': ['syndic_management'],
+    'depends': ['syndic_management', 'pdf_viewer'],
     'data': [
         'views/facturation.xml',
         'report/facture.xml',

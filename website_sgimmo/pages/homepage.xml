@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <template name="Homepage" t-name="website.homepage">
+          <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+              <div class="carousel slide mt0 mb16" data-snippet-id="carousel" id="myCarousel5" style="height: 376px; overflow: hidden;">
+                <ol class="carousel-indicators hidden">
+                  <li class="active" data-slide-to="0" data-target="#myCarousel5"/>
+                </ol>
+                <div class="carousel-inner">
+                  <div class="item text_only oe_img_bg active" style="background-image: url(http://openerp.sgimmo.be/website/image/ir.attachment/205_dd5f2fe/datas);">
+                    <div class="container">
+                      <div class="carousel-caption content"/>
+                    </div>
+                  </div>
+                </div>
+                <a class="carousel-control left hidden" data-slide="prev" href="#myCarousel5" style="width: 10%">
+                  <span class="glyphicon glyphicon-chevron-left">
+                    <span class="hidden">.</span>
+                  </span>
+                </a>
+                <a class="carousel-control right hidden" data-slide="next" href="#myCarousel5" style="width: 10%">
+                  <span class="glyphicon glyphicon-chevron-right">
+                    <span class="hidden">.</span>
+                  </span>
+                </a>
+                <img class="hidden" src=""/>
+                <img class="hidden" src=""/>
+              </div>
+              <section class="mt16 mb16" data-snippet-id="text-block">
+                <div class="container">
+                  <div class="row">
+                    <div class="text-center mb16 mt0 col-md-offset-0 col-md-12">
+                      <h2>
+                        <strong>
+                          <span style="color:#000000;">
+                            <em> "Votre partenaire dans la gestion de tous vos biens immobiliers"</em>
+                          </span>
+                        </strong>
+                      </h2>
+                    </div>
+                    <div class="mt16 mb0 col-md-offset-2 col-md-8" style="font-size:16px">
+                      <p style="text-align: justify;">Notre agence immobilière vous propose ses services depuis 2008 en région Bruxelloise et en Brabant Wallon. Nos experts, présents dans le métier depuis 1994, se mettent à votre disposition et assurent la gestion de votre copropriété ainsi que celle de votre bien.</p>
+                      <p style="text-align: justify;">C’est grâce à notre longue expérience dans le secteur de l'immobilier que nous avons pu développer un service personnalisé se construisant sur une relation de confiance et sur une écoute mutuelle.</p>
+                      <p style="text-align: justify;">Notre petite structure, fondée sur un management horizontal et sur des valeurs familiales, nous permet d’assurer un suivi spécifique à vos besoins et de répondre au mieux à vos attentes.</p>
+                      <p style="text-align: justify;">Nous vous souhaitons une agréable visite sur notre site.<br/>
+        <br/>
+        L'équipe de SG Immo</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section class="mt16 mb32">
+                <div class="container">
+                  <div class="row">
+                    <div class="mt0 col-md-offset-2 col-md-9">
+                      <h2 class="text-center">
+                        <strong>
+                          <span style="color: #00549C;">
+                            <em style="font-size: 36px; line-height: 1.1; text-align: center;">Nos services</em>
+                          </span>
+                        </strong>
+                      </h2>
+                      <div>
+                        <strong>
+                          <span style="color: #00549C;">
+                            <em style="font-size: 36px; line-height: 1.1; text-align: center;"/>
+                          </span>
+                        </strong>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-2">
+                      <img class="img img-rounded img-responsive" src="/website/image/ir.attachment/218_b5a4284/datas" style=""/>
+                      <h3 class="mt16">
+                        <a href="http://openerp.sgimmo.be/page/gestion-de-coproprit">Gestion de copropriété</a>
+                      </h3>
+                      <p>Que vous soyez une petite copropriété ou un complexe résidentiel, nous vous proposons un service de syndic complet selon vos attentes </p>
+                    </div>
+                    <div class="col-md-3">
+                      <img class="img img-rounded img-responsive" src="/website/image/ir.attachment/217_56f7063/datas" style="animation-play-state: paused; transition: none"/>
+                      <div/>
+                      <h3 class="mt16">
+                        <a href="http://openerp.sgimmo.be/page/gestion-privative">Gestion privative</a>
+                      </h3>
+                      <p>Pour les personnes souhaitant une assistance et un suivi dans la gestion de leur patrimoine, nous nous occupons de votre ou de vos bien(s) en toute transparence.                                           </p>
+                    </div>
+                    <div class="col-md-3">
+                      <img class="img img-rounded img-responsive" src="/website/image/ir.attachment/382_4e18a20/datas" style="animation-play-state: paused; transition: none"/>
+                      <div/>
+                      <h3 class="mt16">
+                        <a href="http://openerp.sgimmo.be/page/consultance">Consultance</a>
+                      </h3>
+                      <p>Ce service est destiné aux petites <span style="line-height: 1.42857;">copropriétés recherchant des conseils sur un dossier poncutel ou pour une assitance comptable et technique tout au long de la gestion de votre copropriété.                    </span></p>
+                      <p>
+                        <span style="line-height: 1.42857;"> </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </t>
+        </template>
+    </data>
+</openerp>

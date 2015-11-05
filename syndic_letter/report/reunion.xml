@@ -5,7 +5,7 @@
           id="reunion_print"
           string="Réunion"
           model="letter.reunion"
-          name="letter.rapport_reunion_print"
+          name="syndic_letter.rapport_reunion_print"
           file="rapport_reunion"
           report_type="qweb-pdf"
         />

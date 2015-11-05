@@ -251,35 +251,97 @@ def export_import(model, fields=[], normal_field=True, domain=[]):
 # export_import('letter.end')
 
 
-letter = ['begin_letter_id/id', 'create_date', 'save_letter', 'is_fax',
-          'name_template', 'create_uid/id', 'end_letter_id/id', 'state', 'sujet',
-          'immeuble_id/id', 'letter_type_id/id', 'name', 'contenu',  'ps',
-          'date', 'date_fr', 'write_date', 'write_uid/id', 'all_immeuble', 'mail_server/id', 'is_mail',
-          'partner_address_ids/id', 'letter_model_id/id', 'loc_ids/id',
-          'fourn_ids/id',
-          'old_ids/id', 'divers_ids/id',
-          'propr_ids/id',
-          ]
+# letter = ['begin_letter_id/id', 'create_date', 'save_letter', 'is_fax',
+#           'name_template', 'create_uid/id', 'end_letter_id/id', 'state', 'sujet',
+#           'immeuble_id/id', 'letter_type_id/id', 'name', 'contenu',  'ps',
+#           'date', 'date_fr', 'write_date', 'write_uid/id', 'all_immeuble', 'mail_server/id', 'is_mail',
+#           'partner_address_ids/id', 'letter_model_id/id', 'loc_ids/id',
+#           'fourn_ids/id',
+#           'old_ids/id', 'divers_ids/id',
+#           'propr_ids/id',
+#           ]
+#
+# print '-------------------------------------------------------------------------------------------------------'
+# print 'letter.letter'
+# export_datas = export_model('letter.create', letter, [])
+# print import_model('letter.letter', export_datas['datas'], letter, [])
+#
+# export_import('reunion.type')
+# export_import('letter.reunion', ['name', 'immeuble_id/id', 'descriptif',
+#                                  'create_date', 'write_date', 'type_id/id', 'date', 'date_fr'], False)
+# export_import('reunion.point', ['name', 'sequence',
+#                                 'reunion_id/id', 'descriptif'], False)
+# export_import('type.avis')
+# export_import('letter.avis', ['name',
+#                               'text',
+#                               'immeuble_id/id',
+#                               'create_date',
+#                               'write_date',
+#                               'date',
+#                               'date_fr',
+#                               'type_id/id',
+#                               'avis_model_id/id',
+#                               ], False)
 
-print '-------------------------------------------------------------------------------------------------------'
-print 'letter.letter'
-export_datas = export_model('letter.create', letter, [])
-print import_model('letter.letter', export_datas['datas'], letter, [])
+ # ficher signalitique
 
-export_import('reunion.type')
-export_import('letter.reunion', ['name', 'immeuble_id/id', 'descriptif',
-                                 'create_date', 'write_date', 'type_id/id', 'date', 'date_fr'], False)
-export_import('reunion.point', ['name', 'sequence',
-                                'reunion_id/id', 'descriptif'], False)
-export_import('type.avis')
-export_import('letter.avis', ['name',
-                              'text',
-                              'immeuble_id/id',
-                              'create_date',
-                              'write_date',
-                              'date',
-                              'date_fr',
-                              'type_id/id',
-                              'avis_model_id/id',
-                              ], False)
+sign = ['ascensseur_contrat', 'jardin_more', 'marque_citerne', 'write_uid', 'garden_more',
+        'notaire_building', 'toiture_type', 'toiture_contract', 'risque_expirt',
+        'egoutage_more', 'justice', 'technique', 'number_parking', 'chauffage_cascade',
+        'type_citerne', 'chassis_more', 'building_id/id', 'extincteur_more', 'garden_travaux',
+        'chassis_color', 'garden_day', 'date_compteur', 'nettoyage_more', 'condensation_chauffage',
+        'parlophone_description', 'descriptif_tache', 'compte', 'elec_contrat',
+        'compta', 'date_mois', 'amiente_etabli_par', 'garage_contrat_date',
+        'parlophone_bool', 'ascensseur_le', 'chaudiere_omnium', 'number_cave', 'contrat_chaudiere',
+        'type_adoucisseur', 'number_appartement', 'create_date', 'date_quizaine', 'citerne_par',
+        'appartements_bool', 'juridique', 'chauffage_type', 'conciergerie', 'egoutage_contrat',
+        'plaquette_supplier', 'type_chauffage', 'incendie_expire', 'jardin_contrat', 'garden_contract',
+        'elec_expirt', 'sol_expire', 'facade_isolation', 'access_info', 'type_chauffages', 'risque_le',
+        'adoucisseur_more', 'descr_regul', 'ascenseur', 'chaudiere_entretien_date', 'date_cloture',
+        'boite_bool', 'sol_date', 'supplier_adoucisseur', 'annee_adoucisseur', 'chauffage',
+        'plan_egout', 'qte_citerne', 'chaudiere_more', 'incendie_name_courier',
+        'ascenseur_bool', 'risque_ascensseur_par', 'elec_releve_by', 'access_where', 'lieu_assemble',
+        'chassis_vitrage_four', 'last_peint_date', 'elec_building', 'construction_date', 'qte_adoucisseur',
+        'firm_name_netoyage', 'eau_chaude_type', 'create_uid', 'sol_inscription', 'societe_compteur',
+        'firm_netoyage_date', 'loi', 'date_contrat_compteur', 'peb_immeuble', 'chaudiere_tubage',
+        'entretien_nettoyage', 'entr_control', 'more_info', 'citerne_neutralise', 'cylindre_bool',
+        'parlophone_date', 'rec_creance', 'incendie_num_police', 'incendie_couverture', 'elec_le',
+        'ascensseur_par', 'lieu_acte_building', 'certif_chauf', 'travaux_realise',
+        'mur_mitoyens', 'ramassage', 'garden_firm',
+        'number_chambres', 'chassis_type', 'annee_citerne', 'trotoire', 'prepose_netoyage', 'date_jardin',
+        'ascensseur_date', 'id', 'plan_appartement', 'incendie_franchise', 'chassis_vitrage',
+        'anne_ascensseur', 'environnement_objet', 'access_more', 'garage_contrat',
+        'chaudiere_separboue', 'parlophone_more', 'nbr_passage', 'amiente_etabli_le',
+        'anne_chaudiere', 'environnement_expire', 'chaudiere_horloge', 'garage_description', 'ass_concierge',
+        'numeros_adoucisseur', 'date_acte_building', 'incendie_name', 'ramassage_type',
+        'garden_tree', 'marque_adoucisseur', 'write_date', 'nbr_chaudiere', 'elec_par',
+        'environnement_date', 'citerne_le', 'plan_sous_sol', 'egoutage_contrat_date',
+        'situation_chauffage', 'plan_facade', 'citerne_expirt', 'ascensseur_more', 'ramassage_date',
+        'toiture_isolation', 'number_garage']
 
+export_import('building.signalitic', sign, False)
+
+
+
+export_import('building.desamientage', [
+    'desamiente_par/id',
+    'desamiente_le',
+    'desamiente_niveau',
+    'signalitic_id/id',
+], False)
+
+export_import('building.diu')
+export_import('building.facade')
+export_import('facade.repair')
+export_import('building.terasse')
+export_import('building.repeir.terasse')
+export_import('observation.toiture')
+export_import('repeir.toiture')
+export_import('jardin.observation')
+export_import('ascensseurs')
+export_import('repeir.ascensseur')
+export_import('piece.chauffage')
+export_import('egoutage.observation')
+export_import('extincteur')
+export_import('repeir.garage')
+export_import('repeir.general')

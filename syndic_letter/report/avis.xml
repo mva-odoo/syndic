@@ -5,7 +5,7 @@
           id="avis_print"
           string="avis"
           model="letter.avis"
-          name="letter.avis_impression"
+          name="syndic_letter.avis_impression"
           file="name"
           report_type="qweb-pdf"
         />

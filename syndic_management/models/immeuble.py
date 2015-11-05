@@ -84,4 +84,3 @@ class Building(models.Model):
             'target': 'new',
             'context': self._context,
         }
-

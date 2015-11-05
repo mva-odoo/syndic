@@ -3,9 +3,9 @@
     <data>
         <report
                 id="letter_print"
-                model="letter.create"
+                model="letter.letter"
                 string="lettre"
-                name="letter.letter_qweb"
+                name="syndic_letter.letter_qweb"
                 file="name"
                 report_type="qweb-pdf"
                 />
@@ -96,30 +96,30 @@
                     <t t-foreach="docs" t-as="o">
                         <t t-foreach="o.propr_ids" t-as="prop_id">
                             <t t-call="report.external_layout">
-                                <t t-call="letter.letter"/>
+                                <t t-call="syndic_letter.letter"/>
                             </t>
                         </t>
                         <t t-foreach="o.loc_ids" t-as="prop_id">
                            <t t-call="report.external_layout">
-                                <t t-call="letter.letter"/>
+                                <t t-call="syndic_letter.letter"/>
                             </t>
                         </t>
 
                         <t t-foreach="o.fourn_ids" t-as="prop_id">
                            <t t-call="report.external_layout">
-                                <t t-call="letter.letter"/>
+                                <t t-call="syndic_letter.letter"/>
                             </t>
                         </t>
 
                         <t t-foreach="o.divers_ids" t-as="prop_id">
                             <t t-call="report.external_layout">
-                                <t t-call="letter.letter"/>
+                                <t t-call="syndic_letter.letter"/>
                             </t>
                         </t>
 
                         <t t-foreach="o.partner_address_ids" t-as="prop_id">
                             <t t-call="report.external_layout">
-                                <t t-call="letter.letter"/>
+                                <t t-call="syndic_letter.letter"/>
                             </t>
                         </t>
                     </t>

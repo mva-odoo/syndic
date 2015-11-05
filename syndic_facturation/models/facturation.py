@@ -5,6 +5,8 @@ from openerp.addons.syndic_tools.syndic_tools import UCLTools
 
 class SyndicFacturation(models.Model):
     _name = 'syndic.facturation'
+    _inherit = 'pdf.viewer'
+    _report_name = 'syndic_facturation.facture'
 
     name = fields.Char('Facture', readonly=True)
     immeuble_id = fields.Many2one('syndic.building', string='Immeuble', required=True)

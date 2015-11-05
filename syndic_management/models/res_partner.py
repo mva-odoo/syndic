@@ -92,7 +92,8 @@ class Owner(models.Model):
     address_ids = fields.One2many('partner.address', 'add_parent_id_owner', string='Address')
     lot_ids = fields.Many2many('syndic.lot', string='Lot')
     login = fields.Char('login', related='user_id.login', required=False)
-    password = fields.Char('Mot de passe', related='user_id.password')
+    password = fields.Char('Mot de passe généré', info="Il se peut que l\'utilisateur ai changé de mot de passe dans"
+                                                       "ce cas il le mot de passe peut etre regeneré")
     building_ids = fields.Many2one('syndic.building', related='lot_ids.building_id', string='Immeuble')
     building_store_ids = fields.Many2one('syndic.building', related='lot_ids.building_id',
                                          string='Immeuble', store=True)
@@ -103,22 +104,42 @@ class Owner(models.Model):
     @api.model
     def create(self, vals):
         res_id = super(Owner, self).create(vals)
-        if res_id.user_id:
-            group_ids = self.env['res.groups'].search(['|',
-                                                       ('name', 'ilike', 'Syndic/Client'),
-                                                       ('name', 'ilike', 'Portal')
-                                                       ])
+        group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
+
+        dict_users = {
+            'name': vals['name'],
+            'login': UCLTools().login_generator(vals['name']),
+            'password': UCLTools().pass_generator(),
+            'proprio_id': res_id.id,
+            'groups_id': [(6, 0, group_ids.ids)],
+        }
+
+        res_id.user_id = self.env['res.users'].sudo().create(dict_users)
+        res_id.password = dict_users['password']
+        return res_id
+
+    @api.one
+    def change_password(self):
+        if self.user_id:
+            dict_users = {
+                'login': UCLTools().login_generator(self.name),
+                'password': UCLTools().pass_generator(),
+            }
+            self.user_id.sudo().write(dict_users)
+            self.password = dict_users['password']
+        else:
+            group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
 
             dict_users = {
-                'name': vals['name'],
-                'login': UCLTools().login_generator(vals['name']),
+                'name': self.name,
+                'login': UCLTools().login_generator(self.name),
                 'password': UCLTools().pass_generator(),
-                'proprio_id': res_id.id,
-                'groups_id': [(4, group_id.id) for group_id in group_ids],
+                'proprio_id': self.id,
+                'groups_id': [(6, 0, group_ids.ids)],
             }
 
-            res_id.user_id = self.env['res.users'].sudo().create(dict_users)
-        return res_id
+            self.user_id = self.env['res.users'].sudo().create(dict_users)
+            self.password = dict_users['password']
 
     @api.one
     def unlink(self):

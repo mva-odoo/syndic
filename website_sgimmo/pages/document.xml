@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
        <template id="index">
            <t t-call="website.layout">
 
@@ -20,7 +20,7 @@ th, td {
           <div class="row">
             <div class="col-md-12 text-center mt0 mb32">
                 <div class="col-md-12 text-center mt0 mb16 filter_sgimmo">
-                    <form action="/documents" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+                    <form action="/documents/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
                         <div class="col-md-5 text-center mt16 mb16">
                             <select name="immeubles" class="form-control">
                                 <option t-attf-value="0">Immeubles</option>
