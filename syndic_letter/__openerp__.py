@@ -8,7 +8,7 @@
     Syndic Lettre
     """,
     'author': 'OpenERP SA',
-    'depends': ['syndic_management', 'mail', 'syndic_tools'],
+    'depends': ['syndic_management', 'mail', 'syndic_tools', 'pdf_viewer'],
     'website': 'http://www.openerp.com',
     'data': [
         'views/letter_view.xml',
