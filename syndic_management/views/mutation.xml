@@ -22,8 +22,8 @@
 			<field name="arch" type="xml">
 				<tree string="mutation">
                     <field name="mutation_date"/>
-					<field name="old_owner_id"/>
-				    <field name="new_owner_id"/>
+					<field name="old_owner_ids" widget="many2many_tags"/>
+				    <field name="new_owner_ids" widget="many2many_tags"/>
 				    <field name="immeuble_id"/>
 				</tree>
 			</field>
@@ -38,16 +38,18 @@
 			<field name="arch" type="xml">
 				<form string="mutation" layout="manual" version="7.0">
 				<header>
-					<button string="Mutation" name="mutation_ok" type="object" attrs="{'invisible':[('state','=','done')]}" />
+					<button string="Mutation" name="mutation_ok" type="object"
+                            attrs="{'invisible':[('state','=','done')]}" />
 					<field name="state" widget="statusbar"/>
 				</header>
 				<sheet string="Mutation" layout="auto">
 				    <group>
 				    <field name="mutation_date" attrs="{'readonly':[('state','=','done')]}"/>
-				    <field name="old_owner_id" attrs="{'readonly':[('state','=','done')]}"/>
-				    <field name="new_owner_id" attrs="{'readonly':[('state','=','done')]}"/>
+				    <field name="old_owner_ids" attrs="{'readonly':[('state','=','done')]}" widget="many2many_tags"/>
+				    <field name="new_owner_ids" attrs="{'readonly':[('state','=','done')]}" widget="many2many_tags"/>
 				    <separator string="Lots modifiés" colspan="4"/>
-				    <field name="lot_ids" domain="[('proprio_id','in',old_owner_id)]" attrs="{'readonly':[('state','=','done')]}" colspan="4" nolabel="1">
+				    <field name="lot_ids" colspan="4" nolabel="1"
+						   attrs="{'readonly':[('state','=','done')]}">
 				    	<tree>
 				    		<field name="name"/>
 				    		<field name="building_id"/>
@@ -59,8 +61,7 @@
                 </form>
 			</field>
 		</record>
-               
-		<!--action -->
+
 		<record model="ir.actions.act_window" id="action_mutation">
 			<field name="name">Mutation</field>
 			<field name="type">ir.actions.act_window</field>
