@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+    <template t-name="website.gestion-de-coproprite">
+      <t t-call="website.layout">
+        <div id="wrap" class="oe_structure oe_empty">
+          <div class="carousel slide mb0" id="myCarousel1" style="height: 136px; overflow: hidden;">
+            <ol class="carousel-indicators hidden">
+              <li class="active" data-slide-to="0" data-target="#myCarousel1"/>
+            </ol>
+            <div class="carousel-inner">
+              <div class="item image_text oe_img_bg active" style="background-image: url(http://openerp.sgimmo.be/website/image/ir.attachment/237_017aa7b/datas);">
+                <div class="container">
+                  <div class="row content">
+                    <span class="carousel-img col-md-6 hidden-sm hidden-xs"> </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-control left hidden" data-slide="prev" data-target="#myCarousel0" href="#myCarousel1" style="width: 10%">
+              <i class="fa fa-chevron-left"/>
+            </div>
+            <div class="carousel-control right hidden" data-slide="next" data-target="#myCarousel0" href="#myCarousel1" style="width: 10%">
+              <i class="fa fa-chevron-right"/>
+            </div>
+          </div>
+          <section class="mt16 mb16">
+            <div class="container">
+              <div class="row">
+                <div class="text-center mt16 mb0 col-md-7">
+                  <h2 style="text-align: left;">Nous assurons la gestion de votre Résidence</h2>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="mb0" style="height: 280px; overflow: hidden;">
+            <div class="container">
+              <div class="row">
+                <div class="mt0 col-md-offset-1 col-md-7 mb0">
+                  <p>
+                    <span style="line-height: 1.42857; text-align: justify;">La création de valeurs pour nos clients est au centre de notre mission. La diminution des charges d’exploitation y jouera un rôle important, sans affecter la qualité des services et l’environnement. Afin d’apporter une plus value à votre bien, notre équipe de professionnels vous fournira un service global et de qualité centré sur l'apport de solutions innovantes.</span>
+                  </p>
+                  <p style="text-align: justify;">
+                    <span style="line-height: 1.428571429;">Nous assurons notre service tant au niveau opérationnel qu’au niveau du suivi. Au travers d'échanges d'informations diverses (analyse comptable, prévision budgétaire, comparatif d’offres…), nous vous assureront un réel partenariat. </span>
+                  </p>
+                  <p style="text-align: justify;">
+                    <span style="line-height: 1.428571429;">La mission complète de syndic s’articule selon les axes suivants :</span>
+                  </p>
+                  <p style="text-align: justify;">​<span style="line-height: 1.42857;">                         </span><span style="line-height: 1.42857;"><span style="line-height: 1.428571429;">       </span></span></p>
+                </div>
+                <div class="mt16 col-md-offset-3 col-md-1">
+                  <img class="img img-responsive shadow mb16" src="/website/image/ir.attachment/200_13db4a8/datas" style=" animation-play-state: paused; transition: none;-webkit-transform: translateX(-198.5%)  translateY(72.3%)  scaleX(3.08)  scaleY(2.93);-moz-transform: translateX(-198.5%)  translateY(72.3%)  scaleX(3.08)  scaleY(2.93);-ms-transform: translateX(-198.5%)  translateY(72.3%)  scaleX(3.08)  scaleY(2.93);-o-transform: translateX(-198.5%)  translateY(72.3%)  scaleX(3.08)  scaleY(2.93);transform: translateX(-198.5%)  translateY(72.3%)  scaleX(3.08)  scaleY(2.93)"/>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="mb0">
+            <div class="container">
+              <div class="row mt16 mb16">
+                <div class="col-md-3">
+                  <span tabindex="-1"/>
+                  <div class="well">
+                    <h3 class="mt8 mb0" style="text-align: center;">Suivi comptable</h3>
+                    <h3 class="mt8 mb0" style="text-align: center;"/>
+                    <ul style="margin-bottom: 0px; color: rgb(153, 153, 153);text-align: left!important;" >
+                      <li>
+                            <span style="line-height: 1.42857;">assurer la bonne gestion financière</span>
+                      </li>
+
+                    </ul>
+                    <h3 class="mt8 mb0" style="text-align: center;"/>
+                  </div>
+                  <h3 class="mt8 mb0"/>
+                </div>
+                <div class="text-center col-md-3">
+                  <span tabindex="-1"/>
+                  <div class="well">
+                    <h3 class="mt8 mb0" style="text-align: center;">Suivi administratif        </h3>
+                    <div/>
+                    <div>
+                      <ul style="margin-bottom: 0px; color: rgb(153, 153, 153); text-align: justify;">
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">convoquer l’assemblée générale et assurer le secrétariat</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">tenir un registre des procès-verbaux contenant les décisions de l’assemblée générale</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">assurer l'administration de la copropriété (assurance, contrats et corps de métier) et gérer les contrats</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">veiller au suivi administratif des charges d’exploitation</span>
+                            </span>
+                          </p>
+                        </li>
+                      </ul>
+                      <span style="color: rgb(153, 153, 153); text-align: center; line-height: 1.42857;">.</span>
+                    </div>
+                  </div>
+                  <h3 class="mt8 mb0"/>
+                  <div class="text-muted">
+                    <span style="line-height: 1.42857;">.</span>
+                  </div>
+                </div>
+                <div class="text-center col-md-3">
+                  <span tabindex="-1"/>
+                  <div class="well">
+                    <h3 class="mt8 mb0" style="text-align: center;">Suivi technique          </h3>
+                    <div/>
+                    <div>
+                      <ul style="margin-bottom: 0px; color: rgb(153, 153, 153); text-align: justify;">
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">donner accès à une plateforme en ligne dédiée à la copropriété</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">assurer permanence téléphonique en cas d'urgence</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">suivi des chantiers</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="line-height: 1.42857; color: rgb(0, 0, 0);">exécuter les décisions de l’assemblée générale</span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">assurer un suivi des sinistres</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">maintenir l’immeuble en l'état et participer à son développement</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">assurer son administration (assurance, contrats et corps de métier) et gérer les contrats</span>
+                            </span>
+                          </p>
+                        </li>
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="line-height: 1.42857; color: rgb(0, 0, 0);">octroyer des conseils et une assistance dans la gestion des contrats d’entretien-maintenance y compris le suivi, le contrôle et la coordination des prestations de l’immeuble  </span>
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <h3 class="mt8 mb0"/>
+                  <div class="text-muted">
+                    <span style="line-height: 1.42857;">.</span>
+                  </div>
+                </div>
+                <div class="text-center col-md-3">
+                  <span tabindex="-1"/>
+                  <div class="well">
+                    <h3 class="mt8 mb0" style="text-align: center;">Suivi juridique           </h3>
+                    <div>
+                      <span style="line-height: 1.42857; color: rgb(0, 0, 0); text-align: justify;"/>
+                    </div>
+                    <div>
+                      <span style="line-height: 1.42857; color: rgb(0, 0, 0); text-align: justify;"/>
+                      <ul style="margin-bottom: 0px; color: rgb(153, 153, 153); text-align: justify; background-color: rgb(245, 245, 245);">
+                        <li style="text-align: justify;">
+                          <p>
+                            <span style="color: rgb(0, 0, 0);">
+                              <span style="line-height: 1.42857;">assurer la représentation en justice de l'association des copropriétaires </span>
+                            </span>
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <h3 class="mt8 mb0"/>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="mt16 mb16">
+            <div class="container">
+              <div class="row"/>
+            </div>
+          </section>
+          <section>
+            <div class="container">
+              <div class="row">
+                <div class="mt16 col-md-12">
+                  <h3 style="text-align: center;">
+                    <strong>Nous assurons déjà la gestion de votre copropriété à partir de 250 euros/mois</strong>
+                  </h3>
+                  <h3 style="text-align: center;">
+                    <span style="color:#000000;">N'hésitez pas à prendre contact avec notre agence afin de recevoir une offre pour la gestion complète de votre résidence</span>
+                  </h3>
+                  <div>
+                    <span style="color:#000000;"/>
+                  </div>
+                  <div/>
+                </div>
+                <div class="col-md-6 mt16"/>
+              </div>
+            </div>
+          </section>
+        </div>
+      </t>
+    </template>
+
+    <record id="gestion_copropriete_menu_sgimmo" model="website.menu">
+        <field name="name">Gestion de copropriété</field>
+        <field name="url">/page/gestion-de-coproprite</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">10</field>
+    </record>
+</data>
+</openerp>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <template name="Contact us" t-name="website.contactus">
+          <t t-call="website.layout">
+            <div id="wrap">
+              <div class="oe_structure">
+                <div class="carousel slide mb48" id="myCarousel0" style="height: 136px; overflow: hidden;">
+                  <ol class="carousel-indicators hidden">
+                    <li class="active" data-slide-to="0" data-target="#myCarousel0"/>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="item oe_img_bg active" style="background-image: url(http://openerp.sgimmo.be/website/image/ir.attachment/237_017aa7b/datas);">
+                      <div class="container">
+                        <div class="row content">
+                          <div class="carousel-img col-md-6 hidden-sm hidden-xs"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-control left hidden" data-slide="prev" data-target="#myCarousel0" href="#myCarousel0" style="width: 10%">
+                    <span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="i" data-cke-widget-id="9">
+                      <i class="fa fa-chevron-left cke_widget_element" data-cke-widget-data="{}" data-cke-widget-keep-attr="0" data-widget="icons"/>
+                    </span>
+                  </div>
+                  <div class="carousel-control right hidden" data-slide="next" data-target="#myCarousel0" href="#myCarousel0" style="width: 10%">
+                    <span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="i" data-cke-widget-id="8">
+                      <i class="fa fa-chevron-right cke_widget_element" data-cke-widget-data="{}" data-cke-widget-keep-attr="0" data-widget="icons"/>
+                    </span>
+                  </div>
+                </div>
+                <section class="mb16">
+                  <div class="container">
+                    <div class="row mt16 mb16">
+                      <div class="text-center col-md-offset-1 col-md-5">
+                        <span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="span" data-cke-widget-id="12"/>
+                        <h2 class="mt8 mb0" style="text-align: left;">Nous contacter</h2>
+                        <div/>
+                        <div/>
+                        <div/>
+                        <div class="text-muted">
+                          <p align="left">
+                            <span style="color:#000000;">Pour plus d'informations ou pour une demande d’offre, n’hésitez pas à nous joindre du lundi au vendredi durant nos heures de permanence téléphonique.</span>
+                          </p>
+                          <p align="left">
+                            <span style="color:#000000;">
+                              <span style="text-align: center; line-height: 1.42857143;">Lundi : 9h00-12h30 / 13h30-16h00</span>
+                            </span>
+                          </p>
+                          <p align="left">
+                            <span style="color:#000000;">Mardi : 9h00-12h30 / 13h30-16h00</span>
+                          </p>
+                          <p align="left">
+                            <span style="color:#000000;">Mercredi : 9h00-12h30</span>
+                          </p>
+                          <p align="left">
+                            <span style="color:#000000;">Jeudi : 9h00-12h30 / 13h30-16h00</span>
+                          </p>
+                          <p align="left">
+                            <span style="color:#000000;">Vendredi : 9h00-12h30</span>
+                          </p>
+                          <p align="left">
+                            <span style="color:#000000;">Nous nous tenons également à votre disposition par email ou par fax.</span>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="text-center mb128 col-md-4 col-md-offset-2">
+                        <span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="span" data-cke-widget-id="11"/>
+                        <h2 class="mt8 mb0" style="text-align: left;">Nos coordonnées</h2>
+                        <div/>
+                        <div/>
+                        <div style="text-align: left;"/>
+                        <div class="text-muted">
+                          <div style="text-align: left;"/>
+                          <div style="text-align: left;">
+                            <span style="color:#000000;"><span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="span" data-cke-widget-id="7"><span class="fa fa-map-marker fa-1x cke_widget_element" data-cke-widget-data="{}" data-cke-widget-keep-attr="0" data-widget="icons" style=""/></span> Rue François Vander Elst, 38/1<br/>1950 Kraainem<br/>Belgique</span>
+                          </div>
+                          <div style="text-align: left;">
+                            <span style="color:#000000;"><br/><span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="span" data-cke-widget-id="6"><span class="fa fa-phone fa-1x cke_widget_element" data-cke-widget-data="{}" data-cke-widget-keep-attr="0" data-widget="icons"/></span> 02 242 89 86<br/><span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="span" data-cke-widget-id="5"><span class="fa fa-print fa-1x cke_widget_element" data-cke-widget-data="{}" data-cke-widget-keep-attr="0" data-widget="icons"/></span> 02 242 89 86<br/><span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="span" data-cke-widget-id="4"><span class="fa fa-envelope-o fa-1x cke_widget_element" data-cke-widget-data="{}" data-cke-widget-keep-attr="0" data-widget="icons"/></span> info@sgimmo.be</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="container">
+                <h1/>
+                <div class="row">
+                  <div class="col-md-12 mb32">
+                    <t t-call="website.company_description"/>
+                  </div>
+                </div>
+              </div>
+              <div class="oe_structure"/>
+            </div>
+          </t>
+        </template>
+    </data>
+</openerp>
