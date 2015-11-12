@@ -4,8 +4,8 @@
         <template id="assets_backend" name="syndic assets"
                   inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <!--<link rel="stylesheet"-->
-                      <!--href="/web_change/static/src/css/syndic.css"/>-->
+                <link rel="stylesheet"
+                      href="/web_change/static/src/css/syndic.css"/>
             </xpath>
         </template>
     </data>

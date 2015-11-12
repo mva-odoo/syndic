@@ -1,53 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
-    <template inherit_id="website.layout" optional="disabled" name="Custom Footer">
-      <xpath expr="//div[@id='footer_container']" position="before">
-        <div class="oe_structure">
-          <hr/>
-          <section>
-            <div class="container">
-              <div class="row"/>
-            </div>
-          </section>
-          <section class="mb16 mt8" data-snippet-id="three-columns">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <h4 class="mt16">Nos services</h4>
-                  <p>
-                    <a href="http://openerp.sgimmo.be/page/gestion-de-coproprit">Gestion de copropriété</a>
-                  </p>
-                  <p>
-                    <a href="http://openerp.sgimmo.be/page/gestion-privative">Gestion privative</a>
-                  </p>
-                  <p>
-                    <a href="http://openerp.sgimmo.be/page/consultance">Consultance</a>
-                  </p>
-                </div>
-                <div class="col-md-4">
-                  <h4 class="mt16" style="text-align: center;">SG IMMO</h4>
-                  <div style="text-align: center;">Notre agence et nos gestionnaires sont agréés par l'Institut Professionnel des agents Immobiliers</div>
-                  <img class="img img-rounded img-responsive" src="/website/image/ir.attachment/208_6c6e6dd/datas" style="-webkit-transform: translateX(3.1%) translateY(-18.4%) scaleX(0.73) scaleY(0.56); transform: translateX(3.1%) translateY(-18.4%) scaleX(0.73) scaleY(0.56); -webkit-animation-play-state: paused; -webkit-transition: none; transition: none;"/>
-                  <div/>
-                </div>
-                <div class="col-md-4">
-                  <h4 class="mt16" style="text-align: right;">Contactez-nous - <a href="/page/website.contactus">Nos coordonnées</a></h4>
-                  <p class="mt16">                                  <span tabindex="-1"><span class="fa fa-map-marker fa-1x" data-widget="icons" style=""/></span> Rue François Vander Elst,38/1<br/>
-                                          1950 Bruxelles<br/>
-                                          Belgique<br/>
-                                      <span tabindex="-1"><span class="fa fa-phone fa-1x" data-widget="icons" style=""/></span> 02 242 89 86<br/>
-                                      <span tabindex="-1"><span class="fa fa-print fa-1x" data-widget="icons" style=""/></span> 02 242 89 86<br/>
-                                      <span tabindex="-1"><span class="fa fa-envelope-o fa-1x" data-widget="icons" style=""/></span> info@sgimmo.be</p>
-                </div>
-              </div>
-            </div>
-          </section>
+    <data noupdate="1">
+      <template id="sgimmo_footer" inherit_id="website.layout" name="SGImmo Footer">
+        <xpath expr="//footer" position="replace">
+           <div class="oe_structure">
+      <hr/>
+      <section>
+        <div class="container">
+          <div class="row"/>
         </div>
-      </xpath>
-      <xpath expr="//div[@id='footer_container']" position="attributes">
-        <attribute name="style">display: none</attribute>
-      </xpath>
-        </template>
+      </section>
+      <section class="mb16 mt8" data-snippet-id="three-columns">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <h4 class="mt16">Nos services</h4>
+              <p>
+                <a href="http://openerp.sgimmo.be/page/gestion-de-coproprit">Gestion de copropriété</a>
+              </p>
+              <p>
+                <a href="http://openerp.sgimmo.be/page/gestion-privative">Gestion privative</a>
+              </p>
+              <p>
+                <a href="http://openerp.sgimmo.be/page/consultance">Consultance</a>
+              </p>
+            </div>
+            <div class="col-md-4">
+              <h4 class="mt16" style="text-align: center;">SG IMMO</h4>
+              <div style="text-align: center;">Notre agence et nos gestionnaires sont agréés par l'Institut Professionnel des agents Immobiliers</div>
+              <img class="img img-rounded img-responsive" src="/website/image/ir.attachment/208_6c6e6dd/datas" style="-webkit-transform: translateX(3.1%) translateY(-18.4%) scaleX(0.73) scaleY(0.56); transform: translateX(3.1%) translateY(-18.4%) scaleX(0.73) scaleY(0.56); -webkit-animation-play-state: paused; -webkit-transition: none; transition: none;"/>
+              <div/>
+            </div>
+            <div class="col-md-4">
+              <h4 class="mt16" style="text-align: right;">Contactez-nous - <a href="/page/website.contactus">Nos coordonnées</a></h4>
+              <p class="mt16">                                  <span tabindex="-1"><span class="fa fa-map-marker fa-1x" data-widget="icons" style=""/></span> Rue François Vander Elst,38/1<br/>
+                                      1950 Bruxelles<br/>
+                                      Belgique<br/>
+                                  <span tabindex="-1"><span class="fa fa-phone fa-1x" data-widget="icons" style=""/></span> 02 242 89 86<br/>
+                                  <span tabindex="-1"><span class="fa fa-print fa-1x" data-widget="icons" style=""/></span> 02 242 89 86<br/>
+                                  <span tabindex="-1"><span class="fa fa-envelope-o fa-1x" data-widget="icons" style=""/></span> info@sgimmo.be</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+        </xpath>
+      </template>
+
     </data>
 </openerp>

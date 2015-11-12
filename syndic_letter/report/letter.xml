@@ -22,7 +22,7 @@
 
         <template id="report.external_layout_footer">
           <div class="footer">
-                <hr style="color: #000;background-color: #000;height: 1px;margin-bottom:0px;margin-top: 40px;"/>
+                <hr style="color: #000;background-color: #000;height: 1px;margin-bottom:5px;margin-top: 40px; padding-bottom: 0px;"/>
                 <table class="footer" style="border-top: 1px solid black; width: 100%;border:0;">
                     <tr > <td style="text-align:center;color:#01559D;font-size:14px;">Tél : 02 / 242.89.86  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Fax : 02 / 241.32.55  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Numéro d'entreprise : 0894 523 013 &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp; Email : info@sgimmo.be</td></tr>
                     <tr > <td style="text-align:center;color:#01559D;font-size:14px;">I.P.I n° 501528  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Assurance professionnelle : AXA 730290350  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Compte bancaire : 001 - 5423024 - 24</td></tr>

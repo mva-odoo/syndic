@@ -101,21 +101,28 @@ class Owner(models.Model):
                                     ('courrier_simple', 'Par courrier simple'),
                                     ('email', 'Par Email')], string='Convocation')
 
+    def sgimmo_check_login_unicity(self, login):
+        if self.env['res.users'].search_count([('login', '=', login)]):
+            return False
+        return True
+
     @api.model
     def create(self, vals):
         res_id = super(Owner, self).create(vals)
-        group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
+        login = UCLTools().login_generator(vals['name'])
+        if self.sgimmo_check_login_unicity(login):
+            group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
 
-        dict_users = {
-            'name': vals['name'],
-            'login': UCLTools().login_generator(vals['name']),
-            'password': UCLTools().pass_generator(),
-            'proprio_id': res_id.id,
-            'groups_id': [(6, 0, group_ids.ids)],
-        }
+            dict_users = {
+                'name': vals['name'],
+                'login': login,
+                'password': UCLTools().pass_generator(),
+                'proprio_id': res_id.id,
+                'groups_id': [(6, 0, group_ids.ids)],
+            }
 
-        res_id.user_id = self.env['res.users'].sudo().create(dict_users)
-        res_id.password = dict_users['password']
+            res_id.user_id = self.env['res.users'].sudo().create(dict_users)
+            res_id.password = dict_users['password']
         return res_id
 
     @api.one
