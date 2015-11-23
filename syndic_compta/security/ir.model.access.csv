@@ -1,6 +1,6 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-access_syndic_facture,access_syndic_facture,model_syndic_facture,,1,0,0,0
-access_syndic_facture_ligne,access_syndic_facture_ligne,model_syndic_facture_ligne,,1,0,0,0
+access_syndic_facture,access_syndic_facture,model_syndic_facturation,,1,0,0,0
+access_syndic_facture_ligne,access_syndic_facture_ligne,model_syndic_facturation_ligne,,1,0,0,0
 access_syndic_facture_detail,access_syndic_facture_detail,model_syndic_facture_detail,,1,0,0,0
 access_syndic_pcmn,access_syndic_pcmn,model_syndic_pcmn,,1,0,0,0
 access_syndic_repartition_lot,access_syndic_repartition_lot,model_syndic_repartition_lot,,1,0,0,0

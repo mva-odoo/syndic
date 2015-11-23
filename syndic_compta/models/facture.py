@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
-import datetime
 
 
 class Facture(models.Model):
@@ -102,7 +101,7 @@ class Facture(models.Model):
     def create(self, vals):
         new_id = super(Facture, self).create(vals)
         building = self.env['syndic.building'].search([('id', '=', vals['immeuble_id'])])
-        new_id.name = '%s/%i' %(building.name, new_id)
+        new_id.name = '%s/%i' % (building.name, new_id)
         return new_id
 
     @api.one
@@ -232,7 +231,6 @@ class SplitPayWizard(models.Model):
             detail.write({'is_paid': True})
 
         detail.write({'already_pay': new_amount})
-
 
         prop_name = ''
         proprio_name = [proprio.name for proprio in detail.proprietaire_ids]

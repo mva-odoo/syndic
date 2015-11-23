@@ -144,6 +144,7 @@ class ExerciceCompta(models.Model):
                                              search_default_group_account=1)._context,
             }
 
+
 class OpenExerciceWizard(models.TransientModel):
     _name = 'syndic.open.exercice.wizard'
 
