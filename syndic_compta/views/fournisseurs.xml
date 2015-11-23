@@ -6,8 +6,12 @@
             <field name="model">syndic.supplier</field>
             <field name="inherit_id" ref="syndic_management.form_supplier"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='gsm']" position="after">
-                    <field name="account_id"/>
+                <xpath expr="//page[@name='contact']" position="after">
+                    <page string="Données Comptables">
+                        <group>
+                            <field name="account_id"/>
+                        </group>
+                    </page>
                 </xpath>
             </field>
         </record>

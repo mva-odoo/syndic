@@ -28,19 +28,23 @@
 					</header>
 					<sheet string="Rapport reunion" layout="auto">
 						<group>
-							<field name="name" />
-                            <field name="date" />
+							<field name="name"/>
+                            <field name="date"/>
                             <field name="date_fr" />
-							<field name="immeuble_id" />
-							<field name="type_id" />									
-							<field name="descriptif" />									
-							<field name="point_ids" />									
+							<field name="immeuble_id"/>
+							<field name="type_id" />
 		                </group>
+						<group string="Descriptif">
+							<field name="descriptif" nolabel="1"/>
+						</group>
+						<group string="Points">
+							<field name="point_ids" nolabel="1"/>
+						</group>
 		            </sheet>
                 </form>
 			</field>
 		</record>
-		
+
 		<record model="ir.ui.view" id="form_rapport_reunion_point">
 			<field name="name">Rapport Reunion form point view</field>
 			<field name="model">reunion.point</field>
@@ -49,9 +53,9 @@
 				<form string="Reunion" version="7.0">
 					 <sheet string="Rapport reunion" layout="auto">
 						<group>
-							<field name="name" />									
-							<field name="sequence" />																	
-							<field name="descriptif" />																	
+							<field name="name" />
+							<field name="sequence" />
+							<field name="descriptif" />
 		                </group>
 		            </sheet>
                 </form>

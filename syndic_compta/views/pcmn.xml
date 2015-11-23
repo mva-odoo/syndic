@@ -46,7 +46,7 @@
 
         <record model="ir.ui.view" id="syndic_product_form">
             <field name="name">Syndic product form</field>
-            <field name="model">syndic.product</field>
+            <field name="model">syndic.facturation.type</field>
             <field name="arch" type="xml">
                 <form>
                     <group>

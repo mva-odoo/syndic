@@ -2,6 +2,7 @@
 from openerp import models, fields, api, exceptions
 import datetime
 
+
 class BilanLigne(models.Model):
     _name = 'syndic.bilan.ligne'
 
@@ -16,9 +17,10 @@ class BilanLigne(models.Model):
     credit = fields.Float('Credit')
     total = fields.Float('Total', compute=_compute_total, store=True)
     account_id = fields.Many2one('syndic.pcmn', 'Compte')
-    facture_id = fields.Many2one('syndic.facture', 'Facture')
+    facture_id = fields.Many2one('syndic.facturation', 'Facture')
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
+
 
 class ExerciceCompta(models.Model):
     _name = 'syndic.exercice'
@@ -86,7 +88,7 @@ class ExerciceCompta(models.Model):
 
     @api.one
     def compute_amortissement(self):
-        for facture in self.env['syndic.facture'].search([('exercice_id', '=', self.id)]):
+        for facture in self.env['syndic.facturation'].search([('exercice_id', '=', self.id)]):
             for detail in facture.facture_detail_ids:
                 if detail.is_amortissement:
                     for amortissement in detail.amortissement_ids:
@@ -113,7 +115,7 @@ class ExerciceCompta(models.Model):
 
     @api.multi
     def close_exercice_wizard(self):
-        not_close_facture = self.env['syndic.facture'].search([('exercice_id', '=', self.id), ('state', '!=', 'close')])
+        not_close_facture = self.env['syndic.facturation'].search([('exercice_id', '=', self.id), ('state', '!=', 'close')])
         if not_close_facture:
             names = [facture.name for facture in not_close_facture]
             raise exceptions.Warning('Toutes les factures ne sont pas cloturés %s'%names)
@@ -137,7 +139,8 @@ class ExerciceCompta(models.Model):
                 'view_mode': 'tree,form',
                 'res_model': 'syndic.bilan.ligne',
                 'type': 'ir.actions.act_window',
-                'context': self.with_context(self._context, search_default_exercice_id=exercice.id,
+                'context': self.with_context(self._context,
+                                             search_default_exercice_id=exercice.id,
                                              search_default_group_account=1)._context,
             }
 
@@ -180,12 +183,12 @@ class OpenExerciceWizard(models.TransientModel):
     @api.one
     def open_exercice(self):
         self.exercice_id.state = 'open'
-        facture = self.env['syndic.facture'].create({
+        facture = self.env['syndic.facturation'].create({
             'immeuble_id': self.exercice_id.immeuble_id.id,
             'exercice_id': self.exercice_id.id,
         })
         if self.roulement:
-            self.env['syndic.facture.ligne'].create({
+            self.env['syndic.facturation.ligne'].create({
                 'name': 'Etablissement de fonds de roulement',
                 'amount': self.roulement,
                 'invoice_line_date': datetime.date.today(),
@@ -194,7 +197,7 @@ class OpenExerciceWizard(models.TransientModel):
                 'facture_id': facture.id,
             })
         if self.reserve:
-            self.env['syndic.facture.ligne'].create({
+            self.env['syndic.facturation.ligne'].create({
                 'name': 'Etablissement de fonds de reserve',
                 'amount': self.reserve+self.exercice_id.amount_amortissement,
                 'invoice_line_date': datetime.date.today(),
@@ -202,7 +205,6 @@ class OpenExerciceWizard(models.TransientModel):
                 'product_id': self.reserve_product_id.id,
                 'facture_id': facture.id,
             })
-
 
         self.exercice_id.immeuble_id.current_exercice_id = self.exercice_id
 

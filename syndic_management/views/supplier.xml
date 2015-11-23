@@ -54,7 +54,7 @@
 					<field name="job_ids" colspan="2" widget="many2many_tags"/>
 				</group>
 				<notebook colspan="4">
-                    <page string="Contact">
+                    <page string="Contact" name="contact">
 						<group colspan="4" col="4">
 							<separator string="Contact principal" colspan="4"/>Contact principal
 							<field name="street" colspan="2" string="Adresse"/>

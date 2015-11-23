@@ -76,11 +76,11 @@ class Loaner(models.Model):
     _inherit = 'syndic.personne'
     _name = 'syndic.loaner'
 
-    address_ids = fields.One2many('partner.address', 'add_parent_id_loaner', string='Address')
+    address_ids = fields.One2many('partner.address', 'add_parent_id_loaner', string='Adresse')
     loaner_lot_ids = fields.Many2many('syndic.lot', string='Lot')
     login = fields.Char('login')
     passcode = fields.Char('passcode')
-    building_ids = fields.Many2one('syndic.building', related='loaner_lot_ids.building_id', string='Immeuble')
+    building_ids = fields.Many2one('syndic.building', related='loaner_lot_ids.building_id', string='Immeuble non-storé')
     building_store_ids = fields.Many2one('syndic.building', related='loaner_lot_ids.building_id',
                                          string='Immeuble', store=True)
 

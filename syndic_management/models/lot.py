@@ -20,5 +20,5 @@ class TypeLot(models.Model):
     _name = 'syndic.type_lot'
     _order = 'name'
 
-    name = fields.Char('Type de lot')
+    name = fields.Char('Type de lot', required=True)
 

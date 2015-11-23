@@ -7,9 +7,11 @@ class SyndicAmortissementWizard(models.TransientModel):
     _name = 'syndic.amortissement.wizard'
 
     def _default_product(self):
+        return False
         return self.env['syndic.facture.detail'].browse(self._context.get('active_id')).product_id
 
     def _default_amount(self):
+        return False
         return self.env['syndic.facture.detail'].browse(self._context.get('active_id')).amount
 
     @api.depends('duration')

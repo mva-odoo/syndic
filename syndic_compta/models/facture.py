@@ -2,8 +2,9 @@
 from openerp import models, fields, api, exceptions
 import datetime
 
+
 class Facture(models.Model):
-    _name = 'syndic.facture'
+    _inherit = 'syndic.facturation'
 
     @api.depends('immeuble_id')
     @api.one
@@ -29,10 +30,7 @@ class Facture(models.Model):
         if total >= 100.0:
             self.write({'state': 'close'})
 
-    name = fields.Char('Facture numeros')
-    immeuble_id = fields.Many2one('syndic.building', 'Immeuble', required=True)
     invoice_date = fields.Date('Date de création', default=lambda *a: fields.date.today())
-    facture_line_ids = fields.One2many('syndic.facture.ligne', 'facture_id', 'Ligne de facture')
     state = fields.Selection([('report', 'Report'), ('draft', 'Brouillon'), ('validate', 'Validé'), ('close', 'Payé')],
                              'Etat', default='draft')
     facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
@@ -40,11 +38,12 @@ class Facture(models.Model):
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute=_compute_exercice, store=True)
     proprietaire_ids = fields.Many2many('syndic.owner', string='Proprietaires')
     pay_percentage = fields.Float('Pourcentage de payement', compute=_compute_percentage)
+    communication = fields.Char('Communication virement')
 
     @api.one
     def validate_facture(self):
         if self.state != 'validate':
-            for line in self.facture_line_ids:
+            for line in self.line_ids:
                 check_amount = 0.00
                 if line.repartition_lot_id:
                     for repartition_line in line.repartition_lot_id.repart_detail_ids:
@@ -113,32 +112,31 @@ class Facture(models.Model):
                 detail_id.pay_all()
         self.state = 'close'
 
+
 class FactureLigne(models.Model):
-    _name = 'syndic.facture.ligne'
+    _inherit = 'syndic.facturation.line'
 
     @api.onchange('name', 'amount', 'invoice_line_date', 'product_id')
     def _compute_immeuble(self):
         self.immeuble_id = self.facture_id.immeuble_id.id
 
-    name = fields.Char('Description', required=True)
     amount = fields.Float('Montant', required=True)
     invoice_line_date = fields.Date('Date d\'echéhance')
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
-    product_id = fields.Many2one('syndic.product', 'Produit', required=True)
+    product_id = fields.Many2one('syndic.facturation.type', 'Type', required=True)
     repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
-    facture_id = fields.Many2one('syndic.facture', 'Facture')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
 
 
 class FactureDetail(models.Model):
     _name = 'syndic.facture.detail'
-    _rec_name ='facture_id'
+    _rec_name = 'facture_id'
 
-    facture_id = fields.Many2one('syndic.facture', 'origine facture', required=True)
-    facture_line_id = fields.Many2one('syndic.facture.ligne', 'origine ligne', required=True)
+    facture_id = fields.Many2one('syndic.facturation', 'origine facture', required=True)
+    facture_line_id = fields.Many2one('syndic.facturation.ligne', 'origine ligne', required=True)
     amount = fields.Float('Montant', required=True)
     lot_id = fields.Many2one('syndic.lot', 'Lot')
-    product_id = fields.Many2one('syndic.product', 'Produit')
+    product_id = fields.Many2one('syndic.facturation.type', 'Type')
     proprietaire_ids = fields.Many2many('syndic.owner', string='Propriétaire')
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
     is_paid = fields.Boolean('Payé', readonly=True)
@@ -146,7 +144,7 @@ class FactureDetail(models.Model):
     is_report = fields.Boolean('Report')
     amortissement_ids = fields.One2many('syndic.compta.amortissement', 'facture_detail_id', 'Amorrtissements')
     already_pay = fields.Float('Deja payé')
-    report_facture_id = fields.Many2one('syndic.facture', 'Facture reportée')
+    report_facture_id = fields.Many2one('syndic.facturation', 'Facture reportée')
     is_amortissable = fields.Boolean('est amortissable', related='product_id.is_amortissable')
 
     @api.one
@@ -175,7 +173,7 @@ class FactureDetail(models.Model):
         self.is_paid = True
     @api.one
     def report_pay(self):
-        ligne = self.env['syndic.facture.ligne'].create({
+        ligne = self.env['syndic.facturation.ligne'].create({
             'name': self.facture_line_id.name,
             'amount': self.amount - self.already_pay,
             'immeuble_id': self.facture_line_id.immeuble_id.id,
@@ -184,11 +182,11 @@ class FactureDetail(models.Model):
             'invoice_line_date': self.facture_line_id.invoice_line_date,
         })
 
-        facture_id = self.env['syndic.facture'].create({
+        facture_id = self.env['syndic.facturation'].create({
             'name': 'report',
             'immeuble_id': self.facture_line_id.immeuble_id.id,
             'state': 'report',
-            'facture_line_ids': [(6, 0, [ligne.id])]
+            'line_ids': [(6, 0, [ligne.id])]
         })
 
         self.write({'report_facture_id': facture_id.id, 'is_report': True})

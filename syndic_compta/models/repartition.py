@@ -2,6 +2,7 @@
 from openerp import models, fields, api, exceptions
 import datetime
 
+
 class RepartitionLot(models.Model):
     _name = 'syndic.repartition.lot'
     name = fields.Char('Description', required=True)
@@ -27,6 +28,7 @@ class RepartitionLot(models.Model):
                 })
         else:
             raise exceptions.Warning('Il y a déjà des quotités.')
+
 
 class RepartitionLotDetail(models.Model):
     _name = 'syndic.repartition.lot.detail'

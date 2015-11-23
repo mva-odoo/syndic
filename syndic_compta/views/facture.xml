@@ -3,7 +3,7 @@
     <data>
         <record model="ir.ui.view" id="syndic_facture_search">
             <field name="name">Syndic Facture Search</field>
-            <field name="model">syndic.facture</field>
+            <field name="model">syndic.facturation</field>
             <field name="arch" type="xml">
                 <search>
                     <filter string="payé"
@@ -21,7 +21,8 @@
 
          <record model="ir.ui.view" id="syndic_facture_form">
             <field name="name">Syndic Facture Form</field>
-            <field name="model">syndic.facture</field>
+            <field name="model">syndic.facturation</field>
+            <field name="priority">1</field>
             <field name="arch" type="xml">
                 <form>
                     <header>
@@ -29,6 +30,7 @@
                         <button name="reset_draft" type="object" string="Remettre en brouillon" states="validate"/>
                         <button name="pay_all_facture" type="object"
                                 string="Payer toute la facture" states="validate"/>
+                        <button string="Imprimer" name="report_creation" type="object"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <group>
@@ -37,16 +39,17 @@
                         <field name="invoice_date" attrs="{'readonly':[('state', '!=','draft')]}"/>
                         <field name="exercice_id" domain="[('immeuble_id', '=', immeuble_id)]"/>
                         <field name="pay_percentage" widget="progressbar"/>
+                        <field name="communication"/>
                     </group>
                     <notebook>
                         <page string="Ligne de facture">
-                            <field name="facture_line_ids" attrs="{'readonly':[('state', '!=','draft')]}">
+                            <field name="line_ids" attrs="{'readonly':[('state', '!=','draft')]}">
                                 <tree editable="top">
+                                    <field name="product_id"/>
                                     <field name="name"/>
                                     <field name="amount"/>
-                                    <field name="invoice_line_date"/>
+                                    <!--<field name="invoice_line_date"/>-->
                                     <field name="fournisseur_id"/>
-                                    <field name="product_id"/>
                                     <field name="repartition_lot_id" domain="[('immeuble_id', '=', immeuble_id)]"/>
                                     <field name="immeuble_id" invisible="1"/>
                                 </tree>
@@ -179,7 +182,7 @@
         <record model="ir.actions.act_window" id="action_facture">
             <field name="name">Syndic Facture</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">syndic.facture</field>
+            <field name="res_model">syndic.facturation</field>
             <field name="view_mode">tree,form</field>
         </record>
         <menuitem name="Factures" id="facture_encode" parent="facture" action="action_facture"/>

@@ -9,7 +9,7 @@
     Gestion de la comptabilité des immeubles
     """,
     'author': 'OpenERP SA',
-    'depends': ['syndic_management'],
+    'depends': ['syndic_facturation'],
     'website': 'http://www.openerp.com',
     'data': [
         'views/compta.xml',

@@ -4,7 +4,7 @@
         <record model="ir.actions.act_window" id="action_product">
             <field name="name">Syndic Produit</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">syndic.product</field>
+            <field name="res_model">syndic.facturation.type</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('account_product', '=', False)]</field>
         </record>
@@ -12,7 +12,7 @@
         <record model="ir.actions.act_window" id="action_product_financier">
             <field name="name">Syndic Produit Financier</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">syndic.product</field>
+            <field name="res_model">syndic.facturation.type</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('account_product', '=', True)]</field>
         </record>

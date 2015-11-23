@@ -2,6 +2,7 @@
 from openerp import models, fields, api, exceptions
 import datetime
 
+
 class SyndicComptaSetting(models.Model):
     _name = 'syndic.compta.setting'
 
@@ -13,6 +14,7 @@ class SyndicComptaSetting(models.Model):
     open_report_reserve_compte = fields.Many2one('syndic.product', 'Produit de fond de reserve à reporter pour reouverture')
     open_report_roulement_compte = fields.Many2one('syndic.product', 'Produit de fond de roulement à reporter pour reouverture')
     fournisseur_compte = fields.Many2one('syndic.pcmn', 'Compte fournisseur')
+
 
 class SyndicBuilding(models.Model):
     _inherit = 'syndic.building'
@@ -53,13 +55,6 @@ class SyndicBuilding(models.Model):
             return settings.open_report_reserve_compte.id
         return settings.roulement_product_id
 
-    def _default_open_report_reserve_compte(self):
-        settings = self.env['syndic.compta.setting'].search([])
-        if len(settings) > 0:
-            return settings.open_report_roulement_compte.id
-        return settings.roulement_product_id
-
-
     roulement_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (roulement)',
                                            default=_default_prod_roulement)
     reserve_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (resrve)',
@@ -87,8 +82,9 @@ class Fournisseur(models.Model):
         settings = self.env['syndic.compta.setting'].search([])
         if len(settings) > 0:
             return settings.fournisseur_compte.id
+        return settings.fournisseur_compte
 
-    account_id = fields.Many2one('syndic.pcmn', 'account', default=_default_account_id)
+    account_id = fields.Many2one('syndic.pcmn', 'Compte Fournisseur', default=_default_account_id)
 
 
 class SyndicLot(models.Model):

@@ -2,9 +2,11 @@
 from openerp import models, fields, api, exceptions
 import datetime
 
+
 class Pcmn(models.Model):
     _name = 'syndic.pcmn'
     _rec_name = 'code'
+
     name = fields.Char('Nom du compte', required=True)
     code = fields.Char('Code du compte', required=True)
     parent_id = fields.Many2one('syndic.pcmn', 'Compte parent')
@@ -28,9 +30,10 @@ class Pcmn(models.Model):
         pcmn = self.search(args, limit=limit)
         return pcmn.name_get()
 
+
 class Prodcut(models.Model):
-    _name = 'syndic.product'
-    name = fields.Char('Produit')
+    _inherit = 'syndic.facturation.type'
+
     detail = fields.Text('Detail')
     payable_compte_id = fields.Many2one('syndic.pcmn', 'Compte payé')
     receive_compte_id = fields.Many2one('syndic.pcmn', 'Compte Reçu')

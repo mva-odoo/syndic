@@ -13,6 +13,7 @@
     'data': [
         'views/letter_view.xml',
         'views/reunion.xml',
+        'views/avis.xml',
         'report/letter.xml',
         'report/avis.xml',
         'report/reunion.xml',

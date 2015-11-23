@@ -77,7 +77,7 @@
 							</field>
                             <field name="total_quotites"/>
 						</page>
-						<page string="Fiche technique">
+						<page string="Fiche technique" name="fiche_technique">
                             <button name="go_export_model" string="Exporter fiche technique" type="object"/>
 							<field name="supplier_ids" />
 						</page>

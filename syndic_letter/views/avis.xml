@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="tree_avis">
+            <field name="name">Avis tree view</field>
+            <field name="model">letter.avis</field>
+            <field name="arch" type="xml">
+                <tree string="Avis" version="7.0">
+                        <field name="name" />
+                        <field name="type_id" />
+                        <field name="immeuble_id" />
+                        <field name="date" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="search_avis">
+            <field name="name">Avis search view</field>
+            <field name="model">letter.avis</field>
+            <field name="arch" type="xml">
+                <search string="Avis">
+                        <field name="name" />
+                        <field name="type_id" />
+                        <field name="immeuble_id" />
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="form_avis">
+            <field name="name">Avis form view</field>
+            <field name="model">letter.avis</field>
+            <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Avis">
+                        <header>
+                            <button string="Imprimer" name="report_creation" type="object"/>
+                        </header>
+
+                        <sheet string="Letter" layout="auto">
+                            <group>
+                                <field name="name" />
+                                <field name="date" />
+                                <field name="date_fr" />
+                                <field name="avis_model_id"/>
+                                <field name="type_id"/>
+                                <field name="immeuble_id"/>
+                            </group>
+                            <group string="Texte">
+                                <field name="text" nolabel="1"/>
+                            </group>
+                        </sheet>
+                    </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="form_avis_model">
+            <field name="name">Model Avis form view</field>
+            <field name="model">letter.avis.model</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Avis" version="7.0">
+                    <sheet string="Letter" layout="auto">
+                        <group>
+                            <field name="name"/>
+                            <field name="text"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_model_avis">
+            <field name="name">Modèle d avis</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">letter.avis.model</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_avis">
+            <field name="name">Avis</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">letter.avis</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Avis" id="menu_action_avis" parent="menu_sub_letter" action="action_avis" sequence="3"/>
+        <menuitem name="Modèle d avis" id="menu_action_model_avis" parent="menu_configuration_letter"
+                  action="action_model_avis" sequence="2"/>
+
+    </data>
+</openerp>

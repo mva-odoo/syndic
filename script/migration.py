@@ -253,30 +253,7 @@ export_import('syndic.facturation.line', ['prix_tot',
                                           'nombre',
                                           'name'], False)
 
-# --------------------------------
-# letter
-# --------------------------------
-export_import('letter.avis.model')
-export_import('letter.model')
-export_import('letter.type')
-export_import('letter.begin')
-export_import('letter.end')
 
-
-letter = ['begin_letter_id/id', 'create_date', 'save_letter', 'is_fax',
-          'name_template', 'create_uid/id', 'end_letter_id/id', 'state', 'sujet',
-          'immeuble_id/id', 'letter_type_id/id', 'name', 'contenu',  'ps',
-          'date', 'date_fr', 'write_date', 'write_uid/id', 'all_immeuble', 'mail_server/id', 'is_mail',
-          'partner_address_ids/id', 'letter_model_id/id', 'loc_ids/id',
-          'fourn_ids/id',
-          'old_ids/id', 'divers_ids/id',
-          'propr_ids/id',
-          ]
-
-print '-------------------------------------------------------------------------------------------------------'
-print 'letter.letter'
-export_datas = export_model('letter.create', letter, [])
-print import_model('letter.letter', export_datas['datas'], letter, [])
 
 export_import('reunion.type')
 export_import('letter.reunion', ['name', 'immeuble_id/id', 'descriptif',
@@ -380,3 +357,43 @@ print import_model('syndic.calendar', export_datas['datas'], [
     'where',
     'description',
   ], [])
+
+# --------------------------------
+# letter
+# --------------------------------
+export_import('letter.avis.model')
+export_import('letter.model')
+export_import('letter.type')
+export_import('letter.begin')
+export_import('letter.end')
+
+
+letter = ['begin_letter_id/id', 'create_date', 'save_letter', 'is_fax',
+          'name_template', 'create_uid/id', 'end_letter_id/id', 'state', 'sujet',
+          'immeuble_id/id', 'letter_type_id/id', 'name', 'contenu', 'ps',
+          'date', 'date_fr', 'write_date', 'write_uid/id', 'all_immeuble', 'mail_server/id', 'is_mail',
+          'partner_address_ids/id', 'letter_model_id/id', 'loc_ids/id',
+          # 'fourn_ids/id',
+          'old_ids/id', 'divers_ids/id',
+          'propr_ids/id',
+          ]
+
+print '-------------------------------------------------------------------------------------------------------'
+print 'letter.letter'
+export_datas = export_model('letter.create', letter, [])
+print import_model('letter.letter', export_datas['datas'], letter, [])
+
+letter = ['begin_letter_id/id', 'create_date', 'save_letter', 'is_fax',
+          'name_template', 'create_uid/id', 'end_letter_id/id', 'state', 'sujet',
+          'immeuble_id/id', 'letter_type_id/id', 'name', 'contenu', 'ps',
+          'date', 'date_fr', 'write_date', 'write_uid/id', 'all_immeuble', 'mail_server/id', 'is_mail',
+          'partner_address_ids/id', 'letter_model_id/id', 'loc_ids/id',
+          'fourn_ids/id',
+          'old_ids/id', 'divers_ids/id',
+          'propr_ids/id',
+          ]
+
+print '-------------------------------------------------------------------------------------------------------'
+print 'letter.letter'
+export_datas = export_model('letter.create', letter, [])
+print import_model('letter.letter', export_datas['datas'], letter, [])
