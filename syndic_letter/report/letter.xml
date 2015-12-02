@@ -31,7 +31,6 @@
         </template>
 
         <template t-name="letter">
-            <div class="page">
                 <div class="row">
                  
                     <div class="col-xs-6"><br/><br/>
@@ -82,54 +81,43 @@
                             <p><span t-field="o.ps"/></p>
                         </t>
            
-                    
                     </div>
                 </div>
-            </div>
+            <p style="page-break-after:always;"></p>
         </template>
-
-
 
         <template id="letter_qweb">
             <t t-call="report.html_container">
                 <t t-name="letter_qweb">
                     <t t-foreach="docs" t-as="o">
-                        <t t-foreach="o.propr_ids" t-as="prop_id">
-                            <t t-call="report.external_layout">
-                                <t t-call="syndic_letter.letter"/>
-                            </t>
-                        </t>
-                        <t t-foreach="o.loc_ids" t-as="prop_id">
-                           <t t-call="report.external_layout">
-                                <t t-call="syndic_letter.letter"/>
-                            </t>
+                        <t t-call="report.external_layout">
+                            <div class="page">
+                                <t t-foreach="o.propr_ids" t-as="prop_id">
+                                    <t t-call="syndic_letter.letter"/>
+                                </t>
+
+                                <t t-foreach="o.loc_ids" t-as="prop_id">
+                                    <t t-call="syndic_letter.letter"/>
+                                </t>
+
+                                <t t-foreach="o.fourn_ids" t-as="prop_id">
+                                    <t t-call="syndic_letter.letter"/>
+                                </t>
+
+                                <t t-foreach="o.divers_ids" t-as="prop_id">
+                                    <t t-call="syndic_letter.letter"/>
+                                </t>
+
+                                <t t-foreach="o.partner_address_ids" t-as="prop_id">
+                                    <t t-call="syndic_letter.letter"/>
+                                </t>
+                            </div>
                         </t>
 
-                        <t t-foreach="o.fourn_ids" t-as="prop_id">
-                           <t t-call="report.external_layout">
-                                <t t-call="syndic_letter.letter"/>
-                            </t>
-                        </t>
-
-                        <t t-foreach="o.divers_ids" t-as="prop_id">
-                            <t t-call="report.external_layout">
-                                <t t-call="syndic_letter.letter"/>
-                            </t>
-                        </t>
-
-                        <t t-foreach="o.partner_address_ids" t-as="prop_id">
-                            <t t-call="report.external_layout">
-                                <t t-call="syndic_letter.letter"/>
-                            </t>
-                        </t>
-                    </t>
+                     </t>
                 </t>
             </t>
         </template>
-
-
-
-
 
     </data>
 </openerp>
