@@ -230,7 +230,25 @@ export_import('bon.commande', ['name',
                                'date_cloture',
                                ], False)
 
-export_import('offre.contrat')
+offre_contrat = [
+    'is_refused',
+    'is_bon_commande',
+    'date_acceptation',
+    'accept',
+    'acceptation',
+    'date_transmition',
+    'transmition',
+    'date_reception',
+    'reception',
+    'envoi_par',
+    'date_envoi',
+    'demande',
+    'immeuble_id/id',
+    'fournisseur_id/id',
+    'name',
+]
+
+export_import('offre.contrat', offre_contrat, False)
 
 # --------------------------------
 # facturation
