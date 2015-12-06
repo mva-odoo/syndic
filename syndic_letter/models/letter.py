@@ -62,7 +62,6 @@ class CreateLetter(models.Model):
 
     @api.model
     def create(self, vals):
-        import ipdb;ipdb.set_trace()
         res = super(CreateLetter, self).create(vals)
 
         # create letter template
