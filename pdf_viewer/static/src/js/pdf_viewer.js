@@ -3,13 +3,8 @@ openerp.pdf_viewer = function(instance, local) {
         _lt = instance.web._lt;
     var QWeb = instance.web.qweb;
 
-
-
     local.HomePage = instance.Widget.extend({
         template: "PDFViewer",
-        start: function() {
-            console.log("load pdf viewer");
-        },
         init: function(parent, action) {
             this._super(parent);
             this.report = action.context['report']
@@ -17,10 +12,7 @@ openerp.pdf_viewer = function(instance, local) {
         },
     });
 
-
     instance.web.client_actions.add('pdf_viewer.homepage', 'instance.pdf_viewer.HomePage');
-
-
 }
 
 
@@ -49,7 +41,7 @@ odoo.define('sgimmo.custom_report', function (require) {
             new_action.context = pyeval.eval('contexts',eval_contexts);
             new_action.context['report'] = action['report_name']
 
-//            return self.ir_actions_client(new_action,options);
+            debugger;
 
             return $.Deferred(function (d) {
                 self.ir_actions_client(new_action,options).always(function () {

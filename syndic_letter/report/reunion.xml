@@ -12,6 +12,7 @@
         <template id="rapport_reunion_print">
             <t t-call="report.html_container">
                 <t t-name="reunion_qweb">
+                    <t t-set="docs" t-value="docs.with_context({'lang':'fr_BE'})" />
                     <t t-foreach="docs" t-as="o">
                         <t t-call="report.external_layout">
                             <div class="page">
@@ -19,7 +20,7 @@
                                 <div style="font-size:18px;">
                                     <span t-field="o.immeuble_id.name"/><br/>
                                     <span t-field="o.immeuble_id.address_building"/><br/>
-                                    <span t-field="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
+                                    <span t-esc="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
                                     <tr><td  width="10%">BCE: </td><td  width="90%"> <span t-field="o.immeuble_id.BCE"/></td></tr>
                                     <div style="text-align:right;">
                                         <br/>

@@ -93,6 +93,7 @@ class CreateLetter(models.Model):
     @api.onchange('immeuble_id', 'all_immeuble')
     def onchange_immeuble(self):
         prop_list = []
+        self.propr_ids = False
         if self.all_immeuble:
             for lot in self.immeuble_id.lot_ids:
                 for prop in lot.proprio_id:

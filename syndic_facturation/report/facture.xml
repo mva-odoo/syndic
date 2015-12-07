@@ -3,6 +3,7 @@
     <data>
         <template id="syndic_facturation.facture">
             <t t-call="report.external_layout">
+                <t t-set="docs" t-value="docs.with_context({'lang':'fr_BE'})" />
                     <t t-foreach="docs" t-as="o">
                         <div class="page">
                             <div class="row">
@@ -26,7 +27,7 @@
                                         <div class="col-xs-10">
                                             <br/><span t-field="o.immeuble_id.name"/><br/>
                                             <span t-field="o.immeuble_id.address_building"/><br/>
-                                            <span t-field="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
+                                            <span t-esc="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
                                             <span t-field="o.immeuble_id.BCE"/><br/>
                                             <span>Etats des frais et honoraires pour prestations accomplies</span><br/>
                                         </div>
