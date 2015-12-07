@@ -12,7 +12,7 @@ class PieceJointe(models.Model):
 class CreateLetter(models.Model):
     _name = 'letter.letter'
     _rec_name = 'sujet'
-    _inherit = 'mail.thread', 'pdf.viewer'
+    _inherit = 'pdf.viewer'
     _order = 'create_date desc'
     _report_name = 'syndic_letter.letter_qweb'
 
@@ -86,6 +86,7 @@ class CreateLetter(models.Model):
             elif res.letter_type_id.name in ['Bon de commande']:
                 values['date_demande'] = res.date
                 self.env['bon.commande'].create(values)
+
 
         return res
 
