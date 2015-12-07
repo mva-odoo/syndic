@@ -52,7 +52,6 @@
             <field name="arch" type="xml">
                 <form string="Letter" version="7.0">
                         <header>
-                            <button string="Imprimer" name="report_creation" type="object"/>
                             <button string="Envoyer emails" name="send_email_lettre" type="object"/>
                             <field name="state" widget="statusbar"/>
                         </header>

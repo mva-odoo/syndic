@@ -29,9 +29,6 @@
             <field name="model">syndic.facturation</field>
             <field name="arch" type="xml">
                 <form string="Facture">
-                    <header>
-                        <button string="Imprimer" name="report_creation" type="object"/>
-                    </header>
                     <group>
                         <field name="name"/>
                         <field name="immeuble_id"/>

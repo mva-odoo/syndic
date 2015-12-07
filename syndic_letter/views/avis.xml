@@ -32,10 +32,6 @@
             <field name="type">form</field>
                 <field name="arch" type="xml">
                     <form string="Avis">
-                        <header>
-                            <button string="Imprimer" name="report_creation" type="object"/>
-                        </header>
-
                         <sheet string="Letter" layout="auto">
                             <group>
                                 <field name="name" />

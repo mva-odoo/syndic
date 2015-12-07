@@ -23,9 +23,6 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Reunion" version="7.0">
-					<header>
-						<button string="Imprimer" name="report_creation" type="object"/>
-					</header>
 					<sheet string="Rapport reunion" layout="auto">
 						<group>
 							<field name="name"/>
