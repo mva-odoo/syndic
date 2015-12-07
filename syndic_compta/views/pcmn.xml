@@ -44,29 +44,6 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="syndic_product_form">
-            <field name="name">Syndic product form</field>
-            <field name="model">syndic.facturation.type</field>
-            <field name="arch" type="xml">
-                <form>
-                    <group>
-                        <field name="name"/>
-                        <field name="receive_compte_id"/>
-                        <field name="payable_compte_id"/>
-                        <field name="account_product"/>
-                        <field name="is_amortissable"/>
-                        <field name="etablissement_fond" attrs="{'invisible': [('account_product', '=', False)]}"/>
-                        <field name="accompte_fond_id" attrs="{'invisible': [('account_product', '=', False)]}"/>
-                    </group>
-                    <notebook>
-                        <page string="Detail">
-                            <field name="detail"/>
-                        </page>
-                    </notebook>
-                </form>
-            </field>
-        </record>
-
         <record model="ir.actions.act_window" id="action_syndic_plan_compte_compta">
             <field name="name">Syndic plan comptable</field>
             <field name="type">ir.actions.act_window</field>

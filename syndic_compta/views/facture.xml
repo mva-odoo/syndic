@@ -45,9 +45,9 @@
                         <page string="Ligne de facture">
                             <field name="line_ids" attrs="{'readonly':[('state', '!=','draft')]}">
                                 <tree editable="top">
-                                    <field name="product_id"/>
+                                    <field name="type_id"/>
                                     <field name="name"/>
-                                    <field name="amount"/>
+                                    <field name="prix"/>
                                     <!--<field name="invoice_line_date"/>-->
                                     <field name="fournisseur_id"/>
                                     <field name="repartition_lot_id" domain="[('immeuble_id', '=', immeuble_id)]"/>
@@ -152,6 +152,7 @@
             <field name="arch" type="xml">
                 <search>
                     <field name="facture_id"/>
+                    <field name="exercice_id"/>
                     <field name="facture_line_id"/>
                     <field name="amount"/>
                     <field name="lot_id"/>

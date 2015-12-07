@@ -46,7 +46,7 @@ class Facture(models.Model):
                 check_amount = 0.00
                 if line.repartition_lot_id:
                     for repartition_line in line.repartition_lot_id.repart_detail_ids:
-                        amount = line.amount * (repartition_line.value/1000)
+                        amount = line.prix * (repartition_line.value/1000)
                         proprio_ids = False
                         if repartition_line.lot_id.proprio_id:
                             proprio_ids = [prop_id.id for prop_id in repartition_line.lot_id.proprio_id]
@@ -56,7 +56,7 @@ class Facture(models.Model):
                             'amount': amount,
                             'lot_id': repartition_line.lot_id.id,
                             'proprietaire_ids': [(6, 0, proprio_ids)],
-                            'product_id': line.product_id.id,
+                            'product_id': line.type_id.id,
                             'fournisseur_id': line.fournisseur_id.id,
                         })
 
@@ -65,27 +65,27 @@ class Facture(models.Model):
                     self.env['syndic.facture.detail'].create({
                             'facture_id': self.id,
                             'facture_line_id': line.id,
-                            'amount': line.amount,
-                            'product_id': line.product_id.id,
+                            'amount': line.prix,
+                            'product_id': line.type_id.id,
                             'fournisseur_id': line.fournisseur_id.id,
                         })
                 if self.state == 'draft':
                     self.env['syndic.bilan.ligne'].create({
-                            'name': line.product_id.name,
+                            'name': line.type_id.name,
                             'facture_id': self.id,
-                            'account_id': line.product_id.receive_compte_id.id,
-                            'debit': line.amount,
+                            'account_id': line.type_id.receive_compte_id.id,
+                            'debit': line.prix,
                             'exercice_id': line.facture_id.exercice_id.id,
                         })
 
                     self.env['syndic.bilan.ligne'].create({
-                            'name': line.product_id.name,
+                            'name': line.type_id.name,
                             'facture_id': self.id,
-                            'account_id': line.fournisseur_id.account_id.id or line.product_id.accompte_fond_id.id,
-                            'credit': line.amount,
+                            'account_id': line.fournisseur_id.account_id.id or line.type_id.accompte_fond_id.id,
+                            'credit': line.prix,
                             'exercice_id': line.facture_id.exercice_id.id,
                         })
-                    if check_amount != line.amount and line.repartition_lot_id:
+                    if check_amount != line.prix and line.repartition_lot_id:
                         raise exceptions.Warning("La totalité de la somme n'a pas été facturé. "
                                                  "Vérifié la répartition des quotités")
 
@@ -115,14 +115,12 @@ class Facture(models.Model):
 class FactureLigne(models.Model):
     _inherit = 'syndic.facturation.line'
 
-    @api.onchange('name', 'amount', 'invoice_line_date', 'product_id')
+    @api.onchange('name', 'prix', 'invoice_line_date', 'type_id')
     def _compute_immeuble(self):
         self.immeuble_id = self.facture_id.immeuble_id.id
 
-    amount = fields.Float('Montant', required=True)
     invoice_line_date = fields.Date('Date d\'echéhance')
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
-    product_id = fields.Many2one('syndic.facturation.type', 'Type', required=True)
     repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
 
@@ -132,7 +130,8 @@ class FactureDetail(models.Model):
     _rec_name = 'facture_id'
 
     facture_id = fields.Many2one('syndic.facturation', 'origine facture', required=True)
-    facture_line_id = fields.Many2one('syndic.facturation.ligne', 'origine ligne', required=True)
+    exercice_id = fields.Many2one('syndic.exercice', related='facture_id.exercice_id', store=True, string='Exercice')
+    facture_line_id = fields.Many2one('syndic.facturation.line', 'origine ligne', required=True)
     amount = fields.Float('Montant', required=True)
     lot_id = fields.Many2one('syndic.lot', 'Lot')
     product_id = fields.Many2one('syndic.facturation.type', 'Type')

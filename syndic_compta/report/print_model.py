@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
 
+
 class Facture(models.TransientModel):
     _name = 'syndic.bilan.report.wizard'
     name = fields.Char('test')

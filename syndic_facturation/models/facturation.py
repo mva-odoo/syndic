@@ -67,7 +67,7 @@ class SyndicFacturationType(models.Model):
     _name = 'syndic.facturation.type'
 
     name = fields.Char('Type de facture', required=True)
-    prix = fields.Float('Prix de la prestation', required=True)
+    prix = fields.Float('Prix de la prestation')
 
 
 class SyndicqtyType(models.Model):
