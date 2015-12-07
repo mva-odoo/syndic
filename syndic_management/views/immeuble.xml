@@ -88,13 +88,15 @@
 			</field>
 		</record>
 		
-<record model="ir.ui.view" id="form_wizard_fiche_technique">
+		<record model="ir.ui.view" id="form_wizard_fiche_technique">
 			<field name="name">Wizard fiche technique</field>
 			<field name="model">export.fiche.tech</field>
 			<field name="arch" type="xml">
 				<form string="Fiche technique">
-                    <field name="xls_file" filename="datas_fname"/>
-                    <field name="datas_fname" invisible="1"/>
+					<group>
+						<field name="xls_file" filename="datas_fname"/>
+						<field name="datas_fname" invisible="1"/>
+					</group>
                 </form>
 			</field>
 		</record>
