@@ -69,7 +69,7 @@ class CreateLetter(models.Model):
                 res.env['letter.model'].create({'name': res.name_template, 'text': res.contenu})
 
         # check if building is set
-        #if not res.immeuble_id.id:
+        # if not res.immeuble_id.id:
         #    raise Exception("Il faut un immeuble pour créer un bon de commande ou une offre")
 
         for supplier_id in res.fourn_ids:
@@ -86,7 +86,6 @@ class CreateLetter(models.Model):
             elif res.letter_type_id.name in ['Bon de commande']:
                 values['date_demande'] = res.date
                 self.env['bon.commande'].create(values)
-
 
         return res
 
@@ -145,7 +144,8 @@ class CreateLetter(models.Model):
         footer = """<br/>L'&eacute;quipe SG IMMO<br/>
 Rue Fran&ccedil;ois Vander Elst, 38/1<br/>
 1950 Kraainem<br/>
-'<img src="https://lh6.googleusercontent.com/-7QA8bP7oscU/UUrXkQ1-rHI/AAAAAAAAAAk/WhbiGpLAUCQ/s270/Logo_SG%2520immo.JPG" width="96" height="61"/>'"""
+'<img src="https://lh6.googleusercontent.com/-7QA8bP7oscU/UUrXkQ1-rHI/AAAAAAAAAAk/WhbiGpLAUCQ/s270/Logo_SG%2520immo.JPG"
+width="96" height="61"/>'"""
 
         if self.ps:
             mail['body_html'] = header + body + self.ps + '<br/>'+footer

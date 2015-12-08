@@ -21,4 +21,3 @@ class TypeLot(models.Model):
     _order = 'name'
 
     name = fields.Char('Type de lot', required=True)
-

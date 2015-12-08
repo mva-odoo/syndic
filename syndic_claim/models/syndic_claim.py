@@ -2,6 +2,7 @@
 from openerp import models, fields, api, exceptions
 from datetime import date
 
+
 class Claim(models.Model):
     _name = 'syndic.claim'
     _rec_name = 'subject'

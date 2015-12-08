@@ -2,6 +2,7 @@
 from openerp import models, fields, api, exceptions
 from openerp import tools
 
+
 class PDFViewer(models.Model):
     _name = 'pdf.viewer'
     _report_name = 'pdf.viewer'
@@ -14,8 +15,3 @@ class PDFViewer(models.Model):
             'type': 'ir.actions.client',
             'context': {'report': self._report_name},
         }
-
-
-class ReportViewer(models.Model):
-    _inherit = 'ir.values'
-
