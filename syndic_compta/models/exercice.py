@@ -82,8 +82,8 @@ class ExerciceCompta(models.Model):
                 'type': 'ir.actions.act_window',
                 'view_id': view_id,
                 'domain': ['|', ('account_id.code', '=ilike', '6%'), ('account_id.code', '=ilike', '7%')],
-                'context': self.with_context(self._context, search_default_exercice_id=exercice.id,
-                                             search_default_group_account=1)._context,
+                'context': self.with_context(self.env.context, search_default_exercice_id=exercice.id,
+                                             search_default_group_account=1).env.context,
             }
 
     @api.one
@@ -115,10 +115,11 @@ class ExerciceCompta(models.Model):
 
     @api.multi
     def close_exercice_wizard(self):
-        not_close_facture = self.env['syndic.facturation'].search([('exercice_id', '=', self.id), ('state', '!=', 'close')])
+        not_close_facture = self.env['syndic.facturation'].search([('exercice_id', '=', self.id),
+                                                                   ('state', '!=', 'close')])
         if not_close_facture:
             names = [facture.name for facture in not_close_facture]
-            raise exceptions.Warning('Toutes les factures ne sont pas cloturés %s'%names)
+            raise exceptions.Warning('Toutes les factures ne sont pas cloturés %s' % names)
 
         return {
             'name': 'Cloture d\'exercice',
@@ -139,9 +140,9 @@ class ExerciceCompta(models.Model):
                 'view_mode': 'tree,form',
                 'res_model': 'syndic.bilan.ligne',
                 'type': 'ir.actions.act_window',
-                'context': self.with_context(self._context,
+                'context': self.with_context(self.env.context,
                                              search_default_exercice_id=exercice.id,
-                                             search_default_group_account=1)._context,
+                                             search_default_group_account=1).env.context,
             }
 
 
@@ -158,6 +159,7 @@ class OpenExerciceWizard(models.TransientModel):
         return self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
 
     def _default_product_reserve(self):
+        return
         immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
         if self._context.get('reopen'):
             return immeuble_id.open_report_reserve_compte
@@ -165,6 +167,7 @@ class OpenExerciceWizard(models.TransientModel):
             return immeuble_id.reserve_product_id
 
     def _default_product_roulement(self):
+        return
         immeuble_id = self.env['syndic.exercice'].browse(self._context.get('active_id')).immeuble_id
         if self._context.get('reopen'):
             return immeuble_id.open_report_roulement_compte
@@ -172,10 +175,10 @@ class OpenExerciceWizard(models.TransientModel):
             return immeuble_id.roulement_product_id
 
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice', default=_default_exercice)
-    roulement_product_id = fields.Many2one('syndic.product', 'Produit fond de roulement',
+    roulement_product_id = fields.Many2one('syndic.facturation.type', 'Produit fond de roulement',
                                            default=_default_product_roulement)
     roulement = fields.Float('Fond de roulement')
-    reserve_product_id = fields.Many2one('syndic.product', 'Produit fond de reserve',
+    reserve_product_id = fields.Many2one('syndic.facturation.type', 'Produit fond de reserve',
                                          default=_default_product_reserve)
     reserve = fields.Float('Fond de reserve')
     repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
@@ -189,25 +192,26 @@ class OpenExerciceWizard(models.TransientModel):
             'exercice_id': self.exercice_id.id,
         })
         if self.roulement:
-            self.env['syndic.facturation.ligne'].create({
+            self.env['syndic.facturation.line'].create({
                 'name': 'Etablissement de fonds de roulement',
-                'amount': self.roulement,
+                'prix': self.roulement,
                 'invoice_line_date': datetime.date.today(),
                 'repartition_lot_id': self.repartition_lot_id.id,
-                'product_id': self.roulement_product_id.id,
+                'type_id': self.roulement_product_id.id,
                 'facture_id': facture.id,
             })
         if self.reserve:
-            self.env['syndic.facturation.ligne'].create({
+            self.env['syndic.facturation.line'].create({
                 'name': 'Etablissement de fonds de reserve',
-                'amount': self.reserve+self.exercice_id.amount_amortissement,
+                'prix': self.reserve+self.exercice_id.amount_amortissement,
                 'invoice_line_date': datetime.date.today(),
                 'repartition_lot_id': self.repartition_lot_id.id,
-                'product_id': self.reserve_product_id.id,
+                'type_id': self.reserve_product_id.id,
                 'facture_id': facture.id,
             })
 
         self.exercice_id.immeuble_id.current_exercice_id = self.exercice_id
+
 
 class CloseExerciceWizard(models.TransientModel):
     _name = 'syndic.close.exercice.wizard'
@@ -266,26 +270,26 @@ class CloseExerciceWizard(models.TransientModel):
     @api.multi
     def close_exercice_reopen(self):
         for wizard in self:
-            exercice = self.env['syndic.exercice'].browse(wizard._context['active_id'])
+            exercice = self.env['syndic.exercice'].browse(wizard.env.context['active_id'])
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (fond de roulement)',
                 'credit': wizard.roulement_valeur_rapporter,
                 'account_id': wizard.roulement_compte_rapporter.id,
-                'exercice_id': wizard._context['active_id'],
+                'exercice_id': wizard.env.context['active_id'],
                 'immeuble_id': exercice.immeuble_id.id,
             })
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (fond de reserve)',
                 'credit': wizard.reserve_valeur_rapporter,
                 'account_id': wizard.reserve_compte_rapporter.id,
-                'exercice_id': wizard._context['active_id'],
+                'exercice_id': wizard.env.context['active_id'],
                 'immeuble_id': exercice.immeuble_id.id,
             })
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (valeur à reporter)',
                 'debit': wizard.reserve_valeur_rapporter + wizard.roulement_valeur_rapporter,
                 'account_id': wizard.compte_rapporter.id,
-                'exercice_id': wizard._context['active_id'],
+                'exercice_id': wizard.env.context['active_id'],
                 'immeuble_id': exercice.immeuble_id.id,
             })
             wizard.exercice_id.state = 'close'
@@ -319,14 +323,14 @@ class CloseExerciceWizard(models.TransientModel):
                 'name': 'Cloture d exercice (fond de reserve)',
                 'credit': wizard.reserve_valeur_rapporter,
                 'account_id': wizard.reserve_compte_rapporter.id,
-                'exercice_id': wizard._context['active_id'],
+                'exercice_id': wizard.env.context['active_id'],
                 'immeuble_id': exercice.immeuble_id.id,
             })
             self.env['syndic.bilan.ligne'].create({
                 'name': 'Cloture d exercice (valeur à reporter)',
                 'debit': wizard.reserve_valeur_rapporter + wizard.roulement_valeur_rapporter,
                 'account_id': wizard.compte_rapporter.id,
-                'exercice_id': wizard._context['active_id'],
+                'exercice_id': wizard.env.context['active_id'],
                 'immeuble_id': exercice.immeuble_id.id,
             })
             wizard.exercice_id.state = 'close'

@@ -5,6 +5,19 @@ from openerp import models, fields, api, exceptions
 class Facture(models.Model):
     _inherit = 'syndic.facturation'
 
+    invoice_date = fields.Date('Date de création', default=lambda *a: fields.date.today())
+    state = fields.Selection([('report', 'Report'),
+                              ('draft', 'Brouillon'),
+                              ('validate', 'Validé'),
+                              ('close', 'Payé')],
+                             'Etat', default='draft')
+    facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
+    bilan_ids = fields.One2many('syndic.bilan.ligne', 'facture_id', 'Lignes du bilan')
+    exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute='_compute_exercice', store=True)
+    proprietaire_ids = fields.Many2many('syndic.owner', string='Proprietaires')
+    pay_percentage = fields.Float('Pourcentage de payement', compute='_compute_percentage')
+    communication = fields.Char('Communication virement')
+
     @api.depends('immeuble_id')
     @api.one
     def _compute_exercice(self):
@@ -28,16 +41,6 @@ class Facture(models.Model):
 
         if total >= 100.0:
             self.write({'state': 'close'})
-
-    invoice_date = fields.Date('Date de création', default=lambda *a: fields.date.today())
-    state = fields.Selection([('report', 'Report'), ('draft', 'Brouillon'), ('validate', 'Validé'), ('close', 'Payé')],
-                             'Etat', default='draft')
-    facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
-    bilan_ids = fields.One2many('syndic.bilan.ligne', 'facture_id', 'Lignes du bilan')
-    exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute=_compute_exercice, store=True)
-    proprietaire_ids = fields.Many2many('syndic.owner', string='Proprietaires')
-    pay_percentage = fields.Float('Pourcentage de payement', compute=_compute_percentage)
-    communication = fields.Char('Communication virement')
 
     @api.one
     def validate_facture(self):

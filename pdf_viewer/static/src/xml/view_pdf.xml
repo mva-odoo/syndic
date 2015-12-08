@@ -6,7 +6,9 @@
         </div>
 
         <div style="top:20px;height:95%;width:100%;">
-            <iframe width="100%" height="100%" t-attf-src="{{ widget.url }}"></iframe>
+            <t t-if="widget.url">
+                <iframe width="100%" height="100%" t-attf-src="{{ widget.url }}"></iframe>
+            </t>
         </div>
     </t>
 </templates>

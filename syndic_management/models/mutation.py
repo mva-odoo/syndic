@@ -41,7 +41,7 @@ class Mutation(models.Model):
     @api.one
     def remove_access_users(self, old_ids):
         user_ids = self.env['res.users'].search([('proprio_id', 'in', old_ids)])
-        user_ids.unlink()
+        user_ids.write({'active': False})
 
     @api.one
     def mutation_ok(self):

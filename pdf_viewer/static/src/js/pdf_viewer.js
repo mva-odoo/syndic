@@ -7,8 +7,13 @@ openerp.pdf_viewer = function(instance, local) {
         template: "PDFViewer",
         init: function(parent, action) {
             this._super(parent);
-            this.report = action.context['report']
-            this.url = '/report/pdf/'+action.context['report']+'/'+action.context['active_id'];
+            this.url = '';
+            debugger;
+            this.report = action.context['report'];
+            if ((typeof action.context['report'] !== "undefined") && (typeof action.context['active_id'] !== "undefined")){
+                this.url = '/report/pdf/'+action.context['report']+'/'+action.context['active_id'];
+            }
+
         },
     });
 
@@ -41,14 +46,11 @@ odoo.define('sgimmo.custom_report', function (require) {
             new_action.context = pyeval.eval('contexts',eval_contexts);
             new_action.context['report'] = action['report_name']
 
-            debugger;
-
             return $.Deferred(function (d) {
-                self.ir_actions_client(new_action,options).always(function () {
+                $.when(self.ir_actions_client(new_action,options)).then(function () {
                     framework.unblockUI();
                     d.resolve();
                 });
-
 
             });
 
