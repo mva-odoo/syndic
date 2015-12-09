@@ -6,7 +6,8 @@
             <field name="model">syndic.bilan.report.wizard</field>
             <field name="arch" type="xml">
                 <form>
-                    <button name="print_bilan" type="object" string="Imprimer"/>
+                    <button name="print_bilan" type="object" string="Imprimer Bilan"/>
+                    <button name="print_decompte_charge" type="object" string="Imprimer Decompte de charge"/>
                 </form>
             </field>
         </record>

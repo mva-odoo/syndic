@@ -10,6 +10,15 @@
           report_type="qweb-pdf"
         />
 
+        <report
+          id="compta_decommpte_charge"
+          string="Decompte de charge"
+          model="syndic.exercice"
+          name="syndic_compta.syndic_compta_decompte_charge"
+          file="name"
+          report_type="qweb-pdf"
+        />
+
         <template id="syndic_compta_bilan">
             <t t-call="report.html_container">
                 <t t-name="avis_qweb">
@@ -28,6 +37,40 @@
                                         <td><span t-field="ligne_id.credit"/></td>
                                         <td><span t-field="ligne_id.total"/></td>
                                     </tr>
+                                </t>
+                                </table>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <template id="syndic_compta_decompte_charge">
+            <t t-call="report.html_container">
+                <t t-name="avis_qweb">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="report.external_layout">
+                            <div class="page">
+                                <h1>
+                                   Decompte de charge: <span t-field="o.name"/>
+                                </h1>
+                                <table>
+                                <t t-foreach="o.immeuble_id.lot_ids" t-as="lot_id">
+                                    <t t-if="lot_id.line_facture_ids">
+                                    <tr>
+                                        <td><span t-field="lot_id.name"/></td>
+                                    </tr>
+                                     <t t-foreach="lot_id.line_facture_ids" t-as="detail">
+                                        <tr>
+                                            <td><span t-field="detail.amount"/>€</td>
+                                            <td><span t-field="detail.product_id.name"/></td>
+                                        </tr>
+                                     </t>
+                                    </t>
+
+
                                 </t>
                                 </table>
                             </div>

@@ -53,12 +53,13 @@ class Facture(models.Model):
                         proprio_ids = False
                         if repartition_line.lot_id.proprio_id:
                             proprio_ids = [prop_id.id for prop_id in repartition_line.lot_id.proprio_id]
+                            proprio_ids = [(6, 0, proprio_ids)]
                         self.env['syndic.facture.detail'].create({
                             'facture_id': self.id,
                             'facture_line_id': line.id,
                             'amount': amount,
                             'lot_id': repartition_line.lot_id.id,
-                            'proprietaire_ids': [(6, 0, proprio_ids)],
+                            'proprietaire_ids': proprio_ids,
                             'product_id': line.type_id.id,
                             'fournisseur_id': line.fournisseur_id.id,
                         })

@@ -33,6 +33,7 @@ class RepartitionLot(models.Model):
 class RepartitionLotDetail(models.Model):
     _name = 'syndic.repartition.lot.detail'
     _rec_name = 'lot_id'
+
     repartition_id = fields.Many2one('syndic.repartition.lot', 'Repartition Lot')
     value = fields.Float('Valeur')
     lot_id = fields.Many2one('syndic.lot', 'Lots')
