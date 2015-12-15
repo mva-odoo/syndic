@@ -6,6 +6,16 @@
             <field name="model">syndic.bilan.report.wizard</field>
             <field name="arch" type="xml">
                 <form>
+                    <group>
+                        <field name="ligne_ids" nolabel="1">
+                            <form>
+                                <field name="account_id"/>
+                                <field name="debit"/>
+                                <field name="credit"/>
+                                <field name="total"/>
+                            </form>
+                        </field>
+                    </group>
                     <button name="print_bilan" type="object" string="Imprimer Bilan"/>
                     <button name="print_decompte_charge" type="object" string="Imprimer Decompte de charge"/>
                 </form>

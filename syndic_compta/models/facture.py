@@ -18,16 +18,16 @@ class Facture(models.Model):
     pay_percentage = fields.Float('Pourcentage de payement', compute='_compute_percentage')
     communication = fields.Char('Communication virement')
 
-    @api.depends('immeuble_id')
     @api.one
+    @api.depends('immeuble_id')
     def _compute_exercice(self):
         if not self.state == 'report':
             self.exercice_id = self.immeuble_id.current_exercice_id
         else:
             self.exercice_id = False
 
-    @api.depends('facture_detail_ids')
     @api.one
+    @api.depends('facture_detail_ids')
     def _compute_percentage(self):
         payed = []
         total = 0.00
@@ -42,6 +42,23 @@ class Facture(models.Model):
         if total >= 100.0:
             self.write({'state': 'close'})
 
+    def create_double_entry(self, line, facture_id):
+        self.env['syndic.bilan.ligne'].create({
+            'name': line.type_id.name,
+            'facture_id': facture_id,
+            'account_id': line.type_id.receive_compte_id.id,
+            'debit': line.prix,
+            'exercice_id': line.facture_id.exercice_id.id,
+        })
+
+        self.env['syndic.bilan.ligne'].create({
+            'name': line.type_id.name,
+            'facture_id': facture_id,
+            'account_id': line.fournisseur_id.account_id.id or line.type_id.accompte_fond_id.id,
+            'credit': line.prix,
+            'exercice_id': line.facture_id.exercice_id.id,
+        })
+
     @api.one
     def validate_facture(self):
         if self.state != 'validate':
@@ -52,8 +69,7 @@ class Facture(models.Model):
                         amount = line.prix * (repartition_line.value/1000)
                         proprio_ids = False
                         if repartition_line.lot_id.proprio_id:
-                            proprio_ids = [prop_id.id for prop_id in repartition_line.lot_id.proprio_id]
-                            proprio_ids = [(6, 0, proprio_ids)]
+                            proprio_ids = [(6, 0, [prop_id.id for prop_id in repartition_line.lot_id.proprio_id])]
                         self.env['syndic.facture.detail'].create({
                             'facture_id': self.id,
                             'facture_line_id': line.id,
@@ -73,25 +89,12 @@ class Facture(models.Model):
                             'product_id': line.type_id.id,
                             'fournisseur_id': line.fournisseur_id.id,
                         })
-                if self.state == 'draft':
-                    self.env['syndic.bilan.ligne'].create({
-                            'name': line.type_id.name,
-                            'facture_id': self.id,
-                            'account_id': line.type_id.receive_compte_id.id,
-                            'debit': line.prix,
-                            'exercice_id': line.facture_id.exercice_id.id,
-                        })
+                # if self.state == 'draft':
+                self.create_double_entry(line, self.id)
 
-                    self.env['syndic.bilan.ligne'].create({
-                            'name': line.type_id.name,
-                            'facture_id': self.id,
-                            'account_id': line.fournisseur_id.account_id.id or line.type_id.accompte_fond_id.id,
-                            'credit': line.prix,
-                            'exercice_id': line.facture_id.exercice_id.id,
-                        })
-                    if check_amount != line.prix and line.repartition_lot_id:
-                        raise exceptions.Warning("La totalité de la somme n'a pas été facturé. "
-                                                 "Vérifié la répartition des quotités")
+                if check_amount != line.prix and line.repartition_lot_id:
+                    raise exceptions.Warning("La totalité de la somme n'a pas été facturé. "
+                                             "Vérifié la répartition des quotités")
 
             self.state = 'validate'
 

@@ -39,8 +39,10 @@ class ExerciceCompta(models.Model):
     end_date = fields.Date('Date fin')
     ligne_ids = fields.One2many('syndic.bilan.ligne', 'exercice_id', 'Ligne d\'exercice')
     amount_amortissement = fields.Float('Amortissement', compute=_compute_amortissement)
-    state = fields.Selection([('draft', 'Brouillon'), ('open', 'Ouvert'), ('amortissement', 'Amortissement'),
-        ('close', 'Cloturer')], 'Etat', default='draft')
+    state = fields.Selection([('draft', 'Brouillon'),
+                              ('open', 'Ouvert'),
+                              ('amortissement', 'Amortissement'),
+                              ('close', 'Cloturer')], 'Etat', default='draft')
 
     @api.one
     def reset(self):
@@ -66,7 +68,7 @@ class ExerciceCompta(models.Model):
             'view_mode': 'form',
             'res_model': 'syndic.bilan.report.wizard',
             'type': 'ir.actions.act_window',
-            'target': 'new',
+            'target': 'current',
             'context': self._context,
         }
 
