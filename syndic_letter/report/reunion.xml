@@ -38,7 +38,8 @@
                                     <div style="font-size:20px;">
                                         <span t-field="point.sequence"/>) <span t-field="point.name"/>
                                     </div>
-                                    <hr noshade="" size="1" width="100%" align="center" style="color=#01559D;margin-top:0px;margin-bottom:10px;"/>
+                                    <hr noshade="" size="1" width="100%" align="center"
+                                        style="background-color: #01559D;margin-top:0px;padding-bottom:1px;"/>
                                     <div style="font-size:18px"><span t-field="point.descriptif"/></div>
                                     <br/>
                                 </t>
