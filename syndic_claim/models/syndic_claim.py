@@ -71,7 +71,6 @@ class CommentHistory(models.Model):
     write_date = fields.Datetime('Date de modification', readonly=True)
     create_uid = fields.Many2one('res.users', string="User", readonly=True)
     write_uid = fields.Many2one('res.users', string="User", readonly=True)
-    name = fields.Char('Nom', required=True)
     description = fields.Text('Texte')
     current_status = fields.Many2one('claim.status', string='Current status')
     claim_ids = fields.Many2one('syndic.claim', string='Claim')
