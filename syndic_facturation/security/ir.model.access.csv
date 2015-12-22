@@ -1,5 +1,5 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"syndic_facturation","syndic syndic.facturation","model_syndic_facturation","syndic_management.syndic_employe",1,1,1,1
-"syndic_facturation_line","syndic facturation line","model_syndic_facturation_line","syndic_management.syndic_employe",1,1,1,1
-"syndic_syndic_facturation_type","syndic.facturation.type","model_syndic_facturation_type","syndic_management.syndic_employe",1,1,1,1
-"syndic_syndic_qty_type","syndic.qty.type","model_syndic_qty_type","syndic_management.syndic_employe",1,1,1,1
+"syndic_facturation","syndic syndic.facturation","model_syndic_facturation","syndic_facturation.syndic_facturation_group",1,1,1,1
+"syndic_facturation_line","syndic facturation line","model_syndic_facturation_line","syndic_facturation.syndic_facturation_group",1,1,1,1
+"syndic_syndic_facturation_type","syndic.facturation.type","model_syndic_facturation_type","syndic_facturation.syndic_facturation_group",1,1,1,1
+"syndic_syndic_qty_type","syndic.qty.type","model_syndic_qty_type","syndic_facturation.syndic_facturation_group",1,1,1,1

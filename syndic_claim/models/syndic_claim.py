@@ -66,6 +66,7 @@ class ClaimType(models.Model):
 
 class CommentHistory(models.Model):
     _name = 'comment.history'
+    _rec_name = 'description'
 
     create_date = fields.Datetime('Date de création', readonly=True)
     write_date = fields.Datetime('Date de modification', readonly=True)

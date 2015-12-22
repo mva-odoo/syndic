@@ -5,21 +5,21 @@
             <field name="name">Syndic Facturation</field>
         </record>
 
-        <record id="syndic_facturation" model="res.groups">
+        <record id="syndic_facturation_group" model="res.groups">
             <field name="category_id" ref="base.module_category_syndic_facturation"/>
-            <field name="name">Syndic/Facturation</field>
+            <field name="name">Syndic/Facturation User</field>
         </record>
 
-        <record id="syndic_facturation_manager" model="res.groups">
+        <record id="syndic_facturation_manager_group" model="res.groups">
             <field name="name">Syndic/Facturation Manager</field>
             <field name="category_id" ref="base.module_category_syndic_facturation"/>
-            <field name="implied_ids" eval="[(6,0,[ref('syndic_facturation')])]"/>
+            <field name="implied_ids" eval="[(6,0,[ref('syndic_facturation_group')])]"/>
         </record>
 
         <record id="ir_rule_facturation_all" model="ir.rule">
-            <field name="name">voir que c est facture all</field>
+            <field name="name">Syndic facturation user facturation</field>
             <field name="model_id" ref="model_syndic_facturation"/>
-            <field name="groups" eval="[(4, ref('syndic_facturation'))]"/>
+            <field name="groups" eval="[(4, ref('syndic_facturation_group'))]"/>
             <field name="perm_read" eval="1"/>
             <field name="perm_write" eval="1"/>
             <field name="perm_create" eval="1"/>
@@ -30,9 +30,9 @@
         </record>
 
         <record id="ir_rule_facturation" model="ir.rule">
-            <field name="name">voir que c est facture</field>
+            <field name="name">Syndic facturation manager facturation</field>
             <field name="model_id" ref="model_syndic_facturation"/>
-            <field name="groups" eval="[(4, ref('syndic_facturation_manager'))]"/>
+            <field name="groups" eval="[(4, ref('syndic_facturation_manager_group'))]"/>
             <field name="perm_read" eval="1"/>
             <field name="perm_write" eval="1"/>
             <field name="perm_create" eval="1"/>

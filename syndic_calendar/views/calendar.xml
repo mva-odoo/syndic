@@ -12,9 +12,11 @@
                         <field name="end_date"/>
                         <field name="where"/>
                         <field name="description"/>
-                        <field name="owner_id"/>
+                        <field name="owner_id" domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"/>
                         <field name="building_id"/>
-                        <field name="attendee_ids" widget="many2many_tags"/>
+                        <field name="attendee_ids"
+                               widget="many2many_tags"
+                               domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"/>
                     </group>
                 </form>
             </field>

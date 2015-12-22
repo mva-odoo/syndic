@@ -21,15 +21,5 @@
             <field name="category_id" ref="base.module_category_syndic_management"/>
             <field name="implied_ids" eval="[(6,0,[ref('syndic_client'),ref('syndic_employe')])]"/>
         </record>
-
-        <!--<record id="syndic_calendar_seeall" model="ir.rule">-->
-            <!--<field ref="calendar.model_calendar_event" name="model_id"/>-->
-            <!--<field name="name">All Calendar syndic</field>-->
-            <!--<field name="domain_force">[(1,'=',1)]</field>-->
-            <!--<field name="groups" eval="[(4, ref('syndic_employe'))]"/>-->
-        <!--</record>-->
-
-        <!--"syndic_import","syndic import","base_import.model_base_import_import","syndic_manager",1,1,1,1-->
-
     </data>
 </openerp>

@@ -11,6 +11,7 @@
     'data': [
         'views/facturation.xml',
         'report/facture.xml',
+        'security/groups.xml',
         'security/ir.model.access.csv',
     ],
     'auto_install': False,
