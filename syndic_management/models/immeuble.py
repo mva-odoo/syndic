@@ -27,7 +27,7 @@ class Building(models.Model):
     lot_ids = fields.One2many('syndic.lot', 'building_id', 'Lots')
     BCE = fields.Char('BCE')
     num_building = fields.Integer("N°", required=True)
-    address_building = fields.Char('Adresse', required=True)
+    address_building = fields.Char('Rue', required=True)
     zip_building = fields.Integer('Code Postal', required=True)
     city_building = fields.Many2one('city', 'Commune', required=True)
     supplier_ids = fields.Many2many('syndic.supplier', string="Fiche technique")

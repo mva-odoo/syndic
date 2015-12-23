@@ -5,14 +5,25 @@ from openerp import models, fields, api, exceptions
 class SyndicComptaSetting(models.Model):
     _name = 'syndic.compta.setting'
 
-    roulement_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (roulement)')
-    reserve_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (resrve)')
+    roulement_product_id = fields.Many2one('syndic.facturation.type', 'Produit d ouverture (roulement)')
+    reserve_product_id = fields.Many2one('syndic.facturation.type', 'Produit d ouverture (resrve)')
     compte_rapporter = fields.Many2one('syndic.pcmn', 'Compte à reporter')
     report_reserve_compte = fields.Many2one('syndic.pcmn', 'Compte de fond de reserve à reporter')
     report_roulement_compte = fields.Many2one('syndic.pcmn', 'Compte de fond de roulement à reporter')
-    open_report_reserve_compte = fields.Many2one('syndic.product', 'Produit de fond de reserve à reporter pour reouverture')
-    open_report_roulement_compte = fields.Many2one('syndic.product', 'Produit de fond de roulement à reporter pour reouverture')
+    open_report_reserve_compte = fields.Many2one('syndic.facturation.type',
+                                                 'Produit de fond de reserve à reporter pour reouverture')
+    open_report_roulement_compte = fields.Many2one('syndic.facturation.type',
+                                                   'Produit de fond de roulement à reporter pour reouverture')
     fournisseur_compte = fields.Many2one('syndic.pcmn', 'Compte fournisseur')
+
+
+class BankAccount(models.Model):
+    _name = 'syndic.bank.account'
+
+    name = fields.Char('Compte', required=True)
+    number = fields.Char('Numeros du compte', required=True)
+    accounting_id = fields.Many2one('syndic.pcmn', 'Comptabilité')
+    building_id = fields.Many2one('syndic.building', 'Immeuble')
 
 
 class SyndicBuilding(models.Model):
@@ -54,9 +65,10 @@ class SyndicBuilding(models.Model):
             return settings.open_report_reserve_compte.id
         return settings.roulement_product_id
 
-    roulement_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (roulement)',
+    account_ids = fields.One2many('syndic.bank.account', 'building_id', 'Comptes en banque')
+    roulement_product_id = fields.Many2one('syndic.facturation.type', 'Produit d ouverture (roulement)',
                                            default=_default_prod_roulement)
-    reserve_product_id = fields.Many2one('syndic.product', 'Produit d ouverture (resrve)',
+    reserve_product_id = fields.Many2one('syndic.facturation.type', 'Produit d ouverture (resrve)',
                                          default=_default_prod_reserve)
     compte_rapporter = fields.Many2one('syndic.pcmn', 'Compte à reporter',
                                        default=_default_compte_rapporter)
@@ -64,10 +76,10 @@ class SyndicBuilding(models.Model):
                                             default=_default_report_reserve_compte)
     report_roulement_compte = fields.Many2one('syndic.pcmn', 'Compte de fond de roulement à reporter',
                                               default=_default_report_roulement_compte)
-    open_report_reserve_compte = fields.Many2one('syndic.product',
+    open_report_reserve_compte = fields.Many2one('syndic.facturation.type',
                                                  'Produit de fond de reserve à reporter pour reouverture',
                                                  default=_default_open_report_reserve_compte)
-    open_report_roulement_compte = fields.Many2one('syndic.product',
+    open_report_roulement_compte = fields.Many2one('syndic.facturation.type',
                                                    'Produit de fond de roulement à reporter pour reouverture',
                                                    default=_default_open_report_reserve_compte)
     current_exercice_id = fields.Many2one('syndic.exercice', 'Exercice courant')

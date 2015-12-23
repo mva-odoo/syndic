@@ -11,12 +11,14 @@ class Facture(models.Model):
                               ('validate', 'Validé'),
                               ('close', 'Payé')],
                              'Etat', default='draft')
+    type_facture = fields.Selection([('client', 'Client'), ('fournisseur', 'Fournisseur')], 'Type de facture')
     facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
     bilan_ids = fields.One2many('syndic.bilan.ligne', 'facture_id', 'Lignes du bilan')
     exercice_id = fields.Many2one('syndic.exercice', 'Exercice', compute='_compute_exercice', store=True)
     proprietaire_ids = fields.Many2many('syndic.owner', string='Proprietaires')
     pay_percentage = fields.Float('Pourcentage de payement', compute='_compute_percentage')
     communication = fields.Char('Communication virement')
+    account_id = fields.Many2one('syndic.bank.account', 'Compte en banque')
 
     @api.one
     @api.depends('immeuble_id')

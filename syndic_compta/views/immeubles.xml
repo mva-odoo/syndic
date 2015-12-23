@@ -8,7 +8,14 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='fiche_technique']" position="after">
                     <page string="Parametres Comptabilité">
-                        <group>
+                        <field name="account_ids">
+                            <tree editable="top">
+                                <field name="name"/>
+                                <field name="number"/>
+                                <field name="accounting_id"/>
+                            </tree>
+                        </field>
+						<group>
                             <field name="roulement_product_id"/>
                             <field name="reserve_product_id"/>
                             <field name="compte_rapporter"/>

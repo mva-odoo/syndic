@@ -1,11 +1,12 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-access_syndic_facture,access_syndic_facture,model_syndic_facturation,,1,0,0,0
-access_syndic_facture_ligne,access_syndic_facture_ligne,model_syndic_facturation_ligne,,1,0,0,0
 access_syndic_facture_detail,access_syndic_facture_detail,model_syndic_facture_detail,,1,0,0,0
 access_syndic_pcmn,access_syndic_pcmn,model_syndic_pcmn,,1,0,0,0
 access_syndic_repartition_lot,access_syndic_repartition_lot,model_syndic_repartition_lot,,1,0,0,0
 access_syndic_repartition_lot_detail,access_syndic_repartition_lot_detail,model_syndic_repartition_lot_detail,,1,0,0,0
 access_syndic_exercice,access_syndic_exercice,model_syndic_exercice,,1,0,0,0
-access_syndic_product,access_syndic_product,model_syndic_product,,1,0,0,0
 access_syndic_bilan_ligne,access_syndic_bilan_ligne,model_syndic_bilan_ligne,,1,0,0,0
 access_syndic_compta_amortissement,access_syndic_compta_amortissement,model_syndic_compta_amortissement,,1,0,0,0
+access_syndic_compta_split_pay_wizard,access_syndic_compta_split_pay_wizard,model_syndic_compta_split_pay_wizard,,1,0,0,0
+access_syndic_payment,access_syndic_payment,model_syndic_payment,,1,0,0,0
+access_syndic_compta_setting,access_syndic_compta_setting,model_syndic_compta_setting,,1,0,0,0
+access_syndic_bank_account,access_syndic_bank_account,model_syndic_bank_account,,1,0,0,0

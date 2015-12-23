@@ -38,7 +38,7 @@
 		</record>
 
 
-		<!--form -->syndic.lot
+		<!--form -->
 		<record model="ir.ui.view" id="form_simpl_building">
 			<field name="name">Letter form view</field>
 			<field name="model">syndic.building</field>
@@ -46,17 +46,30 @@
 			<field name="arch" type="xml">
 				<form string="immeuble" layout="manual" version="7.0">
 				<sheet string="immeuble" layout="auto">
-					<group colspan="4" col="4">
-                    <field name="name" colspan="4"/>
-                    <field name="num_building" colspan="2"/>
-                    <field name="BCE" colspan="2"/>
-                    <field name="address_building" colspan="4"/>
-                    <field name="zip_building" colspan="2"/>
-                    <field name="city_building" colspan="2"/>
-                    <field name="compte" colspan="2"/>
-                    <field name="active" colspan="2"/>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="compte"/>
+							<field name="active"/>
+						</group>
 
+						<group>
+							<field name="num_building"/>
+							<field name="BCE"/>
+						</group>
 					</group>
+					<group string="Adresse">
+						<field name="address_building"/>
+					</group>
+					<group>
+						<group>
+							<field name="city_building"/>
+						</group>
+						<group>
+							<field name="zip_building"/>
+						</group>
+					</group>
+
                     <notebook colspan="4">
 						<page string="Lot">
 							<field name="lot_ids" nolabel="1" colspan="4">
@@ -79,9 +92,8 @@
 						</page>
 						<page string="Fiche technique" name="fiche_technique">
                             <button name="go_export_model" string="Exporter fiche technique" type="object"/>
-							<field name="supplier_ids" />
+							<field name="supplier_ids"/>
 						</page>
-
 					</notebook>
                 </sheet>
                 </form>

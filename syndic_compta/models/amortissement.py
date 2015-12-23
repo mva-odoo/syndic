@@ -20,7 +20,7 @@ class SyndicAmortissementWizard(models.TransientModel):
         else:
             self.split_amount = 0.00
 
-    product_id = fields.Many2one('syndic.product', 'Produit', default=_default_product)
+    product_id = fields.Many2one('syndic.facturation.type', 'Produit', default=_default_product)
     amount = fields.Float('Montant', default=_default_amount)
     duration = fields.Integer('Durée')
     split_amount = fields.Float('Montant Divisé', compute=_compute_split_amount)
@@ -47,7 +47,7 @@ class ComptaAmortissement(models.Model):
     _name = 'syndic.compta.amortissement'
     _rec_name = 'product_id'
 
-    product_id = fields.Many2one('syndic.product', 'Produit')
+    product_id = fields.Many2one('syndic.facturation.type', 'Produit')
     active = fields.Boolean('Actif', default=True)
     amount = fields.Float('Montant')
     number = fields.Integer('Numeros de l\'accompte')
