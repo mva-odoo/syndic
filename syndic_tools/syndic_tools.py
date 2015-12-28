@@ -6,7 +6,8 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-class UCLTools:
+
+class SyndicTools:
     def pass_generator(self):
         alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         pw_length = 8

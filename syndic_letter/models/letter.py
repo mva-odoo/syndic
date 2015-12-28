@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
-from openerp.addons.syndic_tools.syndic_tools import UCLTools
+from openerp.addons.syndic_tools.syndic_tools import SyndicTools
 
 
 class PieceJointe(models.Model):
@@ -48,12 +48,12 @@ class CreateLetter(models.Model):
     @api.depends('date')
     def _compute_date(self):
         if self.date:
-            self.date_fr = UCLTools().french_date(self.date)
+            self.date_fr = SyndicTools().french_date(self.date)
 
     @api.onchange('date')
     def onchange_date(self):
         if self.date:
-            self.date_fr = UCLTools().french_date(self.date)
+            self.date_fr = SyndicTools().french_date(self.date)
 
     @api.one
     def copy(self, default=None):
