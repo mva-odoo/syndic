@@ -15,8 +15,7 @@ class SyndicTools:
 
         for i in range(pw_length):
             next_index = random.randrange(len(alphabet))
-            mypw = mypw + alphabet[next_index]
-
+            mypw += alphabet[next_index]
         return mypw
 
     def login_generator(self, name):

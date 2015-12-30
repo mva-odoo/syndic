@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
-from openerp.addons.syndic_tools.syndic_tools import UCLTools
+from openerp.addons.syndic_tools.syndic_tools import SyndicTools
 
 
 class ResUsers(models.Model):
