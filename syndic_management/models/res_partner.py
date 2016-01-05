@@ -42,6 +42,7 @@ class ResPartnerAddress(models.Model):
 
 class Person(models.Model):
     _name = 'syndic.personne'
+    _order = 'name'
 
     name = fields.Char('Nom', select=1, required=True)
     title = fields.Many2one('res.partner.title', 'Title')
@@ -165,6 +166,7 @@ class ResPartnerJob(models.Model):
 class ResOldOwner(models.Model):
     _name = 'syndic.old.owner'
     _rec_name = 'proprio_id'
+    _order = 'proprio_id'
 
     proprio_id = fields.Many2one('syndic.owner', 'Ancien propriétaire', required=True)
     lot_ids = fields.Many2many('syndic.lot', string='Lot modifié')

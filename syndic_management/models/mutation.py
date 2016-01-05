@@ -4,6 +4,7 @@ from openerp import models, fields, api, exceptions
 
 class Mutation(models.Model):
     _name = 'syndic.mutation'
+    _order = 'immeuble_id'
 
     mutation_date = fields.Date('Date de mutation')
     old_owner_ids = fields.Many2many('syndic.owner', 'old_owner_table', string='Ancien Propriétaire', required=True)
