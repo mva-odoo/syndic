@@ -110,14 +110,14 @@ class Owner(models.Model):
     @api.model
     def create(self, vals):
         res_id = super(Owner, self).create(vals)
-        login = UCLTools().login_generator(vals['name'])
+        login = SyndicTools().login_generator(vals['name'])
         if self.sgimmo_check_login_unicity(login):
             group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
 
             dict_users = {
                 'name': vals['name'],
                 'login': login,
-                'password': UCLTools().pass_generator(),
+                'password': SyndicTools().pass_generator(),
                 'proprio_id': res_id.id,
                 'groups_id': [(6, 0, group_ids.ids)],
             }
@@ -130,8 +130,8 @@ class Owner(models.Model):
     def change_password(self):
         if self.user_id:
             dict_users = {
-                'login': UCLTools().login_generator(self.name),
-                'password': UCLTools().pass_generator(),
+                'login': SyndicTools().login_generator(self.name),
+                'password': SyndicTools().pass_generator(),
             }
             self.user_id.sudo().write(dict_users)
             self.password = dict_users['password']
@@ -140,8 +140,8 @@ class Owner(models.Model):
 
             dict_users = {
                 'name': self.name,
-                'login': UCLTools().login_generator(self.name),
-                'password': UCLTools().pass_generator(),
+                'login': SyndicTools().login_generator(self.name),
+                'password': SyndicTools().pass_generator(),
                 'proprio_id': self.id,
                 'groups_id': [(6, 0, group_ids.ids)],
             }

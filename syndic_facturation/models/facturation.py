@@ -20,7 +20,7 @@ class SyndicFacturation(models.Model):
     @api.depends('date')
     def _compute_date(self):
         if self.date:
-            self.date_fr = UCLTools().french_date(self.date)
+            self.date_fr = SyndicTools().french_date(self.date)
 
     @api.model
     def create(self, vals):
