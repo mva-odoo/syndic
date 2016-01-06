@@ -7,6 +7,7 @@ class ResUsers(models.Model):
     _inherit = 'res.users'
 
     proprio_id = fields.Many2one('syndic.owner', string='ref proprio')
+    server_mail_id = fields.Many2one('ir.mail_server', 'Serveur Email')
 
 
 class City(models.Model):

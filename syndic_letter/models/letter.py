@@ -50,11 +50,6 @@ class CreateLetter(models.Model):
         if self.date:
             self.date_fr = SyndicTools().french_date(self.date)
 
-    @api.onchange('date')
-    def onchange_date(self):
-        if self.date:
-            self.date_fr = SyndicTools().french_date(self.date)
-
     @api.one
     def copy(self, default=None):
         default['date'] = fields.date.today()
@@ -88,6 +83,11 @@ class CreateLetter(models.Model):
                 self.env['bon.commande'].create(values)
 
         return res
+
+    @api.onchange('is_mail')
+    def onchange_server(self):
+        if self.is_mail:
+            self.mail_server = self.env.user.server_mail_id.id or False
 
     @api.onchange('immeuble_id', 'all_immeuble')
     def onchange_immeuble(self):
