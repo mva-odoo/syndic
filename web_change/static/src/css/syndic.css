@@ -1,3 +1,11 @@
 .oe_topbar_item oe_topbar_compose_full_email{
     display:none;
 }
+@media print{
+    .oe-control-panel{
+        display: none;
+    }
+    .oe-view-manager {
+        display: table-footer-group !important;
+    }
+}
