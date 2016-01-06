@@ -7,10 +7,11 @@
     calendar
     """,
     'author': 'OpenERP SA',
-    'depends': ['syndic_management'],
+    'depends': ['web', 'syndic_management'],
     'website': 'http://www.openerp.com',
     'data': [
         'views/calendar.xml',
+        'views/backend.xml',
         'security/ir.model.access.csv',
         ],
     'installable': True,

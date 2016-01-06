@@ -58,3 +58,5 @@ odoo.define('sgimmo.custom_report', function (require) {
         }
     });
 });
+
+
