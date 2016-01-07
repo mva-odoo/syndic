@@ -63,11 +63,6 @@ class LetterReunion(models.Model):
         if self.date:
             self.date_fr = SyndicTools().french_date(self.date)
 
-    @api.onchange('date')
-    def onchange_date(self):
-        if self.date:
-            self.date_fr = SyndicTools().french_date(self.date)
-
     @api.one
     def copy(self, default=None):
         default['date'] = fields.date.today()
