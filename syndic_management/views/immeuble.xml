@@ -50,14 +50,17 @@
 						<group>
 							<field name="name" />
 							<field name="compte"/>
+							<field name="sign_mois_rel"/>
 							<field name="active"/>
 						</group>
 
 						<group>
 							<field name="num_building"/>
 							<field name="BCE"/>
+							<field name="sign_quizaine_rel"/>
 						</group>
 					</group>
+
 					<group string="Adresse">
 						<field name="address_building"/>
 					</group>
@@ -71,7 +74,7 @@
 					</group>
 
                     <notebook colspan="4">
-						<page string="Lot">
+						<page string="Lot" name="lot">
 							<field name="lot_ids" nolabel="1" colspan="4">
 								<tree string="Lot" editable="bottom">
 									<field name="name"/>
@@ -91,8 +94,14 @@
                             <field name="total_quotites"/>
 						</page>
 						<page string="Fiche technique" name="fiche_technique">
-                            <button name="go_export_model" string="Exporter fiche technique" type="object"/>
+							<group>
+								<field name="fiche_signalitic_ids" widget="many2one"/>
+							</group>
+							<button name="go_export_model" string="Exporter fiche technique" type="object"/>
 							<field name="supplier_ids"/>
+						</page>
+						<page string="Notes" name="notes">
+							<field name="note"/>
 						</page>
 					</notebook>
                 </sheet>

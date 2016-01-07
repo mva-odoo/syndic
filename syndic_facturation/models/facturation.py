@@ -7,7 +7,7 @@ class SyndicFacturation(models.Model):
     _name = 'syndic.facturation'
     _inherit = 'pdf.viewer'
     _report_name = 'syndic_facturation.facture'
-    _order = 'date desc'
+    _order = 'id desc'
 
     name = fields.Char('Facture', readonly=True)
     immeuble_id = fields.Many2one('syndic.building', string='Immeuble', required=True)

@@ -34,6 +34,12 @@ class Building(models.Model):
     compte = fields.Char('Compte en banque')
     total_quotites = fields.Float(compute=_get_total_quotites, string='Total Quotites')
     active = fields.Boolean(default=True)
+    fiche_signalitic_ids = fields.One2many('building.signalitic',
+                                           'building_id',
+                                           string='Fiche Signalitique')# One2many but it is a relation o2o
+    sign_mois_rel = fields.Selection(string='Mois d\'assemblée', related='fiche_signalitic_ids.date_mois')
+    sign_quizaine_rel = fields.Selection(string='Quinzaine d\'assemblée', related='fiche_signalitic_ids.date_quizaine')
+    note = fields.Text('Notes')
 
     @api.multi
     def compute_xls(self):

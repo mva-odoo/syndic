@@ -126,8 +126,13 @@ class CreateLetter(models.Model):
     def send_email_lettre(self):
         header = ''
 
+        if not self.mail_server.id:
+            mail_server = self.env.user.server_mail_id.id or False
+        else:
+            mail_server = self.mail_server.id
+
         mail = {
-            'mail_server_id': self.mail_server.id,
+            'mail_server_id': mail_server,
             'email_from': self.env.user.email,
             'reply_to': self.env.user.email,
             'attachment_ids': [(6, 0, self.piece_jointe_ids.ids)],
