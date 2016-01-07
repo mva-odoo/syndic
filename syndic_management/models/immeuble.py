@@ -36,10 +36,29 @@ class Building(models.Model):
     active = fields.Boolean(default=True)
     fiche_signalitic_ids = fields.One2many('building.signalitic',
                                            'building_id',
-                                           string='Fiche Signalitique')# One2many but it is a relation o2o
-    sign_mois_rel = fields.Selection(string='Mois d\'assemblée', related='fiche_signalitic_ids.date_mois')
-    sign_quizaine_rel = fields.Selection(string='Quinzaine d\'assemblée', related='fiche_signalitic_ids.date_quizaine')
+                                           string='Fiche Signalitique',
+                                           readonly=True)  # One2many but it is a relation o2o
+    sign_mois_rel = fields.Selection(string='Mois', related='fiche_signalitic_ids.date_mois')
+    sign_quizaine_rel = fields.Selection(string='Quinzaine', related='fiche_signalitic_ids.date_quizaine')
     note = fields.Text('Notes')
+
+    @api.onchange('city_building')
+    def onchange_city(self):
+        self.zip_building = int(self.city_building.zip)
+
+    @api.one
+    def unactivate_building(self):
+        self.active = False
+
+    @api.one
+    def activate_building(self):
+        self.active = True
+
+    @api.model
+    def create(self, vals):
+        res = super(Building, self).create(vals)
+        self.env['building.signalitic'].create({'building_id': res.id})
+        return res
 
     @api.multi
     def compute_xls(self):

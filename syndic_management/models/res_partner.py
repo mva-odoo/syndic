@@ -15,6 +15,7 @@ class City(models.Model):
     _order = 'name'
 
     name = fields.Char('Ville', required=True)
+    zip = fields.Char('Code Postal')
 
 
 class ResPartnerAddress(models.Model):
@@ -40,6 +41,9 @@ class ResPartnerAddress(models.Model):
     add_parent_id_loaner = fields.Many2one('syndic.loaner', 'Locataire')
     is_letter = fields.Boolean('Lettre')
 
+    @api.onchange('city_id')
+    def onchange_city(self):
+        self.zip = int(self.city_id.zip)
 
 class Person(models.Model):
     _name = 'syndic.personne'
@@ -63,6 +67,9 @@ class Person(models.Model):
     gsm = fields.Char('GSM')
     user_id = fields.Many2one('res.users', string="User", ondelete="cascade")
 
+    @api.onchange('city_id')
+    def onchange_city(self):
+        self.zip = int(self.city_id.zip)
 
 # fournisseur
 class Supplier(models.Model):

@@ -7,7 +7,7 @@
 			<field name="model">building.signalitic</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="signalitique">
+				<tree string="signalitique" create="false">
 					<field name="building_id" required="True"/>
 				</tree>
 			</field>
@@ -28,8 +28,8 @@
 			<field name="name">Letter form view</field>
 			<field name="model">building.signalitic</field>
 			<field name="arch" type="xml">
-				<form string="Building" layout="manual" version="7.0">
-				<sheet string="Building" layout="auto">
+				<form string="Building" create="false">
+				<sheet string="Building">
 					<group colspan="4" col="4">
 						<field name="building_id" colspan="4"/>
 					</group>

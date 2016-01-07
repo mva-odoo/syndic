@@ -45,63 +45,81 @@
 			<field name="model">syndic.owner</field>
 			<field name="arch" type="xml">
 				<form string="Propriétaires" layout="manual" version="7.0"> 
-				<group colspan="4" col="4">
-					<separator string="Informations sur le propriétaire" colspan="4"/>
-					<field name="name" colspan="2" string="Nom"/>
-					<field name="prenom" colspan="2"/>
-					<field name="title" colspan="2" string="Titre"/>
-					<field name="convocation" colspan="2"/>
-				</group>
-				<notebook colspan="4">
-                    <page string="Contact">
-						<group colspan="4" col="4">
-							<separator string="Contact principal" colspan="4"/>
-							<field name="street" colspan="2" string="Adresse"/>
-							<field name="zip" colspan="2" string="Code Postal"/>
-							<field name="city_id" colspan="2"/>
-							<field name="country_id" string="Pays" colspan="2"/>
-							<field name="phone" string="Téléphone" />
-							<field name="fax"/>
-							<field name="gsm"/>
-							<field name="email"/>
-							<separator string="Autres contacts" colspan="4"/>
-							<field name="address_ids" colspan="4" nolabel="1">
-								<tree string="Autres contacts" editable="top">
-									<field name="name"/>
-                                    <field name="title"/>
-									<field name="street"/>
-									<field name="zip"/>
-									<field name="city_id"/>
-									<field name="country_id" string="Pays"/>
-									<field name="phone" string="Téléphone"/>
-									<field name="fax" string="Fax"/>
-									<field name="mobile" string="GSM"/>
-									<field name="email"/>
-									<field name="is_letter"/>
-								</tree>
-							</field>
-						</group>
-                    </page>
-                    <page string="Lots">
-						<group colspan="4" col="4">
-							<field name="lot_ids" colspan="4" nolabel="1">
-								<tree string="Lots">
-									<field name="name"/>
-									<field name="locataire_id" widget="many2many_tags"/>
-									<field name="building_id"/>
-								</tree>
-							</field>
-						</group>
-                    </page>
-                    <page string="Connexion web">
-						<button name="change_password" string="Changer de password/login" type="object"/>
-						<group>
-							<field name="login" readonly="1"/>
-							<field name="password" readonly="1"/>
-							<field name="user_id" readonly="1"/>
-						</group>
-                    </page>
-                </notebook>
+					<h1>
+						<field name="name" default_focus="1" class="oe_inline" placeholder="Nom du propriétaire"/> -
+						<field name="prenom" class="oe_inline" placeholder="Prénom du propriétaire"/>
+					</h1>
+					<group colspan="4" col="4">
+						<field name="title" colspan="2" string="Titre"/>
+						<field name="convocation" colspan="2"/>
+					</group>
+					<notebook colspan="4">
+						<page string="Contact">
+							<group colspan="4" col="4">
+								<group>
+									<group>
+										<h3 style="color:#3F82B9" colspan="4">
+											Adresse:
+										</h3>
+										<group col="4" colspan="4">
+											<field name="country_id" colspan="4" string="Pays"/>
+											<field name="city_id"  colspan="2"/>
+											<field name="zip"  colspan="2" string="Code Postal"/>
+											<field name="street" colspan="4" string="Rue"/>
+										</group>
+									</group>
+
+									<group>
+										<h3 style="color:#3F82B9" colspan="4">
+											Contact Electronique:
+										</h3>
+										<group>
+											<field name="phone" string="Téléphone"/>
+											<field name="fax"/>
+											<field name="gsm"/>
+											<field name="email"/>
+										</group>
+									</group>
+								</group>
+							</group>
+							<group string="Autres contacts">
+								<field name="address_ids" colspan="4" nolabel="1">
+									<tree string="Autres contacts" editable="top">
+										<field name="name"/>
+										<field name="title"/>
+										<field name="street"/>
+										<field name="city_id"/>
+										<field name="zip"/>
+										<field name="country_id" string="Pays"/>
+										<field name="phone" string="Téléphone"/>
+										<field name="fax" string="Fax"/>
+										<field name="mobile" string="GSM"/>
+										<field name="email"/>
+										<field name="is_letter"/>
+									</tree>
+								</field>
+							</group>
+						</page>
+						<page string="Lots">
+							<group colspan="4" col="4">
+								<field name="lot_ids" colspan="4" nolabel="1">
+									<tree string="Lots">
+										<field name="name"/>
+										<field name="locataire_id" widget="many2many_tags"/>
+										<field name="building_id"/>
+									</tree>
+								</field>
+							</group>
+						</page>
+						<page string="Connexion web">
+							<button name="change_password" string="Changer de password/login" type="object"/>
+							<group>
+								<field name="login" readonly="1"/>
+								<field name="password" readonly="1"/>
+								<field name="user_id" readonly="1"/>
+							</group>
+						</page>
+					</notebook>
                 </form>
 			</field>
 		</record>

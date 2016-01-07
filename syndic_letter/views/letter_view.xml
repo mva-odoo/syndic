@@ -55,18 +55,23 @@
                             <button string="Envoyer emails" name="send_email_lettre" type="object"/>
                             <field name="state" widget="statusbar"/>
                         </header>
-                        <group colspan="4" col="4">
-                            <field name="sujet"/>
-                            <field name="letter_type_id"  colspan="2"/>
-                            <field name="letter_model_id" colspan="2"/>
-                            <field name="immeuble_id" />
-                            <field name="date" />
-                            <field name="all_immeuble"/>
-                            <field name="is_mail"/>
-                            <field name="mail_server" attrs="{'required':[('is_mail', '=', True)], 'invisible':[('is_mail', '=', False)]}"/>
-                            <field name="is_fax"/>
-                            <field name="date_fr"/>
-                            <field name="piece_jointe_ids" attrs="{'invisible':[('is_mail','=',False)]}">
+                        <group col="16" colspan="16">
+                            <field name="sujet" colspan="8"/>
+                            <field name="letter_type_id" colspan="8"/>
+                            <field name="letter_model_id" colspan="8"/>
+                            <field name="immeuble_id" colspan="4"/>
+                            <field name="all_immeuble" colspan="4"/>
+                            <field name="date" colspan="4"/>
+                            <field name="date_fr" colspan="4"/>
+                            <field name="is_mail" colspan="4"/>
+                            <field name="is_fax" colspan="4"/>
+                            <field name="mail_server"
+                                   colspan="8"
+                                   attrs="{'required':[('is_mail', '=', True)], 'invisible':[('is_mail', '=', False)]}"/>
+
+                            <field name="piece_jointe_ids"
+                                   attrs="{'invisible':[('is_mail','=',False)]}"
+                                   colspan="8">
                                 <tree>
                                     <field name="datas_fname"/>
                                 </tree>
@@ -78,50 +83,54 @@
                                     </group>
                                 </form>
                             </field>
-                            <notebook colspan="4">
-                                <page string="propriétaires">
-                                    <field name="propr_ids">
-                                        <tree string="Fournisseur">
-                                            <field name="name" string="Nom"/>
-                                            <field name="street" string="Adresse"/>
-                                            <field name="city_id" string="Ville"/>
-                                            <field name="country_id" string="Pays"/>
-                                            <field name="email"/>
-                                            <field name="building_store_ids"/>
-                                            <field name="convocation"/>
-                                        </tree>
-                                    </field>
-
-                                </page>
-                                <page string="fournisseurs">
-                                    <field name="fourn_ids" />
-                                </page>
-                                <page string="locataires">
-                                    <field name="loc_ids"/>
-                                </page>
-                                <page string="Divers">
-                                    <field name="divers_ids" colspan="1"/>
-                                </page>
-                                <page string="Personnes jointes">
-                                    <field name="partner_address_ids" colspan="1">
-                                        <tree>
-                                            <field name="name"/>
-                                            <field name="add_parent_id_owner"/>
-                                            <field name="add_parent_id_supplier"/>
-                                            <field name="add_parent_id_loaner"/>
-                                        </tree>
-                                    </field>
-                                </page>
-
-                            </notebook>
-
-                                <field name="begin_letter_id" colspan="4"/>
-                                <field name="save_letter"/>
-                                <field name="name_template" attrs="{'required':[('save_letter','=',True)],'invisible':[('save_letter','=',False)]}"/>
-                                <field name="contenu" nolabel="1" colspan="4" widget="html"/>
-                                <field name="end_letter_id" colspan="4"/>
-                                <field name="ps" colspan="4"/>
                         </group>
+                        <notebook colspan="4">
+                            <page string="propriétaires">
+                                <field name="propr_ids">
+                                    <tree string="Fournisseur">
+                                        <field name="name" string="Nom"/>
+                                        <field name="street" string="Adresse"/>
+                                        <field name="city_id" string="Ville"/>
+                                        <field name="country_id" string="Pays"/>
+                                        <field name="email"/>
+                                        <field name="building_store_ids"/>
+                                        <field name="convocation"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                            <page string="fournisseurs">
+                                <field name="fourn_ids" />
+                            </page>
+                            <page string="locataires">
+                                <field name="loc_ids"/>
+                            </page>
+                            <page string="Divers">
+                                <field name="divers_ids" colspan="1"/>
+                            </page>
+                            <page string="Personnes jointes">
+                                <field name="partner_address_ids" colspan="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="add_parent_id_owner"/>
+                                        <field name="add_parent_id_supplier"/>
+                                        <field name="add_parent_id_loaner"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                        </notebook>
+                        <group col="4" colspan="4">
+                            <field name="save_letter" colspan="2"/>
+                            <field name="name_template"
+                                   colspan="2"
+                                   attrs="{'required':[('save_letter','=',True)],'invisible':[('save_letter','=',False)]}"/>
+                            <field name="begin_letter_id" colspan="4"/>
+                            <field name="contenu" nolabel="1" colspan="4" widget="html"/>
+                            <field name="end_letter_id" colspan="4"/>
+                            <field name="ps" colspan="4"/>
+                        </group>
+
 
                 </form>
             </field>

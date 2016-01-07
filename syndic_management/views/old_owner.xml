@@ -36,10 +36,9 @@
 			<field name="model">syndic.old.owner</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Fournisseur" layout="manual" version="7.0"> 
-				<sheet string="Partner" layout="auto"  >
+				<form string="Fournisseur">
+				<sheet string="Partner">
 				<group colspan="4" col="4">
-					<separator string="Partner Informations" colspan="4"/>
 					<field name="proprio_id" colspan="2"/>
 					<field name="date_close" colspan="2"/>
 					<separator string="Lot modifié" colspan="4"/>
