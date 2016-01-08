@@ -15,7 +15,24 @@ class City(models.Model):
     _order = 'name'
 
     name = fields.Char('Ville', required=True)
-    zip = fields.Char('Code Postal')
+    zip = fields.Char('Code Postal', required=True)
+    country_id = fields.Many2one('res.country', 'Country', required=True)
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name'):
+            vals['name'] = vals['name'][0].upper()+vals['name'][1:].lower()
+        return super(City, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        if vals.get('name'):
+            vals['name'] = vals['name'][0].upper()+vals['name'][1:].lower()
+        return super(City, self).write(vals)
+
+    _sql_constraints = [
+        ('city_id_uniq', 'unique (name,zip)', ("Cette ville existe déjà"))
+    ]
 
 
 class ResPartnerAddress(models.Model):
@@ -41,9 +58,16 @@ class ResPartnerAddress(models.Model):
     add_parent_id_loaner = fields.Many2one('syndic.loaner', 'Locataire')
     is_letter = fields.Boolean('Lettre')
 
-    @api.onchange('city_id')
-    def onchange_city(self):
-        self.zip = int(self.city_id.zip)
+    @api.onchange('zip')
+    def onchange_zip(self):
+        if self.zip:
+            dom = [('zip', '=', self.zip)]
+            if self.country_id:
+                dom.append(('country_id', '=', self.country_id))
+            city = self.env['city'].search(dom)
+            if city:
+                self.city_id = city[0].id
+
 
 class Person(models.Model):
     _name = 'syndic.personne'
@@ -70,6 +94,17 @@ class Person(models.Model):
     @api.onchange('city_id')
     def onchange_city(self):
         self.zip = int(self.city_id.zip)
+
+    @api.onchange('zip')
+    def onchange_zip(self):
+        if self.zip:
+            dom = [('zip', '=', self.zip)]
+            if self.country_id.id:
+                dom.append(('country_id', '=', self.country_id.id))
+            city = self.env['city'].search(dom)
+            if city:
+                self.city_id = city[0].id
+
 
 # fournisseur
 class Supplier(models.Model):

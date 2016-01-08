@@ -42,10 +42,25 @@ class Building(models.Model):
     sign_quizaine_rel = fields.Selection(string='Quinzaine', related='fiche_signalitic_ids.date_quizaine')
     note = fields.Text('Notes')
 
-    # bug orm avec onchange et o2o
-    # @api.onchange('city_building', 'zip_building')
-    # def onchange_city(self):
-    #     self.zip_building = int(self.city_building.zip)
+    @api.onchange('zip_building')
+    def onchange_zip(self):
+        if self.zip_building:
+            city = self.env['city'].search([('zip', '=', self.zip_building)])
+            if city:
+                self.city_building = city[0].id
+
+    @api.multi
+    def open_sign(self):
+        res_id = self.env['building.signalitic'].search([('building_id', '=', self.id)])
+        return {
+            'res_id': res_id.id,
+            'name': 'Ouvrir fiche signalétique',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'building.signalitic',
+            'type': 'ir.actions.act_window',
+            'context': self._context,
+        }
 
     @api.one
     def unactivate_building(self):

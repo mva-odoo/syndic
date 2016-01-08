@@ -77,6 +77,5 @@
                 file="name"
                 report_type="qweb-pdf"
                 />
-
     </data>
 </openerp>

@@ -46,10 +46,8 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Fournisseur">
-					<h1>
-						<field name="name" default_focus="1" placeholder="Nom du locataire"/>
-					</h1>
 					<group colspan="4" col="4">
+						<field name="name" default_focus="1" placeholder="Nom du locataire"/>
 						<field name="title" colspan="2" string="Titre"/>
 					</group>
 					<notebook colspan="4">
@@ -61,8 +59,8 @@
 									</h3>
 									<group col="4" colspan="4">
 										<field name="country_id" colspan="4" string="Pays"/>
-										<field name="city_id"  colspan="2"/>
 										<field name="zip"  colspan="2" string="Code Postal"/>
+										<field name="city_id"  colspan="2" domain="[('country_id', '=', country_id)]"/>
 										<field name="street" colspan="4" string="Rue"/>
 									</group>
 								</group>
@@ -85,8 +83,8 @@
 										<field name="name"/>
 										<field name="title"/>
 										<field name="street"/>
-										<field name="city_id"/>
 										<field name="zip"/>
+										<field name="city_id" domain="[('country_id', '=', country_id)]"/>
 										<field name="country_id" string="Pays"/>
 										<field name="phone" string="Téléphone"/>
 										<field name="fax" string="Fax"/>

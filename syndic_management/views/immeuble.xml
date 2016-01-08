@@ -57,16 +57,16 @@
 					</header>
 					<sheet string="immeuble">
 						<h1>
-							<field name="name" default_focus="1" placeholder="Immeuble" class="oe_inline"/> N°
-							<field name="num_building" class="oe_inline"/>
+							<field name="name" default_focus="1" placeholder="Immeuble" />
+							Numeros: <field name="num_building" class="oe_inline"/>
                         </h1>
 
 						<h3 style="color:#3F82B9">
 							Adresse:
 						</h3>
 						<group col="4" colspan="4">
-							<field name="city_building"  colspan="2"/>
 							<field name="zip_building"  colspan="2"/>
+							<field name="city_building"  colspan="2" domain="[('zip', '=', zip_building)]"/>
 							<field name="address_building" colspan="4"/>
 						</group>
 
@@ -113,9 +113,10 @@
 								<field name="total_quotites"/>
 							</page>
 							<page string="Fiche technique" name="fiche_technique">
-								<group>
-									<field name="fiche_signalitic_ids" widget="many2one"/>
-								</group>
+								<button name="open_sign"
+										string="Consulter la fiche signalétique"
+										type="object"/>
+
 								<button name="go_export_model" string="Exporter fiche technique" type="object"/>
 								<field name="supplier_ids"/>
 							</page>

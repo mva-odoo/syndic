@@ -54,7 +54,7 @@
         </record>
 
         <record model="ir.actions.act_window" id="action_facturation_syndic">
-            <field name="name">facturation syndic</field>
+            <field name="name">facture suivi syndic</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">syndic.facturation</field>
             <field name="view_type">form</field>
@@ -77,7 +77,7 @@
                   parent="syndic_facturation_main"
                   sequence="10"/>
 
-        <menuitem name="Factures"
+        <menuitem name="Factures Suivi Syndic"
                   id="syndic_facture"
                   parent="syndic_facture_main"
                   action="action_facturation_syndic"
@@ -87,7 +87,7 @@
                   id="syndic_type_facture"
                   parent="syndic_facture_main"
                   action="action_type_facturation_syndic"
-                  sequence="20"/>
+                  sequence="80"/>
     </data>
 
 </openerp>

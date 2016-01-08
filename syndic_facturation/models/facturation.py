@@ -3,7 +3,7 @@ from openerp import models, fields, api, exceptions
 from openerp.addons.syndic_tools.syndic_tools import SyndicTools
 
 
-class SyndicFacturation(models.Model):
+class SuiviFacture(models.Model):
     _name = 'syndic.facturation'
     _inherit = 'pdf.viewer'
     _report_name = 'syndic_facturation.facture'
@@ -25,7 +25,7 @@ class SyndicFacturation(models.Model):
 
     @api.model
     def create(self, vals):
-        new_id = super(SyndicFacturation, self).create(vals)
+        new_id = super(SuiviFacture, self).create(vals)
         new_id.name = 'Facture %i' % new_id
         return new_id
 
