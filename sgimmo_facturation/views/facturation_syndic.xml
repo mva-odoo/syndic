@@ -30,24 +30,24 @@
             <field name="arch" type="xml">
                 <form string="Facture">
                     <group>
+                        <field name="year_id"/>
                         <field name="name"/>
+                        <field name="num_facture"/>
                         <field name="immeuble_id"/>
-                        <field name="date" />
-                        <field name="date_fr" />
+                        <field name="num_immeuble"/>
+                        <field name="date"/>
                     </group>
 
-                    <field name="line_ids">
+                    <field name="sgimmo_lign_ids">
                         <tree editable="top">
-                            <field name="name"/>
-                            <field name="type_id"/>
+                            <field name="description"/>
+                            <field name="qty"/>
                             <field name="prix"/>
-                            <field name="nombre"/>
-                            <field name="qty_id"/>
                             <field name="prix_tot"/>
                         </tree>
                     </field>
                     <group>
-                        <field name="total"/>
+                        <field name="facture_tot"/>
                     </group>
                 </form>
             </field>

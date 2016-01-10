@@ -11,8 +11,7 @@
     'data': [
         'views/facturation_syndic.xml',
         'report/facture_sgimmo_report.xml',
-        # 'security/groups.xml',
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
 }

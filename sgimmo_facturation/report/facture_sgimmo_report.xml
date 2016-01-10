@@ -27,9 +27,9 @@
                                                     <td>Code client</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Facture</td>
-                                                    <td>Facture</td>
-                                                    <td>Facture</td>
+                                                    <td><span t-field="o.num_facture"/></td>
+                                                    <td><span t-field="o.date"/></td>
+                                                    <td><span t-field="o.num_immeuble"/></td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -43,7 +43,7 @@
                                 <div class="col-xs-12">
                                         <div class="col-xs-6" style="font-size:16px;">
                                             mode de paiement: Virement<br/>
-                                            Date d'échéance: <br/>
+                                            Date d'échéance: <span t-field="o.date"/><br/>
                                         </div>
                                         <div class="col-xs-6">
 
@@ -63,20 +63,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="sale_tbody">
-                                            <t t-foreach="o.line_ids" t-as="line">
+                                            <t t-foreach="o.sgimmo_lign_ids" t-as="line">
                                                 <tr>
-                                                    <td>AR0001</td>
-                                                    <td>HONORAIRE</td>
+                                                    <t t-if="line.description == 'honoraire'">
+                                                        <td>AR0001</td>
+                                                    </t>
+                                                    <t t-if="line.description == 'administration'">
+                                                        <td>AR0002</td>
+                                                    </t>
+                                                    <t t-if="line.description == 'suivi'">
+                                                        <td>AR0003</td>
+                                                    </t>
+                                                    <td><span t-esc="line.description"/></td>
+                                                    <td><span t-esc="line.qty"/></td>
+                                                    <td><span t-esc="line.prix"/></td>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td><span t-esc="line.prix_tot"/></td>
+                                                    <td>21%</td>
                                                 </tr>
                                             </t>
                                              </tbody>
                                          </table>
 
+                                         <br/>
+                                         <br/>
+                                         <br/>
+                                         <br/>
                                          <br/>
                                          <table class="table table-bordered" style="font-size:16px;">
                                             <thead>
@@ -93,11 +105,11 @@
                                              <tbody>
                                                  <tr>
                                                      <td>Exoneré</td>
-                                                     <td><span t-field="o.total"/></td>
+                                                     <td><span t-field="o.facture_tot"/></td>
                                                      <td></td>
-                                                     <td><span t-field="o.total"/></td>
+                                                     <td><span t-field="o.facture_tot"/></td>
                                                      <td></td>
-                                                     <td><span t-field="o.total"/></td>
+                                                     <td><span t-field="o.facture_tot"/></td>
                                                      <td></td>
                                                  </tr>
                                                  <tr>
@@ -107,7 +119,7 @@
                                                  </tr>
                                                  <tr>
                                                      <td colspan="7" style="text-align:right">
-                                                         <span t-field="o.total"/>
+                                                         <span t-field="o.facture_tot"/>
                                                      </td>
                                                  </tr>
                                              </tbody>
