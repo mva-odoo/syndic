@@ -12,20 +12,21 @@ class FacturationSyndic(models.Model):
     year_id = fields.Many2one('syndic.facturation.syndic.year', 'Années', required=True)
     facture_tot = fields.Float('Total', compute='_compute_total_syndic', readonly=True)
     num_immeuble = fields.Char('Numeros Client')
-    num_facture = fields.Char('Numeros Client', readonly=True)
+    num_facture = fields.Char('Numeros Facture', readonly=True)
 
     @api.multi
     def copy(self, default=None):
-        return super(FacturationSyndic, self).copy(default)
+        lign_ids = []
+        for lign in self.sgimmo_lign_ids:
+            cpy_lign = lign.copy()
+            cpy_lign.facture_syndic_id = self.id
+            lign_ids.append(cpy_lign.id)
+        return super(FacturationSyndic, self).copy({'sgimmo_lign_ids': [(6, 0, lign_ids)]})
 
     @api.model
     def create(self, vals):
-        year = self.env['syndic.facturation.syndic.year'].browse(vals.get('year_id'))
-
-        num_facture = year.last_number+1
-
-        vals['num_facture'] = 'FC%04d' % num_facture
-        year.write({'last_number': num_facture})
+        seq_code = 'sgimmo - %s' % self.env['syndic.facturation.syndic.year'].browse(vals.get('year_id')).name
+        vals['num_facture'] = self.env['ir.sequence'].next_by_code(seq_code)
         return super(FacturationSyndic, self).create(vals)
 
     @api.one
@@ -45,7 +46,7 @@ class FacturationSyndicLigne(models.Model):
     _name = 'syndic.facturation.syndic.ligne'
 
     ref = fields.Char('Référence')
-    description = fields.Selection([('honoraire', 'HORAIRE'),
+    description = fields.Selection([('honoraire', 'HONORAIRE'),
                                     ('administration', 'ADMINISTRATION'),
                                     ('suivi', 'SUIVI SYNDIC')], 'Description', required=True)
     qty = fields.Float('Quantité', required=True)
@@ -65,4 +66,17 @@ class FacturationSyndicYear(models.Model):
     name = fields.Char('Année', required=True)
     last_number = fields.Integer('Dernier Numeros', default='0')
     facture_ids = fields.One2many('syndic.facturation.syndic', 'year_id', 'Facture')
+    sequence_id = fields.Many2one('ir.sequence', 'Sequence')
 
+    @api.model
+    def create(self, vals):
+        sequence = self.env['ir.sequence'].sudo().create({
+            'name': "sgimmo: %s" % vals['name'],
+            'implementation': 'no_gap',
+            'padding': 4,
+            'number_increment': 1,
+            'code': 'sgimmo - %s' % vals['name'],
+            'prefix': 'FC',
+        })
+        vals['sequence_id'] = sequence.id
+        return super(FacturationSyndicYear, self).create(vals)

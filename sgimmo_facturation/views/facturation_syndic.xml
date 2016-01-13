@@ -17,7 +17,7 @@
             <field name="model">syndic.facturation.syndic</field>
             <field name="arch" type="xml">
                 <tree string="Facture">
-                    <field name="name"/>
+                    <field name="num_facture"/>
                     <field name="immeuble_id"/>
                     <field name="date" />
                 </tree>
@@ -30,12 +30,15 @@
             <field name="arch" type="xml">
                 <form string="Facture">
                     <group>
-                        <field name="year_id"/>
-                        <field name="name"/>
-                        <field name="num_facture"/>
-                        <field name="immeuble_id"/>
-                        <field name="num_immeuble"/>
-                        <field name="date"/>
+                        <group>
+                            <field name="year_id" attrs="{'readonly':[('num_facture', '!=', False)]}"/>
+                            <field name="immeuble_id"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="num_facture"/>
+                            <field name="num_immeuble"/>
+                        </group>
                     </group>
 
                     <field name="sgimmo_lign_ids">
@@ -62,7 +65,7 @@
         </record>
 
         <menuitem name="Factures SGImmo"
-                  id="sgimmo_facture"
+                  id="menusgimmo_facture"
                   parent="syndic_facturation.syndic_facture_main"
                   action="action_syndic_facturation_syndic"
                   sequence="20"/>
