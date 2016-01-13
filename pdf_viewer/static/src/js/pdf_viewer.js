@@ -11,9 +11,13 @@ openerp.pdf_viewer = function(instance, local) {
             debugger;
             this.report = action.context['report'];
             if ((typeof action.context['report'] !== "undefined") && (typeof action.context['active_id'] !== "undefined")){
-                this.url = '/report/pdf/'+action.context['report']+'/'+action.context['active_id'];
+                if (typeof action.context['active_ids'] !== "undefined"){
+                    this.url = '/report/pdf/'+action.context['report']+'/'+action.context['active_ids'];
+                }
+                else{
+                   this.url = '/report/pdf/'+action.context['report']+'/'+action.context['active_id'];
+                }
             }
-
         },
     });
 

@@ -57,8 +57,8 @@
 					</header>
 					<sheet string="immeuble">
 						<h1>
+							Numéro: <field name="num_building" class="oe_inline"/>
 							<field name="name" default_focus="1" placeholder="Immeuble" />
-							Numeros: <field name="num_building" class="oe_inline"/>
                         </h1>
 
 						<h3 style="color:#3F82B9">
