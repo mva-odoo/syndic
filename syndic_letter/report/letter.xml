@@ -10,7 +10,7 @@
                 report_type="qweb-pdf"
                 />
 
-        <template t-name="report.external_layout_header">
+        <template t-name="report.external_layout_header" id="external_layout_header">
             <div class="header">
                 <div class="row">
                     <div class="col-xs-3">
@@ -30,7 +30,7 @@
             </div>
         </template>
 
-        <template t-name="letter">
+        <template t-name="letter" id="letter">
                 <div class="row">
                  
                     <div class="col-xs-6"><br/><br/>
@@ -108,14 +108,13 @@
                                 <t t-foreach="o.divers_ids" t-as="prop_id">
                                     <t t-call="syndic_letter.letter"/>
                                 </t>
-
                                 <t t-foreach="o.partner_address_ids" t-as="prop_id">
                                     <t t-call="syndic_letter.letter"/>
                                 </t>
                             </div>
                         </t>
 
-                     </t>
+                    </t>
                 </t>
             </t>
         </template>

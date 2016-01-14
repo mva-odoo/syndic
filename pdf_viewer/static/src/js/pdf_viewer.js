@@ -8,14 +8,12 @@ openerp.pdf_viewer = function(instance, local) {
         init: function(parent, action) {
             this._super(parent);
             this.url = '';
-            debugger;
-            this.report = action.context['report'];
-            if ((typeof action.context['report'] !== "undefined") && (typeof action.context['active_id'] !== "undefined")){
-                if (typeof action.context['active_ids'] !== "undefined"){
-                    this.url = '/report/pdf/'+action.context['report']+'/'+action.context['active_ids'];
+            if ((typeof action.params['report'] !== "undefined") && (typeof action.params['active_id'] !== "undefined")){
+                if (typeof action.params['active_ids'] !== "undefined"){
+                    this.url = '/report/pdf/'+action.params['report']+'/'+action.params['active_ids'];
                 }
                 else{
-                   this.url = '/report/pdf/'+action.context['report']+'/'+action.context['active_id'];
+                   this.url = '/report/pdf/'+action.params['report']+'/'+action.params['active_id'];
                 }
             }
         },
@@ -45,15 +43,18 @@ odoo.define('sgimmo.custom_report', function (require) {
                 'tag': 'pdf_viewer.homepage',
                 'name': 'pdf_viewer',
                 'type': "ir.actions.client",
+                'params': {
+                    'report': action['report_name'],
+                    'active_id': action.context['active_id'],
+                    'active_ids': action.context['active_ids']},
             };
 
             new_action.context = pyeval.eval('contexts',eval_contexts);
-            new_action.context['report'] = action['report_name']
 
             return $.Deferred(function (d) {
                 $.when(self.ir_actions_client(new_action,options)).then(function () {
-                    framework.unblockUI();
                     d.resolve();
+                    framework.unblockUI();
                 });
 
             });
