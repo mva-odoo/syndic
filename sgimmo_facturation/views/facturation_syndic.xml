@@ -19,7 +19,7 @@
                 <tree string="Facture">
                     <field name="num_facture"/>
                     <field name="immeuble_id"/>
-                    <field name="date" />
+                    <field name="date"/>
                 </tree>
             </field>
         </record>

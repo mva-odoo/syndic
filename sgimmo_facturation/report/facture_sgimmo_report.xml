@@ -38,7 +38,8 @@
                                             </tr>
                                             <tr>
                                                 <td><span t-field="o.num_facture"/></td>
-                                                <td><span t-field="o.date"/></td>
+                                                <td><span t-field="o.date"
+                                                          t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/></td>
                                                 <td><span t-field="o.num_immeuble"/></td>
                                             </tr>
                                         </table>
@@ -53,7 +54,8 @@
                             <div class="col-xs-12">
                                     <div class="col-xs-6" style="font-size:16px;">
                                         mode de paiement: Virement<br/>
-                                        Date d'échéance: <span t-field="o.date"/><br/>
+                                        Date d'échéance: <span t-field="o.date"
+                                                               t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/><br/>
                                     </div>
                                     <div class="col-xs-6">
 
