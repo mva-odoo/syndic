@@ -17,6 +17,15 @@ class SuiviFacture(models.Model):
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     object = fields.Char('Objet')
 
+    @api.multi
+    def copy(self, default=None):
+        lign_ids = []
+        for lign in self.line_ids:
+            cpy_lign = lign.copy()
+            cpy_lign.facture_id = self.id
+            lign_ids.append(cpy_lign.id)
+        return super(SuiviFacture, self).copy({'line_ids': [(6, 0, lign_ids)]})
+
     @api.one
     @api.depends('date')
     def _compute_date(self):
