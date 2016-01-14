@@ -5,15 +5,15 @@
                 id="sgimmo_facture_print"
                 model="syndic.facturation.syndic"
                 string="Facture SGimmo"
-                name="sgimmo_facturation.sgimmo_facture"
+                name="sgimmo_facturation.sgimmo_facturation_report_view"
                 file="name"
                 report_type="qweb-pdf"
                 />
 
 
-        <template id="sgimmo_facture">
+        <template id="sgimmo_facturation_report_view">
             <t t-call="report.html_container">
-                <t t-name="sgimmo_facture">
+                <t t-name="sgimmo_facturation_report_view">
                     <t t-set="docs" t-value="docs.with_context({'lang':'fr_BE'})" />
                     <t t-foreach="docs" t-as="o">
                         <div class="page">

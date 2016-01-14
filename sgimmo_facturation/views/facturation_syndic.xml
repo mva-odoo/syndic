@@ -64,11 +64,25 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record model="ir.actions.act_window" id="action_syndic_facturation_year">
+            <field name="name">facturate SGImmo année</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.facturation.syndic.year</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <menuitem name="Factures SGImmo"
                   id="menusgimmo_facture"
                   parent="syndic_facturation.syndic_facture_main"
                   action="action_syndic_facturation_syndic"
                   sequence="20"/>
+
+        <menuitem name="Factures SGImmo Année"
+                  id="menusgimmo_facture_year"
+                  parent="syndic_facturation.syndic_facture_main"
+                  action="action_syndic_facturation_year"
+                  sequence="60"/>
 
     </data>
 </openerp>
