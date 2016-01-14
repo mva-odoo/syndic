@@ -5,8 +5,6 @@ from openerp.addons.syndic_tools.syndic_tools import SyndicTools
 
 class SuiviFacture(models.Model):
     _name = 'syndic.facturation'
-    _inherit = 'pdf.viewer'
-    _report_name = 'syndic_facturation.facture'
     _order = 'id desc'
 
     name = fields.Char('Facture', readonly=True)

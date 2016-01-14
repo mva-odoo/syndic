@@ -12,9 +12,7 @@ class PieceJointe(models.Model):
 class CreateLetter(models.Model):
     _name = 'letter.letter'
     _rec_name = 'sujet'
-    _inherit = 'pdf.viewer'
     _order = 'date desc'
-    _report_name = 'syndic_letter.letter_qweb'
 
     name = fields.Char('ID de la lettre', readonly=True)
     sujet = fields.Char('Sujet', required=True)

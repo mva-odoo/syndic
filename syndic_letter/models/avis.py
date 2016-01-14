@@ -6,8 +6,6 @@ from openerp.addons.syndic_tools.syndic_tools import SyndicTools
 class LetterAvis(models.Model):
     _name = 'letter.avis'
     _order = 'create_date desc'
-    _inherit = 'pdf.viewer'
-    _report_name = 'syndic_letter.avis_impression'
 
     name = fields.Char('Nom de l’avis', required=True)
     text = fields.Html('Texte')
@@ -44,8 +42,6 @@ class TypeAvis(models.Model):
 class LetterReunion(models.Model):
     _name = 'letter.reunion'
     _order = 'create_date desc'
-    _inherit = 'pdf.viewer'
-    _report_name = 'syndic_letter.rapport_reunion_print'
             
     name = fields.Char('Réunion', required=True)
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble', required=True)
