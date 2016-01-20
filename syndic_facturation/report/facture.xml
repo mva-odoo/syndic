@@ -5,6 +5,7 @@
             <t t-call="report.html_container">
                 <t t-set="docs" t-value="docs.with_context({'lang':'fr_BE'})" />
                     <t t-foreach="docs" t-as="o">
+                        <t t-call="report.external_layout">
                         <div class="page">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -66,6 +67,7 @@
                                  </div>
                             </div>
                         </div>
+                    </t>
                 </t>
             </t>
         </template>

@@ -16,135 +16,137 @@
                 <t t-name="sgimmo_facturation_report_view">
                     <t t-set="docs" t-value="docs.with_context({'lang':'fr_BE'})" />
                     <t t-foreach="docs" t-as="o">
-                        <div class="page">
-                            <div class="col-xs-12">
-                                <div class="col-xs-6">
-                                    <span t-field="res_company.name"/><br/>
-                                    <span t-field="res_company.street"/><br/>
-                                    <span t-field="res_company.zip"/> <span t-field="res_company.city"/><br/>
-                                    Tél: <span t-field="res_company.phone"/><br/>
-                                    Fax: <span t-field="res_company.fax"/><br/>
-                                </div>
-                                <div class="col-xs-6" style="font-size:16px;">
-                                    <div>
-                                        <table class="table table-bordered">
-                                            <tr style="border:1px;">
-                                                <th colspan="3" style="text-align:center;">Facture</th>
-                                            </tr>
-                                            <tr>
-                                                <td>N°facture</td>
-                                                <td>Date</td>
-                                                <td>Code client</td>
-                                            </tr>
-                                            <tr>
-                                                <td><span t-field="o.num_facture"/></td>
-                                                <td><span t-field="o.date"
-                                                          t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/></td>
-                                                <td><span t-field="o.num_immeuble"/></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                    <br/><b><span t-field="o.immeuble_id.name"/></b><br/>
-                                    <span t-field="o.immeuble_id.address_building"/><br/>
-                                    <span t-esc="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
-                                    <br/>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                    <div class="col-xs-6" style="font-size:16px;">
-                                        mode de paiement: Virement<br/>
-                                        Date d'échéance: <span t-field="o.date"
-                                                               t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/><br/>
-                                    </div>
+                        <t t-call="report.external_layout">
+                            <div class="page">
+                                <div class="col-xs-12">
                                     <div class="col-xs-6">
-
+                                        <span t-field="res_company.name"/><br/>
+                                        <span t-field="res_company.street"/><br/>
+                                        <span t-field="res_company.zip"/> <span t-field="res_company.city"/><br/>
+                                        Tél: <span t-field="res_company.phone"/><br/>
+                                        Fax: <span t-field="res_company.fax"/><br/>
                                     </div>
+                                    <div class="col-xs-6" style="font-size:16px;">
+                                        <div>
+                                            <table class="table table-bordered">
+                                                <tr style="border:1px;">
+                                                    <th colspan="3" style="text-align:center;">Facture</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>N°facture</td>
+                                                    <td>Date</td>
+                                                    <td>Code client</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span t-field="o.num_facture"/></td>
+                                                    <td><span t-field="o.date"
+                                                              t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/></td>
+                                                    <td><span t-field="o.num_immeuble"/></td>
+                                                </tr>
+                                            </table>
+                                        </div>
 
-                                 <div class="col-xs-12">
-                                     <table class="table table-condensed" style="font-size:16px;">
-                                          <thead>
-                                            <tr style ="text-align:center">
-                                                <th>Référence</th>
-                                                <th>Description</th>
-                                                <th>Quantité</th>
-                                                <th>Prix unitaire</th>
-                                                <th>Remise HT</th>
-                                                <th>Total HT</th>
-                                                <th>Tx TVA</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="sale_tbody">
-                                        <t t-foreach="o.sgimmo_lign_ids" t-as="line">
-                                            <tr>
-                                                <t t-if="line.description == 'honoraire'">
-                                                    <td>AR0001</td>
-                                                </t>
-                                                <t t-if="line.description == 'administration'">
-                                                    <td>AR0002</td>
-                                                </t>
-                                                <t t-if="line.description == 'suivi'">
-                                                    <td>AR0003</td>
-                                                </t>
-                                                <td><span t-esc="line.description"/></td>
-                                                <td><span t-esc="line.qty"/></td>
-                                                <td><span t-esc="line.prix"/></td>
-                                                <td></td>
-                                                <td><span t-esc="line.prix_tot"/></td>
-                                                <td>21%</td>
-                                            </tr>
-                                        </t>
-                                         </tbody>
-                                     </table>
-
-                                     <br/>
-                                     <br/>
-                                     <br/>
-                                     <br/>
-                                     <br/>
-                                     <table class="table table-bordered" style="font-size:16px;">
-                                        <thead>
-                                            <tr style ="text-align:center">
-                                                <th>% TVA</th>
-                                                <th>Base</th>
-                                                <th>Montant</th>
-                                                <th>Total HT</th>
-                                                <th>Total TVA</th>
-                                                <th>Total TTC</th>
-                                                <th>Déjà réglé TTC</th>
-                                            </tr>
-                                        </thead>
-                                         <tbody>
-                                             <tr>
-                                                 <td>Exoneré</td>
-                                                 <td><span t-field="o.facture_tot"/></td>
-                                                 <td></td>
-                                                 <td><span t-field="o.facture_tot"/></td>
-                                                 <td></td>
-                                                 <td><span t-field="o.facture_tot"/></td>
-                                                 <td></td>
-                                             </tr>
-                                             <tr>
-                                                 <td colspan="7" style="text-align:right">
-                                                     <b>Net à payer</b>
-                                                 </td>
-                                             </tr>
-                                             <tr>
-                                                 <td colspan="7" style="text-align:right">
-                                                     <span t-field="o.facture_tot"/>
-                                                 </td>
-                                             </tr>
-                                         </tbody>
-                                     </table>
-                                     <br/>
-                                     <br/>
-                                     <b style="font-size:16px;">
-                                        Excempt de TVA suivant circulaire n°13/95 du 20.09.95 du ministere des Finances.<br/>
-                                        A verser au compte 001 5423024-24
-                                     </b>
+                                        <br/><b><span t-field="o.immeuble_id.name"/></b><br/>
+                                        <span t-field="o.immeuble_id.address_building"/><br/>
+                                        <span t-esc="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
+                                        <br/>
                                     </div>
-                                 </div>
-                        </div>
+                                </div>
+                                <div class="col-xs-12">
+                                        <div class="col-xs-6" style="font-size:16px;">
+                                            mode de paiement: Virement<br/>
+                                            Date d'échéance: <span t-field="o.date"
+                                                                   t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/><br/>
+                                        </div>
+                                        <div class="col-xs-6">
+
+                                        </div>
+
+                                     <div class="col-xs-12">
+                                         <table class="table table-condensed" style="font-size:16px;">
+                                              <thead>
+                                                <tr style ="text-align:center">
+                                                    <th>Référence</th>
+                                                    <th>Description</th>
+                                                    <th>Quantité</th>
+                                                    <th>Prix unitaire</th>
+                                                    <th>Remise HT</th>
+                                                    <th>Total HT</th>
+                                                    <th>Tx TVA</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="sale_tbody">
+                                            <t t-foreach="o.sgimmo_lign_ids" t-as="line">
+                                                <tr>
+                                                    <t t-if="line.description == 'honoraire'">
+                                                        <td>AR0001</td>
+                                                    </t>
+                                                    <t t-if="line.description == 'administration'">
+                                                        <td>AR0002</td>
+                                                    </t>
+                                                    <t t-if="line.description == 'suivi'">
+                                                        <td>AR0003</td>
+                                                    </t>
+                                                    <td><span t-esc="line.description"/></td>
+                                                    <td><span t-esc="line.qty"/></td>
+                                                    <td><span t-esc="line.prix"/></td>
+                                                    <td></td>
+                                                    <td><span t-esc="line.prix_tot"/></td>
+                                                    <td>21%</td>
+                                                </tr>
+                                            </t>
+                                             </tbody>
+                                         </table>
+
+                                         <br/>
+                                         <br/>
+                                         <br/>
+                                         <br/>
+                                         <br/>
+                                         <table class="table table-bordered" style="font-size:16px;">
+                                            <thead>
+                                                <tr style ="text-align:center">
+                                                    <th>% TVA</th>
+                                                    <th>Base</th>
+                                                    <th>Montant</th>
+                                                    <th>Total HT</th>
+                                                    <th>Total TVA</th>
+                                                    <th>Total TTC</th>
+                                                    <th>Déjà réglé TTC</th>
+                                                </tr>
+                                            </thead>
+                                             <tbody>
+                                                 <tr>
+                                                     <td>Exoneré</td>
+                                                     <td><span t-field="o.facture_tot"/></td>
+                                                     <td></td>
+                                                     <td><span t-field="o.facture_tot"/></td>
+                                                     <td></td>
+                                                     <td><span t-field="o.facture_tot"/></td>
+                                                     <td></td>
+                                                 </tr>
+                                                 <tr>
+                                                     <td colspan="7" style="text-align:right">
+                                                         <b>Net à payer</b>
+                                                     </td>
+                                                 </tr>
+                                                 <tr>
+                                                     <td colspan="7" style="text-align:right">
+                                                         <span t-field="o.facture_tot"/>
+                                                     </td>
+                                                 </tr>
+                                             </tbody>
+                                         </table>
+                                         <br/>
+                                         <br/>
+                                         <b style="font-size:16px;">
+                                            Excempt de TVA suivant circulaire n°13/95 du 20.09.95 du ministere des Finances.<br/>
+                                            A verser au compte 001 5423024-24
+                                         </b>
+                                        </div>
+                                     </div>
+                            </div>
+                        </t>
                     </t>
                 </t>
             </t>
