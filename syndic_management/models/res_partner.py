@@ -58,15 +58,15 @@ class ResPartnerAddress(models.Model):
     add_parent_id_loaner = fields.Many2one('syndic.loaner', 'Locataire')
     is_letter = fields.Boolean('Lettre')
 
-    @api.onchange('zip')
-    def onchange_zip(self):
-        if self.zip:
-            dom = [('zip', '=', self.zip)]
-            if self.country_id:
-                dom.append(('country_id', '=', self.country_id))
-            city = self.env['city'].search(dom)
-            if city:
-                self.city_id = city[0].id
+    # @api.onchange('zip')
+    # def onchange_zip(self):
+    #     if self.zip:
+    #         dom = [('zip', '=', self.zip)]
+    #         if self.country_id:
+    #             dom.append(('country_id', '=', self.country_id))
+    #         city = self.env['city'].search(dom)
+    #         if city:
+    #             self.city_id = city[0].id
 
 
 class Person(models.Model):
@@ -91,19 +91,19 @@ class Person(models.Model):
     gsm = fields.Char('GSM')
     user_id = fields.Many2one('res.users', string="User", ondelete="cascade")
 
-    @api.onchange('city_id')
-    def onchange_city(self):
-        self.zip = int(self.city_id.zip)
+    # @api.onchange('city_id')
+    # def onchange_city(self):
+    #     self.zip = int(self.city_id.zip)
 
-    @api.onchange('zip')
-    def onchange_zip(self):
-        if self.zip:
-            dom = [('zip', '=', self.zip)]
-            if self.country_id.id:
-                dom.append(('country_id', '=', self.country_id.id))
-            city = self.env['city'].search(dom)
-            if city:
-                self.city_id = city[0].id
+    # @api.onchange('zip')
+    # def onchange_zip(self):
+    #     if self.zip:
+    #         dom = [('zip', '=', self.zip)]
+    #         if self.country_id.id:
+    #             dom.append(('country_id', '=', self.country_id.id))
+    #         city = self.env['city'].search(dom)
+    #         if city:
+    #             self.city_id = city[0].id
 
 
 # fournisseur
