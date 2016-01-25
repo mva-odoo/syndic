@@ -15,12 +15,10 @@ class FacturationSyndic(models.Model):
 
     @api.multi
     def copy(self, default=None):
-        lign_ids = []
-        for lign in self.sgimmo_lign_ids:
-            cpy_lign = lign.copy()
-            cpy_lign.facture_syndic_id = self.id
-            lign_ids.append(cpy_lign.id)
-        return super(FacturationSyndic, self).copy({'sgimmo_lign_ids': [(6, 0, lign_ids)]})
+        new_lign_ids = self.sgimmo_lign_ids.copy()
+        new_id = super(FacturationSyndic, self).copy()
+        new_id.sgimmo_lign_ids = new_lign_ids
+        return new_id
 
     @api.model
     def create(self, vals):
@@ -63,7 +61,6 @@ class FacturationSyndicYear(models.Model):
     _name = 'syndic.facturation.syndic.year'
 
     name = fields.Char('Année', required=True)
-    last_number = fields.Integer('Dernier Numeros', default='0')
     facture_ids = fields.One2many('syndic.facturation.syndic', 'year_id', 'Facture')
     sequence_id = fields.Many2one('ir.sequence', 'Sequence')
 
