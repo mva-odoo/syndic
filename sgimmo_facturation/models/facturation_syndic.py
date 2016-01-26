@@ -16,7 +16,7 @@ class FacturationSyndic(models.Model):
     @api.multi
     def copy(self, default=None):
         new_lign_ids = self.sgimmo_lign_ids.copy()
-        new_id = super(FacturationSyndic, self).copy()
+        new_id = super(FacturationSyndic, self).copy(default=default)
         new_id.sgimmo_lign_ids = new_lign_ids
         return new_id
 

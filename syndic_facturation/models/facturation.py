@@ -18,7 +18,7 @@ class SuiviFacture(models.Model):
     @api.multi
     def copy(self, default=None):
         new_lign_ids = self.line_ids.copy()
-        new_id = super(SuiviFacture, self).copy()
+        new_id = super(SuiviFacture, self).copy(default=default)
         new_id.line_ids = new_lign_ids
         return new_id
 
