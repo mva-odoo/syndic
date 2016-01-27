@@ -73,7 +73,7 @@ class ReunionType(models.Model):
 
 class ReunionPoint(models.Model):
     _name = 'reunion.point'
-    _order = 'create_date desc'
+    _order = 'sequence'
 
     name = fields.Char('Point', required=True)
     sequence = fields.Integer('Numéros de point')
