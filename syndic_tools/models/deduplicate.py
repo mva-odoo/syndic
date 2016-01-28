@@ -26,13 +26,13 @@ class Deduplicate(models.TransientModel):
         move_ids = [duplicate_id.id for duplicate_id in self.duplicate_ids]
 
         for deduplicate_id in self.deduplicate_ids:
-            import ipdb;ipdb.set_trace()
+            # import ipdb;ipdb.set_trace()
             move = self.env[deduplicate_id.model_id.name].search([(deduplicate_id.champs, 'in', move_ids)])
             print move_ids
             move.write({deduplicate_id.champs: self.id_master})
             print 'write -- %s -- %s --> model: %s' % (deduplicate_id.champs, self.id_master, move._name)
 
-        del_ids = set(move_ids) - set([self.id_master])
+        del_ids = set(move_ids) - set(self.id_master)
         self.env[self.model_id.name].browse(del_ids).unlink()
 
 

@@ -17,13 +17,10 @@ class SuiviFacture(models.Model):
 
     @api.multi
     def copy(self, default=None):
-        print 'facturation 2'
-        lign_ids = []
-        for lign in self.line_ids:
-            cpy_lign = lign.copy()
-            cpy_lign.facture_id = self.id
-            lign_ids.append(cpy_lign.id)
-        return super(SuiviFacture, self).copy({'line_ids': [(6, 0, lign_ids)]})
+        new_lign_ids = self.line_ids.copy()
+        new_id = super(SuiviFacture, self).copy(default=default)
+        new_id.line_ids = new_lign_ids
+        return new_id
 
     @api.one
     @api.depends('date')
