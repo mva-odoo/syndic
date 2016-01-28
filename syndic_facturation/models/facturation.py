@@ -17,6 +17,7 @@ class SuiviFacture(models.Model):
 
     @api.multi
     def copy(self, default=None):
+        print 'facturation 2'
         lign_ids = []
         for lign in self.line_ids:
             cpy_lign = lign.copy()
