@@ -10,7 +10,7 @@ Syndic Tools
     'depends': [
     ],
     'data': [
-        'views/deduplicate.xml',
+        # 'views/deduplicate.xml',
     ],
     'installable': True,
     'auto_install': False,
