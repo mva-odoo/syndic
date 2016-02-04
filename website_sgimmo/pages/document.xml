@@ -56,7 +56,7 @@ th, td {
                            <td><t t-esc="document.nom_document"/></td>
                            <td><t t-esc="document.immeuble_id.name"/></td>
                            <td><t t-esc="document.type_id.name"/></td>
-                           <td><a t-attf-href="/web/binary/saveas?model=syndic.documents&amp;field=document&amp;filename_field=datas_fname&amp;id=#{document.id}">Télécharger</a></td>
+                           <td><a t-attf-href="/web/content?model=syndic.documents&amp;field=document&amp;filename_field=datas_fname&amp;id=#{document.id}">Télécharger</a></td>
                        </tr>
                    </t>
                </table>
