@@ -60,10 +60,10 @@
 										Adresse:
 									</h3>
 									<group col="4" colspan="4">
-										<field name="country_id" colspan="4" string="Pays"/>
+										<field name="street" colspan="4" string="Rue"/>
 										<field name="zip"  colspan="2" string="Code Postal"/>
 										<field name="city_id"  colspan="2" domain="[('country_id', '=', country_id)]"/>
-										<field name="street" colspan="4" string="Rue"/>
+										<field name="country_id" colspan="4" string="Pays"/>
 									</group>
 								</group>
 
