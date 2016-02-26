@@ -66,7 +66,7 @@
 						</h3>
 						<group col="4" colspan="4">
 							<field name="zip_building"  colspan="2"/>
-							<field name="city_building"  colspan="2" domain="[('zip', '=', zip_building)]"/>
+							<field name="city_building"  colspan="2"/>
 							<field name="address_building" colspan="4"/>
 						</group>
 
