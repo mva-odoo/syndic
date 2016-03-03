@@ -17,6 +17,7 @@ class City(models.Model):
     name = fields.Char('Ville', required=True)
     zip = fields.Char('Code Postal', required=True)
     country_id = fields.Many2one('res.country', 'Country', required=True)
+    active = fields.Boolean('Actif', default=True)
 
     @api.model
     def create(self, vals):

@@ -10,7 +10,8 @@ Syndic Tools
     'depends': [
     ],
     'data': [
-        # 'views/deduplicate.xml',
+        'views/deduplicate.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'auto_install': False,
