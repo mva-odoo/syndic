@@ -8,8 +8,8 @@ class WebsiteDocument(http.Controller):
     def index(self, **kwargs):
         domain = []
         if kwargs:
-            if int(kwargs.get('immeubles')):
-                domain.append(('immeuble_id', '=', int(kwargs.get('immeubles'))))
+            # if int(kwargs.get('immeubles')):
+            #     domain.append(('immeuble_id', '=', int(kwargs.get('immeubles'))))
             if int(kwargs.get('types')):
                 domain.append(('type_id', '=', int(kwargs.get('types'))))
 
@@ -18,9 +18,11 @@ class WebsiteDocument(http.Controller):
 
         docs = http.request.env['syndic.documents'].search(domain)
 
-        return http.request.render('website_sgimmo.index', {'documents': docs,
-                                                            'types': doc_types,
-                                                            'immeubles': building_ids})
+        return http.request.render('website_sgimmo.index', {
+            'documents': docs,
+            'types': doc_types,
+            'immeubles': building_ids
+        })
 
 
 class Website(openerp.addons.web.controllers.main.Home):
