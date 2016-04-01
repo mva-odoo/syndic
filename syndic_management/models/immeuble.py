@@ -41,6 +41,7 @@ class Building(models.Model):
     sign_mois_rel = fields.Selection(string='Mois', related='fiche_signalitic_ids.date_mois')
     sign_quizaine_rel = fields.Selection(string='Quinzaine', related='fiche_signalitic_ids.date_quizaine')
     note = fields.Text('Notes')
+    user_id = fields.Many2one('res.users', 'Utilisateur', required=True)
 
     @api.onchange('zip_building')
     def onchange_zip(self):
