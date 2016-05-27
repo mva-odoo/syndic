@@ -33,37 +33,37 @@ class SyndicBuilding(models.Model):
         settings = self.env['syndic.compta.setting'].search([])
         if len(settings) > 0:
             return settings.roulement_product_id.id
-        return settings.roulement_product_id
+        return False
 
     def _default_prod_reserve(self):
         settings = self.env['syndic.compta.setting'].search([])
         if len(settings) > 0:
             return settings.reserve_product_id.id
-        return settings.roulement_product_id
+        return False
 
     def _default_compte_rapporter(self):
         settings = self.env['syndic.compta.setting'].search([])
         if len(settings) > 0:
             return settings.compte_rapporter.id
-        return settings.roulement_product_id
+        return False
 
     def _default_report_reserve_compte(self):
         settings = self.env['syndic.compta.setting'].search([])
         if len(settings) > 0:
             return settings.report_reserve_compte.id
-        return settings.roulement_product_id
+        return False
 
     def _default_report_roulement_compte(self):
         settings = self.env['syndic.compta.setting'].search([])
         if len(settings) > 0:
             return settings.report_roulement_compte.id
-        return settings.roulement_product_id
+        return False
 
     def _default_open_report_reserve_compte(self):
         settings = self.env['syndic.compta.setting'].search([])
         if len(settings) > 0:
             return settings.open_report_reserve_compte.id
-        return settings.roulement_product_id
+        return False
 
     account_ids = fields.One2many('syndic.bank.account', 'building_id', 'Comptes en banque')
     roulement_product_id = fields.Many2one('syndic.facturation.type', 'Produit d ouverture (roulement)',

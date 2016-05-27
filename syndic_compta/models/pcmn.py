@@ -13,6 +13,8 @@ class Pcmn(models.Model):
     main_compte = fields.Boolean('Compte Général')
     type_account = fields.Selection([('roulement', 'Roulement'), ('reserve', 'Reserve')])
     child_ids = fields.One2many('syndic.pcmn', 'parent_id', string="Compte(s) enfant(s)")
+    description = fields.Text('Description')
+    immeuble_id = fields.Many2one('syndic.building', 'immeuble')
 
     @api.multi
     def name_get(self):
