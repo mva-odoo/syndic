@@ -8,7 +8,7 @@
     'author': 'OpenERP SA',
     'website': 'http://openerp.com',
     'depends': ['web'],
-    'data' : ['web_change.xml'],
+    'data': ['web_change.xml'],
     'auto_install': True,
     'installable': True,
 }

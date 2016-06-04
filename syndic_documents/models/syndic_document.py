@@ -15,6 +15,7 @@ class Document(models.Model):
     proprio_ids = fields.Many2many('syndic.owner', string='Propriétaires')
     building_id = fields.Many2one('syndic.building', 'Immeubles')
     type_id = fields.Many2one('syndic.type.document', 'Type de document')
+    all_document = fields.Boolean('Pour tout le batiment')
 
 
 class Proprio(models.Model):

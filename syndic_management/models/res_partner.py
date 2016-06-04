@@ -156,18 +156,23 @@ class Owner(models.Model):
         res_id = super(Owner, self).create(vals)
         login = SyndicTools().login_generator(vals['name'])
         if self.sgimmo_check_login_unicity(login):
-            group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
+            # group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
 
             dict_users = {
                 'name': vals['name'],
                 'login': login,
                 'password': SyndicTools().pass_generator(),
                 'proprio_id': res_id.id,
-                'groups_id': [(6, 0, group_ids.ids)],
+                'groups_id': [(6, 0, self.env.ref('syndic_management.syndic_client').ids)],
             }
 
-            res_id.user_id = self.env['res.users'].sudo().create(dict_users)
-            res_id.password = dict_users['password']
+            # res_id.user_id = self.env['res.users'].sudo().create(dict_users)
+            # res_id.password = dict_users['password']
+
+            self.write({
+                'user_id': self.env['res.users'].sudo().create(dict_users),
+                'password': dict_users['password']
+            })
         return res_id
 
     @api.one
@@ -180,18 +185,23 @@ class Owner(models.Model):
             self.user_id.sudo().write(dict_users)
             self.password = dict_users['password']
         else:
-            group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
+            # group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
 
             dict_users = {
                 'name': self.name,
                 'login': SyndicTools().login_generator(self.name),
                 'password': SyndicTools().pass_generator(),
                 'proprio_id': self.id,
-                'groups_id': [(6, 0, group_ids.ids)],
+                'groups_id': [(6, 0, self.env.ref('syndic_management.syndic_client').ids)],
             }
 
-            self.user_id = self.env['res.users'].sudo().create(dict_users)
-            self.password = dict_users['password']
+            self.write({
+                'user_id': self.env['res.users'].sudo().create(dict_users),
+                'password': dict_users['password']
+            })
+
+            # self.user_id = self.env['res.users'].sudo().create(dict_users)
+            # self.password = dict_users['password']
 
     @api.one
     def unlink(self):
