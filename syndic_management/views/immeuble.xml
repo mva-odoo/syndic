@@ -123,6 +123,12 @@
 							<page string="Notes" name="notes">
 								<field name="note"/>
 							</page>
+							<page string="Accès" name="acces">
+								<group>
+									<field name="user_id"/>
+									<field name="password"/>
+								</group>
+							</page>
 						</notebook>
 					</sheet>
                 </form>

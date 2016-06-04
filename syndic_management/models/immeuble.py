@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
+from openerp.addons.syndic_tools.syndic_tools import SyndicTools
+
 from xlwt import Workbook
 import StringIO
 import base64
@@ -41,6 +43,8 @@ class Building(models.Model):
     sign_mois_rel = fields.Selection(string='Mois', related='fiche_signalitic_ids.date_mois')
     sign_quizaine_rel = fields.Selection(string='Quinzaine', related='fiche_signalitic_ids.date_quizaine')
     note = fields.Text('Notes')
+    user_id = fields.Many2one('res.users', 'Utilisateur', required=True)
+    password = fields.Char('Mot de Passe')
 
     @api.onchange('zip_building')
     def onchange_zip(self):
@@ -72,9 +76,31 @@ class Building(models.Model):
 
     @api.model
     def create(self, vals):
+        passwd = SyndicTools().pass_generator()
+
+        vals['user_id'] = self.env['res.users'].sudo().create({
+            'name': vals['name'],
+            'login': vals['name'],
+            'password': passwd,
+            'groups_id': [(6, 0, self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')]).ids)],
+        }).id
+        vals['password'] = passwd
+
         res = super(Building, self).create(vals)
         self.env['building.signalitic'].create({'building_id': res.id})
         return res
+
+    @api.multi
+    def write(self, vals):
+        if vals.get('name'):
+            self.user_id.name = vals['name']
+            self.user_id.login = vals['name']
+        return super(Building, self).write(vals)
+
+    @api.one
+    def unlink(self):
+        self.user_id.unlink()
+        return super(Building, self).unlink()
 
     @api.multi
     def compute_xls(self):

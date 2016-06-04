@@ -27,15 +27,14 @@
         </record>
 
         <record model="ir.actions.act_window" id="action_tools_deduplicate">
-			<field name="name">Dedupliquer</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">syndic.tools.deduplicate</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+            <field name="name">Dedupliquer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.tools.deduplicate</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
         <menuitem name="Dédupliquer"
                   id="tools_deduplicate_menu"
-                  parent="syndic_management.configuration_syndic"
                   action="action_tools_deduplicate"/>
     </data>
 </openerp>

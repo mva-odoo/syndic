@@ -38,6 +38,8 @@
                         <field name="parent_id"/>
                         <field name="main_compte"/>
                         <field name="type_account"/>
+                        <field name="description"/>
+                        <field name="immeuble_id"/>
                     </group>
                     <field name="child_ids"/>
                 </form>

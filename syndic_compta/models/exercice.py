@@ -296,9 +296,12 @@ class CloseExerciceWizard(models.TransientModel):
             })
             wizard.exercice_id.state = 'close'
 
-            context = self.with_context(self._context, default_reserve=wizard.reserve_valeur_rapporter,
-                                        default_roulement=wizard.roulement_valeur_rapporter,
-                                        reopen=1)._context
+            context = self.with_context(
+                    self.env.context,
+                    default_reserve=wizard.reserve_valeur_rapporter,
+                    default_roulement=wizard.roulement_valeur_rapporter,
+                    reopen=1
+            )
 
         return {
             'name': 'Ouverture d\'exercice',
@@ -307,7 +310,7 @@ class CloseExerciceWizard(models.TransientModel):
             'res_model': 'syndic.open.exercice.wizard',
             'type': 'ir.actions.act_window',
             'target': 'new',
-            'context': context,
+            'context': context.env.context,
         }
 
     @api.multi
