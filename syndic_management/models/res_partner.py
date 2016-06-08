@@ -7,6 +7,7 @@ class ResUsers(models.Model):
     _inherit = 'res.users'
 
     proprio_id = fields.Many2one('syndic.owner', string='ref proprio')
+    proprio_id = fields.Many2one('syndic.owner', string='ref proprio')
     server_mail_id = fields.Many2one('ir.mail_server', 'Serveur Email')
 
 
@@ -59,16 +60,6 @@ class ResPartnerAddress(models.Model):
     add_parent_id_loaner = fields.Many2one('syndic.loaner', 'Locataire')
     is_letter = fields.Boolean('Lettre')
 
-    # @api.onchange('zip')
-    # def onchange_zip(self):
-    #     if self.zip:
-    #         dom = [('zip', '=', self.zip)]
-    #         if self.country_id:
-    #             dom.append(('country_id', '=', self.country_id))
-    #         city = self.env['city'].search(dom)
-    #         if city:
-    #             self.city_id = city[0].id
-
 
 class Person(models.Model):
     _name = 'syndic.personne'
@@ -91,20 +82,6 @@ class Person(models.Model):
     prenom = fields.Char('Prenom')
     gsm = fields.Char('GSM')
     user_id = fields.Many2one('res.users', string="User", ondelete="cascade")
-
-    # @api.onchange('city_id')
-    # def onchange_city(self):
-    #     self.zip = int(self.city_id.zip)
-
-    # @api.onchange('zip')
-    # def onchange_zip(self):
-    #     if self.zip:
-    #         dom = [('zip', '=', self.zip)]
-    #         if self.country_id.id:
-    #             dom.append(('country_id', '=', self.country_id.id))
-    #         city = self.env['city'].search(dom)
-    #         if city:
-    #             self.city_id = city[0].id
 
 
 # fournisseur
@@ -166,9 +143,6 @@ class Owner(models.Model):
                 'groups_id': [(6, 0, self.env.ref('syndic_management.syndic_client').ids)],
             }
 
-            # res_id.user_id = self.env['res.users'].sudo().create(dict_users)
-            # res_id.password = dict_users['password']
-
             self.write({
                 'user_id': self.env['res.users'].sudo().create(dict_users),
                 'password': dict_users['password']
@@ -185,23 +159,18 @@ class Owner(models.Model):
             self.user_id.sudo().write(dict_users)
             self.password = dict_users['password']
         else:
-            # group_ids = self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')])
-
-            dict_users = {
+            user = self.env['res.users'].sudo().create({
                 'name': self.name,
                 'login': SyndicTools().login_generator(self.name),
                 'password': SyndicTools().pass_generator(),
                 'proprio_id': self.id,
                 'groups_id': [(6, 0, self.env.ref('syndic_management.syndic_client').ids)],
-            }
-
-            self.write({
-                'user_id': self.env['res.users'].sudo().create(dict_users),
-                'password': dict_users['password']
             })
 
-            # self.user_id = self.env['res.users'].sudo().create(dict_users)
-            # self.password = dict_users['password']
+            self.write({
+                'user_id': user.id,
+                'password': user.password
+            })
 
     @api.one
     def unlink(self):

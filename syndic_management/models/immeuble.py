@@ -85,9 +85,9 @@ class Building(models.Model):
             'groups_id': [(6, 0, self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')]).ids)],
         }).id
         vals['password'] = passwd
-
         res = super(Building, self).create(vals)
         self.env['building.signalitic'].create({'building_id': res.id})
+        res.user_id.immeuble_id = res.id
         return res
 
     @api.multi
@@ -151,3 +151,9 @@ class Building(models.Model):
             'target': 'new',
             'context': self._context,
         }
+
+
+class BuildingUser(models.Model):
+    _inherit = 'res.users'
+
+    immeuble_id = fields.Many2one('syndic.building', 'immeuble_id')

@@ -11,6 +11,7 @@
 						<group>
 							<field name="proprio_id"/>
 							<field name="server_mail_id"/>
+							<field name="immeuble_id"/>
 						</group>
 					</page>
                </xpath>
