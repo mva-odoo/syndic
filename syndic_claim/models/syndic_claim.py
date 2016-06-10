@@ -5,6 +5,7 @@ from datetime import date
 
 class Claim(models.Model):
     _name = 'syndic.claim'
+    _inherit = 'mail.thread'
     _rec_name = 'subject'
     _order = 'create_date desc'
 
@@ -49,6 +50,29 @@ class Claim(models.Model):
     def on_change_partner(self):
         self.email = self.main_owner.email
         self.phone = self.main_owner.phone
+
+    @api.model
+    def create(self, vals):
+
+        res = super(Claim, self).create(vals)
+
+        if res.manager_id.id != res.create_uid.id:
+            body = """
+Bonjour,
+
+une tâche t'attends sur : <a href='https://syndic.sgimmo.be/web#id=%i&view_type=form&model=syndic.claim&menu_id=128&action=119'>Odoo</a>
+""" % res.id
+
+            self.env['mail.mail'].create({
+                'mail_server_id':  self.env.user.server_mail_id.id or False,
+                'email_from': self.env.user.email,
+                'reply_to': self.env.user.email,
+                'body_html': body,
+                'subject': 'Une tâche t\'attends dans Odoo',
+                'email_to': self.env['res.users'].browse(vals.get('manager_id')).email
+            })
+
+        return res
 
 
 class ClaimStatus(models.Model):

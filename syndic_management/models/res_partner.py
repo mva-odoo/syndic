@@ -63,6 +63,7 @@ class ResPartnerAddress(models.Model):
 
 class Person(models.Model):
     _name = 'syndic.personne'
+    _inherits = {'res.partner': 'partner_id'}
     _order = 'name'
 
     name = fields.Char('Nom', select=1, required=True)

@@ -76,7 +76,10 @@ class Building(models.Model):
 
     @api.model
     def create(self, vals):
-        passwd = SyndicTools().pass_generator()
+        if not vals.get('password'):
+            passwd = SyndicTools().pass_generator()
+        else:
+            passwd = vals.get('password')
 
         vals['user_id'] = self.env['res.users'].sudo().create({
             'name': vals['name'],
@@ -84,6 +87,7 @@ class Building(models.Model):
             'password': passwd,
             'groups_id': [(6, 0, self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')]).ids)],
         }).id
+
         vals['password'] = passwd
         res = super(Building, self).create(vals)
         self.env['building.signalitic'].create({'building_id': res.id})
@@ -95,6 +99,10 @@ class Building(models.Model):
         if vals.get('name'):
             self.user_id.name = vals['name']
             self.user_id.login = vals['name']
+
+        if vals.get('password') and self.user_id:
+            self.user_id.password = vals.get('password')
+
         return super(Building, self).write(vals)
 
     @api.one
