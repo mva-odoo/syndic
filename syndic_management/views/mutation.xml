@@ -38,7 +38,7 @@
 			<field name="arch" type="xml">
 				<form string="mutation" layout="manual" version="7.0">
 				<header>
-					<button string="Mutation" name="mutation_ok" type="object"
+					<button string="Mutation" name="mutation" type="object"
                             attrs="{'invisible':[('state','=','done')]}" />
 					<field name="state" widget="statusbar"/>
 				</header>

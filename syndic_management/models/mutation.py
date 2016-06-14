@@ -21,11 +21,11 @@ class Mutation(models.Model):
 
     @api.one
     def mutation(self):
-        for old_id in self.lot_ids:
+        for old_id in self.old_owner_ids:
             self.env['syndic.old.owner'].create({
-                'proprio_id': old_id,
+                'proprio_id': old_id.id,
                 'lot_ids': [(6, 0, self.lot_ids.ids)],
-                'date_close': self.mutation_date
+                'date_close': self.mutation_date,
             })
 
         self.lot_ids.write({'proprio_id': [(6, 0, self.new_owner_ids.ids)]})
