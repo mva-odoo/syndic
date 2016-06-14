@@ -6,7 +6,7 @@ class Mutation(models.Model):
     _name = 'syndic.mutation'
     _order = 'immeuble_id'
 
-    mutation_date = fields.Date('Date de mutation')
+    mutation_date = fields.Date('Date de mutation', required=True)
     old_owner_ids = fields.Many2many('syndic.owner', 'old_owner_table', string='Ancien Propriétaire', required=True)
     new_owner_ids = fields.Many2many('syndic.owner', 'new_owner_table', string='Nouveau Propriétaire', required=True)
     lot_ids = fields.Many2many('syndic.lot', string='Lot', required=True)
