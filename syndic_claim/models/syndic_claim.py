@@ -27,7 +27,10 @@ class Claim(models.Model):
     claim_status_id = fields.Many2one('claim.status', string='Status')
     description_ids = fields.One2many('comment.history', 'claim_ids', string='historique')
     building_id = fields.Many2one('syndic.building', 'Immeuble')
-    importance = fields.Selection([('0', 'pas important'), ('1', 'important'), ('2', 'tres important')],
+    importance = fields.Selection([('0', 'pas important'),
+                                   ('1', 'important'),
+                                   ('2', 'tres important'),
+                                   ('3', 'ultra important')],
                                   string='Importance')
     color = fields.Integer('Color')
     status = fields.Selection([('draft', 'Ouvert'), ('done', 'Cloturer')], 'Status', default='draft')

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
        <template id="index">
            <t t-call="website.layout">
 
@@ -21,7 +21,10 @@ th, td {
             <div class="col-md-12 text-center mt0 mb32">
                 <div class="col-md-12 text-center mt0 mb16 filter_sgimmo">
                     <form action="/documents/" method="get" class="form-horizontal mt32" enctype="multipart/form-data">
-                        <div class="col-md-5 text-center mt16 mb16">
+                        <div class="col-md-4 text-center mt16 mb16">
+                            <input type="text" name="fname" class="form-control" placeholder="Nom du document"/>
+                        </div>
+                        <div class="col-md-3 text-center mt16 mb16">
                             <select name="immeubles" class="form-control">
                                 <option t-attf-value="0">Immeubles</option>
                                 <t t-foreach="immeubles" t-as="immeuble">
@@ -29,7 +32,7 @@ th, td {
                                 </t>
                             </select>
                         </div>
-                        <div class="col-md-5 text-center mt16 mb16">
+                        <div class="col-md-3 text-center mt16 mb16">
                         <select name="types" class="form-control">
                             <option t-attf-value="0">type de documents</option>
                             <t t-foreach="types" t-as="type">

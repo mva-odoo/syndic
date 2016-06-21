@@ -66,19 +66,26 @@
 				<field name="loaner_ids" widget="many2many_tags"/>
 				<field name="supplier_ids" widget="many2many_tags"/>
 				<field name="other_ids" widget="many2many_tags"/>
-				<field name="building_id" widget="selection"/>
-				<field name="manager_id" colspan="2" widget="selection" domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"/>
-				<field name="importance" colspan="2"/>
+				<field name="building_id" options="{'no_open': True, 'no_create': True}"/>
+				<field name="manager_id" colspan="2" widget="selection"
+					   required="1"
+					   domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"/>
+				<field name="importance" colspan="2" widget="priority"/>	
 				<field name="claim_status_id" colspan="2"/>
 				<field name="color" colspan="2" invisible='1'/>
 				</group>
 				<notebook colspan="4">
                     <page string="Descriptions">
                         <field name="description_ids" nolabel="1" colspan="4">
-                            <tree editable="top">
+                            <tree>
                                 <field name="description" />
                                 <field name="create_date" />
                             </tree>
+							<form>
+								<group>
+									<field name="description" />
+								</group>
+							</form>
                         </field>
                     </page>
                     
