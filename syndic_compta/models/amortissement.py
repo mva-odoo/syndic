@@ -16,7 +16,8 @@ class SyndicAmortissementWizard(models.TransientModel):
     @api.one
     def _compute_split_amount(self):
         if self.duration > 0:
-            self.split_amount = self.env['syndic.facture.detail'].browse(self._context.get('active_id')).amount / self.duration
+            self.split_amount = self.env['syndic.facture.detail'].browse(
+                self._context.get('active_id')).amount / self.duration
         else:
             self.split_amount = 0.00
 
@@ -42,6 +43,7 @@ class SyndicAmortissementWizard(models.TransientModel):
             'counter': self.duration,
         })
         detail.is_amortissement = True
+
 
 class ComptaAmortissement(models.Model):
     _name = 'syndic.compta.amortissement'

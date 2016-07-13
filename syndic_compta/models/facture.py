@@ -11,6 +11,7 @@ class Facture(models.Model):
                               ('validate', 'Validé'),
                               ('close', 'Payé')],
                              'Etat', default='draft')
+    fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
     type_facture = fields.Selection([('client', 'Client'), ('fournisseur', 'Fournisseur')], 'Type de facture')
     facture_detail_ids = fields.One2many('syndic.facture.detail', 'facture_id', 'Detail de facture')
     bilan_ids = fields.One2many('syndic.bilan.ligne', 'facture_id', 'Lignes du bilan')
@@ -23,19 +24,20 @@ class Facture(models.Model):
     @api.one
     @api.depends('immeuble_id')
     def _compute_exercice(self):
+        exercice_id = False
         if not self.state == 'report':
             self.exercice_id = self.immeuble_id.current_exercice_id
-        else:
-            self.exercice_id = False
+
+        self.exercice_id = exercice_id
 
     @api.one
     @api.depends('facture_detail_ids')
     def _compute_percentage(self):
         payed = []
         total = 0.00
-        for detail_id in self.facture_detail_ids:
-            if detail_id.is_paid:
-                payed.append(detail_id.id)
+        for detail_id in self.facture_detail_ids.filtered(lambda x: x.is_paid):
+            payed.append(detail_id.id)
+
         if self.facture_detail_ids:
             total = (len(payed)/float(len(self.facture_detail_ids)))*100
 
@@ -48,7 +50,8 @@ class Facture(models.Model):
         self.env['syndic.bilan.ligne'].create({
             'name': line.type_id.name,
             'facture_id': facture_id,
-            'account_id': line.type_id.receive_compte_id.id,
+            # 'account_id': line.type_id.receive_compte_id.id,
+            'account_id': line.type_id.charge_account_id.id,
             'debit': line.prix,
             'exercice_id': line.facture_id.exercice_id.id,
         })
@@ -56,7 +59,8 @@ class Facture(models.Model):
         self.env['syndic.bilan.ligne'].create({
             'name': line.type_id.name,
             'facture_id': facture_id,
-            'account_id': line.fournisseur_id.account_id.id or line.type_id.accompte_fond_id.id,
+            # 'account_id': line.fournisseur_id.account_id.id or line.type_id.accompte_fond_id.id,
+            'account_id': self.fournisseur_id.account_id.id,
             'credit': line.prix,
             'exercice_id': line.facture_id.exercice_id.id,
         })
@@ -115,9 +119,12 @@ class Facture(models.Model):
 
     @api.one
     def pay_all_facture(self):
-        for detail_id in self.facture_detail_ids:
-            if not detail_id.is_paid:
-                detail_id.pay_all()
+        for lign_id in self.line_ids:
+            lign_id.pay_all()
+
+        # for detail_id in self.facture_detail_ids:
+        #     if not detail_id.is_paid:
+        #         detail_id.pay_all()
         self.state = 'close'
 
 
@@ -132,6 +139,28 @@ class FactureLigne(models.Model):
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
     repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
+
+    @api.one
+    def pay_all(self):
+
+        self.env['syndic.bilan.ligne'].create({
+            'name': 'payement ',
+            'facture_id': self.facture_id.id,
+            'account_id': self.facture_id.account_id.accounting_id.id,
+            'exercice_id': self.facture_id.exercice_id.id,
+            'credit': self.prix,
+            'immeuble_id': self.facture_id.immeuble_id.id,
+        })
+        self.env['syndic.bilan.ligne'].create({
+            'name': 'payement ',
+            'facture_id': self.facture_id.id,
+            'account_id': self.facture_id.fournisseur_id.account_id.id,
+            'exercice_id': self.facture_id.exercice_id.id,
+            'debit': self.prix,
+            'immeuble_id': self.facture_id.immeuble_id.id,
+        })
+
+        # self.is_paid = True
 
 
 class FactureDetail(models.Model):
@@ -160,10 +189,12 @@ class FactureDetail(models.Model):
         proprio_name = [proprio.name for proprio in self.proprietaire_ids]
         if proprio_name:
             prop_name = ', '.join(proprio_name)
+
         self.env['syndic.bilan.ligne'].create({
             'name': 'payement '+self.product_id.name+' par '+prop_name,
             'facture_id': self.facture_id.id,
-            'account_id': self.product_id.payable_compte_id.id,
+            # 'account_id': self.product_id.payable_compte_id.id,
+            'account_id': self.facture_id.account_id.accounting_id.id,
             'exercice_id': self.facture_id.exercice_id.id,
             'credit': self.amount,
             'immeuble_id': self.facture_id.immeuble_id.id,
@@ -171,13 +202,15 @@ class FactureDetail(models.Model):
         self.env['syndic.bilan.ligne'].create({
             'name': 'payement '+self.product_id.name,
             'facture_id': self.facture_id.id,
-            'account_id': self.fournisseur_id.account_id.id or self.product_id.etablissement_fond.id,
+            # 'account_id': self.fournisseur_id.account_id.id or self.product_id.etablissement_fond.id,
+            'account_id': self.facture_id.fournisseur_id.account_id.id,
             'exercice_id': self.facture_id.exercice_id.id,
             'debit': self.amount,
             'immeuble_id': self.facture_id.immeuble_id.id,
         })
 
         self.is_paid = True
+
     @api.one
     def report_pay(self):
         ligne = self.env['syndic.facturation.ligne'].create({
@@ -227,7 +260,6 @@ class SplitPayWizard(models.Model):
     _name = 'syndic.compta.split.pay.wizard'
 
     amount = fields.Float('Montant')
-
 
     @api.one
     def split_pay(self):

@@ -13,8 +13,9 @@
                     <notebook>
                         <page string="Comptabilité">
                             <group>
-                                <field name="receive_compte_id"/>
-                                <field name="payable_compte_id"/>
+                                <!--<field name="receive_compte_id"/>-->
+                                <!--<field name="payable_compte_id"/>-->
+                                <field name="charge_account_id"/>
                                 <field name="account_product"/>
                                 <field name="is_amortissable"/>
                                 <field name="etablissement_fond"

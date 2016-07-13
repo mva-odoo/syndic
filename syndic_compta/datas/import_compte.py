@@ -11,8 +11,19 @@ uid = sock_common.login(dbname, username, pwd)
 sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
 with open('compte', 'r') as comptes:
     for ligne in comptes.readlines():
+        ligne = ligne.replace('.', '')
         compte = ligne.split(' ', 1)
-        sock.execute(dbname, uid, pwd, 'syndic.pcmn', 'create', {'code': compte[0], 'name': compte[1]})
+
+        ids = sock.execute(dbname, uid, pwd, 'syndic.pcmn', 'search', [('code', '=', compte[0][:-1])])
+        parent_id = False
+        if ids:
+            parent_id = ids[0]
+
+        sock.execute(dbname, uid, pwd, 'syndic.pcmn', 'create', {
+            'code': compte[0],
+            'name': compte[1],
+            'parent_id': parent_id
+        })
 
 
 

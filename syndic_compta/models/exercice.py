@@ -109,7 +109,7 @@ class ExerciceCompta(models.Model):
                                 'exercice_id': self.id,
                                 'immeuble_id': facture.immeuble_id.id,
                             })
-                            amortissement.counter = amortissement.counter-1
+                            amortissement.counter -= 1
                             amortissement.stay_pay = amortissement.stay_pay - amortissement.amount
 
                             break

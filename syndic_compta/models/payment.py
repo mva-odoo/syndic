@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, exceptions
 
+
 class SyndicPayment(models.Model):
     _name = 'syndic.payment'
 

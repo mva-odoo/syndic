@@ -5,6 +5,7 @@ import datetime
 
 class RepartitionLot(models.Model):
     _name = 'syndic.repartition.lot'
+
     name = fields.Char('Description', required=True)
     repart_detail_ids = fields.One2many('syndic.repartition.lot.detail', 'repartition_id', 'Detail de repartition')
     percentage_lot = fields.Float('Pourcentage des quotités', compute='compute_percentage_quot')

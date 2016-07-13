@@ -41,5 +41,6 @@ class Prodcut(models.Model):
     receive_compte_id = fields.Many2one('syndic.pcmn', 'Compte Reçu')
     etablissement_fond = fields.Many2one('syndic.pcmn', 'etabblissement de fond')
     accompte_fond_id = fields.Many2one('syndic.pcmn', 'accompte de fond')
+    charge_account_id = fields.Many2one('syndic.pcmn', 'Compte de charge', domain=[('code', '=like', '6%')])
     account_product = fields.Boolean('Produit comptable')
     is_amortissable = fields.Boolean('Est amortissable')
