@@ -95,6 +95,7 @@
 										<field name="mobile" string="GSM"/>
 										<field name="email"/>
 										<field name="is_letter"/>
+										<field name="is_email"/>
 									</tree>
 								</field>
 							</group>

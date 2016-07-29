@@ -24,11 +24,10 @@ class Facture(models.Model):
     @api.one
     @api.depends('immeuble_id')
     def _compute_exercice(self):
-        exercice_id = False
         if not self.state == 'report':
-            self.exercice_id = self.immeuble_id.current_exercice_id
-
-        self.exercice_id = exercice_id
+            self.exercice_id = self.immeuble_id.current_exercice_id.id
+        else:
+            self.exercice_id = False
 
     @api.one
     @api.depends('facture_detail_ids')
@@ -139,6 +138,10 @@ class FactureLigne(models.Model):
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
     repartition_lot_id = fields.Many2one('syndic.repartition.lot', 'Répartition des Lots')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
+
+    @api.onchange('type_id')
+    def onchange_type_id(self):
+        self.name = self.type_id.name
 
     @api.one
     def pay_all(self):

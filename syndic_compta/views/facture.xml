@@ -43,7 +43,7 @@
                             <field name="fournisseur_id"/>
                         </group>
                         <group>
-                            <field name="exercice_id" domain="[('immeuble_id', '=', immeuble_id)]"/>
+                            <field name="exercice_id"/>
                         </group>
                         <group>
                             <field name="invoice_date" attrs="{'readonly':[('state', '!=','draft')]}"/>
@@ -67,7 +67,7 @@
                                     <field name="qty_id"/>
                                     <field name="prix_tot"/>
                                     <!--<field name="invoice_line_date"/>-->
-                                    <field name="fournisseur_id"/>
+                                    <!--<field name="fournisseur_id"/>-->
                                     <field name="repartition_lot_id" domain="[('immeuble_id', '=', immeuble_id)]"/>
                                     <field name="immeuble_id" invisible="1"/>
                                 </tree>

@@ -7,7 +7,6 @@ class ResUsers(models.Model):
     _inherit = 'res.users'
 
     proprio_id = fields.Many2one('syndic.owner', string='ref proprio')
-    proprio_id = fields.Many2one('syndic.owner', string='ref proprio')
     server_mail_id = fields.Many2one('ir.mail_server', 'Serveur Email')
 
 
@@ -59,6 +58,7 @@ class ResPartnerAddress(models.Model):
     supplier_id = fields.Many2one('syndic.supplier', 'Fournisseur')
     add_parent_id_loaner = fields.Many2one('syndic.loaner', 'Locataire')
     is_letter = fields.Boolean('Lettre')
+    is_email = fields.Boolean('Email')
 
 
 class Person(models.Model):

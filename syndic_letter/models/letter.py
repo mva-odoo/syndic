@@ -160,25 +160,25 @@ width="96" height="61"/>'"""
         else:
             mail['subject'] = self.sujet
 
-        for prop in self.propr_ids:
-            if prop.email:
-                mail['email_to'] = prop.email
-                self.env['mail.mail'].create(mail)
+        for prop in self.propr_ids.filtered(lambda s: s.email):
+            mail['email_to'] = prop.email
+            self.env['mail.mail'].create(mail)
 
-        for fourn in self.fourn_ids:
-            if fourn.email:
-                mail['email_to'] = fourn.email
-                self.env['mail.mail'].create(mail)
+        for fourn in self.fourn_ids.filtered(lambda s: s.email):
+            mail['email_to'] = fourn.email
+            self.env['mail.mail'].create(mail)
 
-        for loc in self.loc_ids:
-            if loc.email:
-                mail['email_to'] = loc.email
-                self.env['mail.mail'].create(mail)
+        for loc in self.loc_ids.filtered(lambda s: s.email):
+            mail['email_to'] = loc.email
+            self.env['mail.mail'].create(mail)
 
-        for div in self.divers_ids:
-            if div.email:
-                mail['email_to'] = div.email
-                self.env['mail.mail'].create(mail)
+        for div in self.divers_ids.filtered(lambda s: s.email):
+            mail['email_to'] = div.email
+            self.env['mail.mail'].create(mail)
+
+        for addr in self.propr_ids.mapped('address_ids').filtered(lambda s: s.email):
+            mail['email_to'] = addr.email
+            self.env['mail.mail'].create(mail)
 
         self.is_mail = True
         self.state = 'send'
