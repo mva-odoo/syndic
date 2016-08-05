@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="syndic_compta_wizard_appel_fond_form">
+        <field name="name">Syndic comptabilité appel de fond From</field>
+        <field name="model">syndic.compta.wizard.fond</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="amount"/>
+                    <field name="type" widget="radio"/>
+                    <field name="account_id"/>
+                    <field name="is_facturable"/>
+                    <field name="accompte_account_id"/>
+                    <field name="is_split_accompte"/>
+                </group>
+                <footer>
+                    <button name="create_fond" type="object" string="Créer Fond"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

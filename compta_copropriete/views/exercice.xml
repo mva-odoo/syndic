@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="syndic_compta_exercice_form">
+        <field name="name">Syndic comptabilité exercice From</field>
+        <field name="model">syndic.compta.exercice</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="appel_fond" type="object" string="Appel de fond"/>
+                    <button type="object" string="Cloturer exercice"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="immeuble_id" options="{'no_create': True}"/>
+                            <field name="period_type" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="open_date"/>
+                            <field name="close_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lignes">
+                            <field name="exercice_ligne_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="syndic_compta_exercice_tree">
+        <field name="name">Syndic comptabilité exercice Tree</field>
+        <field name="model">syndic.compta.exercice</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="immeuble_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="syndic_compta_exercice_ligne_tree">
+        <field name="name">Syndic comptabilité exercice ligne Tree</field>
+        <field name="model">syndic.compta.exercice.ligne</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="account_id"/>
+                <field name="debit"/>
+                <field name="credit"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_syndic_compta_exercice">
+            <field name="name">Syndic compta exercice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.compta.exercice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+    <menuitem name="Comptabilité" id="syndic_compta"/>
+    <menuitem name="Exercice" id="syndic_compta_exercice"
+              parent="syndic_compta" action="action_syndic_compta_exercice"/>
+</odoo>

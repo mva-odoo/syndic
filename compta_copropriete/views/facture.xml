@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="syndic_compta_facture_form">
+        <field name="name">Syndic comptabilité facture From</field>
+        <field name="model">syndic.compta.facture</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+                <group>
+                    <group>
+                        <field name="building_id"/>
+                        <field name="fournisseur_id"/>
+                    </group>
+                    <group>
+                        <field name="payment_type"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Lignes de facture">
+                        <field name="ligne_ids"/>
+                    </page>
+                    <page string="Payement">
+                        <field name="payment_ids"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="syndic_compta_facture_ligne_form">
+        <field name="name">Syndic comptabilité facture ligne From</field>
+        <field name="model">syndic.compta.facture.ligne</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="product_id"/>
+                <field name="amount"/>
+                <field name="qty"/>
+                <field name="total_amount"/>
+                <field name="repartition_id"/>
+                <field name="is_amortissement"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_syndic_compta_facture">
+            <field name="name">Syndic compta facture</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syndic.compta.facture</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    <menuitem name="Facture" id="syndic_compta_facture"
+              parent="syndic_compta" action="action_syndic_compta_facture"/>
+
+</odoo>

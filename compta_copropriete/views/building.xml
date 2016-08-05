@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="syndic_immeuble_compta_form">
+            <field name="name">Syndic add account setting in building</field>
+            <field name="model">syndic.building</field>
+            <field name="inherit_id" ref="syndic_management.form_simpl_building"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='fiche_technique']" position="after">
+                    <page string="Parametres Comptabilité">
+                        <field name="bank_account_ids">
+                            <tree editable="top">
+                                <field name="name"/>
+                                <field name="number"/>
+                                <field name="accounting_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

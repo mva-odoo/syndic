@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="syndic_fournisseur_compta_form">
+            <field name="name">Syndic add account for supplier</field>
+            <field name="model">syndic.supplier</field>
+            <field name="inherit_id" ref="syndic_management.form_supplier"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='contact']" position="after">
+                    <page string="Données Comptables">
+                        <group>
+                            <field name="account_id"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
