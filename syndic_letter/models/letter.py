@@ -176,7 +176,7 @@ width="96" height="61"/>'"""
             mail['email_to'] = div.email
             self.env['mail.mail'].create(mail)
 
-        for addr in self.propr_ids.mapped('address_ids').filtered(lambda s: s.email):
+        for addr in self.propr_ids.mapped('address_ids').filtered(lambda s: s.email and s.is_email):
             mail['email_to'] = addr.email
             self.env['mail.mail'].create(mail)
 
