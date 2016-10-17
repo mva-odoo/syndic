@@ -15,3 +15,8 @@ class SyndicBuilding(models.Model):
     _inherit = 'syndic.building'
 
     bank_account_ids = fields.One2many('syndic.bank.account', 'building_id', 'Comptes en banque')
+    exercice_ids = fields.One2many('syndic.compta.exercice', 'immeuble_id', 'Exercices')
+    period_type = fields.Selection([
+        ('trimestrielle', 'Trimestrielle'),
+        ('annuelle', 'Annuelle'),
+    ])

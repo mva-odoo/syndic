@@ -14,12 +14,12 @@ with open('compte', 'r') as comptes:
         ligne = ligne.replace('.', '')
         compte = ligne.split(' ', 1)
 
-        ids = sock.execute(dbname, uid, pwd, 'syndic.pcmn', 'search', [('code', '=', compte[0][:-1])])
+        ids = sock.execute(dbname, uid, pwd, 'syndic.compta.pcmn', 'search', [('code', '=', compte[0][:-1])])
         parent_id = False
         if ids:
             parent_id = ids[0]
 
-        sock.execute(dbname, uid, pwd, 'syndic.pcmn', 'create', {
+        sock.execute(dbname, uid, pwd, 'syndic.compta.pcmn', 'create', {
             'code': compte[0],
             'name': compte[1],
             'parent_id': parent_id

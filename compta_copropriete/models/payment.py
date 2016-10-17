@@ -7,7 +7,7 @@ class Payment(models.Model):
 
     due_amount = fields.Float('Montant du')
     paid_amount = fields.Float('Montant payé')
-    facture_id = fields.Many2one('syndic.compta.facture', 'Facture')
+    payment_split_id = fields.Many2one('syndic.compta.facture.payment.split', 'Payment split')
     payment_ligne_ids = fields.One2many('syndic.compta.payment.ligne', 'payment_id', 'Payement Effectué')
     communication = fields.Char('Communication')
 

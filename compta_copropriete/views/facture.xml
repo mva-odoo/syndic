@@ -7,6 +7,7 @@
             <form>
                 <group>
                     <field name="name"/>
+                    <field name="exercice_id"/>
                 </group>
                 <group>
                     <group>
@@ -22,7 +23,7 @@
                         <field name="ligne_ids"/>
                     </page>
                     <page string="Payement">
-                        <field name="payment_ids"/>
+                        <field name="payment_split_ids"/>
                     </page>
                 </notebook>
             </form>

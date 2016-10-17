@@ -9,6 +9,7 @@ class Exrecice(models.Model):
     open_date = fields.Date('Date d\'ouverture')
     close_date = fields.Date('Date de fermeture')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
+    is_current = fields.Boolean('Exercice courant')
 
     period_type = fields.Selection([
         ('trimestrielle', 'Trimestrielle'),
@@ -21,6 +22,7 @@ class Exrecice(models.Model):
         ('close', 'Cloturer')], 'Etat', default='draft')
 
     exercice_ligne_ids = fields.One2many('syndic.compta.exercice.ligne', 'exercice_id', 'Lignes')
+    facture_ids = fields.One2many('syndic.compta.facture', 'exercice_id', 'Factures')
     # pcmn_id
 
     @api.multi
@@ -89,7 +91,7 @@ class WizardFond(models.Model):
 
         if self.is_facturable:
             facture = self.env['syndic.compta.facture'].create({
-                'name': 'Création de fonds de %s' % type,
+                'name': str('Création de fonds de %s') % str(self.type),
             })
             self.env['syndic.compta.facture.ligne'].create({
                 'facture_id': facture.id,
