@@ -26,10 +26,10 @@
                     </group>
                     <notebook>
                         <page string="Lignes">
-                            <field name="exercice_ligne_ids"/>
+                            <!--<field name="exercice_ligne_ids"/>-->
                         </page>
                         <page string="Factures">
-                            <field name="facture_ids"/>
+                            <!--<field name="facture_ids"/>-->
                         </page>
                     </notebook>
                 </sheet>

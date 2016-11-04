@@ -20,3 +20,15 @@ class SyndicBuilding(models.Model):
         ('trimestrielle', 'Trimestrielle'),
         ('annuelle', 'Annuelle'),
     ])
+    @api.model
+    def create(self, vals):
+        self.env['ir.sequence'].sudo().create({
+            'name': 'Facture - %s' % vals['name'],
+            'implementation': 'no_gap',
+            'padding': 8,
+            'number_increment': 1,
+            'code': 'Facture - %s' % vals['name'],
+            'prefix': vals['name']+'/',
+        })
+
+        return super(SyndicBuilding, self).create(vals)

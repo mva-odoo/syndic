@@ -5,24 +5,24 @@
         <field name="model">syndic.compta.facture</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="validate_facture" string="valider" type="object"/>
+                    <button name="pay_facture" string="Payement" type="object"/>
+                </header>
                 <group>
-                    <field name="name"/>
-                    <field name="exercice_id"/>
+                    <field name="name" readonly="1"/>
                 </group>
                 <group>
                     <group>
                         <field name="building_id"/>
                         <field name="fournisseur_id"/>
                     </group>
-                    <group>
-                        <field name="payment_type"/>
-                    </group>
                 </group>
                 <notebook>
                     <page string="Lignes de facture">
                         <field name="ligne_ids"/>
                     </page>
-                    <page string="Payement">
+                    <page string="Répartition">
                         <field name="payment_split_ids"/>
                     </page>
                 </notebook>
@@ -41,7 +41,6 @@
                 <field name="qty"/>
                 <field name="total_amount"/>
                 <field name="repartition_id"/>
-                <field name="is_amortissement"/>
             </tree>
         </field>
     </record>

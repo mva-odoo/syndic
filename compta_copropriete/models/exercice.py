@@ -22,7 +22,7 @@ class Exrecice(models.Model):
         ('close', 'Cloturer')], 'Etat', default='draft')
 
     exercice_ligne_ids = fields.One2many('syndic.compta.exercice.ligne', 'exercice_id', 'Lignes')
-    facture_ids = fields.One2many('syndic.compta.facture', 'exercice_id', 'Factures')
+    # facture_ids = fields.One2many('syndic.compta.facture', 'exercice_id', 'Factures')
     # pcmn_id
 
     @api.multi

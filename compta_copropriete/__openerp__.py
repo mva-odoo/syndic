@@ -17,6 +17,7 @@
         'views/building.xml',
         'views/payment.xml',
         'views/fournisseurs.xml',
+        'views/repartition.xml',
     ],
     'installable': True,
     'active': False,
