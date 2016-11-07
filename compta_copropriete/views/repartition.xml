@@ -4,8 +4,12 @@
         <field name="model">syndic.compta.repartition</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="create_normal_repartition" string="Repartition" type="object"/>
+                </header>
                 <group>
                     <field name="name"/>
+                    <field name="immeuble_id"/>
                 </group>
                 <group>
                     <field name="repart_detail_ids"/>
@@ -14,6 +18,18 @@
                     <field name="percentage_lot"/>
                 </group>
             </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="syndic_compta_repartition_ligne_tree">
+        <field name="name">Syndic comptabilité Repartition ligne Tree</field>
+        <field name="model">syndic.compta.repartition.ligne</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="value"/>
+                <field name="lot_id"/>
+            </tree>
         </field>
     </record>
 </odoo>

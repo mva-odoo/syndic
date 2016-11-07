@@ -7,15 +7,8 @@ class Repartition(models.Model):
 
     name = fields.Char('Description', required=True)
     repart_detail_ids = fields.One2many('syndic.compta.repartition.ligne', 'repartition_id', 'Detail de repartition')
-    percentage_lot = fields.Float('Pourcentage des quotités', compute='compute_percentage_quotity')
+    percentage_lot = fields.Float('Pourcentage des quotités')
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
-
-    @api.one
-    def compute_percentage_quotity(self):
-        amount = 0.00
-        for detail in self.repart_detail_ids:
-            amount += detail.value
-        self.percentage_lot = amount/10
 
     @api.one
     def create_normal_repartition(self):

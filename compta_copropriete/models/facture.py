@@ -12,7 +12,8 @@ class Facture(models.Model):
     building_id = fields.Many2one('syndic.building', 'Immeuble', required=True)
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur', required=True)
     state = fields.Selection([('Draft', 'Brouillon'), ('validate', 'Validé')])
-    total_amount = fields.Float('Total amount')
+    total_amount = fields.Float('Total amount', compute='_get_total_amount')
+    account_ids = fields.One2many('syndic.compta.account', 'facture_id', 'Comptes')
 
     @api.model
     def create(self, vals):
@@ -20,8 +21,16 @@ class Facture(models.Model):
         sequence = self.env['ir.sequence'].next_by_code('Facture - %s' % building_id.name)
         if not sequence:
             raise exceptions.ValidationError('Il n\'y pas de sequence pour cet immeuble. Solution: appeler super michou')
-        vals['name'] = self.env['ir.sequence'].next_by_code('Facture - %s' % building_id.name)
+        vals['name'] = sequence
         return super(Facture, self).create(vals)
+
+    @api.multi
+    def _get_total_amount(self):
+        for facture in self:
+            amount = 0.00
+            for ligne in facture.ligne_ids:
+                amount += ligne.total_amount
+            self.total_amount = amount
 
     @api.multi
     def validate_facture(self):
@@ -29,10 +38,12 @@ class Facture(models.Model):
             for ligne in facture.ligne_ids:
                 total_amount = 0.00
                 for repartition_ligne in ligne.repartition_id.repart_detail_ids:
-                    split_value = (ligne.total_amount/repartition_ligne.value) * ligne.repartition_id.percentage_lot
+
+                    split_value = (ligne.total_amount/ligne.repartition_id.percentage_lot) * repartition_ligne.value
                     self.env['syndic.compta.facture.payment.split'].create({
                         'amount': split_value,
                         'facture_id': facture.id,
+                        'lot_id': repartition_ligne.id,
                     })
                     total_amount += split_value
 
@@ -44,19 +55,30 @@ class Facture(models.Model):
                         'facture_id': self.id,
                     })
                 # ecriture comptable
-                ligne.product_id.account_id
-                ligne.total_amount
+                self.env['syndic.compta.account'].create({
+                    'account_id': ligne.product_id.account_id.id,
+                    'debit': ligne.total_amount,
+                    'facture_id': facture.id,
+                })
 
-                facture.fournisseur_id.account_id
+                self.env['syndic.compta.account'].create({
+                    'account_id': facture.fournisseur_id.account_id.id,
+                    'credit': ligne.total_amount,
+                    'facture_id': facture.id,
+                })
 
             self.state = 'validate'
 
     @api.multi
     def pay_facture(self):
-        for facture in self:
-            for ligne in facture.ligne_ids:
-                # create account lign
-                pass
+        return {
+            'name': 'Payement',
+            'type': 'ir.actions.act_window',
+            'src_model': "syndic.compta.facture",
+            'res_model': 'syndic.compta.wizard.payment',
+            'view_mode': 'form',
+            'target': 'new',
+        }
 
 
 class FactureLigne(models.Model):
@@ -79,9 +101,12 @@ class FactureLigne(models.Model):
         if self.product_id:
             self.amount = self.product_id.amount
 
+
 class FactureLigne(models.Model):
     _name = 'syndic.compta.facture.payment.split'
+    _rec_name = 'amount'
 
     amount = fields.Float('Montant')
     payment_ids = fields.One2many('syndic.compta.payment', 'payment_split_id', 'Payements')
     facture_id = fields.Many2one('syndic.compta.facture.facture', 'Facture')
+    lot_id = fields.Many2one('syndic.lot', 'Lot')

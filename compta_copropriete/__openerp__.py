@@ -18,6 +18,8 @@
         'views/payment.xml',
         'views/fournisseurs.xml',
         'views/repartition.xml',
+        'views/account.xml',
+        'wizards/wizard_payement.xml',
     ],
     'installable': True,
     'active': False,

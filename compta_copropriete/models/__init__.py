@@ -6,3 +6,5 @@ import building
 import payment
 import product
 import fournisseur
+import account
+import bank_account

@@ -25,14 +25,17 @@
                     <page string="Répartition">
                         <field name="payment_split_ids"/>
                     </page>
+                    <page string="Comptabilité">
+                        <field name="account_ids"/>
+                    </page>
                 </notebook>
             </form>
         </field>
     </record>
 
 
-    <record model="ir.ui.view" id="syndic_compta_facture_ligne_form">
-        <field name="name">Syndic comptabilité facture ligne From</field>
+    <record model="ir.ui.view" id="syndic_compta_facture_ligne_tree">
+        <field name="name">Syndic comptabilité facture ligne Tree</field>
         <field name="model">syndic.compta.facture.ligne</field>
         <field name="arch" type="xml">
             <tree editable="top">
@@ -45,6 +48,29 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="syndic_repartition_tree">
+        <field name="name">Syndic comptabilité facture ligne Tree</field>
+        <field name="model">syndic.compta.facture.payment.split</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="lot_id"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="syndic_repartition_form">
+        <field name="name">Syndic comptabilité facture ligne Form</field>
+        <field name="model">syndic.compta.facture.payment.split</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="lot_id"/>
+                    <field name="amount"/>
+                </group>
+            </form>
+        </field>
+    </record>
 
     <record model="ir.actions.act_window" id="action_syndic_compta_facture">
             <field name="name">Syndic compta facture</field>

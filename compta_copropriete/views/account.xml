@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="syndic_compta_account_tree">
+        <field name="name">Syndic comptabilité account Tree</field>
+        <field name="model">syndic.compta.account</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="account_id"/>
+                <field name="debit"/>
+                <field name="credit"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
