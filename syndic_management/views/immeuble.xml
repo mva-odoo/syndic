@@ -55,42 +55,29 @@
 								name="activate_building"
 								attrs="{'invisible':[('active','=', True)]}"/>
 					</header>
-					<sheet string="immeuble">
-						<h1>
-							Numéro: <field name="num_building" class="oe_inline"/>
-							<field name="name" default_focus="1" placeholder="Immeuble" />
-                        </h1>
 
-						<h3 style="color:#3F82B9">
-							Adresse:
-						</h3>
-						<group col="4" colspan="4">
-							<field name="zip_building"  colspan="2"/>
-							<field name="city_building"  colspan="2"/>
-							<field name="address_building" colspan="4"/>
+					<h1>
+						<field name="num_building" class="oe_inline" placeholder="Numéros d'immeuble"/> -
+						<field name="name" class="oe_inline" placeholder="Nom d'immeuble"/>
+					</h1>
+
+
+					<group string="Adresse:">
+						<field name="zip_building"/>
+						<field name="city_building" context="{'default_zip': zip_building}"/>
+						<field name="address_building"/>
+					</group>
+					<group>
+						<group string="Information Divers:">
+							<field name="compte"/>
+							<field name="BCE"/>
+							<field name="active" invisible="1"/>
 						</group>
-
-						<group>
-							<group>
-								<h3 style="color:#3F82B9" colspan="4">
-									Information Divers:
-								</h3>
-								<field name="compte"/>
-								<field name="BCE" />
-								<field name="active" invisible="1"/>
-							</group>
-							<group>
-								<h3 style="color:#3F82B9" colspan="4">
-									Date de l'Assemblée Générale:
-								</h3>
-								<field name="sign_mois_rel" colspan="2"/>
-								<field name="sign_quizaine_rel" colspan="2"/>
-							</group>
+						<group string="Date de l'Assemblée Générale">
+							<field name="sign_mois_rel"/>
+							<field name="sign_quizaine_rel"/>
 						</group>
-
-						<group>
-
-						</group>
+					</group>
 
 						<notebook colspan="4">
 							<page string="Lot" name="lot">
@@ -129,7 +116,6 @@
 								</group>
 							</page>
 						</notebook>
-					</sheet>
                 </form>
 			</field>
 		</record>

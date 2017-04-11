@@ -38,7 +38,7 @@ class Website(openerp.addons.web.controllers.main.Home):
             old_uid = request.uid
             uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
             if uid is not False:
-                user = request.registry['res.users'].browse(request.cr, uid, uid, request.context)
+                user = request.env['res.users'].browse(uid)
                 return http.redirect_with_hash(user.login_path)
             request.uid = old_uid
             values['error'] = "Wrong login/password"
