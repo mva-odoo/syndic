@@ -39,7 +39,7 @@ class City(models.Model):
 class ResPartnerAddress(models.Model):
     _name = 'partner.address'
 
-    name = fields.Char('Nom', select=1, required=True)
+    name = fields.Char('Nom', index=1, required=True)
     city_id = fields.Many2one('city', 'Ville')
     title = fields.Many2one('res.partner.title', 'Title')
     street = fields.Char('Rue')
@@ -65,7 +65,7 @@ class Person(models.Model):
     _name = 'syndic.personne'
     _order = 'name'
 
-    name = fields.Char('Nom', select=1, required=True)
+    name = fields.Char('Nom', index=1, required=True)
     title = fields.Many2one('res.partner.title', 'Title')
     active = fields.Boolean('Active', default=True)
     street = fields.Char('Street')
