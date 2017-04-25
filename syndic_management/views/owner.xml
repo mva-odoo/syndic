@@ -1,52 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-			<!--search -->
-		<record model="ir.ui.view" id="search_owner">
-			<field name="name">owner search</field>
-			<field name="model">syndic.owner</field>
-			<field name="arch" type="xml">
-				<search string="Propriétaires">
-                    <field name="name" string="Nom"/>
-					<field name="street" string="Adresse"/>
-					<field name="city_id" string="Ville"/>
-					<field name="country_id" string="Pays"/>
-					<field name="phone" string="Téléphone"/>
-					<field name="email" string="Email"/>
-					<field name="building_ids"/>
-					<field name="lot_ids"/>
-				</search>
-			</field>
-		</record>
-        
-		<!--tree view -->
-		<record model="ir.ui.view" id="tree_owner">
-			<field name="name">owner tree view</field>
-			<field name="model">syndic.owner</field>
-			<field name="arch" type="xml">
-				<tree string="Propriétaires">
-					<field name="name" string="Nom"/>
-					<field name="street" string="Adresse"/>
-					<field name="city_id" string="Ville"/>
-					<field name="zip" string="Code Postal"/>
-					<field name="country_id" string="Pays"/>
-					<field name="phone" string="Téléphone"/>
-					<field name="email"/>
-					<field name="building_store_ids"/>
-					<field name="convocation"/>
-				</tree>
-			</field>
-		</record>
-		
-		
-		<!--form -->
-		<record model="ir.ui.view" id="form_owner">
-			<field name="name">owner form view</field>
-			<field name="model">syndic.owner</field>
-			<field name="arch" type="xml">
-				<form string="Propriétaires" layout="manual" version="7.0"> 
+<?xml version="1.0"?>
+<form string="Propri&#xE9;taires" layout="manual" version="7.0">
 					<group colspan="4" col="4">
-						<field name="name" colspan="2" /> -
+						<field name="name" colspan="2"/> -
 						<field name="prenom" colspan="2"/>
 
 						<field name="title" colspan="2" string="Titre"/>
@@ -54,7 +9,6 @@
 					</group>
 					<notebook colspan="4">
 						<page string="Contact">
-							<group colspan="4" col="4">
 								<group>
 									<group>
 										<h3 style="color:#3F82B9" colspan="4">
@@ -62,8 +16,8 @@
 										</h3>
 										<group col="4" colspan="4">
 											<field name="street" colspan="4" string="Rue"/>
-											<field name="zip"  colspan="2" string="Code Postal"/>
-											<field name="city_id"  colspan="2"/>
+											<field name="zip" colspan="2" string="Code Postal"/>
+											<field name="city_id" colspan="2"/>
 											<field name="country_id" colspan="4" string="Pays"/>
 										</group>
 									</group>
@@ -72,14 +26,14 @@
 										<h3 style="color:#3F82B9" colspan="4">
 											Contact Electronique:
 										</h3>
-										<group>
+										<group colspan="4">
 											<field name="phone" string="Téléphone"/>
 											<field name="fax"/>
 											<field name="gsm"/>
 											<field name="email"/>
 										</group>
 									</group>
-								</group>
+
 							</group>
 							<group string="Autres contacts">
 								<field name="address_ids" colspan="4" nolabel="1">
@@ -121,24 +75,3 @@
 						</page>
 					</notebook>
                 </form>
-			</field>
-		</record>
-               
-              
-               
-		<!--action -->
-		<record model="ir.actions.act_window" id="action_owner_syndic">
-			<field name="name">Propriétaires</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">syndic.owner</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="tree_owner" />
-			<field name="search_view_id" ref="search_owner" />
-		</record>
-
-		
-		
-		
-    </data>
-</openerp>
