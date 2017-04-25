@@ -54,30 +54,28 @@
 					</group>
 					<notebook colspan="4">
 						<page string="Contact">
-							<group colspan="4" col="4">
+							<group>
 								<group>
-									<group>
-										<h3 style="color:#3F82B9" colspan="4">
-											Adresse:
-										</h3>
-										<group col="4" colspan="4">
-											<field name="street" colspan="4" string="Rue"/>
-											<field name="zip"  colspan="2" string="Code Postal"/>
-											<field name="city_id"  colspan="2"/>
-											<field name="country_id" colspan="4" string="Pays"/>
-										</group>
+									<h3 style="color:#3F82B9" colspan="4">
+										Adresse:
+									</h3>
+									<group col="4" colspan="4">
+										<field name="street" colspan="4" string="Rue"/>
+										<field name="zip"  colspan="2" string="Code Postal"/>
+										<field name="city_id"  colspan="2"/>
+										<field name="country_id" colspan="4" string="Pays"/>
 									</group>
+								</group>
 
-									<group>
-										<h3 style="color:#3F82B9" colspan="4">
-											Contact Electronique:
-										</h3>
-										<group>
-											<field name="phone" string="Téléphone"/>
-											<field name="fax"/>
-											<field name="gsm"/>
-											<field name="email"/>
-										</group>
+								<group>
+									<h3 style="color:#3F82B9" colspan="4">
+										Contact Electronique:
+									</h3>
+									<group colspan="4">
+										<field name="phone" string="Téléphone"/>
+										<field name="fax"/>
+										<field name="gsm"/>
+										<field name="email"/>
 									</group>
 								</group>
 							</group>
