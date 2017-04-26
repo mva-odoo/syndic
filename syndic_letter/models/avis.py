@@ -23,7 +23,7 @@ class LetterAvis(models.Model):
         if self.date:
             self.date_fr = SyndicTools().french_date(self.date)
 
-    @api.one
+    @api.multi
     def copy(self, default=None):
         default['date'] = fields.date.today()
         return super(LetterAvis, self).copy(default)
@@ -59,7 +59,7 @@ class LetterReunion(models.Model):
         if self.date:
             self.date_fr = SyndicTools().french_date(self.date)
 
-    @api.one
+    @api.multi
     def copy(self, default=None):
         default['date'] = fields.date.today()
         return super(LetterReunion, self).copy(default)
