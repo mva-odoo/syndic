@@ -46,7 +46,6 @@ class CreateLetter(models.Model):
     @api.depends('date')
     def _compute_date(self):
         if self.date:
-            import ipdb;ipdb.set_trace()
             self.date_fr = SyndicTools().french_date(self.date)
 
     @api.one
