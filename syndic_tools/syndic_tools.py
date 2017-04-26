@@ -27,7 +27,7 @@ class SyndicTools:
     def french_date(self, tr_date):
         date = datetime.datetime.strptime(tr_date, '%Y-%m-%d')
         try:
-            locale.setlocale(locale.LC_TIME, '')
+            locale.setlocale(locale.LC_ALL, 'fr_BE.utf8')
         except locale.Error:
             _logger.error('Local not settable')
 
