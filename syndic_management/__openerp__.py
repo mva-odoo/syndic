@@ -26,6 +26,7 @@
             'views/res_users.xml',
             'views/remove_menu.xml',
             'security/ir.model.access.csv',
+            'report/immeuble.xml',
         ],
     'application': True,
 }

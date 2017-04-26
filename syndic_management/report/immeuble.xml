@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <report id="action_print_immeuble"
+             model="syndic.building"
+             string="Presentation Immeuble"
+             name="syndic_management.immeuble_presentation"
+             report_type="qweb-html"/>
+
+     <template id="immeuble_presentation" name="Presantation Immeuble">
+        <t t-foreach="docs" t-as="o">
+            <div class="page">
+                 <h1><span t-field="o.name"/>:</h1>
+
+                <div style="font-size:16px">
+                    <div><span t-field="o.address_building"/></div>
+                    <div>Code Postal: <span t-esc="o.zip_building"/>Ville:  <span t-field="o.city_building.name"/></div>
+                    <div>BCE: <span t-field="o.BCE"/></div>
+                    <div>Compte: <span t-field="o.compte"/></div>
+                    <div>Date de l'assemblée générale: <span t-field="o.sign_quizaine_rel"/>semaine du mois de <span t-field="o.sign_mois_rel"/></div>
+                </div>
+                <div>
+                    <h2>Lots:</h2>
+                    <table>
+                        <tr>
+                            <td width="10%"><b>Nom Du lot</b></td>
+                            <td width="30%"><b>Proriétaire(s)</b></td>
+                            <td width="30%"><b>Locataire(s)</b></td>
+                            <td width="10%"><b>Quotités</b></td>
+                            <td width="20%"><b>Type de Lot</b></td>
+                        </tr>
+                         <t t-foreach="o.lot_ids" t-as="lot">
+                            <tr>
+                                <td><span t-field="lot.name"/></td>
+                                <td>
+                                    <t t-foreach="lot.proprio_id" t-as="proprietaire">
+                                        <span t-field="proprietaire.name"/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-foreach="lot.locataire_id" t-as="locataire">
+                                        <span t-field="locataire.name"/>
+                                    </t>
+                                </td>
+                                <td><span t-field="lot.quotities"/></td>
+                                <td><span t-field="lot.type_id.name"/></td>
+                            </tr>
+
+                         </t>
+                    </table>
+
+                </div>
+            </div>
+        </t>
+     </template>
+
+
+ </odoo>
+
