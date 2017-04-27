@@ -79,24 +79,16 @@ class CreateLetter(models.Model):
             elif res.letter_type_id.name in ['Bon de commande']:
                 values['date_demande'] = res.date
                 self.env['bon.commande'].create(values)
-
         return res
 
     @api.onchange('is_mail')
     def onchange_server(self):
-        if self.is_mail:
-            self.mail_server = self.env.user.server_mail_id.id or False
+        self.mail_server = self.env.user.server_mail_id.id if self.is_mail else False
 
     @api.onchange('immeuble_id', 'all_immeuble')
     def onchange_immeuble(self):
-        prop_list = []
-        self.propr_ids = False
-        if self.all_immeuble:
-            for lot in self.immeuble_id.lot_ids:
-                for prop in lot.proprio_id:
-                    if prop.id not in prop_list:
-                        prop_list.append(prop.id)
-        self.propr_ids = prop_list
+        self.propr_ids = self.immeuble_id.mapped('lot_ids').mapped('proprio_id') if self.all_immeuble else False
+
 
     @api.depends('propr_ids', 'fourn_ids', 'loc_ids')
     def _compute_join_address(self):

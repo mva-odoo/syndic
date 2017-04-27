@@ -12,11 +12,12 @@ class FacturationSyndic(models.Model):
     facture_tot = fields.Float('Total', compute='_compute_total_syndic', readonly=True)
     num_immeuble = fields.Char('Numeros Client')
     num_facture = fields.Char('Numeros Facture', readonly=True)
-    immeuble_id = fields.Many2one('syndic.building', string='Immeuble', required=True)
+    immeuble_id = fields.Many2one('syndic.building', string='Immeuble')
     date = fields.Date('Date de création', default=lambda *a: fields.date.today())
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     object = fields.Char('Objet')
     name = fields.Char('Facture', readonly=True)
+    fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
 
     @api.multi
     def copy(self, default=None):

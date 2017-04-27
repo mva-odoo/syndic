@@ -46,9 +46,20 @@
                                             </table>
                                         </div>
 
-                                        <br/><b><span t-field="o.immeuble_id.name"/></b><br/>
-                                        <span t-field="o.immeuble_id.address_building"/><br/>
-                                        <span t-esc="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
+                                        <br/>
+                                        <t t-if="o.immeuble_id">
+                                            <b><span t-field="o.immeuble_id.name"/></b><br/>
+                                            <span t-field="o.immeuble_id.address_building"/><br/>
+                                            <span t-esc="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
+
+                                        </t>
+                                        <t t-if="o.fournisseur_id">
+                                            <b><span t-field="o.fournisseur_id.name"/></b><br/>
+                                            <span t-field="o.fournisseur_id.street"/><br/>
+                                            <span t-esc="o.fournisseur_id.zip"/> <span t-field="o.fournisseur_id.city_id.name"/><br/>
+
+                                        </t>
+
                                         <br/>
                                     </div>
                                 </div>
