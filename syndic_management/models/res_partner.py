@@ -111,6 +111,52 @@ class Owner(models.Model):
     _inherit = 'syndic.personne'
     _name = 'syndic.owner'
 
+    # def _auto_init(self):
+    #     def _get_fk_on(table):
+    #         """ return a list of many2one relation with the given table.
+    #             :param table : the name of the sql table to return relations
+    #             :returns a list of tuple 'table name', 'column name'.
+    #         """
+    #         query = """
+    #             SELECT cl1.relname as table, att1.attname as column
+    #             FROM pg_constraint as con, pg_class as cl1, pg_class as cl2, pg_attribute as att1, pg_attribute as att2
+    #             WHERE con.conrelid = cl1.oid
+    #                 AND con.confrelid = cl2.oid
+    #                 AND array_lower(con.conkey, 1) = 1
+    #                 AND con.conkey[1] = att1.attnum
+    #                 AND att1.attrelid = cl1.oid
+    #                 AND cl2.relname = %s
+    #                 AND att2.attname = 'id'
+    #                 AND array_lower(con.confkey, 1) = 1
+    #                 AND con.confkey[1] = att2.attnum
+    #                 AND att2.attrelid = cl2.oid
+    #                 AND con.contype = 'f'
+    #         """
+    #         self._cr.execute(query, (table,))
+    #         return self._cr.fetchall()
+    #
+    #     for fk in _get_fk_on(self._table):
+    #         table, col = fk
+    #         self._cr.execute('ALTER TABLE %s ADD COLUMN %s INTEGER;' % fk)
+    #         partner_id = False
+    #         fields_to_export = []
+    #
+    #         dict_fields = self.fields_get()
+    #         for field in dict_fields:
+    #             if dict_fields[field]['type'] not in ['many2many', 'one2many']:
+    #                 fields_to_export.append(field)
+    #
+    #         for owner in self.search([]):
+    #             datas = self.read([fields_to_export])[0]
+    #             if owner.user_id:
+    #                 if owner.user_id.partner_id:
+    #                     partner_id = owner.user_id.partner_id.write(datas)
+    #
+    #             if not partner_id:
+    #                 partner_id = self.env['res.partner'].create(datas)
+    #
+    #             self._cr.execute('UPDATE % SET %s=%s; where %s=%s;', (table, col, partner_id.id, col, self.id))
+
     address_ids = fields.One2many('partner.address', 'add_parent_id_owner', string='Address')
     lot_ids = fields.Many2many('syndic.lot', string='Lot')
     login = fields.Char('login', related='user_id.login', required=False)

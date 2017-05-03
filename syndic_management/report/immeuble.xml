@@ -20,7 +20,7 @@
                 </div>
                 <div>
                     <h2>Lots:</h2>
-                    <table>
+                    <table class="table table-condensed">
                         <tr>
                             <td width="10%"><b>Nom Du lot</b></td>
                             <td width="30%"><b>Proriétaire(s)</b></td>

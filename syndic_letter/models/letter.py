@@ -61,10 +61,6 @@ class CreateLetter(models.Model):
         if res.save_letter:
                 res.env['letter.model'].create({'name': res.name_template, 'text': res.contenu})
 
-        # check if building is set
-        # if not res.immeuble_id.id:
-        #    raise Exception("Il faut un immeuble pour créer un bon de commande ou une offre")
-
         for supplier_id in res.fourn_ids:
             values = {
                 'name': res.sujet,
@@ -89,43 +85,27 @@ class CreateLetter(models.Model):
     def onchange_immeuble(self):
         self.propr_ids = self.immeuble_id.mapped('lot_ids').mapped('proprio_id') if self.all_immeuble else False
 
-
     @api.depends('propr_ids', 'fourn_ids', 'loc_ids')
     def _compute_join_address(self):
-        partner_address_ids = []
-        partner_address_env = self.env['partner.address']
+        partner_address = self.env['partner.address']
 
-        for owner_id in self.propr_ids:
-            partner_address_ids += partner_address_env.search([('add_parent_id_owner', '=', owner_id['id']),
-                                                               ('is_letter', '=', True)])
-        for supplier_id in self.fourn_ids:
-            partner_address_ids += partner_address_env.search([('add_parent_id_supplier', '=', supplier_id['id']),
-                                                               ('is_letter', '=', True)])
-        for loaner_id in self.loc_ids:
-            partner_address_ids += partner_address_env.search([('add_parent_id_loaner', '=', loaner_id['id']),
-                                                               ('is_letter', '=', True)])
+        partner_address |= self.propr_ids.mapped('address_ids').filtered(lambda s: s.is_letter)
+        partner_address |= self.fourn_ids.mapped('address_ids').filtered(lambda s: s.is_letter)
+        partner_address |= self.loc_ids.mapped('address_ids').filtered(lambda s: s.is_letter)
 
-        self.partner_address_ids = [(6, 0, [partner_id.id for partner_id in partner_address_ids])]
-
-        if len(self.fourn_ids) > 0:
-            self.is_fax = True
-        else:
-            self.is_fax = False
+        self.partner_address_ids = partner_address
+        self.is_fax = True if self.fourn_ids else False
 
     @api.one
     def send_email_lettre(self):
         header = ''
 
-        if not self.mail_server.id:
-            mail_server = self.env.user.server_mail_id.id or False
-        else:
-            mail_server = self.mail_server.id
-
         mail = {
-            'mail_server_id': mail_server,
+            'mail_server_id': self.mail_server if self.mail_server else self.env.user.server_mail_id or False,
             'email_from': self.env.user.email,
             'reply_to': self.env.user.email,
             'attachment_ids': [(6, 0, self.piece_jointe_ids.ids)],
+            'subject': self.immeuble_id.name + '-' + self.sujet if self.immeuble_id else self.sujet,
         }
 
         if self.immeuble_id:
@@ -142,15 +122,7 @@ Rue Fran&ccedil;ois Vander Elst, 38/1<br/>
 '<img src="https://lh6.googleusercontent.com/-7QA8bP7oscU/UUrXkQ1-rHI/AAAAAAAAAAk/WhbiGpLAUCQ/s270/Logo_SG%2520immo.JPG"
 width="96" height="61"/>'"""
 
-        if self.ps:
-            mail['body_html'] = header + body + self.ps + '<br/>'+footer
-        else:
-            mail['body_html'] = header + body + footer
-
-        if self.immeuble_id:
-            mail['subject'] = self.immeuble_id.name + '-' + self.sujet
-        else:
-            mail['subject'] = self.sujet
+        mail['body_html'] = header + body + self.ps + '<br/>'+footer if self.ps else header + body + footer
 
         for prop in self.propr_ids.filtered(lambda s: s.email):
             mail['email_to'] = prop.email
