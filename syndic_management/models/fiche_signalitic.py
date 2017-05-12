@@ -152,7 +152,7 @@ class RepeirGeneral(models.Model):
 
 class SignalitiqueImmeuble(models.Model):
     _name = 'building.signalitic'
-    _rec_name = 'building_id'
+    _inherits = {'syndic.building': 'building_id'}
 
     building_id = fields.Many2one('syndic.building', string='Immeuble', required=True)
     # info general---------------------------------------

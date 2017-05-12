@@ -4,7 +4,7 @@
                 <menuitem name="Syndic" id="syndic_main" groups="syndic_management.syndic_employe,syndic_management.syndic_manager"/>
                 <menuitem name="Gestion de Syndic" id="syndic" parent="syndic_main" sequence="1"/> 
                 <menuitem name="Immeubles" id="simpl_immeubles" parent="syndic" action="action_simpl_building"/>
-                <menuitem name="Fiche signalitique immeuble" id="simpl_immeubles_signalitic" parent="syndic" action="action_building_signalitic"/>
+                <menuitem name="Fiche signalitique immeuble" id="simpl_immeubles_signalitic" parent="syndic" action="action_signalitic"/>
                 
                 <menuitem name="Contact" id="res_partner"  parent="syndic_main" sequence="2"/> 
                 <menuitem name="Fournisseurs" id="supplier" parent="res_partner"  action="action_supplier_syndic"/>
