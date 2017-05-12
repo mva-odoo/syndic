@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-			<!--search -->
 		<record model="ir.ui.view" id="search_supplier">
 			<field name="name">supplier search</field>
 			<field name="model">syndic.supplier</field>
@@ -19,8 +18,7 @@
 				</search>
 			</field>
 		</record>
-        
-		<!--tree view -->
+
 		<record model="ir.ui.view" id="tree_supplier">
 			<field name="name">supplier tree view</field>
 			<field name="model">syndic.supplier</field>
@@ -38,50 +36,39 @@
 				</tree>
 			</field>
 		</record>
-		
-		
-		<!--form -->
+
 		<record model="ir.ui.view" id="form_supplier">
 			<field name="name">supplier form view</field>
 			<field name="model">syndic.supplier</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Fournisseur">
+				<form>
 					<group colspan="4" col="4">
 						<field name="name" colspan="2"/>
 						<field name="title" colspan="2" string="Titre"/>
 						<field name="job_ids" colspan="2" widget="many2many_tags"/>
 					</group>
-					<notebook colspan="4">
+					<notebook>
 						<page string="Contact" name="contact">
 							<group>
-								<group>
-									<h3 style="color:#3F82B9" colspan="4">
-										Adresse:
-									</h3>
-									<group col="4" colspan="4">
-										<field name="street" colspan="4" string="Rue"/>
-										<field name="zip"  colspan="2" string="Code Postal"/>
-										<field name="city_id"  colspan="2"/>
-										<field name="country_id" colspan="4" string="Pays"/>
-									</group>
+								<group string="Adresse">
+									<field name="street"/>
+									<field name="city_id"/>
+									<field name="zip"/>
+									<field name="country_id" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
 								</group>
 
-								<group>
-									<h3 style="color:#3F82B9" colspan="4">
-										Contact Electronique:
-									</h3>
-									<group colspan="4">
-										<field name="phone" string="Téléphone"/>
-										<field name="fax"/>
-										<field name="gsm"/>
-										<field name="email"/>
-									</group>
+								<group string="Contact Electronique">
+									<field name="phone" string="Téléphone"/>
+									<field name="fax"/>
+									<field name="gsm"/>
+									<field name="email"/>
 								</group>
 							</group>
+
 							<group string="Autres contacts">
 								<field name="address_ids" colspan="4" nolabel="1">
-									<tree string="Autres contacts" editable="top">
+									<tree editable="top">
 										<field name="name"/>
 										<field name="title"/>
 										<field name="street"/>
@@ -102,9 +89,6 @@
 			</field>
 		</record>
                
-              
-               
-		<!--action -->
 		<record model="ir.actions.act_window" id="action_supplier_syndic">
 			<field name="name">Fournisseurs</field>
 			<field name="type">ir.actions.act_window</field>
@@ -114,9 +98,5 @@
 			<field name="view_id" ref="tree_supplier" />
 			<field name="search_view_id" ref="search_supplier" />
 		</record>
-
-		
-		
-		
     </data>
 </openerp>

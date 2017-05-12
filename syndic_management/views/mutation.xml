@@ -36,28 +36,29 @@
 			<field name="model">syndic.mutation</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="mutation" layout="manual" version="7.0">
-				<header>
-					<button string="Mutation" name="mutation" type="object"
-                            attrs="{'invisible':[('state','=','done')]}" />
-					<field name="state" widget="statusbar"/>
-				</header>
-				<sheet string="Mutation" layout="auto">
+				<form>
+					<header>
+						<button string="Mutation" name="mutation" type="object"
+								attrs="{'invisible':[('state','=','done')]}" />
+						<field name="state" widget="statusbar"/>
+					</header>
+
 				    <group>
-				    <field name="mutation_date" attrs="{'readonly':[('state','=','done')]}"/>
-				    <field name="old_owner_ids" attrs="{'readonly':[('state','=','done')]}" widget="many2many_tags"/>
-				    <field name="new_owner_ids" attrs="{'readonly':[('state','=','done')]}" widget="many2many_tags"/>
-				    <separator string="Lots modifiés" colspan="4"/>
-				    <field name="lot_ids" colspan="4" nolabel="1"
-						   attrs="{'readonly':[('state','=','done')]}">
-				    	<tree>
-				    		<field name="name"/>
-				    		<field name="building_id"/>
-				    	</tree>
-				    </field>
-				    
+						<field name="mutation_date" attrs="{'readonly':[('state','=','done')]}"/>
+						<field name="old_owner_ids" attrs="{'readonly':[('state','=','done')]}" widget="many2many_tags"/>
+						<field name="new_owner_ids" attrs="{'readonly':[('state','=','done')]}" widget="many2many_tags"/>
                     </group>
-                </sheet>
+					<notebook>
+						<page string="Lots modifiés">
+							<field name="lot_ids" nolabel="1"
+								   attrs="{'readonly':[('state','=','done')]}">
+								<tree>
+									<field name="name"/>
+									<field name="building_id"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
                 </form>
 			</field>
 		</record>
