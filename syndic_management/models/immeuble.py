@@ -46,6 +46,9 @@ class Building(models.Model):
     user_id = fields.Many2one('res.users', 'Utilisateur', required=True)
     password = fields.Char('Mot de Passe')
 
+    honoraire = fields.Float('Honoraire', groups='syndic_management.syndic_manager')
+    frais_admin = fields.Float('Frais Administratif', groups='syndic_management.syndic_manager')
+
     @api.onchange('zip_building')
     def onchange_zip(self):
         if self.zip_building:

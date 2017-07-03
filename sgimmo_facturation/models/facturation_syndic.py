@@ -58,6 +58,8 @@ class FacturationSyndicLigne(models.Model):
     description = fields.Selection([('honoraire', 'HONORAIRE'),
                                     ('administration', 'ADMINISTRATION'),
                                     ('suivi', 'SUIVI SYNDIC')], 'Description', required=True)
+
+    type_id = fields.Many2one('syndic.facturation.syndic.ligne.type', 'Description', required=True)
     qty = fields.Float('Quantité', required=True)
     prix = fields.Float('Prix', required=True)
     prix_tot = fields.Float('Prix tot', compute='_compute_tot_hours', readonly=True)
@@ -88,3 +90,10 @@ class FacturationSyndicYear(models.Model):
         })
         vals['sequence_id'] = sequence.id
         return super(FacturationSyndicYear, self).create(vals)
+
+
+class SyndicFacturationLineType(models.Model):
+    _name = 'syndic.facturation.syndic.ligne.type'
+
+    name = fields.Char('Nom', required=True)
+    description = fields.Char('Description')

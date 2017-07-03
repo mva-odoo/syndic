@@ -12,6 +12,7 @@
         'views/facturation_syndic.xml',
         'report/facture_sgimmo_report.xml',
         'security/ir.model.access.csv',
+        'datas/facturation_type.xml',
     ],
     'installable': True,
 }

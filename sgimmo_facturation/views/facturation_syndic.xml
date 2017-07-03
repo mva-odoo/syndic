@@ -46,7 +46,7 @@
 
                     <field name="sgimmo_lign_ids">
                         <tree editable="top">
-                            <field name="description"/>
+                            <field name="type_id"/>
                             <field name="qty"/>
                             <field name="prix"/>
                             <field name="prix_tot"/>

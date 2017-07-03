@@ -89,16 +89,8 @@
                                             <tbody class="sale_tbody">
                                             <t t-foreach="o.sgimmo_lign_ids" t-as="line">
                                                 <tr>
-                                                    <t t-if="line.description == 'honoraire'">
-                                                        <td>AR0001</td>
-                                                    </t>
-                                                    <t t-if="line.description == 'administration'">
-                                                        <td>AR0002</td>
-                                                    </t>
-                                                    <t t-if="line.description == 'suivi'">
-                                                        <td>AR0003</td>
-                                                    </t>
-                                                    <td><span t-esc="line.description"/></td>
+                                                    <td><span t-esc="line.type_id.description"/></td>
+                                                    <td><span t-esc="line.type_id.name"/></td>
                                                     <td><span t-esc="line.qty"/></td>
                                                     <td><span t-esc="line.prix"/></td>
                                                     <td></td>

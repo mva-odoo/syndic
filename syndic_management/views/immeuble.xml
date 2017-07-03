@@ -115,6 +115,13 @@
 									<field name="password"/>
 								</group>
 							</page>
+
+							<page string="Honoraires" name="honoraires" groups="syndic_management.syndic_manager">
+								<group>
+									<field name="honoraire"/>
+									<field name="frais_admin"/>
+								</group>
+							</page>
 						</notebook>
                 </form>
 			</field>
