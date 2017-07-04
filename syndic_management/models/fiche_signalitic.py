@@ -154,7 +154,7 @@ class SignalitiqueImmeuble(models.Model):
     _name = 'building.signalitic'
     _inherits = {'syndic.building': 'building_id'}
 
-    building_id = fields.Many2one('syndic.building', string='Immeuble', required=True)
+    building_id = fields.Many2one('syndic.building', string='Immeuble', required=True, ondelete="cascade")
     # info general---------------------------------------
     construction_date = fields.Integer('Date de construction')
     date_mois = fields.Selection([('janvier', 'Janvier'), ('fevrier', 'Fevrier'), ('mars', 'Mars'), ('avril', 'Avril'),
