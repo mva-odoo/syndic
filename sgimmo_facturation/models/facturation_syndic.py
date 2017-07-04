@@ -57,7 +57,7 @@ class FacturationSyndicLigne(models.Model):
     ref = fields.Char('Référence')
     description = fields.Selection([('honoraire', 'HONORAIRE'),
                                     ('administration', 'ADMINISTRATION'),
-                                    ('suivi', 'SUIVI SYNDIC')], 'Description', required=True)
+                                    ('suivi', 'SUIVI SYNDIC')], 'Description', required=False)
 
     type_id = fields.Many2one('syndic.facturation.syndic.ligne.type', 'Description', required=True)
     qty = fields.Float('Quantité', required=True)
