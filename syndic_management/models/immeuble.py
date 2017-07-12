@@ -49,6 +49,9 @@ class Building(models.Model):
     honoraire = fields.Float('Honoraire', groups='syndic_management.syndic_manager')
     frais_admin = fields.Float('Frais Administratif', groups='syndic_management.syndic_manager')
 
+    manager_id = fields.Many2one('res.users', 'Manager',
+                                 domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]")
+
     @api.onchange('zip_building')
     def onchange_zip(self):
         if self.zip_building:

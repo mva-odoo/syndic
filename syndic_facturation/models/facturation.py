@@ -15,6 +15,29 @@ class SuiviFacture(models.Model):
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     object = fields.Char('Objet')
 
+    facture_type = fields.Selection([
+        ('suivi_syndic', 'Suivis Syndic'),
+        ('fraisadmin', 'Frais Administratifs'),
+        ('honoraire', 'Honoraires'),
+    ], 'Type de facture')
+
+    facture_type2 = fields.Selection([
+        ('fraisadmin', 'Frais Administratifs'),
+        ('honoraire', 'Honoraires'),
+    ], 'Type de facture')
+
+    trimestre = fields.Selection([
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+    ], string='Trimestre')
+    year = fields.Char("Année")
+
+    @api.onchange('facture_type2')
+    def onchange_type(self):
+        self.facture_type = self.facture_type2
+
     @api.multi
     def copy(self, default=None):
         new_lign_ids = self.line_ids.copy()
@@ -30,17 +53,24 @@ class SuiviFacture(models.Model):
 
     @api.model
     def create(self, vals):
-        new_id = super(SuiviFacture, self).create(vals)
-        new_id.name = 'Facture %i' % new_id
-        return new_id
+        if vals.get('facture_type') == 'suivi_syndic':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                self.env.ref('syndic_facturation.sequence_facture_sgimmo').code)
+        elif vals.get('facture_type') == 'honoraire':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                self.env.ref('syndic_facturation.sequence_honoraire_sgimmo').code)
+        elif vals.get('facture_type') == 'fraisadmin':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                self.env.ref('syndic_facturation.sequence_fraisadmin').code)
+        else:
+            vals['name'] = 'Facture Non Typée'
+
+        return super(SuiviFacture, self).create(vals)
 
     @api.one
     @api.depends('line_ids')
     def _compute_total(self):
-        total = 0.00
-        for line in self.line_ids:
-            total += line.prix_tot
-        self.total = total
+        self.total = sum(self.line_ids.mapped('prix_tot')) if self.line_ids else 0.00
 
     @api.one
     def compute_price(self):
@@ -52,9 +82,9 @@ class SyndicFacturationLine(models.Model):
     _name = 'syndic.facturation.line'
 
     name = fields.Char('Ligne de facturation')
-    type_id = fields.Many2one('syndic.facturation.type', string='Type de frais', required=True)
+    type_id = fields.Many2one('syndic.facturation.type', string='Type de frais')
     facture_id = fields.Many2one('syndic.facturation', string='facture')
-    nombre = fields.Float('Nombre')
+    nombre = fields.Float('Nombre', default=1.00)
     prix = fields.Float('Prix de la prestation', required=True)
     prix_tot = fields.Float('Prix de la prestation', compute='_compute_tot_hours', store=True)
     qty_id = fields.Many2one('syndic.qty.type', 'Unité')

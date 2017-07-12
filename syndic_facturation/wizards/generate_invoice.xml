@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="syndic_facturation_generate">
+        <field name="name">Syndic facturation generate</field>
+            <field name="model">syndic.facturation.generation</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="index"/>
+                        <field name="trimestre"/>
+                        <field name="year"/>
+                        <field name="date"/>
+                        <field name="all_building"/>
+                        <field name="immeuble_ids"
+                               widget="many2many_tags"
+                               attrs="{'invisible':[('all_building', '=', True)]}"/>
+                    </group>
+                    <footer>
+                        <button name="invoice_generate" string="Générer Facture" type="object"/>
+                    </footer>
+                </form>
+            </field>
+    </record>
+
+    <act_window id="act_window_generate_invoice"
+    name="Généré facture"
+    src_model="syndic.building"
+    res_model="syndic.facturation.generation"
+    view_mode="form"
+    target="new"
+    groups="syndic_management.syndic_manager"
+    key2="client_action_multi"/>
+
+</odoo>

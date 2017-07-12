@@ -8,6 +8,7 @@ Syndic Tools
 """,
     'author': 'Odoo SA',
     'depends': [
+        'base',
     ],
     'data': [
         'views/deduplicate.xml',

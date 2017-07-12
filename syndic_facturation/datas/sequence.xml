@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.sequence" id="sequence_facture_sgimmo">
+            <field name="name">facture sgimmo</field>
+            <field name="code">facture sgimmo</field>
+            <field name="prefix">Facture</field>
+            <field name="padding">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record model="ir.sequence" id="sequence_honoraire_sgimmo">
+            <field name="name">honoraire sgimmo</field>
+            <field name="code">honoraire sgimmo</field>
+            <field name="prefix">Honoraires</field>
+            <field name="padding">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record model="ir.sequence" id="sequence_fraisadmin">
+            <field name="name">Frais administratif sgimmo</field>
+            <field name="code">Frais administratif sgimmo</field>
+            <field name="prefix">Frais administratifs</field>
+            <field name="padding">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+    </data>
+</odoo>

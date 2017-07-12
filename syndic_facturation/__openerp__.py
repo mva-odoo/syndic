@@ -13,8 +13,9 @@
         'report/facture.xml',
         'security/groups.xml',
         'security/ir.model.access.csv',
+        'datas/sequence.xml',
+        'wizards/generate_invoice.xml',
     ],
-    'auto_install': False,
     'installable': True,
 }
 

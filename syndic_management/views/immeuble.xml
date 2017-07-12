@@ -15,6 +15,7 @@
                     <field name="address_building"/>
                     <field name="zip_building"/>
                     <field name="city_building"/>
+                    <field name="manager_id"/>
                     <filter name="old_building" string="Anciens batiments" domain="[('active', '=', False)]"/>
 				</search>
 			</field>
@@ -71,6 +72,7 @@
 						<group string="Information Divers:">
 							<field name="compte"/>
 							<field name="BCE"/>
+							<field name="manager_id" options="{'no_create': True, 'no_edit': True}"/>
 							<field name="active" invisible="1"/>
 						</group>
 						<group string="Date de l'Assemblée Générale">
