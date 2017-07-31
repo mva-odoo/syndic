@@ -9,9 +9,9 @@ class SuiviFacture(models.Model):
 
     name = fields.Char('Facture', readonly=True)
     immeuble_id = fields.Many2one('syndic.building', string='Immeuble', required=True)
-    line_ids = fields.One2many('syndic.facturation.line', 'facture_id', string='Lignes de facture')
+    line_ids = fields.One2many('syndic.facturation.line', 'facture_id', string='Lignes de facture', copy=True)
     total = fields.Float(string='Total', compute='_compute_total', store=True)
-    date = fields.Date('Date de création', default=lambda *a: fields.date.today())
+    date = fields.Date('Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     object = fields.Char('Objet')
 
@@ -37,13 +37,6 @@ class SuiviFacture(models.Model):
     @api.onchange('facture_type2')
     def onchange_type(self):
         self.facture_type = self.facture_type2
-
-    @api.multi
-    def copy(self, default=None):
-        new_lign_ids = self.line_ids.copy()
-        new_id = super(SuiviFacture, self).copy(default=default)
-        new_id.line_ids = new_lign_ids
-        return new_id
 
     @api.one
     @api.depends('date')

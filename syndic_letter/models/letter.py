@@ -35,7 +35,7 @@ class CreateLetter(models.Model):
     is_fax = fields.Boolean('Envoi par fax')
     piece_jointe_ids = fields.One2many('ir.attachment', 'letter_id', string='Piece Jointe')
     create_date = fields.Datetime('Date de création')
-    date = fields.Date('Date de création', default=lambda *a: fields.date.today())
+    date = fields.Date('Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     partner_address_ids = fields.Many2many('partner.address', String="Personne Jointe",
                                            compute='_compute_join_address', store=True)
@@ -47,11 +47,6 @@ class CreateLetter(models.Model):
     def _compute_date(self):
         if self.date:
             self.date_fr = SyndicTools().french_date(self.date)
-
-    @api.multi
-    def copy(self, default=None):
-        default['date'] = fields.date.today()
-        return super(CreateLetter, self).copy(default)
 
     @api.model
     def create(self, vals):

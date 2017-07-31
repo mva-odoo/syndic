@@ -12,7 +12,7 @@ class LetterAvis(models.Model):
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
     create_date = fields.Datetime('Date de création', readonly=True)
     write_date = fields.Datetime('Write Date', readonly=True)
-    date = fields.Date('Date de création', default=lambda *a: fields.date.today())
+    date = fields.Date('Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     type_id = fields.Many2one('type.avis', "Type d'avis", required=True)
     avis_model_id = fields.Many2one("letter.avis.model", "Modele d'avis")
@@ -22,11 +22,6 @@ class LetterAvis(models.Model):
     def _compute_date(self):
         if self.date:
             self.date_fr = SyndicTools().french_date(self.date)
-
-    @api.multi
-    def copy(self, default=None):
-        default['date'] = fields.date.today()
-        return super(LetterAvis, self).copy(default)
 
     @api.onchange('avis_model_id')
     def onchange_letter_avis_model(self):
@@ -50,7 +45,7 @@ class LetterReunion(models.Model):
     create_date = fields.Datetime('Date de création', readonly=True)
     write_date = fields.Datetime('Write Date', readonly=True)
     type_id = fields.Many2one('reunion.type', 'Type', required=True)
-    date = fields.Date('Date de création', default=lambda *a: fields.date.today())
+    date = fields.Date('Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
 
     @api.one
@@ -58,11 +53,6 @@ class LetterReunion(models.Model):
     def _compute_date(self):
         if self.date:
             self.date_fr = SyndicTools().french_date(self.date)
-
-    @api.multi
-    def copy(self, default=None):
-        default['date'] = fields.date.today()
-        return super(LetterReunion, self).copy(default)
 
 
 class ReunionType(models.Model):

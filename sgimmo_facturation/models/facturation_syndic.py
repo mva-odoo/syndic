@@ -7,24 +7,17 @@ class FacturationSyndic(models.Model):
     _name = 'syndic.facturation.syndic'
     _order = 'id desc'
 
-    sgimmo_lign_ids = fields.One2many('syndic.facturation.syndic.ligne', 'facture_syndic_id', 'Lignes')
+    sgimmo_lign_ids = fields.One2many('syndic.facturation.syndic.ligne', 'facture_syndic_id', 'Lignes', copy=True)
     year_id = fields.Many2one('syndic.facturation.syndic.year', 'Années', required=True)
     facture_tot = fields.Float('Total', compute='_compute_total_syndic', readonly=True)
     num_immeuble = fields.Char('Numeros Client')
     num_facture = fields.Char('Numeros Facture', readonly=True)
     immeuble_id = fields.Many2one('syndic.building', string='Immeuble')
-    date = fields.Date('Date de création', default=lambda *a: fields.date.today())
+    date = fields.Date('Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     object = fields.Char('Objet')
     name = fields.Char('Facture', readonly=True)
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
-
-    @api.multi
-    def copy(self, default=None):
-        new_lign_ids = self.sgimmo_lign_ids.copy()
-        new_id = super(FacturationSyndic, self).copy(default=default)
-        new_id.sgimmo_lign_ids = new_lign_ids
-        return new_id
 
     @api.one
     @api.depends('date')
