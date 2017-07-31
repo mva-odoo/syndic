@@ -1,11 +1,8 @@
-.oe_topbar_item oe_topbar_compose_full_email{
-    display:none;
-}
 @media print{
-    .oe-control-panel{
-        display: none;
+    .o_sub_menu{
+        display: none!important;
     }
-    .oe-view-manager {
+    .o_content{
         display: table-footer-group !important;
     }
 }
