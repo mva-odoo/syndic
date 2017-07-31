@@ -35,6 +35,7 @@
 					<field name="zip_building" />
 					<field name="BCE"/>
 					<field name="honoraire" groups="syndic_management.syndic_manager"/>
+					<field name="frais_admin" groups="syndic_management.syndic_manager"/>
 				</tree>
 			</field>
 		</record>
