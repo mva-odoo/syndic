@@ -7,7 +7,7 @@
     Syndic management:
     """,
     'author': 'SGIMMO',
-    'depends': ['base', 'mail', 'syndic_tools'],
+    'depends': ['base', 'mail'],
     'website': 'http://www.sgimmo.be',
     'data': [
             'views/fiche_signalitic.xml',

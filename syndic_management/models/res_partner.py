@@ -15,8 +15,8 @@ class City(models.Model):
     _order = 'name'
 
     name = fields.Char('Ville', required=True)
-    zip = fields.Char('Code Postal', required=True)
-    country_id = fields.Many2one('res.country', 'Country', required=True)
+    zip = fields.Char('Code Postal')
+    country_id = fields.Many2one('res.country', 'Country')
     active = fields.Boolean('Actif', default=True)
 
     @api.model
@@ -30,10 +30,6 @@ class City(models.Model):
         if vals.get('name'):
             vals['name'] = vals['name'][0].upper()+vals['name'][1:].lower()
         return super(City, self).write(vals)
-
-    _sql_constraints = [
-        ('city_id_uniq', 'unique (name,zip)', ("Cette ville existe déjà"))
-    ]
 
 
 class ResPartnerAddress(models.Model):
