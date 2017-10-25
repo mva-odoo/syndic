@@ -7,8 +7,8 @@ class Mutation(models.Model):
     _order = 'immeuble_id'
 
     mutation_date = fields.Date('Date de mutation', required=True)
-    old_owner_ids = fields.Many2many('syndic.owner', 'old_owner_table', string='Ancien Propriétaire', required=True)
-    new_owner_ids = fields.Many2many('syndic.owner', 'new_owner_table', string='Nouveau Propriétaire', required=True)
+    old_owner_ids = fields.Many2many('syndic.owner', 'old_owner_table', string=u'Ancien Propriétaire', required=True)
+    new_owner_ids = fields.Many2many('syndic.owner', 'new_owner_table', string=u'Nouveau Propriétaire', required=True)
     lot_ids = fields.Many2many('syndic.lot', string='Lot', required=True)
     state = fields.Selection([('draft', 'brouillon'), ('done', 'terminé')], 'Etat', default='draft')
     immeuble_id = fields.Many2one('syndic.building', related='lot_ids.building_id', store=True, string="Immeuble")

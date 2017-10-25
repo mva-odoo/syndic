@@ -11,15 +11,15 @@ class Claim(models.Model):
     subject = fields.Char('Sujet', required=True)
     email = fields.Char('Email')
     phone = fields.Char('Telephone')
-    create_date = fields.Datetime(string='Date de création', readonly=True)
+    create_date = fields.Datetime(string=u'Date de création', readonly=True)
     write_date = fields.Datetime(string='Update Date', readonly=True)
     create_uid = fields.Many2one('res.users', string="Createur", readonly=True)
     write_uid = fields.Many2one('res.users', string="Modifieur", readonly=True)
     manager_id = fields.Many2one('res.users', string='Manager de la plainte',
                                  domain=['!', ('groups_id.name', 'ilike', 'Syndic/Client')],
                                  default=lambda self: self.env.uid)
-    main_owner = fields.Many2one('syndic.owner', string='Contact propriétaires')
-    owner_ids = fields.Many2many('syndic.owner', string='Autres propriétaires')
+    main_owner = fields.Many2one('syndic.owner', string=u'Contact propriétaires')
+    owner_ids = fields.Many2many('syndic.owner', string=u'Autres propriétaires')
     supplier_ids = fields.Many2many('syndic.supplier', string='Fournisseurs')
     loaner_ids = fields.Many2many('syndic.loaner', string='Locataires')
     other_ids = fields.Many2many('syndic.personne', string='Divers')
@@ -94,7 +94,7 @@ class CommentHistory(models.Model):
     _name = 'comment.history'
     _rec_name = 'description'
 
-    create_date = fields.Datetime('Date de création', readonly=True)
+    create_date = fields.Datetime(u'Date de création', readonly=True)
     write_date = fields.Datetime('Date de modification', readonly=True)
     create_uid = fields.Many2one('res.users', string="User", readonly=True)
     write_uid = fields.Many2one('res.users', string="User", readonly=True)
@@ -115,7 +115,7 @@ class OffreContrats(models.Model):
     envoi_par = fields.Selection([('recommende', 'Par recommandé'),
                                   ('courrier_simple', 'Par courrier simple'),
                                   ('email', 'Par Email'),
-                                  ('fax', 'Par Fax')], string='Envoyé par')
+                                  ('fax', 'Par Fax')], string=u'Envoyé par')
     reception = fields.Boolean('Reception')
     date_reception = fields.Date('Date reception')
     transmition = fields.Boolean('Transmition')

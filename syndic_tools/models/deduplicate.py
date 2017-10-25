@@ -7,10 +7,10 @@ class Deduplicate(models.Model):
     _rec_name = 'name_research'
 
     model_id = fields.Many2one('ir.model', 'Model')
-    name_research = fields.Char('Nom cherché')
+    name_research = fields.Char(u'Nom cherché')
     name_translate = fields.Char('Nom traduit')
     id_master = fields.Char('ID master')
-    duplicate_ids = fields.One2many('syndic.tools.deduplicate.rec', 'deduplicate_id', 'Record Duplicqué')
+    duplicate_ids = fields.One2many('syndic.tools.deduplicate.rec', 'deduplicate_id', u'Record Duplicqué')
 
     @api.one
     def search_occurance(self):
@@ -18,7 +18,7 @@ class Deduplicate(models.Model):
             self.duplicate_ids = False
             for duplicate_rec in self.env[self.model_id.name].search([
                 '|',
-                ('name', 'ilike', self.name_research),
+                ('name', '=like', self.name_research),
                 ('name', 'ilike', self.name_translate)
             ]):
                 vals = {
@@ -64,7 +64,8 @@ class Deduplicate(models.Model):
                     else:
                         update_query = "UPDATE "+table+" SET "+column+"="+self.id_master+" WHERE id = "+str(tuple(datas_ids)[0])
                     self.env.cr.execute(update_query, ())
-                self.env[self.model_id.name].search([('id', 'in', tuple(slave_ids))]).write({'active': False})
+
+                self.env[self.model_id.name].search([('id', 'in', tuple(slave_ids))]).unlink()
 
 
 class DeduplicateRec(models.Model):

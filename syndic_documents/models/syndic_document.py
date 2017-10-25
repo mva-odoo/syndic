@@ -8,11 +8,11 @@ class Document(models.Model):
     _rec_name = 'nom_document'
 
     nom_document = fields.Char('nom du document', required=True)
-    create_date = fields.Datetime('Date de création')
+    create_date = fields.Datetime(u'Date de création')
     document = fields.Binary('document', required=True)
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
     datas_fname = fields.Char("File Name")
-    proprio_ids = fields.Many2many('syndic.owner', string='Propriétaires')
+    proprio_ids = fields.Many2many('syndic.owner', string=u'Propriétaires')
     building_id = fields.Many2one('syndic.building', 'Immeubles')
     type_id = fields.Many2one('syndic.type.document', 'Type de document')
     all_document = fields.Boolean('Pour tout le batiment')

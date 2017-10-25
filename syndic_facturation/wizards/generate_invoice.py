@@ -17,7 +17,7 @@ class SuiviFacture(models.TransientModel):
         ('3', '3'),
         ('4', '4'),
     ], string='Trimestre', required=True)
-    year = fields.Char('Année', required=True)
+    year = fields.Char(u'Année', required=True)
     date = fields.Date('Date', default=lambda *a: fields.date.today(), required=True)
 
     @api.multi

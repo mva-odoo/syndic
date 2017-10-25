@@ -11,7 +11,7 @@ class SuiviFacture(models.Model):
     immeuble_id = fields.Many2one('syndic.building', string='Immeuble', required=True)
     line_ids = fields.One2many('syndic.facturation.line', 'facture_id', string='Lignes de facture', copy=True)
     total = fields.Float(string='Total', compute='_compute_total', store=True)
-    date = fields.Date('Date de création', default=lambda *a: fields.date.today(), copy=False)
+    date = fields.Date(u'Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     object = fields.Char('Objet')
 
@@ -32,7 +32,7 @@ class SuiviFacture(models.Model):
         ('3', '3'),
         ('4', '4'),
     ], string='Trimestre')
-    year = fields.Char("Année")
+    year = fields.Char(u"Année")
 
     @api.onchange('facture_type2')
     def onchange_type(self):
@@ -80,7 +80,7 @@ class SyndicFacturationLine(models.Model):
     nombre = fields.Float('Nombre', default=1.00)
     prix = fields.Float('Prix de la prestation', required=True)
     prix_tot = fields.Float('Prix de la prestation', compute='_compute_tot_hours', store=True)
-    qty_id = fields.Many2one('syndic.qty.type', 'Unité')
+    qty_id = fields.Many2one('syndic.qty.type', u'Unité')
 
     @api.onchange('type_id')
     def _onchange_price(self):
@@ -102,4 +102,4 @@ class SyndicFacturationType(models.Model):
 class SyndicqtyType(models.Model):
     _name = 'syndic.qty.type'
 
-    name = fields.Char('Quantité', required=True)
+    name = fields.Char(u'Quantité', required=True)

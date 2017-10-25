@@ -10,7 +10,7 @@ class CreateLetter(models.Model):
     end_date = fields.Datetime('Date de fin')
     where = fields.Char('Lieu')
     description = fields.Text('Description')
-    owner_id = fields.Many2one('res.users', string='Responsable de l\'évenement', default=lambda self: self._uid)
+    owner_id = fields.Many2one('res.users', string=u'Responsable de l\'évenement', default=lambda self: self._uid)
     building_id = fields.Many2one('syndic.building', string='Immeuble')
     attendee_ids = fields.Many2many('res.users', string="Participants")
     attendee_string = fields.Char('Participants', compute='compute_participant')

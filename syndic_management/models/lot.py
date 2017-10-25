@@ -8,9 +8,9 @@ class Lot(models.Model):
 
     name = fields.Char('Nom du lot', required=True)
     building_id = fields.Many2one('syndic.building', 'Immeuble')
-    proprio_id = fields.Many2many('syndic.owner', string='Propriétaire')
+    proprio_id = fields.Many2many('syndic.owner', string=u'Propriétaire')
     locataire_id = fields.Many2many('syndic.loaner', string='Locataire')
-    quotities = fields.Float('Quotitées')
+    quotities = fields.Float(u'Quotitées')
     lot_id = fields.Many2one('syndic.lot', string='Lot')
     lot_ids = fields.One2many('syndic.lot', 'lot_id', string='sous-lots')
     type_id = fields.Many2one('syndic.type_lot', 'Type de lot')

@@ -8,12 +8,12 @@ class FacturationSyndic(models.Model):
     _order = 'id desc'
 
     sgimmo_lign_ids = fields.One2many('syndic.facturation.syndic.ligne', 'facture_syndic_id', 'Lignes', copy=True)
-    year_id = fields.Many2one('syndic.facturation.syndic.year', 'Années', required=True)
+    year_id = fields.Many2one('syndic.facturation.syndic.year', u'Années', required=True)
     facture_tot = fields.Float('Total', compute='_compute_total_syndic', readonly=True)
     num_immeuble = fields.Char('Numeros Client')
     num_facture = fields.Char('Numeros Facture', readonly=True)
     immeuble_id = fields.Many2one('syndic.building', string='Immeuble')
-    date = fields.Date('Date de création', default=lambda *a: fields.date.today(), copy=False)
+    date = fields.Date(u'Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     object = fields.Char('Objet')
     name = fields.Char('Facture', readonly=True)
@@ -47,13 +47,13 @@ class FacturationSyndic(models.Model):
 class FacturationSyndicLigne(models.Model):
     _name = 'syndic.facturation.syndic.ligne'
 
-    ref = fields.Char('Référence')
+    ref = fields.Char(u'Référence')
     description = fields.Selection([('honoraire', 'HONORAIRE'),
                                     ('administration', 'ADMINISTRATION'),
                                     ('suivi', 'SUIVI SYNDIC')], 'Description', required=False)
 
     type_id = fields.Many2one('syndic.facturation.syndic.ligne.type', 'Description', required=True)
-    qty = fields.Float('Quantité', required=True)
+    qty = fields.Float(u'Quantité', required=True)
     prix = fields.Float('Prix', required=True)
     prix_tot = fields.Float('Prix tot', compute='_compute_tot_hours', readonly=True)
     facture_syndic_id = fields.Many2one('syndic.facturation.syndic', 'Facture Syndic')
@@ -67,7 +67,7 @@ class FacturationSyndicLigne(models.Model):
 class FacturationSyndicYear(models.Model):
     _name = 'syndic.facturation.syndic.year'
 
-    name = fields.Char('Année', required=True)
+    name = fields.Char(u'Année', required=True)
     facture_ids = fields.One2many('syndic.facturation.syndic', 'year_id', 'Facture')
     sequence_id = fields.Many2one('ir.sequence', 'Sequence')
 
