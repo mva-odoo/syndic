@@ -78,6 +78,7 @@ class Person(models.Model):
     prenom = fields.Char('Prenom')
     gsm = fields.Char('GSM')
     user_id = fields.Many2one('res.users', string="User", ondelete="cascade")
+    partner_id = fields.Many2one('res.partner', string='Partner', related='user_id.partner_id')
 
 
 # fournisseur
@@ -120,9 +121,7 @@ class Owner(models.Model):
                                     ('email', 'Par Email')], string='Convocation')
 
     def sgimmo_check_login_unicity(self, login):
-        if self.env['res.users'].search_count([('login', '=', login)]):
-            return False
-        return True
+        return False if self.env['res.users'].search_count([('login', '=like', login)]) else True
 
     @api.model
     def create(self, vals):
@@ -138,8 +137,8 @@ class Owner(models.Model):
                 'groups_id': [(6, 0, self.env.ref('syndic_management.syndic_client').ids)],
             }
 
-            self.write({
-                'user_id': self.env['res.users'].sudo().create(dict_users),
+            res_id.write({
+                'user_id': self.env['res.users'].sudo().create(dict_users).id,
                 'password': dict_users['password']
             })
         return res_id
