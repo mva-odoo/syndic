@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <!-- don t delete add groupe no one -->
-        <delete id="mail.mail_channel_menu_root_chat" model="ir.ui.menu"/>
-        <delete id="contacts.menu_contacts" model="ir.ui.menu"/>
+        <record id="mail.mail_channel_menu_root_chat" model="ir.ui.menu">
+            <field name="active" eval="0"/>
+        </record>
+        <record id="contacts.menu_contacts" model="ir.ui.menu">
+            <field name="active" eval="0"/>
+        </record>
+        <record id="sales_team.menu_base_partner" model="ir.ui.menu">
+            <field name="active" eval="0"/>
+        </record>
     </data>
 </openerp>
