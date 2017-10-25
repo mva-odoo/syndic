@@ -39,7 +39,6 @@ class SuiviFacture(models.TransientModel):
                    'prix': (immeuble.honoraire * self.index)/100 if self.index else immeuble.honoraire,
                })
             ]
-            print vals
             self.env['syndic.facturation'].create(vals)
 
             vals.pop('line_ids')
@@ -52,5 +51,4 @@ class SuiviFacture(models.TransientModel):
                    'prix': (immeuble.frais_admin * self.index) / 100 if self.index else immeuble.frais_admin,
                })
             ]
-            print vals
             self.env['syndic.facturation'].create(vals)
