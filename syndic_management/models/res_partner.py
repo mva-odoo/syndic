@@ -19,17 +19,12 @@ class City(models.Model):
     country_id = fields.Many2one('res.country', 'Country')
     active = fields.Boolean('Actif', default=True)
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name'):
-            vals['name'] = vals['name'][0].upper()+vals['name'][1:].lower()
-        return super(City, self).create(vals)
-
     @api.multi
-    def write(self, vals):
-        if vals.get('name'):
-            vals['name'] = vals['name'][0].upper()+vals['name'][1:].lower()
-        return super(City, self).write(vals)
+    @api.onchange('name')
+    def onchange_export_type(self):
+        for city in self:
+            if city.name:
+                city.name = city.name.title()
 
 
 class ResPartnerAddress(models.Model):
