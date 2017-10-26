@@ -1,4 +1,4 @@
-openerp.pdf_viewer = function(instance, local) {
+odoo.pdf_viewer = function(instance, local) {
     var _t = instance.web._t,
         _lt = instance.web._lt;
     var QWeb = instance.web.qweb;
