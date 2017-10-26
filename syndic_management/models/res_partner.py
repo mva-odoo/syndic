@@ -19,13 +19,6 @@ class City(models.Model):
     country_id = fields.Many2one('res.country', 'Country')
     active = fields.Boolean('Actif', default=True)
 
-    @api.multi
-    @api.onchange('name')
-    def onchange_export_type(self):
-        for city in self:
-            if city.name:
-                city.name = city.name.title()
-
 
 class ResPartnerAddress(models.Model):
     _name = 'partner.address'
