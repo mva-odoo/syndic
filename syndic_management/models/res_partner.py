@@ -108,14 +108,11 @@ class Owner(models.Model):
                                     ('courrier_simple', 'Par courrier simple'),
                                     ('email', 'Par Email')], string='Convocation')
 
-    def sgimmo_check_login_unicity(self, login):
-        return False if self.env['res.users'].search_count([('login', '=like', login)]) else True
-
     @api.model
     def create(self, vals):
         res_id = super(Owner, self).create(vals)
         login = SyndicTools().login_generator(vals['name'])
-        if self.sgimmo_check_login_unicity(login):
+        if self.env['res.users'].search_count([('login', '=like', login)]):
 
             dict_users = {
                 'name': vals['name'],
