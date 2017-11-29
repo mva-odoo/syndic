@@ -20,10 +20,7 @@ class Building(models.Model):
 
     @api.one
     def _get_total_quotites(self):
-        total_quotites = 0.00
-        for lot in self.lot_ids:
-            total_quotites += lot.quotities
-        self.total_quotites = total_quotites
+        self.total_quotites = sum(self.lot_ids.mapped('quotities'))
 
     name = fields.Char('Immeuble', required=True)
     lot_ids = fields.One2many('syndic.lot', 'building_id', 'Lots')
@@ -55,9 +52,9 @@ class Building(models.Model):
     @api.onchange('zip_building')
     def onchange_zip(self):
         if self.zip_building:
-            city = self.env['city'].search([('zip', '=', self.zip_building)])
+            city = self.env['city'].search([('zip', '=', self.zip_building)], limit=1)
             if city:
-                self.city_building = city[0].id
+                self.city_building = city.id
 
     @api.multi
     def open_sign(self):
@@ -82,10 +79,7 @@ class Building(models.Model):
 
     @api.model
     def create(self, vals):
-        if not vals.get('password'):
-            passwd = SyndicTools().pass_generator()
-        else:
-            passwd = vals.get('password')
+        passwd = vals.get('password') or SyndicTools().pass_generator()
 
         vals['user_id'] = self.env['res.users'].sudo().create({
             'name': vals['name'],
@@ -103,8 +97,7 @@ class Building(models.Model):
     @api.multi
     def write(self, vals):
         if vals.get('name'):
-            self.user_id.name = vals['name']
-            self.user_id.login = vals['name']
+            self.user_id.name = self.user_id.login = vals['name']
 
         if vals.get('password') and self.user_id:
             self.user_id.password = vals.get('password')

@@ -34,10 +34,7 @@ class FacturationSyndic(models.Model):
     @api.one
     @api.depends('sgimmo_lign_ids')
     def _compute_total_syndic(self):
-        total = 0.00
-        for line in self.sgimmo_lign_ids:
-            total += line.prix_tot
-        self.facture_tot = total
+        self.facture_tot = sum(self.sgimmo_lign_ids.mapped('prix_tot'))
 
     @api.onchange('immeuble_id')
     def onchange_immeuble(self):

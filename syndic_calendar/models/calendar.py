@@ -17,7 +17,4 @@ class CreateLetter(models.Model):
 
     @api.one
     def compute_participant(self):
-        participant = ''
-        for attendee_id in self.attendee_ids:
-            participant += '%s ' % attendee_id.name
-        self.attendee_string = participant
+        self.attendee_string = ','.join(self.attendee_ids.mapped('name'))

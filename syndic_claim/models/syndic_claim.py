@@ -129,24 +129,15 @@ class OffreContrats(models.Model):
 
     @api.onchange('reception')
     def onchange_reception(self):
-        if self.reception:
-            self.date_reception = date.today().strftime('%Y-%m-%d')
-        else:
-            self.date_reception = False
+        self.date_reception = date.today().strftime('%Y-%m-%d') if self.reception else False
 
     @api.onchange('transmition')
     def onchange_transmition(self):
-        if self.transmition:
-            self.date_transmition = date.today().strftime('%Y-%m-%d')
-        else:
-            self.date_transmition = False
+        self.date_transmition = date.today().strftime('%Y-%m-%d') if self.transmition else False
 
     @api.onchange('acceptation')
     def onchange_acceptation(self):
-        if self.acceptation:
-            self.date_acceptation = date.today().strftime('%Y-%m-%d')
-        else:
-            self.date_acceptation = False
+        self.date_acceptation = date.today().strftime('%Y-%m-%d') if self.acceptation else False
 
     @api.one
     def transform_bon_commande(self):
@@ -172,7 +163,4 @@ class BonCommande(models.Model):
 
     @api.onchange('cloture')
     def onchange_cloture(self):
-        if self.cloture:
-            self.date_cloture = date.today().strftime('%Y-%m-%d')
-        else:
-            self.date_cloture = False
+        self.date_cloture = date.today().strftime('%Y-%m-%d') if self.cloture else False
