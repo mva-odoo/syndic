@@ -64,7 +64,7 @@
 
 
 					<group string="Adresse:">
-						<field name="zip_building"/>
+						<field name="zip_building" widget="raw-field-integer"/>
 						<field name="city_building" context="{'default_zip': zip_building}"/>
 						<field name="address_building"/>
 					</group>
