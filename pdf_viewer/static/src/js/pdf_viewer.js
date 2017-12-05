@@ -1,11 +1,14 @@
-odoo.pdf_viewer = function(instance, local) {
-    var _t = instance.web._t,
-        _lt = instance.web._lt;
-    var QWeb = instance.web.qweb;
 
-    local.HomePage = instance.Widget.extend({
-        template: "PDFViewer",
+odoo.define('odoo.pdf_viewer', function (require) {
+    'use strict';
+
+    var Widget = require('web.Widget');
+    var core = require('web.core');
+
+    var Dashboard = Widget.extend({
+        template: 'PDFViewer',
         init: function(parent, action) {
+
             this._super(parent);
             this.url = '';
             if ((typeof action.params['report'] !== "undefined") && (typeof action.params['active_id'] !== "undefined")){
@@ -17,15 +20,15 @@ odoo.pdf_viewer = function(instance, local) {
                 }
             }
         },
+
     });
 
-    instance.web.client_actions.add('pdf_viewer.homepage', 'instance.pdf_viewer.HomePage');
-}
-
+    core.action_registry.add('pdf_viewer.homepage', Dashboard);
+});
 
 odoo.define('sgimmo.custom_report', function (require) {
     var ActionManager = require('web.ActionManager');
-    var core = require('web.core');
+    var core = require('web.core'); 
     var crash_manager = require('web.crash_manager');
     var framework = require('web.framework');
     var session = require('web.session');
@@ -38,7 +41,6 @@ odoo.define('sgimmo.custom_report', function (require) {
             action = _.clone(action);
             var eval_contexts = ([session.user_context] || []).concat([action.context]);
 
-            _t =  core._t;
             new_action = {
                 'tag': 'pdf_viewer.homepage',
                 'name': 'pdf_viewer',
@@ -50,7 +52,6 @@ odoo.define('sgimmo.custom_report', function (require) {
             };
 
             new_action.context = pyeval.eval('contexts',eval_contexts);
-
             return $.Deferred(function (d) {
                 $.when(self.ir_actions_client(new_action,options)).then(function () {
                     d.resolve();
