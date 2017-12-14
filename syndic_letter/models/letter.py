@@ -139,8 +139,10 @@ width="96" height="61"/>'"""
             mail['email_to'] = addr.email
             self.env['mail.mail'].create(mail)
 
-        self.is_mail = True
-        self.state = 'send'
+        self.write({
+            'is_mail': True,
+            'state': 'send',
+        })
 
     @api.onchange('letter_model_id')
     def onchange_letter(self):
