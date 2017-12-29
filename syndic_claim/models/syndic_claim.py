@@ -62,7 +62,7 @@ class Claim(models.Model):
             body = """
 Bonjour,
 
-une tâche t'attends sur : <a href='https://syndic.sgimmo.be/web#id=%i&view_type=form&model=syndic.claim&menu_id=128&action=119'>Odoo</a>
+une tâche t'attends sur : <a href='https://sgimmo.be/web#id=%i&view_type=form&model=syndic.claim&menu_id=128&action=119'>Odoo</a>
 """ % res.id
 
             self.env['mail.mail'].create({
