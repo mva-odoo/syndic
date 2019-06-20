@@ -13,4 +13,4 @@ var fieldRegistry = require('web.field_registry');
 
 fieldRegistry.add('raw-field-integer', RawFieldInteger);
 
-}});
+});
