@@ -1,1 +1,1 @@
-import syndic_claim
+from . import syndic_claim

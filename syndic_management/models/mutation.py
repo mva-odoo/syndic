@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions
 
 
 class Mutation(models.Model):
@@ -19,8 +19,8 @@ class Mutation(models.Model):
             'domain': {'lot_ids': [('proprio_id', 'in',  self.old_owner_ids.ids)]}
         }
 
-    @api.one
     def mutation(self):
+        self.ensure_one()
         for old_id in self.old_owner_ids:
             self.env['syndic.old.owner'].create({
                 'proprio_id': old_id.id,

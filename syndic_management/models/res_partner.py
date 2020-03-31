@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
-from openerp.addons.syndic_tools.syndic_tools import SyndicTools
+from odoo import models, fields, api, exceptions
+from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 
 class ResUsers(models.Model):
@@ -128,8 +128,8 @@ class Owner(models.Model):
             })
         return res_id
 
-    @api.one
     def change_password(self):
+        self.ensure_one()
         if self.user_id:
             dict_users = {
                 'login': SyndicTools().login_generator(self.name),
@@ -151,9 +151,9 @@ class Owner(models.Model):
                 'password': user.password
             })
 
-    @api.one
     def unlink(self):
-        self.user_id.unlink()
+        for partner in self:
+            partner.user_id.unlink()
         return super(Owner, self).unlink()
 
 

@@ -32,6 +32,6 @@ background-color: transparent;
 .oe_topbar_item oe_topbar_compose_full_email {
   display : none;
 }
-.openerp .oe_topbar_item.oe_topbar_compose_full_email {
+.odoo .oe_topbar_item.oe_topbar_compose_full_email {
 	display: none;
 }

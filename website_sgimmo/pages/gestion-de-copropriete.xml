@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
     <template t-name="website.gestion-de-coproprite">
       <t t-call="website.layout">
@@ -9,7 +9,7 @@
               <li class="active" data-slide-to="0" data-target="#myCarousel1"/>
             </ol>
             <div class="carousel-inner">
-              <div class="item image_text oe_img_bg active" style="background-image: url(http://openerp.sgimmo.be/website/image/ir.attachment/237_017aa7b/datas);">
+              <div class="item image_text oe_img_bg active" style="background-image: url(http://odoo.sgimmo.be/website/image/ir.attachment/237_017aa7b/datas);">
                 <div class="container">
                   <div class="row content">
                     <span class="carousel-img col-md-6 hidden-sm hidden-xs"> </span>
@@ -243,4 +243,4 @@
         <field name="sequence" type="int">10</field>
     </record>
 </data>
-</openerp>
+</odoo>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
-from openerp.addons.syndic_tools.syndic_tools import SyndicTools
+from odoo import models, fields, api, exceptions
+from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 
 class PieceJointe(models.Model):
@@ -42,11 +42,11 @@ class CreateLetter(models.Model):
     state = fields.Selection([('not_send', 'Pas envoyé'), ('send', 'Envoyé')], string='State', default='not_send')
     mail_server = fields.Many2one('ir.mail_server', 'Serveur email')
 
-    @api.one
     @api.depends('date')
     def _compute_date(self):
-        if self.date:
-            self.date_fr = SyndicTools().french_date(self.date)
+        for letter in self:
+            if letter.date:
+                letter.date_fr = SyndicTools().french_date(letter.date)
 
     @api.model
     def create(self, vals):
@@ -91,8 +91,8 @@ class CreateLetter(models.Model):
         self.partner_address_ids = partner_address
         self.is_fax = True if self.fourn_ids else False
 
-    @api.one
     def send_email_lettre(self):
+        self.ensure_one()
         header = ''
 
         mail = {

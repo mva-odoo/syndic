@@ -1,6 +1,6 @@
-from openerp import http
-import openerp
-from openerp.http import request
+from odoo import http
+import odoo
+from odoo.http import request
 
 
 class WebsiteDocument(http.Controller):
@@ -29,7 +29,7 @@ class WebsiteDocument(http.Controller):
         })
 
 
-class Website(openerp.addons.web.controllers.main.Home):
+class Website(odoo.addons.web.controllers.main.Home):
     @http.route(website=True, auth="public")
     def web_login(self, *args, **kw):
         values = {}

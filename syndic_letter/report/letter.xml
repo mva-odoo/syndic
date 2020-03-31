@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
         <report
                 id="letter_print"
@@ -10,7 +10,7 @@
                 report_type="qweb-pdf"
                 />
 
-        <template t-name="report.external_layout_header" id="report.external_layout_header">
+        <!-- <template t-name="report.external_layout_header" id="report.external_layout_header">
             <div class="header">
                 <div class="row">
                     <div class="col-xs-3">
@@ -26,7 +26,7 @@
                 <p>Tél : 02 / 242.89.86  &amp;nbsp;-&amp;nbsp; Fax : 02 / 241.32.55  &amp;nbsp;&amp;nbsp;-&amp;nbsp;  Numéro d'entreprise : 0894 523 013 &amp;nbsp;-&amp;nbsp; Email : info@sgimmo.be</p>
                 <p>I.P.I n° 501528  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Assurance professionnelle : AXA 730290350  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Compte bancaire : 001 - 5423024 - 24</p>
             </div>
-        </template>
+        </template> -->
 
         <template t-name="letter" id="letter">
                 <div class="row">
@@ -118,4 +118,4 @@
         </template>
 
     </data>
-</openerp>
+</odoo>

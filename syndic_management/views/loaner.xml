@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 			<!--search -->
 		<record model="ir.ui.view" id="search_loaner">
@@ -120,4 +120,4 @@
 		
 		
     </data>
-</openerp>
+</odoo>

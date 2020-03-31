@@ -5,8 +5,8 @@
     'description': """
     see pdf
 """,
-    'author': 'OpenERP SA',
-    'website': 'http://openerp.com',
+    'author': 'Odoo SA',
+    'website': 'http://odoo.com',
     'depends': ['web'],
     'data': [
         'backend.xml',

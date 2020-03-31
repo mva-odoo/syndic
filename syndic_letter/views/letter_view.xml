@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <!--search -->
         <record model="ir.ui.view" id="search_letter">
@@ -50,7 +50,7 @@
             <field name="name">Letter form view</field>
             <field name="model">letter.letter</field>
             <field name="arch" type="xml">
-                <form string="Letter" version="7.0">
+                <form string="Letter">
                         <header>
                             <button string="Envoyer emails" name="send_email_lettre" type="object"/>
                             <field name="state" widget="statusbar"/>
@@ -140,7 +140,7 @@
             <field name="name">Letter tree view</field>
             <field name="model">letter.letter</field>
             <field name="arch" type="xml">
-                <tree string="Letter" version="7.0">
+                <tree string="Letter">
                     <field name="create_date"/>
                     <field name="sujet"/>
                     <field name="letter_type_id"  colspan="2"/>
@@ -159,7 +159,7 @@
             <field name="name">Letter form view</field>
             <field name="model">letter.model</field>
             <field name="arch" type="xml">
-                <form string="model" version="7.0">
+                <form string="model">
                     <sheet string="Letter" layout="auto">
                 <notebook colspan="4">
                     <page string="Models">
@@ -238,4 +238,4 @@
         <menuitem name="Fin de lettre" id="menu_end_letter" parent="menu_configuration_letter" action="end_letter" sequence="5"/>
         <menuitem name="Courriel" id="email_letter" parent="menu_configuration_letter" action="mail_letter" sequence="6"/>
     </data>
-</openerp>
+</odoo>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
       <template id="sgimmo_footer" inherit_id="website.layout" name="SGImmo Footer">
         <xpath expr="//footer" position="replace">
@@ -16,13 +16,13 @@
             <div class="col-md-4">
               <h4 class="mt16">Nos services</h4>
               <p>
-                <a href="http://openerp.sgimmo.be/page/gestion-de-coproprite">Gestion de copropriété</a>
+                <a href="http://odoo.sgimmo.be/page/gestion-de-coproprite">Gestion de copropriété</a>
               </p>
               <p>
-                <a href="http://openerp.sgimmo.be/page/gestion-privative">Gestion privative</a>
+                <a href="http://odoo.sgimmo.be/page/gestion-privative">Gestion privative</a>
               </p>
               <p>
-                <a href="http://openerp.sgimmo.be/page/consultance">Consultance</a>
+                <a href="http://odoo.sgimmo.be/page/consultance">Consultance</a>
               </p>
             </div>
             <div class="col-md-4">
@@ -48,4 +48,4 @@
       </template>
 
     </data>
-</openerp>
+</odoo>

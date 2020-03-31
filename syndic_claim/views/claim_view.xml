@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
 	<data>
 
 		<!--search -->
@@ -49,7 +49,7 @@
 			<field name="model">syndic.claim</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Gestion d'immeuble" layout="manual" version="7.0">
+				<form string="Gestion d'immeuble" layout="manual">
 				<header>
 				<button string="Cloture" name="action_done" type="object" />
 				<button string="Réouvrir l'appel" name="action_reopen" type="object" />
@@ -112,7 +112,7 @@
 	      <field name="model">syndic.claim</field>
 	      <field name="type">kanban</field>
 	      <field name="arch" type="xml">
-	        <kanban default_group_by="claim_status_id" class="oe_notes oe_kanban_quickcreate_textarea" version="7.0">
+	        <kanban default_group_by="claim_status_id" class="oe_notes oe_kanban_quickcreate_textarea">
 	          <field name="color"/>
 	          <field name="subject"/>
 	          <field name="claim_status_id"/>
@@ -348,4 +348,4 @@
 		<menuitem name="Status" id="menu_status" parent="menu_status_conf" action="action_claim_status"/>
 
 	</data>
-</openerp>
+</odoo>

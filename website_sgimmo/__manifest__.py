@@ -5,8 +5,8 @@
     'description': """
 Site web SGImmo
 """,
-    'author': 'OpenERP SA',
-    'website': 'http://openerp.com',
+    'author': 'odoo SA',
+    'website': 'http://odoo.com',
     'depends': ['website', 'syndic_documents'],
     'data': [
         'pages/document.xml',

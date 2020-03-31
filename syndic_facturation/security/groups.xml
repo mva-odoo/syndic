@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <record model="ir.module.category" id="base.module_category_syndic_facturation">
             <field name="name">Syndic Facturation</field>
@@ -42,4 +42,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>

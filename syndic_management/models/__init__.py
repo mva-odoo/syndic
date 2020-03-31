@@ -1,5 +1,5 @@
-import res_partner
-import lot
-import mutation
-import immeuble
-import fiche_signalitic
+from . import res_partner
+from . import lot
+from . import mutation
+from . import immeuble
+from . import fiche_signalitic

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
         <template id="syndic_facturation.facture">
             <t t-call="report.html_container">
@@ -80,4 +80,4 @@
                 report_type="qweb-pdf"
                 />
     </data>
-</openerp>
+</odoo>

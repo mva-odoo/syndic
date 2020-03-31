@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
-from openerp.addons.syndic_tools.syndic_tools import SyndicTools
+from odoo import models, fields, api, exceptions
+from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 
 class LetterAvis(models.Model):
@@ -17,11 +17,11 @@ class LetterAvis(models.Model):
     type_id = fields.Many2one('type.avis', "Type d'avis", required=True)
     avis_model_id = fields.Many2one("letter.avis.model", "Modele d'avis")
 
-    @api.one
     @api.depends('date')
     def _compute_date(self):
-        if self.date:
-            self.date_fr = SyndicTools().french_date(self.date)
+        for avis in self:
+            if avis.date:
+                avis.date_fr = SyndicTools().french_date(self.date)
 
     @api.onchange('avis_model_id')
     def onchange_letter_avis_model(self):
@@ -48,11 +48,11 @@ class LetterReunion(models.Model):
     date = fields.Date(u'Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
 
-    @api.one
     @api.depends('date')
     def _compute_date(self):
-        if self.date:
-            self.date_fr = SyndicTools().french_date(self.date)
+        for reunion in self:
+            if reunion.date:
+                reunion.date_fr = SyndicTools().french_date(reunion.date)
 
 
 class ReunionType(models.Model):

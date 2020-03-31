@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions
 from datetime import date
 
 
@@ -36,12 +36,12 @@ class Claim(models.Model):
     status = fields.Selection([('draft', 'Ouvert'), ('done', 'Cloturer')], 'Status', default='draft')
     type_id = fields.Many2one('claim.type', 'Type')
 
-    @api.one
     def action_done(self):
+        self.ensure_one()
         self.status = 'done'
 
-    @api.one
     def action_reopen(self):
+        self.ensure_one()
         self.status = 'draft'
 
     @api.onchange('importance')
@@ -139,8 +139,8 @@ class OffreContrats(models.Model):
     def onchange_acceptation(self):
         self.date_acceptation = date.today().strftime('%Y-%m-%d') if self.acceptation else False
 
-    @api.one
     def transform_bon_commande(self):
+        self.ensure_one()
         self.env['bon.commande'].create({
             'name': self.name,
             'immeuble_id': self.immeuble_id.id,

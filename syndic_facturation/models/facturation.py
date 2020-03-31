@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
-from openerp.addons.syndic_tools.syndic_tools import SyndicTools
+from odoo import models, fields, api, exceptions
+from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 
 class SuiviFacture(models.Model):
@@ -38,11 +38,11 @@ class SuiviFacture(models.Model):
     def onchange_type(self):
         self.facture_type = self.facture_type2
 
-    @api.one
     @api.depends('date')
     def _compute_date(self):
-        if self.date:
-            self.date_fr = SyndicTools().french_date(self.date)
+        for facturation in self:
+            if self.date:
+                self.date_fr = SyndicTools().french_date(self.date)
 
     @api.model
     def create(self, vals):
@@ -60,15 +60,15 @@ class SuiviFacture(models.Model):
 
         return super(SuiviFacture, self).create(vals)
 
-    @api.one
     @api.depends('line_ids')
     def _compute_total(self):
-        self.total = sum(self.line_ids.mapped('prix_tot')) if self.line_ids else 0.00
+        for facturation in self:
+            facturation.total = sum(facturation.line_ids.mapped('prix_tot')) if facturation.line_ids else 0.00
 
-    @api.one
     def compute_price(self):
-        for proprietaire_id in self.proprietaire_ids:
-            proprietaire_id.prix_unitaire = self.total*(proprietaire_id.pourcentage/100)
+        for facturation in self:
+            for proprietaire_id in facturation.proprietaire_ids:
+                proprietaire_id.prix_unitaire = facturation.total*(proprietaire_id.pourcentage/100)
 
 
 class SyndicFacturationLine(models.Model):
@@ -86,10 +86,10 @@ class SyndicFacturationLine(models.Model):
     def _onchange_price(self):
         self.prix = self.type_id.prix
 
-    @api.one
     @api.depends('nombre', 'prix')
     def _compute_tot_hours(self):
-        self.prix_tot = self.prix*self.nombre
+        for line in self:
+            line.prix_tot = line.prix*line.nombre
 
 
 class SyndicFacturationType(models.Model):

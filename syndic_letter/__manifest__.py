@@ -7,9 +7,9 @@
     'description': """
     Syndic Lettre
     """,
-    'author': 'OpenERP SA',
+    'author': 'odoo SA',
     'depends': ['syndic_management', 'mail', 'syndic_tools', 'pdf_viewer'],
-    'website': 'http://www.openerp.com',
+    'website': 'http://www.odoo.com',
     'data': [
         'views/letter_view.xml',
         'views/reunion.xml',

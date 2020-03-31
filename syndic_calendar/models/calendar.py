@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions
 
 
 class CreateLetter(models.Model):
@@ -15,6 +15,6 @@ class CreateLetter(models.Model):
     attendee_ids = fields.Many2many('res.users', string="Participants")
     attendee_string = fields.Char('Participants', compute='compute_participant')
 
-    @api.one
     def compute_participant(self):
-        self.attendee_string = ','.join(self.attendee_ids.mapped('name'))
+        for calendar in self:
+            self.attendee_string = ','.join(self.attendee_ids.mapped('name'))

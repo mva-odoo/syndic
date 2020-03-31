@@ -1,2 +1,2 @@
-import avis
-import letter
+from . import avis
+from . import letter

@@ -6,9 +6,9 @@
     'description': """
     calendar
     """,
-    'author': 'OpenERP SA',
+    'author': 'odoo SA',
     'depends': ['web', 'syndic_management'],
-    'website': 'http://www.openerp.com',
+    'website': 'http://www.odoo.com',
     'data': [
         'views/calendar.xml',
         'views/backend.xml',

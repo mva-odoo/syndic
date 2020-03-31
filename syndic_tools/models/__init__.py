@@ -1,1 +1,1 @@
-import deduplicate
+from . import deduplicate

@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Appel',
+    'name': 'Syndic documents',
     'version': '0.1',
     "category": 'Syndic',
     'complexity': "easy",
     'description': """
-    Gestion des appels
+    Syndic document
     """,
-    'author': 'SGImmo',
+    'author': 'odoo SA',
     'depends': ['syndic_management'],
-    'website': 'http://www.openerp.com',
+    'website': 'http://www.odoo.com',
     'data': [
-        'views/claim_view.xml',
+        'views/syndic_document.xml',
         'security/ir.model.access.csv',
+        'security/ir.rule.csv',
         ],
     'installable': True,
 }

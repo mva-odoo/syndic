@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <template id="tools_assets_backend" name="syndic tools assets"
                   inherit_id="web.assets_backend">
@@ -8,4 +8,4 @@
             </xpath>
         </template>
     </data>
-</openerp>
+</odoo>

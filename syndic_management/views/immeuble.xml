@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
 	<data>
 
 		<!--search -->
@@ -45,7 +45,7 @@
 			<field name="model">syndic.building</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="immeuble" layout="manual" version="7.0">
+				<form string="immeuble">
 					<header>
 						<button string="Désactiver Immeuble"
 								type="object"
@@ -156,4 +156,4 @@
 
 
 	</data>
-</openerp>
+</odoo>

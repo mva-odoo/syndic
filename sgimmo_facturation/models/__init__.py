@@ -1,1 +1,1 @@
-import facturation_syndic
+from . import facturation_syndic

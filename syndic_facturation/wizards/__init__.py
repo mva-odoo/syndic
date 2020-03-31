@@ -1,1 +1,1 @@
-import generate_invoice
+from . import generate_invoice

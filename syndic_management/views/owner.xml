@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 		<!--search -->
 		<record model="ir.ui.view" id="search_owner">
@@ -44,7 +44,7 @@
 			<field name="name">owner form view</field>
 			<field name="model">syndic.owner</field>
 			<field name="arch" type="xml">
-				<form string="Propriétaires" layout="manual" version="7.0">
+				<form string="Propriétaires">
 					<group colspan="4" col="4">
 						<field name="name" colspan="2" /> -
 						<field name="prenom" colspan="2"/>
@@ -130,4 +130,4 @@
 
 
     </data>
-</openerp>
+</odoo>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 		<record model="ir.ui.view" id="search_supplier">
 			<field name="name">supplier search</field>
@@ -99,4 +99,4 @@
 			<field name="search_view_id" ref="search_supplier" />
 		</record>
     </data>
-</openerp>
+</odoo>

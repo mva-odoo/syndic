@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
-from openerp.addons.syndic_tools.syndic_tools import SyndicTools
+from odoo import models, fields, api, exceptions
+from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 
 class FacturationSyndic(models.Model):
@@ -19,11 +19,11 @@ class FacturationSyndic(models.Model):
     name = fields.Char('Facture', readonly=True)
     fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
 
-    @api.one
     @api.depends('date')
     def _compute_date(self):
-        if self.date:
-            self.date_fr = SyndicTools().french_date(self.date)
+        for facture in self:
+            if facture.date:
+                facture.date_fr = SyndicTools().french_date(self.date)
 
     @api.model
     def create(self, vals):
@@ -31,10 +31,10 @@ class FacturationSyndic(models.Model):
         vals['num_facture'] = self.env['ir.sequence'].next_by_code(seq_code)
         return super(FacturationSyndic, self).create(vals)
 
-    @api.one
     @api.depends('sgimmo_lign_ids')
     def _compute_total_syndic(self):
-        self.facture_tot = sum(self.sgimmo_lign_ids.mapped('prix_tot'))
+        for facture in self:
+            facture.facture_tot = sum(facture.sgimmo_lign_ids.mapped('prix_tot'))
 
     @api.onchange('immeuble_id')
     def onchange_immeuble(self):
@@ -55,10 +55,10 @@ class FacturationSyndicLigne(models.Model):
     prix_tot = fields.Float('Prix tot', compute='_compute_tot_hours', readonly=True)
     facture_syndic_id = fields.Many2one('syndic.facturation.syndic', 'Facture Syndic')
 
-    @api.one
     @api.depends('qty', 'prix')
     def _compute_tot_hours(self):
-        self.prix_tot = self.prix*self.qty
+        for ligne in self:
+            ligne.prix_tot = ligne.prix*ligne.qty
 
 
 class FacturationSyndicYear(models.Model):

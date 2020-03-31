@@ -1,2 +1,2 @@
-import controller
-import users
+from . import controller
+from . import users

@@ -5,8 +5,8 @@
     'description': """
     Facturation pour syndic
 """,
-    'author': 'OpenERP SA',
-    'website': 'http://openerp.com',
+    'author': 'odoo SA',
+    'website': 'http://odoo.com',
     'depends': ['syndic_facturation'],
     'data': [
         'views/facturation_syndic.xml',

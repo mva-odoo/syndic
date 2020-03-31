@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
+from odoo import models, fields, exceptions
 
 
 class SuiviFacture(models.TransientModel):
@@ -20,7 +20,6 @@ class SuiviFacture(models.TransientModel):
     year = fields.Char(u'Année', required=True)
     date = fields.Date('Date', default=lambda *a: fields.date.today(), required=True)
 
-    @api.multi
     def invoice_generate(self):
         self.ensure_one()
         vals = {

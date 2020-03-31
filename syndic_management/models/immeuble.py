@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
-from openerp.addons.syndic_tools.syndic_tools import SyndicTools
+from odoo import models, fields, api, exceptions
+from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 from xlwt import Workbook
-import StringIO
+# import StringIO
 import base64
 
 
@@ -18,9 +18,7 @@ class Building(models.Model):
     _name = 'syndic.building'
     _order = 'name asc'
 
-    @api.one
-    def _get_total_quotites(self):
-        self.total_quotites = sum(self.lot_ids.mapped('quotities'))
+
 
     name = fields.Char('Immeuble', required=True)
     lot_ids = fields.One2many('syndic.lot', 'building_id', 'Lots')
@@ -31,7 +29,7 @@ class Building(models.Model):
     city_building = fields.Many2one('city', 'Commune', required=True)
     supplier_ids = fields.Many2many('syndic.supplier', string="Fiche technique")
     compte = fields.Char('Compte en banque')
-    total_quotites = fields.Float(compute=_get_total_quotites, string='Total Quotites')
+    total_quotites = fields.Float(compute='_get_total_quotites', string='Total Quotites')
     active = fields.Boolean(default=True)
     fiche_signalitic_ids = fields.One2many('building.signalitic',
                                            'building_id',
@@ -49,6 +47,10 @@ class Building(models.Model):
     manager_id = fields.Many2one('res.users', 'Manager',
                                  domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]")
 
+    def _get_total_quotites(self):
+        for building in self:
+            building.total_quotites = sum(building.lot_ids.mapped('quotities'))
+
     @api.onchange('zip_building')
     def onchange_zip(self):
         if self.zip_building:
@@ -56,7 +58,6 @@ class Building(models.Model):
             if city:
                 self.city_building = city.id
 
-    @api.multi
     def open_sign(self):
         res_id = self.env['building.signalitic'].search([('building_id', '=', self.id)])
         return {
@@ -69,12 +70,12 @@ class Building(models.Model):
             'context': self._context,
         }
 
-    @api.one
     def unactivate_building(self):
+        self.ensure_one()
         self.active = False
 
-    @api.one
     def activate_building(self):
+        self.ensure_one()
         self.active = True
 
     @api.model
@@ -94,7 +95,6 @@ class Building(models.Model):
         res.user_id.immeuble_id = res.id
         return res
 
-    @api.multi
     def write(self, vals):
         if vals.get('name'):
             self.user_id.name = self.user_id.login = vals['name']
@@ -104,12 +104,11 @@ class Building(models.Model):
 
         return super(Building, self).write(vals)
 
-    @api.one
     def unlink(self):
-        self.user_id.unlink()
+        for building in self:
+            building.user_id.unlink()
         return super(Building, self).unlink()
 
-    @api.multi
     def compute_xls(self):
         xls = Workbook()
         feuil1 = xls.add_sheet('sheet 1')
@@ -137,14 +136,13 @@ class Building(models.Model):
             feuil1.write(row, 6, fournisseur_id.phone)
             feuil1.write(row, 7, fournisseur_id.email)
 
-        output = StringIO.StringIO()
-        xls.save(output)
-        return self.env['export.fiche.tech'].create({
-            'xls_file': base64.encodestring(output.getvalue()),
-            'datas_fname': 'export_%s.xls' % self.name,
-        })
+        # output = StringIO.StringIO()
+        # xls.save(output)
+        # return self.env['export.fiche.tech'].create({
+        #     'xls_file': base64.encodestring(output.getvalue()),
+        #     'datas_fname': 'export_%s.xls' % self.name,
+        # })
 
-    @api.multi
     def go_export_model(self):
         res_id = self.compute_xls()
 

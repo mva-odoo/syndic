@@ -5,8 +5,8 @@
     'description': """
     Change the layout and some web features
 """,
-    'author': 'OpenERP SA',
-    'website': 'http://openerp.com',
+    'author': 'odoo SA',
+    'website': 'http://odoo.com',
     'depends': ['web'],
     'data': ['web_change.xml'],
     'auto_install': True,

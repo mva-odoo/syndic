@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <record model="ir.ui.view" id="tree_avis">
             <field name="name">Avis tree view</field>
             <field name="model">letter.avis</field>
             <field name="arch" type="xml">
-                <tree string="Avis" version="7.0">
+                <tree string="Avis">
                         <field name="name" />
                         <field name="type_id" />
                         <field name="immeuble_id" />
@@ -54,7 +54,7 @@
             <field name="model">letter.avis.model</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Avis" version="7.0">
+                <form string="Avis">
                     <sheet string="Letter" layout="auto">
                         <group>
                             <field name="name"/>
@@ -87,4 +87,4 @@
                   action="action_model_avis" sequence="2"/>
 
     </data>
-</openerp>
+</odoo>

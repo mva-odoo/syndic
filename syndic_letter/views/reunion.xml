@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
 	<data>
 		<record model="ir.ui.view" id="tree_rapport_reunion">
 			<field name="name">Rapport Reunion tree view</field>
 			<field name="model">letter.reunion</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Reunion" version="7.0">
+				<tree string="Reunion">
 					<field name="name" />									
 					<field name="immeuble_id" />									
 					<field name="type_id" />
@@ -22,7 +22,7 @@
 			<field name="model">letter.reunion</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Reunion" version="7.0">
+				<form string="Reunion">
 					<sheet string="Rapport reunion" layout="auto">
 						<group>
 							<field name="name"/>
@@ -47,7 +47,7 @@
 			<field name="model">reunion.point</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Reunion" version="7.0">
+				<form string="Reunion">
 					 <sheet string="Rapport reunion" layout="auto">
 						<group>
 							<field name="name" />
@@ -95,4 +95,4 @@
 		<menuitem name="Rapports de réunions" id="menu_rapport_reunion" parent="menu_sub_letter" action="rapport_reunion" sequence="4"/>
 
 	</data>
-</openerp>
+</odoo>

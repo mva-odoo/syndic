@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
 	<data>
 		<!--search -->
 		<record model="ir.ui.view" id="search_doc">
@@ -38,7 +38,7 @@
 			<field name="model">syndic.documents</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="claim" layout="manual" version="7.0">
+				<form string="claim" layout="manual">
 					<sheet string="Sales Order" layout="auto">
 						<group col="4" colspan="4">
 							<field name="nom_document" colspan="2"/>
@@ -76,4 +76,4 @@
 		<menuitem name="Documents" id="menu_action_docu" parent="menu_sub_docu" action="action_syndic_document"/>
 
 	</data>
-</openerp>
+</odoo>

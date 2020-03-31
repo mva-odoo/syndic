@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
         <template name="Contact us" t-name="website.contactus">
           <t t-call="website.layout">
@@ -10,7 +10,7 @@
                     <li class="active" data-slide-to="0" data-target="#myCarousel0"/>
                   </ol>
                   <div class="carousel-inner">
-                    <div class="item oe_img_bg active" style="background-image: url(http://openerp.sgimmo.be/website/image/ir.attachment/237_017aa7b/datas);">
+                    <div class="item oe_img_bg active" style="background-image: url(http://odoo.sgimmo.be/website/image/ir.attachment/237_017aa7b/datas);">
                       <div class="container">
                         <div class="row content">
                           <div class="carousel-img col-md-6 hidden-sm hidden-xs"/>
@@ -97,4 +97,4 @@
           </t>
         </template>
     </data>
-</openerp>
+</odoo>
