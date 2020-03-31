@@ -296,7 +296,6 @@
 			<field name="name">Gestion d'immeuble</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">syndic.claim</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form,kanban,graph,pivot</field>
 			<field name="view_id" ref="tree_claim" />
 			<field name="search_view_id" ref="search_claim" />
@@ -307,7 +306,6 @@
 			<field name="name">Status</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">claim.status</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
  		</record>
 
@@ -315,7 +313,6 @@
 			<field name="name">Type</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">claim.type</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
  		</record>
 
@@ -323,7 +320,6 @@
 			<field name="name">Offre et contrat</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">offre.contrat</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
  		</record>
 
@@ -331,7 +327,6 @@
 			<field name="name">Bon de commande</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">bon.commande</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
             <field name="context">{'search_default_cloture_filter':1 }</field>
  		</record>

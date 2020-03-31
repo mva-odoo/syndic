@@ -72,7 +72,7 @@
                             <field name="piece_jointe_ids"
                                    attrs="{'invisible':[('is_mail','=',False)]}"
                                    colspan="8">
-                                <tree>
+                                <!-- <tree>
                                     <field name="datas_fname"/>
                                 </tree>
                                 <form>
@@ -81,7 +81,7 @@
                                         <field name="datas" filename="datas_fname"/>
                                         <field name="datas_fname" invisible="1"/>
                                     </group>
-                                </form>
+                                </form> -->
                             </field>
                         </group>
                         <notebook colspan="4">
@@ -180,7 +180,7 @@
             <field name="name">Modèle de lettre</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">letter.model</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="tree_model" />
             <field name="search_view_id" ref="search_model" />
@@ -190,7 +190,7 @@
             <field name="name">lettres</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">letter.letter</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
             <field name="target">current</field>
         </record>
@@ -199,7 +199,7 @@
             <field name="name">Debut de lettre</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">letter.begin</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
         </record>
 
@@ -207,7 +207,7 @@
             <field name="name">Fin de lettre</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">letter.end</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
         </record>
 
@@ -215,7 +215,7 @@
             <field name="name">Type de lettre</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">letter.type</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
         </record>
 
@@ -223,7 +223,7 @@
             <field name="name">mail letter</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mail.mail</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
         </record>
 

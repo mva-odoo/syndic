@@ -6,7 +6,7 @@
 			<field name="name">Lots</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">syndic.lot</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 		</record>
                
@@ -14,7 +14,7 @@
 			<field name="name">Types lots</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">syndic.type_lot</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 		</record>
 
@@ -22,7 +22,7 @@
 			<field name="name">Titres</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">res.partner.title</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 		</record>	
 
@@ -30,7 +30,7 @@
 			<field name="name">Villes</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">city</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 		</record>	
 		
@@ -38,7 +38,7 @@
 			<field name="name">Pays</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">res.country</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 		</record>
     </data>

@@ -22,13 +22,12 @@
             </field>
     </record>
 
-    <act_window id="act_window_generate_invoice"
+    <!-- <act_window id="act_window_generate_invoice"
     name="Généré facture"
     src_model="syndic.building"
     res_model="syndic.facturation.generation"
     view_mode="form"
     target="new"
-    groups="syndic_management.syndic_manager"
-    key2="client_action_multi"/>
+    groups="syndic_management.syndic_manager"/> -->
 
 </odoo>

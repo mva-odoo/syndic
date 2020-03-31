@@ -65,7 +65,7 @@
 			<field name="name">Réunion</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">letter.reunion</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 		</record>
 		
@@ -73,7 +73,7 @@
 			<field name="name">Type de rapport</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">reunion.type</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 		</record>
 
@@ -81,7 +81,7 @@
 			<field name="name">Type d'avis</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">type.avis</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 		</record>
 

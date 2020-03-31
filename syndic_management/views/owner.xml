@@ -120,7 +120,7 @@
 			<field name="name">Propriétaires</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">syndic.owner</field>
-			<field name="view_type">form</field>
+			
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="tree_owner" />
 			<field name="search_view_id" ref="search_owner" />

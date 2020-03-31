@@ -70,7 +70,7 @@
             <field name="name">Modèle d avis</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">letter.avis.model</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
         </record>
 
@@ -78,7 +78,7 @@
             <field name="name">Avis</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">letter.avis</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
         </record>
 

@@ -111,7 +111,6 @@
             <field name="name">facture suivi syndic</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">syndic.facturation</field>
-            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('facture_type', '=', 'suivi_syndic')]</field>
             <field name="context">{'default_facture_type': 'suivi_syndic'}</field>
@@ -121,7 +120,6 @@
             <field name="name">facture suivi honoraire</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">syndic.facturation</field>
-            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('facture_type', 'in', ['honoraire', 'fraisadmin'])]</field>
             <field name="context">{'default_facture_type': 'honoraire'}</field>
@@ -145,7 +143,6 @@
             <field name="name">type de facture</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">syndic.facturation.type</field>
-            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 

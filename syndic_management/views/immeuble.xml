@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<data>
-
 		<!--search -->
 		<record model="ir.ui.view" id="search_simpl_building">
 			<field name="name">Letter search</field>
@@ -147,13 +145,9 @@
 			<field name="name">Immeubles</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">syndic.building</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="tree_simpl_building" />
 			<field name="search_view_id" ref="search_simpl_building" />
 		</record>
 
-
-
-	</data>
 </odoo>
