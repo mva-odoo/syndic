@@ -5,6 +5,7 @@ from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 class FacturationSyndic(models.Model):
     _name = 'syndic.facturation.syndic'
+    _description = 'syndic.facturation.syndic'
     _order = 'id desc'
 
     sgimmo_lign_ids = fields.One2many('syndic.facturation.syndic.ligne', 'facture_syndic_id', 'Lignes', copy=True)
@@ -17,7 +18,7 @@ class FacturationSyndic(models.Model):
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     object = fields.Char('Objet')
     name = fields.Char('Facture', readonly=True)
-    fournisseur_id = fields.Many2one('syndic.supplier', 'Fournisseur')
+    fournisseur_id = fields.Many2one('res.partner', 'Fournisseur')
 
     @api.depends('date')
     def _compute_date(self):
@@ -43,6 +44,7 @@ class FacturationSyndic(models.Model):
 
 class FacturationSyndicLigne(models.Model):
     _name = 'syndic.facturation.syndic.ligne'
+    _description = 'syndic.facturation.syndic.ligne'
 
     ref = fields.Char(u'Référence')
     description = fields.Selection([('honoraire', 'HONORAIRE'),
@@ -63,6 +65,7 @@ class FacturationSyndicLigne(models.Model):
 
 class FacturationSyndicYear(models.Model):
     _name = 'syndic.facturation.syndic.year'
+    _description = 'syndic.facturation.syndic.year'
 
     name = fields.Char(u'Année', required=True)
     facture_ids = fields.One2many('syndic.facturation.syndic', 'year_id', 'Facture')
@@ -84,6 +87,7 @@ class FacturationSyndicYear(models.Model):
 
 class SyndicFacturationLineType(models.Model):
     _name = 'syndic.facturation.syndic.ligne.type'
+    _description = 'syndic.facturation.syndic.ligne.type'
 
     name = fields.Char('Nom', required=True)
     description = fields.Char('Description')

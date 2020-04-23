@@ -10,35 +10,39 @@
                 report_type="qweb-pdf"
                 />
 
-        <!-- <template t-name="report.external_layout_header" id="report.external_layout_header">
-            <div class="header">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 165px;"/>
+        <template id="external_layout_syndic">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-3">
+                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 165px;"/>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                    <t t-raw="0"/>
+                </div>
+
+                <div class="footer" style="text-align:center;color:#01559D;font-size:13px;">
+                    <p class="footer" style="border-top: solid 1px black; width: 100%"/>
+                    <p>Tél : 02 / 242.89.86  &amp;nbsp;-&amp;nbsp; Fax : 02 / 241.32.55  &amp;nbsp;&amp;nbsp;-&amp;nbsp;  Numéro d'entreprise : 0894 523 013 &amp;nbsp;-&amp;nbsp; Email : info@sgimmo.be</p>
+                    <p>I.P.I n° 501528  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Assurance professionnelle : AXA 730290350  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Compte bancaire : 001 - 5423024 - 24</p>
+                </div>  
+
         </template>
 
-        <template id="report.external_layout_footer">
-            <div class="footer" style="text-align:center;color:#01559D;font-size:13px;">
-                <p class="footer" style="border-top: solid 1px black; width: 100%"/>
-                <p>Tél : 02 / 242.89.86  &amp;nbsp;-&amp;nbsp; Fax : 02 / 241.32.55  &amp;nbsp;&amp;nbsp;-&amp;nbsp;  Numéro d'entreprise : 0894 523 013 &amp;nbsp;-&amp;nbsp; Email : info@sgimmo.be</p>
-                <p>I.P.I n° 501528  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Assurance professionnelle : AXA 730290350  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Compte bancaire : 001 - 5423024 - 24</p>
-            </div>
-        </template> -->
 
         <template t-name="letter" id="letter">
                 <div class="row">
-                 
-                    <div class="col-xs-6"><br/><br/>
+
+                    <div class="col-6"><br/><br/>
                         <t t-if="o.is_fax">
                             FAX: <span t-field="prop_id.fax" style="font-size:16px;"/>
                         </t>
                         <br/><span t-field="o.letter_type_id.name" style="font-size:18px;"/>
                         <br/>
                     </div>
-                    <div class="col-xs-6" style="font-size:16px;">
+                    <div class="col-6" style="font-size:16px;">
                         <span t-field="prop_id.title.name"/> <span t-field="prop_id.name"/><br/>
                         <span t-field="prop_id.street"/><br/>
                         <span t-field="prop_id.zip"/> <span t-field="prop_id.city_id.name"/><br/>
@@ -47,22 +51,24 @@
                         Bruxelles, le <span t-field="o.date_fr"/><br/>
                     </div>
                 
-
-                    <div class="col-xs-2" style="font-size:16px;">
+                </div>
+                <div class="row">
+                    <div class="col-2" style="font-size:16px;">
                         <br/>Concerne:<br/><br/><br/>
                         BCE:<br/><br/>
                         Objet:
                     </div>
-                    <div class="col-xs-10" style="font-size:16px;">
+                    <div class="col-10" style="font-size:16px;">
                         <br/><span t-field="o.immeuble_id.name"/><br/>
                         <span t-field="o.immeuble_id.address_building"/><br/>
                         <span t-esc="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
                         <span t-field="o.immeuble_id.BCE"/><br/><br/>
                         <span t-field="o.sujet"/><br/>
                     </div>
-
+                </div>
+                <div class="row">
                 
-                    <div class="col-xs-12" style="font-size:16px;">
+                    <div class="col-12" style="font-size:16px;">
                         <br/><br/>
                         <span t-field="o.begin_letter_id.name"/>
                         <br/>
@@ -85,25 +91,25 @@
         </template>
 
         <template id="letter_qweb">
-            <t t-call="report.html_container">
+            <t t-call="web.html_container">
                 <t t-set="docs" t-value="docs.with_context({'lang':'fr_BE'})" />
                 <t t-name="letter_qweb">
                     <t t-foreach="docs" t-as="o">
-                        <t t-call="report.external_layout">
+                        <t t-call="web.external_layout">
                             <div class="page">
-                                <t t-foreach="o.propr_ids" t-as="prop_id">
+                                <t t-foreach="o.owner_ids" t-as="prop_id">
                                     <t t-call="syndic_letter.letter"/>
                                 </t>
 
-                                <t t-foreach="o.loc_ids" t-as="prop_id">
+                                <t t-foreach="o.loaner_ids" t-as="prop_id">
                                     <t t-call="syndic_letter.letter"/>
                                 </t>
 
-                                <t t-foreach="o.fourn_ids" t-as="prop_id">
+                                <t t-foreach="o.supplier_ids" t-as="prop_id">
                                     <t t-call="syndic_letter.letter"/>
                                 </t>
 
-                                <t t-foreach="o.divers_ids" t-as="prop_id">
+                                <t t-foreach="o.other_ids" t-as="prop_id">
                                     <t t-call="syndic_letter.letter"/>
                                 </t>
                                 <t t-foreach="o.partner_address_ids" t-as="prop_id">

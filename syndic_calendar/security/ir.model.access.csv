@@ -1,2 +1,2 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"syndic_calendar","syndic syndic.calendar","model_syndic_calendar","syndic_management.syndic_employe",1,1,1,1
+"syndic_calendar","syndic syndic.calendar","calendar.model_calendar_event","syndic_base.syndic_employe",1,1,1,1

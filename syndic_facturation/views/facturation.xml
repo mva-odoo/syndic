@@ -147,7 +147,8 @@
         </record>
 
         <menuitem name="Facturation"
-                  id="syndic_facturation_main" />
+                  id="syndic_facturation_main"
+                  web_icon="syndic_facturation,static/description/icon.png" />
 
         <menuitem name="Factures"
                   id="syndic_facture_main"

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<!--search -->
+		<record model="ir.ui.view" id="search_simpl_building">
+			<field name="name">Letter search</field>
+			<field name="model">syndic.building</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="simpl_building">
+                    <field name="name"/>
+                    <field name="BCE"/>
+                    <field name="num_building"/>
+                    <field name="address_building"/>
+                    <field name="zip_building"/>
+                    <field name="city_building"/>
+                    <field name="manager_id"/>
+                    <filter name="old_building" string="Anciens batiments" domain="[('active', '=', False)]"/>
+				</search>
+			</field>
+		</record>
+        
+		<!--tree view -->
+		<record model="ir.ui.view" id="tree_simpl_building">
+			<field name="name">Letter tree view</field>
+			<field name="model">syndic.building</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Immeubles">
+					<field name="num_building"/>
+					<field name="name" />
+					<field name="address_building" />
+					<field name="city_building" />
+					<field name="zip_building" />
+					<field name="BCE"/>
+				</tree>
+			</field>
+		</record>
+
+
+		<!--form -->
+		<record model="ir.ui.view" id="form_simpl_building">
+			<field name="name">Letter form view</field>
+			<field name="model">syndic.building</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+						<button name="toggle_lock" string="Bloquer" type="object" icon="fa-lock"
+								attrs="{'invisible': [('is_lock', '=', True)]}"/>
+						<button name="toggle_lock" string="Débloquer" type="object" icon="fa-unlock"
+								attrs="{'invisible': [('is_lock', '=', False)]}"/>
+						<button class="oe_stat_button" type="object" name="action_lot" icon="fa-building">
+							<field string="Lots" name="lot_count" widget="statinfo"/>
+						</button>
+						<button class="oe_stat_button" type="object" name="action_inhabitant" icon="fa-user-circle"
+								context="{'inhabitant_type':'owner'}">
+							<field string="Propriétaires" name="owner_count" widget="statinfo"/>
+						</button>
+						<button class="oe_stat_button" type="object" name="action_inhabitant" icon="fa-user-circle-o"
+								context="{'inhabitant_type':'loaner'}">
+							<field string="Locataires" name="loaner_count" widget="statinfo"/>
+						</button>
+						<button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+							<field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+						</button>
+					</div>
+				<h1>
+					<field name="num_building" class="oe_inline" placeholder="Numéros d'immeuble"
+						attrs="{'readonly': [('is_lock', '=', True)]}"/> -
+					<field name="name" class="oe_inline" placeholder="Nom d'immeuble"
+						attrs="{'readonly': [('is_lock', '=', True)]}"/>
+				</h1>
+
+				<field name="is_lock" invisible="1"/>
+
+				<group string="Adresse:" name="address">
+					<field name="address_building" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+					<field name="zip_building" widget="raw-field-integer" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+					<field name="city_building" context="{'default_zip_building': zip_building}" attrs="{'readonly': [('is_lock', '=', True)]}" options="{'no_open': True, 'no_create': True}"/>
+				</group>
+				<group>
+					<group string="Information Divers:" name="divers">
+						<field name="BCE" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+						<field name="manager_id" 
+								attrs="{'readonly': [('is_lock', '=', True)]}"
+								options="{'no_open': True, 'no_create': True}"/>
+					</group>
+					<group string="Date de l'Assemblée Générale" name="assemblee">
+						<field name="ag_month" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+						<field name="ag_fortnight" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+					</group>
+
+				</group>
+					<notebook colspan="4">
+						<page string="Lot" name="lot">
+							<field name="lot_ids" attrs="{'readonly': [('is_lock', '=', True)]}">
+								<tree editable="top">
+									<!-- <field name="sequence" widget="handle"/> -->
+									<field name="name"/>
+									<field name="owner_ids" widget="many2many_tags"/>
+									<field name="loaner_ids" widget="many2many_tags"/>
+									<field name="type_id"/>
+								</tree>
+								
+								<form>
+									<group>
+										<group>
+											<field name="owner_ids" widget="many2many_tags"/>
+											<field name="loaner_ids" widget="many2many_tags"/>
+										</group>
+										<group>
+											<field name="type_id"/>
+										</group>
+									</group>
+								</form>
+
+							</field>
+						</page>
+						<page string="Fiche technique" name="tech_profile_page">
+							<group string="Fiche technique" name="tech_profile">
+								<field name="supplier_ids" attrs="{'readonly': [('is_lock', '=', True)]}" nolabel="1"/>
+							</group>
+						</page>
+						<page string="Comptabilité" name="comptabilite">
+							<group string="Compte en Banque" name="bank">
+								<field name="bank_ids" attrs="{'readonly': [('is_lock', '=', True)]}" nolabel="1">
+									<tree editable="bottom">
+										<field name="acc_number"/>
+										<field name="acc_type"/>
+										<field name="bank_id"/>
+									</tree>
+								</field>
+							</group>
+						</page>
+						<page string="Notes" name="notes">
+							<field name="note" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+						</page>
+					</notebook>
+				</sheet>
+                </form>
+			</field>
+		</record>
+
+		<!--action -->
+		<record model="ir.actions.act_window" id="action_simpl_building">
+			<field name="name">Immeubles</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">syndic.building</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="tree_simpl_building" />
+			<field name="search_view_id" ref="search_simpl_building" />
+		</record>
+
+</odoo>

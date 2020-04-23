@@ -1,68 +1,73 @@
-
 odoo.define('odoo.pdf_viewer', function (require) {
-    'use strict';
+  'use strict';
 
-    var Widget = require('web.Widget');
-    var core = require('web.core');
+  var AbstractAction = require('web.AbstractAction');
+  var core = require('web.core');
+  var framework = require('web.framework');
+  var ActionManager = require('web.ActionManager');
 
-    var Dashboard = Widget.extend({
-        template: 'PDFViewer',
-        init: function(parent, action) {
+  var _t = core._t;
 
-            this._super(parent);
-            this.url = '';
-            if ((typeof action.params['report'] !== "undefined") && (typeof action.params['active_id'] !== "undefined")){
-                if (typeof action.params['active_ids'] !== "undefined"){
-                    this.url = '/report/pdf/'+action.params['report']+'/'+action.params['active_ids'];
-                }
-                else{
-                   this.url = '/report/pdf/'+action.params['report']+'/'+action.params['active_id'];
-                }
-            }
-        },
+  var Dashboard = AbstractAction.extend({
+      contentTemplate: 'PDFViewer',
+      hasControlPanel: true,
+      
+      init: function(parent, action, options) {
+        this._super(parent, action, options);
 
-    });
-
-    core.action_registry.add('pdf_viewer.homepage', Dashboard);
-});
-
-odoo.define('sgimmo.custom_report', function (require) {
-    var ActionManager = require('web.ActionManager');
-    var core = require('web.core'); 
-    var crash_manager = require('web.crash_manager');
-    var framework = require('web.framework');
-    var session = require('web.session');
-    var pyeval = require('web.pyeval');
-
-     ActionManager.include({
-        ir_actions_report_xml: function(action, options) {
-            var self = this;
-            framework.blockUI();
-            action = _.clone(action);
-            var eval_contexts = ([session.user_context] || []).concat([action.context]);
-
-            new_action = {
-                'tag': 'pdf_viewer.homepage',
-                'name': 'pdf_viewer',
-                'type': "ir.actions.client",
-                'params': {
-                    'report': action['report_name'],
-                    'active_id': action.context['active_id'],
-                    'active_ids': action.context['active_ids']},
-            };
-
-            new_action.context = pyeval.eval('contexts',eval_contexts);
-            return $.Deferred(function (d) {
-                $.when(self.ir_actions_client(new_action,options)).then(function () {
-                    d.resolve();
-                    framework.unblockUI();
-                });
-
-            });
-
-
+        this._title = _t('Lettre');
+        this.url = '';
+        var context = action.context;
+        
+        if ((typeof context.report !== "undefined") && (typeof context.active_id !== "undefined")){
+          if (typeof context.active_ids !== "undefined"){
+            this.url = '/report/pdf/'+context.report+'/'+context.active_ids;
+          }
+          else{
+            this.url = '/report/pdf/'+context.report+'/'+context.active_id;
+          }
         }
-    });
+          if ((typeof context.multi_report !== "undefined") && (typeof context.active_id !== "undefined")){
+            this.url = 'multi_report/'+context.multi_report+'/'+context.active_id+'/'+context.active_model;
+            
+          }
+      },
+      start: function(){
+            var superDef = this._super.apply(this, arguments);
+            return superDef.then(this._updateControlPanel());
+      },
+
+      do_show: function () {
+          this._super.apply(this, arguments);
+          this._updateControlPanel();
+      },
+
+      _updateControlPanel: function () {
+          this.updateControlPanel();
+      },
+
+  });
+
+  core.action_registry.add('pdf_viewer.homepage', Dashboard);
+
+  var ActionManager = ActionManager.include({
+    _triggerDownload: function (action, options, type){
+      framework.blockUI();
+
+      var context = action.context;
+      if (context.reports !== undefined){
+        context.multi_report = context;
+      }
+      context.report = action.report_name;
+      return this.do_action( {
+        'tag': 'pdf_viewer.homepage',
+        'name': 'pdf_viewer',
+        'type': "ir.actions.client",
+        'context': context,
+      }, options).then(function(){
+        framework.unblockUI();
+      });
+    },
+  });
+  return Dashboard;
 });
-
-

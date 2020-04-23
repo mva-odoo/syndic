@@ -3,18 +3,12 @@ from odoo import models, fields, api, exceptions
 
 
 class CreateLetter(models.Model):
-    _name = 'syndic.calendar'
+    _inherit = 'calendar.event'
 
-    name = fields.Char('Nom du rendez-vous', required=True)
-    start_date = fields.Datetime('Date de debut')
-    end_date = fields.Datetime('Date de fin')
-    where = fields.Char('Lieu')
-    description = fields.Text('Description')
-    owner_id = fields.Many2one('res.users', string=u'Responsable de l\'évenement', default=lambda self: self._uid)
     building_id = fields.Many2one('syndic.building', string='Immeuble')
-    attendee_ids = fields.Many2many('res.users', string="Participants")
     attendee_string = fields.Char('Participants', compute='compute_participant')
+    is_ag = fields.Boolean('AG')
 
     def compute_participant(self):
-        for calendar in self:
-            self.attendee_string = ','.join(self.attendee_ids.mapped('name'))
+        for rec in self:
+            rec.attendee_string = ','.join(rec.attendee_ids.mapped('name'))

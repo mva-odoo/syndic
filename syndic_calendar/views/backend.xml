@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <template id="tools_assets_backend" name="syndic tools assets"
-                  inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                 <script type="text/javascript" src="/syndic_calendar/static/src/js/calendar_custom.js"/>
-            </xpath>
-        </template>
-    </data>
+  <template id="tools_assets_backend" name="syndic tools assets"
+            inherit_id="web.assets_backend">
+      <xpath expr="." position="inside">
+           <script type="text/javascript" src="/syndic_calendar/static/src/js/calendar_custom.js"/>
+      </xpath>
+    </template>
 </odoo>

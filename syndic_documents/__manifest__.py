@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Syndic documents',
-    'version': '0.1',
+    'version': '0.5',
     "category": 'Syndic',
     'complexity': "easy",
     'description': """
     Syndic document
     """,
     'author': 'odoo SA',
-    'depends': ['syndic_management'],
+    'depends': ['syndic_base'],
     'website': 'http://www.odoo.com',
     'data': [
         'views/syndic_document.xml',

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_category_syndic_base">
+            <field name="name">Syndic Management</field>
+        </record>
+
+        <record id="syndic_client" model="res.groups">
+            <field name="name">Syndic/Client</field>
+        </record>
+
+        <record id="syndic_employe" model="res.groups">
+            <field name="name">Syndic/Employe</field>
+            <field name="category_id" ref="module_category_syndic_base"/>
+            <field name="implied_ids" eval="[(6,0,[ref('syndic_client')])]"/>
+        </record>
+
+        <record id="syndic_manager" model="res.groups">
+            <field name="name">Syndic/Manager</field>
+            <field name="category_id" ref="module_category_syndic_base"/>
+            <field name="implied_ids" eval="[(6,0,[ref('syndic_client'),ref('syndic_employe')])]"/>
+        </record>
+    </data>
+</odoo>

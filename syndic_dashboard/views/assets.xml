@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <template id="syndicassets_backend" name="syndic dashboard assets backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/syndic_dashboard/static/src/css/style.css"/>
+            <script type="text/javascript" src="/syndic_dashboard/static/src/js/dashboard.js"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!--search -->
+		<record model="ir.ui.view" id="search_mutation">
+			<field name="name">Mutation search</field>
+			<field name="model">syndic.mutation</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="mutation">
+                    <field name="mutation_date"/>
+                    <field name="immeuble_id"/>
+				</search>
+			</field>
+		</record>
+        
+		<!--tree view -->
+		<record model="ir.ui.view" id="tree_mutation">
+			<field name="name">Mutation tree view</field>
+			<field name="model">syndic.mutation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="mutation">
+                    <field name="mutation_date"/>
+					<field name="old_partner_ids" widget="many2many_tags"/>
+					<field name="new_partner_ids" widget="many2many_tags"/>
+					<field name="immeuble_id"/>
+				</tree>
+			</field>
+		</record>
+
+
+		<!--form -->
+		<record model="ir.ui.view" id="form_mutation">
+			<field name="name">Mutation form view</field>
+			<field name="model">syndic.mutation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button string="Mutation" name="mutation" type="object"
+								attrs="{'invisible':[('state','=','done')]}" />
+						<field name="state" widget="statusbar"/>
+					</header>
+
+				    <group>
+						<field name="mutation_date" attrs="{'readonly':[('state','=','done')]}"/>
+						<field 
+							name="old_partner_ids"
+							attrs="{'readonly':[('state','=','done')]}"
+							widget="many2many_tags"
+							domain="['|', ('is_owner', '=', True), ('is_old', '=', True)]"
+						/>
+						<field name="new_partner_ids" attrs="{'readonly':[('state','=','done')]}" widget="many2many_tags"/>
+                    </group>
+					<notebook>
+						<page string="Lots modifiés">
+							<field name="lot_ids" nolabel="1"
+								   attrs="{'readonly':[('state','=','done')]}">
+								<tree>
+									<field name="name"/>
+									<field name="building_id"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+                </form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_mutation">
+			<field name="name">Mutation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">syndic.mutation</field>
+			
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="tree_mutation" />
+			<field name="search_view_id" ref="search_mutation" />
+		</record>
+
+	</data>
+</odoo>

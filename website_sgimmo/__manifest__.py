@@ -9,8 +9,8 @@ Site web SGImmo
     'website': 'http://odoo.com',
     'depends': ['website', 'syndic_documents'],
     'data': [
-        # 'pages/document.xml',
-        # 'pages/homepage.xml',
+        'pages/document.xml',
+        'pages/homepage.xml',
         # 'pages/gestion-de-copropriete.xml',
         # 'pages/gestion-privative.xml',
         # 'pages/contact.xml',
