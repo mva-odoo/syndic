@@ -5,6 +5,7 @@ from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 class SuiviFacture(models.Model):
     _name = 'syndic.facturation'
+    _description = 'syndic.facturation'
     _order = 'id desc'
 
     name = fields.Char('Facture', readonly=True)
@@ -73,6 +74,7 @@ class SuiviFacture(models.Model):
 
 class SyndicFacturationLine(models.Model):
     _name = 'syndic.facturation.line'
+    _description = 'syndic.facturation.line'
 
     name = fields.Char('Ligne de facturation')
     type_id = fields.Many2one('syndic.facturation.type', string='Type de frais')
@@ -94,6 +96,7 @@ class SyndicFacturationLine(models.Model):
 
 class SyndicFacturationType(models.Model):
     _name = 'syndic.facturation.type'
+    _description = 'syndic.facturation.type'
 
     name = fields.Char('Type de facture', required=True)
     prix = fields.Float('Prix de la prestation')
@@ -101,5 +104,6 @@ class SyndicFacturationType(models.Model):
 
 class SyndicqtyType(models.Model):
     _name = 'syndic.qty.type'
+    _description = 'syndic.qty.type'
 
     name = fields.Char(u'Quantité', required=True)

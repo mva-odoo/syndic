@@ -7,7 +7,7 @@
 """,
     'author': 'odoo SA',
     'website': 'http://odoo.com',
-    'depends': ['syndic_management', 'pdf_viewer'],
+    'depends': ['syndic_base', 'pdf_viewer'],
     'data': [
         'views/facturation.xml',
         'report/facture.xml',

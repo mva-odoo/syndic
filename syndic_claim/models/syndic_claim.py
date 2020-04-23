@@ -5,6 +5,7 @@ from datetime import date
 
 class Claim(models.Model):
     _name = 'syndic.claim'
+    _description = 'syndic.claim'
     _rec_name = 'subject'
     _order = 'create_date desc'
 
@@ -18,11 +19,11 @@ class Claim(models.Model):
     manager_id = fields.Many2one('res.users', string='Manager de la plainte',
                                  domain=['!', ('groups_id.name', 'ilike', 'Syndic/Client')],
                                  default=lambda self: self.env.uid)
-    main_owner = fields.Many2one('syndic.owner', string=u'Contact propriétaires')
-    owner_ids = fields.Many2many('syndic.owner', string=u'Autres propriétaires')
-    supplier_ids = fields.Many2many('syndic.supplier', string='Fournisseurs')
-    loaner_ids = fields.Many2many('syndic.loaner', string='Locataires')
-    other_ids = fields.Many2many('syndic.personne', string='Divers')
+    main_owner = fields.Many2one('res.partner', string=u'Contact propriétaires')
+    owner_ids = fields.Many2many('res.partner', 'syndic_claim_owner_rel', string=u'Autres propriétaires')
+    supplier_ids = fields.Many2many('res.partner',  'syndic_claim_supplier_rel', string='Fournisseurs')
+    loaner_ids = fields.Many2many('res.partner',  'syndic_claim_loaner_rel', string='Locataires')
+    other_ids = fields.Many2many('res.partner', string='Divers')
     lot_ids = fields.Many2many('syndic.lot', string='Lot')
     claim_status_id = fields.Many2one('claim.status', string='Status')
     description_ids = fields.One2many('comment.history', 'claim_ids', string='historique')
@@ -79,6 +80,7 @@ une tâche t'attends sur : <a href='https://sgimmo.be/web#id=%i&view_type=form&m
 
 class ClaimStatus(models.Model):
     _name = 'claim.status'
+    _description = 'claim.status'
 
     name = fields.Char('Status', required=True)
     sequence = fields.Integer('Status sequence')
@@ -86,12 +88,14 @@ class ClaimStatus(models.Model):
 
 class ClaimType(models.Model):
     _name = 'claim.type'
+    _description = 'claim.type'
 
     name = fields.Char('Status', required=True)
 
 
 class CommentHistory(models.Model):
     _name = 'comment.history'
+    _description = 'comment.history'
     _rec_name = 'description'
 
     create_date = fields.Datetime(u'Date de création', readonly=True)
@@ -105,10 +109,11 @@ class CommentHistory(models.Model):
 
 class OffreContrats(models.Model):
     _name = 'offre.contrat'
+    _description = 'offre.contrat'
     _order = 'date_envoi desc'
 
     name = fields.Char('Type', required=True)
-    fournisseur_id = fields.Many2one('syndic.supplier', string='Nom du fournisseur', required=True)
+    fournisseur_id = fields.Many2one('res.partner', string='Nom du fournisseur', required=True)
     immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble', required=True)
     demande = fields.Selection([('offre', 'Offre'), ('contrat', 'Contrat')], string='Demande')
     date_envoi = fields.Date('Date envoi', required=True)
@@ -152,11 +157,12 @@ class OffreContrats(models.Model):
 
 class BonCommande(models.Model):
     _name = 'bon.commande'
+    _description = 'bon.commande'
     _order = 'date_demande desc'
 
     name = fields.Char('Type', required=True)
     immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble', required=True)
-    fournisseur_id = fields.Many2one('syndic.supplier', string='Nom du fournisseur', required=True)
+    fournisseur_id = fields.Many2one('res.partner', string='Nom du fournisseur', required=True)
     date_demande = fields.Date('Date demande')
     cloture = fields.Boolean('Cloture')
     date_cloture = fields.Date('Date cloture')

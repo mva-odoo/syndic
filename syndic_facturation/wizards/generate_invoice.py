@@ -4,6 +4,7 @@ from odoo import models, fields, exceptions
 
 class SuiviFacture(models.TransientModel):
     _name = 'syndic.facturation.generation'
+    _description = 'syndic.facturation.generation'
 
     def _get_immeuble(self):
         return self._context.get('active_ids', []) or []

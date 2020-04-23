@@ -2,13 +2,13 @@
 
 {
     'name': 'Syndic Letter',
-    'version': '0.1',
+    'version': '0.5',
     "category": 'Syndic',
     'description': """
     Syndic Lettre
     """,
     'author': 'odoo SA',
-    'depends': ['syndic_management', 'mail', 'syndic_tools', 'pdf_viewer'],
+    'depends': ['syndic_base', 'mail', 'syndic_tools', 'pdf_viewer'],
     'website': 'http://www.odoo.com',
     'data': [
         'views/letter_view.xml',

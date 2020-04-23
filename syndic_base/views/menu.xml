@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+                <menuitem name="Syndic" id="syndic_main" groups="syndic_base.syndic_employe,syndic_base.syndic_manager" web_icon="syndic_base,static/description/building.png"/>
+                <menuitem name="Gestion de Syndic" id="syndic" parent="syndic_main" sequence="1"/> 
+                <menuitem name="Immeubles" id="simpl_immeubles" parent="syndic" action="action_simpl_building"/>
+                <menuitem name="Fiche signalitique immeuble" id="simpl_immeubles_signalitic" parent="syndic" action="action_signalitic"/>
+                
+                <menuitem name="Mutation" id="mutation" parent="syndic_main" action="action_mutation" sequence="30"/>
+                
+                <menuitem name="Configuration" id="configuration_syndic"  parent="syndic_main" sequence="90" groups="syndic_base.syndic_manager"/> 
+                <menuitem name="Métiers" id="jobs" parent="configuration_syndic" action="action_metier"/>
+                <menuitem name="Titres" id="title_menu" parent="configuration_syndic" action="res_partner_title_action"/>
+                <menuitem name="Type de lots" id="type_lot_menu" parent="configuration_syndic" action="syndic_type_lot_action"/>
+                <menuitem name="Lots" id="lot_menu" parent="configuration_syndic" action="syndic_lot_action"/>
+                <menuitem name="Villes" id="ville_menu" parent="configuration_syndic" action="ville_action"/>
+                <menuitem name="Pays" id="pays_menu" parent="configuration_syndic" action="pays_action"/>
+
+                <record model="ir.ui.menu" id="mail.menu_root_discuss">
+                    <field name="active" eval="0"/>
+                </record>
+	</data>
+</odoo>

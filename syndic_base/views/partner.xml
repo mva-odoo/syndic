@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record model="ir.ui.view" id="base.view_partner_form">
+        <field name="priority">10</field>
+     </record>
+
+    <record model="ir.ui.view" id="base.view_res_partner_filter">
+        <field name="priority">10</field>
+     </record>
+
+    <record model="ir.ui.view" id="base.view_partner_tree">
+        <field name="priority">10</field>
+     </record>
+
+    <record model="ir.ui.view" id="search_partner">
+        <field name="name">Syndic Partner search view</field>
+        <field name="model">res.partner</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="street"/>
+                <field name="city_id"/>
+                <field name="zip"/>
+                <field name="country_id"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="tree_partner">
+        <field name="name">Syndic Partner tree view</field>
+        <field name="model">res.partner</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Nom"/>
+                <field name="street" string="Adresse"/>
+                <field name="zip" string="Code Postal"/>
+                <field name="city_id" string="Ville"/>
+                <field name="country_id" string="Pays"/>
+                <field name="phone" string="Téléphone"/>
+                <field name="email"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="form_partner">
+        <field name="name">Syndic Partner form view</field>
+        <field name="model">res.partner</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                attrs="{'invisible': [('is_owner', '=', False)]}"
+                                name="action_lot" icon="fa-building">
+                            <field name="lot_count" widget="statinfo"/>
+                        </button>
+
+                        <button class="oe_stat_button" type="object"
+                                attrs="{'invisible': [('is_loaner', '=', False)]}"
+                                name="action_lot_loaner" icon="fa-building">
+                            <field name="loaner_lot_count" widget="statinfo"/>
+                        </button>
+
+                        <button class="oe_stat_button" type="object"
+                                attrs="{'invisible': [('is_old', '=', False)]}"
+                                name="action_lot_old" icon="fa-building">
+                        </button>
+                    </div>
+
+                    <group colspan="4" col="4">
+                        <field name="name" colspan="2"/>
+                        <field name="title" colspan="2" string="Titre"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Contact" name="contact">
+                            <group>
+                                <group string="Adresse">
+                                    <field name="street"/>
+                                    <field name="zip"/>
+                                    <field name="city_id" attrs="{'readonly': [('zip', '=', False)]}"/>
+                                    <field name="country_id" options="{'no_open': True, 'no_create': True}" />
+                                </group>
+
+                                <group string="Contact Electronique">
+                                    <field name="phone" string="Téléphone"/>
+                                    <field name="fax"/>
+                                    <field name="mobile"/>
+                                    <field name="email"/>
+                                </group>
+                            </group>
+
+                            <group string="Autres contacts">
+                            <field name="child_ids" mode="kanban" nolabel="1">
+                                <form>
+                                    <group colspan="4" col="4">
+                                        <field name="name" colspan="2"/>
+                                        <field name="title" colspan="2" string="Titre"/>
+                                    </group>
+
+                                    <group>
+                                        <group string="Adresse">
+                                            <field name="street"/>
+                                            <field name="zip"/>
+                                            <field name="city_id" attrs="{'readonly': [('zip', '=', False)]}"/>
+                                            <field name="country_id" options="{'no_open': True, 'no_create': True}" />
+                                            <field name="is_letter"/>
+                                        </group>
+
+                                        <group string="Contact Electronique">
+                                            <field name="phone" string="Téléphone"/>
+                                            <field name="fax"/>
+                                            <field name="mobile"/>
+                                            <field name="email"/>
+                                            <field name="is_email"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                                    
+                            </group>
+                        </page>
+                        <page string="Information Technique">
+                            <group>
+                                <field name="user_ids"/>
+                                <field name="is_owner"/>
+                                <field name="is_loaner"/>
+                                <field name="is_old"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="syndic_action_partner">
+        <field name="name">Autres contacts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="syndic_action_old">
+        <field name="name">Anciens Propriétaires</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="domain">[('is_old', '=', True)]</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Contacts" id="menu_partner" parent="syndic_main" sequence="20"/>
+    <menuitem name="Anciens Propriétaires" id="menu_old_partner"  parent="menu_partner" action="syndic_action_old" sequence="40"/>
+    <menuitem name="Tous les contacts" id="menu_old"  parent="menu_partner" action="syndic_action_partner" sequence="50"/>
+</odoo>

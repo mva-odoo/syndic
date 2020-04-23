@@ -1,3 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"syndic_deduplicate","syndic tools deduplicate","model_syndic_tools_deduplicate","base.group_no_one",1,1,1,1
-"syndic_deduplicate_rec","syndic tools dedupl rec","model_syndic_tools_deduplicate_rec","base.group_no_one",1,1,1,1

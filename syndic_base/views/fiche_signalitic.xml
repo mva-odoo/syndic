@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<!--tree view -->
+		<record model="ir.ui.view" id="tree_building_signalitic">
+			<field name="name">signalitic tree view</field>
+			<field name="model">building.signalitic</field>
+			<field name="arch" type="xml">
+				<tree create="false" edit="false" delete="false">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="search_building_signalitic">
+			<field name="name">signalitic tree view</field>
+			<field name="model">building.signalitic</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name"/>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="form_building_signalitic">
+			<field name="name">Letter form view</field>
+			<field name="model">building.signalitic</field>
+			<field name="arch" type="xml">
+				<form create="false" delete="false">
+                    <h1>
+                        <field name="num_building" class="oe_inline" readonly="True" placeholder="Numéros d'immeuble"/> -
+                        <field name="name" class="oe_inline" readonly="True" placeholder="Nom d'immeuble"/>
+                    </h1>
+                    <notebook colspan="4">
+                        <page string="Information générale" >
+							<group>
+                                <group string="Assemblée">
+                                    <field name="lieu_assemble"/>
+                                </group>
+                                <group string="Finance du bâtiment">
+                                    <field name="compte"/>
+                                    <field name="compta"/>
+                                    <field name="date_cloture"/>
+                                </group>
+                                <group string="Acte de base">
+                                    <field name="construction_date"/>
+                                    <field name="notaire_building"/>
+                                    <field name="lieu_acte_building"/>
+                                    <field name="date_acte_building"/>
+                                    <field name="plan_sous_sol"/>
+                                    <field name="plan_facade"/>
+                                    <field name="plan_appartement"/>
+                                    <field name="plan_egout"/>
+                                </group>
+                                <group string="Composition du bâtiment">
+                                    <field name="number_appartement"/>
+                                    <field name="number_cave"/>
+                                    <field name="number_chambres"/>
+                                    <field name="number_garage"/>
+                                    <field name="number_parking"/>
+                                    <field name="conciergerie"/>
+                                </group>
+                                <group string="Assurances">
+                                    <field name="incendie_name"/>
+                                    <field name="incendie_name_courier"/>
+                                    <field name="incendie_num_police"/>
+                                    <field name="incendie_franchise"/>
+                                    <field name="incendie_expire"/>
+                                    <field name="incendie_couverture"/>
+                                </group>
+                                <group string="Assurances">
+                                    <field name="loi"/>
+                                    <field name="justice"/>
+                                    <field name="ass_concierge"/>
+                                    <field name="rec_creance"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Renseignements utiles">
+							<group>
+                                <group string="Experts">
+                                    <field name="technique"/>
+                                    <field name="chauffage"/>
+                                    <field name="certif_chauf"/>
+                                    <field name="ascenseur"/>
+                                    <field name="juridique"/>
+                                </group>
+                                <group string="Permis environnement">
+                                    <field name="environnement_date"/>
+                                    <field name="environnement_expire"/>
+                                    <field name="environnement_objet"/>
+                                </group>
+                                <group string="Pollution du sol">
+                                    <field name="sol_inscription"/>
+                                    <field name="sol_date"/>
+                                    <field name="sol_expire"/>
+                                </group>
+                                <group string="Inventaire amiante">
+                                    <field name="amiente_etabli_par"/>
+                                    <field name="amiente_etabli_le"/>
+                                    <field name="amiente_ids">
+                                        <tree editable="top">
+                                            <field name="desamiente_par"/>
+                                            <field name="desamiente_le"/>
+                                            <field name="desamiente_niveau"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Contrôle citerne">
+                                    <field name="citerne_par"/>
+                                    <field name="citerne_le"/>
+                                    <field name="citerne_expirt"/>
+                                    <field name="citerne_neutralise"/>
+                                </group>
+
+                                <group string="Rapport de conformité électrique">
+                                    <field name="elec_par"/>
+                                    <field name="elec_le"/>
+                                    <field name="elec_expirt"/>
+                                </group>
+                                <group string="Analyse des risques ascensseur">
+                                    <field name="risque_ascensseur_par"/>
+                                    <field name="risque_le"/>
+                                    <field name="risque_expirt"/>
+                                </group>
+                                <group string="Mise en conformité de l'ascensseur">
+                                    <field name="ascensseur_par"/>
+                                    <field name="ascensseur_le"/>
+                                    <field name="anne_ascensseur"/>
+                                </group>
+
+                                <group string="DIU">
+                                    <field name="diu" nolabel="1" colspan="4">
+                                        <tree editable="top">
+                                            <field name="diu_par"/>
+                                            <field name="diu_le"/>
+                                            <field name="diu_concerne"/>
+                                        </tree>
+                                    </field>
+                                </group>
+
+                                <group string="PEB">
+                                    <field name="anne_chaudiere"/>
+                                    <field name="peb_immeuble"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string='Information immeuble'>
+                            <group>
+                                <group string="Information">
+                                    <field name="trotoire"/>
+                                    <field name="mur_mitoyens"/>
+                                    <field name="more_info"/>
+                                </group>
+                                <group string="Façade">
+                                     <field name="facade_id">
+                                        <tree string='facade' editable='top'>
+                                            <field name='observation' />
+                                            <field name='date_observation' />
+                                            <field name='suivi' />
+                                        </tree>
+                                    </field>
+                                    <field name="facade_isolation"/>
+                                    <field name="facade_repeir_id">
+                                        <tree string='reparation facade' editable='top'>
+                                            <field name='facade_date_repeir' />
+                                            <field name='facade_fournisseur_repeir' />
+                                            <field name='facade_what_repeir' />
+                                        </tree>
+                                    </field>
+                                </group>
+
+                                <group string="Châssis">
+                                    <field name="chassis_type"/>
+                                    <field name="chassis_vitrage"/>
+                                    <field name="chassis_vitrage_four"/>
+                                    <field name="chassis_color"/>
+                                    <field name="chassis_more"/>
+                                </group>
+                                <group string="Terrasse">
+                                    <field name="terasse_ids">
+                                        <tree string='terasse' editable='top'>
+                                                <field name='observation' />
+                                                <field name='date_observation' />
+                                                <field name='suivi' />
+                                        </tree>
+                                    </field>
+                                    <field name="terasse_repeir_ids">
+                                        <tree string='reparation terasse' editable='top'>
+                                            <field name='terasse_date_repeir' />
+                                            <field name='terasse_fournisseur_repeir' />
+                                            <field name='terasse_what_repeir' />
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Accès">
+                                    <field name="access_more"/>
+                                    <field name="access_info"/>
+                                    <field name="access_where"/>
+                                </group>
+
+                                <group string="Parlophone et boite aux lettres">
+                                    <field name="parlophone_description"/>
+                                    <field name="parlophone_date"/>
+                                    <field name="plaquette_supplier"/>
+                                    <field name="boite_bool"/>
+                                    <field name="ascenseur_bool"/>
+                                    <field name="appartements_bool"/>
+                                    <field name="parlophone_bool"/>
+                                </group>
+                                <group string="Toiture">
+                                    <field name="toiture_type"/>
+                                    <field name="toiture_contract"/>
+                                    <field name="toiture_obs">
+                                        <tree string='reparation toiture' editable='top'>
+                                            <field name='observation_toiture' />
+                                            <field name='date_toiture' />
+                                            <field name='suivi_toiture' />
+                                        </tree>
+                                    </field>
+                                    <field name="toiture_isolation"/>
+                                    <field name="toiture_repa">
+                                        <tree string='reparation toiture' editable='top'>
+                                            <field name='entreprise' />
+                                            <field name='date_repeir' />
+                                            <field name='objet_repeir' />
+                                        </tree>
+                                    </field>
+                                </group>
+                                </group>
+                            </page>
+                            <page string="Information installation immeuble">
+                                <group>
+                                    <group string="Jardin">
+                                        <field name="jardin_contrat"/>
+                                        <field name="date_jardin"/>
+                                        <field name="jardin_onservation">
+                                            <tree string='reparation toiture' editable='top'>
+                                                <field name='observation_jardin' />
+                                                <field name='date_jardin' />
+                                                <field name='suivi_jardin' />
+                                            </tree>
+                                        </field>
+                                        <field name="jardin_more"/>
+                                    </group>
+                                    <group string="Ascenseur">
+                                         <field name="ascensseur_contrat"/>
+                                        <field name="ascensseur_date"/>
+                                        <field name="nbr_passage"/>
+                                    </group>
+                                    <group string="Liste des ascenseurs">
+                                        <field name="ascensseur_ids" nolabel="1" colspan="4">
+                                            <tree string='Ascenseurs' editable='top'>
+                                                <field name='name' />
+                                                <field name='type' />
+                                                <field name='vitesse' />
+                                                <field name='constructeur' />
+                                                <field name='date_asc' />
+                                                <field name='charge' />
+                                                <field name='nbr_personne' />
+                                            </tree>
+                                        </field>
+                                        <field name="cylindre_bool"/>
+                                        <field name="entr_control"/>
+                                        <field name="repeir_ascensseur_ids">
+                                            <tree string='Reparation' editable='top'>
+                                                <field name='entreprise' />
+                                                <field name='date_repeir' />
+                                                <field name='objet_repeir' />
+                                            </tree>
+                                        </field>
+                                        <field name="ascensseur_more"/>
+                                    </group>
+
+                                    <group string="Relevé des compteurs">
+                                        <field name='societe_compteur' />
+                                        <field name='date_compteur' />
+                                        <field name='date_contrat_compteur' />
+                                    </group>
+
+                                    <group string="Chaufferie">
+                                        <field name='chauffage_type' />
+                                        <field name='eau_chaude_type' />
+                                        <field name='type_chauffage' />
+                                        <field name='condensation_chauffage' />
+                                        <field name='type_chauffages' />
+                                        <field name='situation_chauffage' />
+                                        <field name='nbr_chaudiere' />
+                                        <field name='chauffage_cascade' />
+                                        <field name='contrat_chaudiere' />
+                                        <field name='chaudiere_omnium' />
+                                        <field name='chaudiere_tubage' />
+                                        <field name='chaudiere_separboue' />
+                                        <field name='chaudiere_horloge' />
+                                    </group>
+
+                                    <group string="Composition chaudiere">
+                                        <field name="piece_chaudiere_ids" nolabel="1" colspan="4">
+                                            <tree string='pieces chaudiere' editable='top'>
+                                                <field name='parties' />
+                                                <field name='Marque' />
+                                                <field name='type' />
+                                                <field name='annee' />
+                                                <field name='puissance' />
+                                            </tree>
+                                        </field>
+                                        <field name='descr_regul' />
+                                        <field name="repeir_chaudiere_ids">
+                                            <tree string='Reparation chaudière' editable='top'>
+                                                <field name='entreprise' />
+                                                <field name='date_repeir' />
+                                                <field name='objet_repeir' />
+                                            </tree>
+                                        </field>
+                                        <field name='chaudiere_more' />
+                                    </group>
+                                    <group string="Adoucisseur">
+                                        <field name='type_adoucisseur' />
+                                        <field name='marque_adoucisseur' />
+                                        <field name='numeros_adoucisseur' />
+                                        <field name='annee_adoucisseur' />
+                                        <field name='supplier_adoucisseur' />
+                                        <field name='qte_adoucisseur' />
+                                        <field name='adoucisseur_more' />
+                                    </group>
+                                    <group string="Citerne">
+                                        <field name='marque_citerne' />
+                                        <field name='type_citerne' />
+                                        <field name='annee_citerne' />
+                                        <field name='qte_citerne' />
+                                    </group>
+
+                                    <group string="Egouttage">
+                                        <field name='egoutage_contrat' />
+                                        <field name='egoutage_contrat_date' />
+                                        <field name="obs_egoutage_ids">
+                                            <tree string='egouttage' editable='top'>
+                                                <field name='entreprise' />
+                                                <field name='date_egoutage' />
+                                                <field name='suivi_egoutage' />
+                                            </tree>
+                                        </field>
+                                        <field name='egoutage_more' />
+                                    </group>
+                                    <group string="Extincteurs">
+                                        <field name="extincteur_ids" nolabel="1" colspan="4">
+                                            <tree string='Extincteur' editable='top'>
+                                                <field name='extincteur_marque' />
+                                                <field name='extincteur_contrat' />
+                                                <field name='extincteur_contrat_date' />
+                                            </tree>
+                                        </field>
+                                        <field name='extincteur_more' />
+
+                                    </group>
+
+                                    <group string="Installation éléctrique">
+                                        <field name='elec_contrat' />
+                                        <field name='elec_building' />
+                                        <field name='elec_releve_by' />
+                                    </group>
+                                    <group string="Porte de garage">
+                                        <field name='garage_contrat' />
+                                        <field name='garage_contrat_date' />
+                                        <field name="garage_repeir_ids">
+                                            <tree string='Porte de garage' editable='top'>
+                                                <field name='entreprise' />
+                                                <field name='date_repeir' />
+                                                <field name='objet_repeir' />
+                                            </tree>
+                                        </field>
+                                        <field name='garage_description' />
+                                    </group>
+                                    <group string="Travaux">
+                                        <field name="travaux_ids">
+                                            <tree string='Travaux' editable='top'>
+                                                <field name='entreprise' />
+                                                <field name='date_repeir' />
+                                                <field name='objet_repeir' />
+                                                <field name='architect' />
+                                            </tree>
+                                        </field>
+                                    </group>
+                            </group>
+                        </page>
+					</notebook>
+                </form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_signalitic">
+			<field name="name">Fiche signalitique immeuble</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">building.signalitic</field>
+			
+			<field name="view_mode">tree,form</field>
+		</record>
+
+</odoo>

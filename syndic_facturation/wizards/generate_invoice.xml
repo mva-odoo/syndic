@@ -28,6 +28,6 @@
     res_model="syndic.facturation.generation"
     view_mode="form"
     target="new"
-    groups="syndic_management.syndic_manager"/> -->
+    groups="syndic_base.syndic_manager"/> -->
 
 </odoo>

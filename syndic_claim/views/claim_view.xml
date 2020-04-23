@@ -332,13 +332,13 @@
  		</record>
 
 		<!--menu -->
-		<menuitem name="Gestion d'immeuble" id="claim"/>
+		<menuitem name="Gestion d'immeuble" id="claim" web_icon="syndic_claim,static/description/icon.png"/>
 		<menuitem name="Gestion d'immeuble" id="menu_sub_claim" parent="claim"/>
 		<menuitem name="Gestion d'immeuble" id="menu_action_claim" parent="menu_sub_claim" action="action_claim"/>
 		<menuitem name="Offre et contrat" id="menu_offre_contrat" parent="menu_sub_claim" action="action_offre_contrat"/>
 		<menuitem name="Bon de commande" id="menu_bon_commande" parent="menu_sub_claim" action="action_bon_commande"/>
 
-		<menuitem name="Configuration" id="menu_status_conf" parent="claim" groups="syndic_management.syndic_manager"/>
+		<menuitem name="Configuration" id="menu_status_conf" parent="claim" groups="syndic_base.syndic_manager"/>
 		<menuitem name="Type" id="menu_type" parent="menu_status_conf" action="action_type_claim"/>
 		<menuitem name="Status" id="menu_status" parent="menu_status_conf" action="action_claim_status"/>
 

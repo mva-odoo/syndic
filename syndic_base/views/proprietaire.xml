@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="search_proprietaire">
+        <field name="name">Syndic Search view proprietaire</field>
+        <field name="model">res.partner</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="search_partner"/>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="owner_building_ids"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="tree_proprietaire">
+        <field name="name">Syndic Tree view proprietaire</field>
+        <field name="model">res.partner</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="tree_partner"/>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="owner_building_ids" widget="many2many_tags"/>
+                <field name="convocation"/>
+            </field>
+            <xpath expr="/tree" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record model="ir.ui.view" id="form_proprietaire">
+        <field name="name">Syndic Form view proprietaire</field>
+        <field name="model">res.partner</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="form_partner"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="first_name"/>
+                <field name="owner_building_ids" widget="many2many_tags"/>
+            </field>
+            <field name="title" position="after">
+                <field name="convocation"/>
+            </field>
+
+            <xpath expr="/form" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_proprietaire">
+        <field name="name">Propriétaires</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="search_proprietaire"/>
+        <field name="domain">[('is_owner', '=', True)]</field>
+    </record>
+
+    <record id="action_view_tree_proprietaire" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_proprietaire"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="tree_proprietaire"/>
+    </record>
+
+    <record id="action_view_form_proprietaire" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_proprietaire"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="form_proprietaire"/>
+    </record>
+
+    <menuitem name="Propriétaires" id="menu_proprietaire" parent="menu_partner" action="action_proprietaire" sequence="10"/>
+</odoo>

@@ -11,6 +11,7 @@ class PieceJointe(models.Model):
 
 class CreateLetter(models.Model):
     _name = 'letter.letter'
+    _description = 'letter.letter'
     _rec_name = 'sujet'
     _order = 'date desc'
 
@@ -18,11 +19,29 @@ class CreateLetter(models.Model):
     sujet = fields.Char('Sujet', required=True)
     immeuble_id = fields.Many2one('syndic.building', string='Immeuble')
     all_immeuble = fields.Boolean('Immeuble entier')
-    propr_ids = fields.Many2many('syndic.owner', string=u'Propriétaire')
-    fourn_ids = fields.Many2many('syndic.supplier', string='Fournisseurs')
-    divers_ids = fields.Many2many('syndic.personne', string='Divers')
-    old_ids = fields.Many2many('syndic.old.owner', string=u'Ancien Propriétaire')
-    loc_ids = fields.Many2many('syndic.loaner', string='Locataires')
+
+    old_ids = fields.Many2many('res.partner', 'letter_old_rel', string=u'Ancien Propriétaire')
+
+    owner_ids = fields.Many2many(
+        'res.partner',
+        'letter_owner_rel',
+        domain=[('is_owner', '=', True)],
+        string=u'Propriétaire'
+    )
+    loaner_ids = fields.Many2many(
+        'res.partner',
+        'letter_loaner_rel',
+        domain=[('is_loaner', '=', True)],
+        string='Locataires'
+    )
+    supplier_ids = fields.Many2many(
+        'res.partner',
+        'letter_supplier_rel',
+        domain=[('supplier', '=', True)],
+        string='Fournisseurs'
+    )
+    other_ids = fields.Many2many('res.partner', 'letter_other_rel', string='Divers')
+    
     end_letter_id = fields.Many2one('letter.end', 'Fin de lettre', required=True)
     begin_letter_id = fields.Many2one('letter.begin', u'Début de lettre', required=True)
     letter_type_id = fields.Many2one('letter.type', 'Type de lettre', required=True)
@@ -33,11 +52,11 @@ class CreateLetter(models.Model):
     name_template = fields.Char(u'Nom du modèle de lettre')
     is_mail = fields.Boolean('Envoi par email')
     is_fax = fields.Boolean('Envoi par fax')
-    piece_jointe_ids = fields.One2many('ir.attachment', 'letter_id', string='Piece Jointe')
+    attachment_ids = fields.Many2many('ir.attachment', 'letter_letter_ir_attachment_rel', string='Piece Jointe')
     create_date = fields.Datetime(u'Date de création')
     date = fields.Date(u'Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
-    partner_address_ids = fields.Many2many('partner.address', String="Personne Jointe",
+    partner_address_ids = fields.Many2many('res.partner', String="Personne Jointe",
                                            compute='_compute_join_address', store=True)
     state = fields.Selection([('not_send', 'Pas envoyé'), ('send', 'Envoyé')], string='State', default='not_send')
     mail_server = fields.Many2one('ir.mail_server', 'Serveur email')
@@ -56,7 +75,7 @@ class CreateLetter(models.Model):
         if res.save_letter:
                 res.env['letter.model'].create({'name': res.name_template, 'text': res.contenu})
 
-        for supplier_id in res.fourn_ids:
+        for supplier_id in res.supplier_ids:
             values = {
                 'name': res.sujet,
                 'fournisseur_id': supplier_id.id,
@@ -78,28 +97,28 @@ class CreateLetter(models.Model):
 
     @api.onchange('immeuble_id', 'all_immeuble')
     def onchange_immeuble(self):
-        self.propr_ids = self.immeuble_id.mapped('lot_ids').mapped('proprio_id') if self.all_immeuble else False
+        self.owner_ids = self.immeuble_id.mapped('lot_ids').mapped('owner_ids') if self.all_immeuble else False
 
-    @api.depends('propr_ids', 'fourn_ids', 'loc_ids')
+    @api.depends('owner_ids', 'supplier_ids', 'loaner_ids')
     def _compute_join_address(self):
-        partner_address = self.env['partner.address']
+        partner_address = self.env['res.partner']
+        for rec in self:
+            partner_address |= rec.owner_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
+            partner_address |= rec.supplier_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
+            partner_address |= rec.loaner_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
 
-        partner_address |= self.propr_ids.mapped('address_ids').filtered(lambda s: s.is_letter)
-        partner_address |= self.fourn_ids.mapped('address_ids').filtered(lambda s: s.is_letter)
-        partner_address |= self.loc_ids.mapped('address_ids').filtered(lambda s: s.is_letter)
-
-        self.partner_address_ids = partner_address
-        self.is_fax = True if self.fourn_ids else False
+            rec.partner_address_ids = partner_address
+            rec.is_fax = True if rec.supplier_ids else False
 
     def send_email_lettre(self):
         self.ensure_one()
         header = ''
 
         mail = {
-            'mail_server_id': self.mail_server if self.mail_server else self.env.user.server_mail_id or False,
+            'mail_server_id': self.mail_server.id if self.mail_server else self.env.user.server_mail_id or False,
             'email_from': self.env.user.email,
             'reply_to': self.env.user.email,
-            'attachment_ids': [(6, 0, self.piece_jointe_ids.ids)],
+            'attachment_ids': [(6, 0, self.attachment_ids.ids)],
             'subject': self.immeuble_id.name + '-' + self.sujet if self.immeuble_id else self.sujet,
         }
 
@@ -119,23 +138,23 @@ width="96" height="61"/>'"""
 
         mail['body_html'] = header + body + self.ps + '<br/>'+footer if self.ps else header + body + footer
 
-        for prop in self.propr_ids.filtered(lambda s: s.email):
+        for prop in self.owner_ids.filtered(lambda s: s.email):
             mail['email_to'] = prop.email
             self.env['mail.mail'].create(mail)
 
-        for fourn in self.fourn_ids.filtered(lambda s: s.email):
+        for fourn in self.supplier_ids.filtered(lambda s: s.email):
             mail['email_to'] = fourn.email
             self.env['mail.mail'].create(mail)
 
-        for loc in self.loc_ids.filtered(lambda s: s.email):
+        for loc in self.loaner_ids.filtered(lambda s: s.email):
             mail['email_to'] = loc.email
             self.env['mail.mail'].create(mail)
 
-        for div in self.divers_ids.filtered(lambda s: s.email):
+        for div in self.other_ids.filtered(lambda s: s.email):
             mail['email_to'] = div.email
             self.env['mail.mail'].create(mail)
 
-        for addr in self.propr_ids.mapped('address_ids').filtered(lambda s: s.email and s.is_email):
+        for addr in self.owner_ids.mapped('child_ids').filtered(lambda s: s.email and s.is_email):
             mail['email_to'] = addr.email
             self.env['mail.mail'].create(mail)
 
@@ -151,24 +170,28 @@ width="96" height="61"/>'"""
 
 class EndLetter(models.Model):
     _name = 'letter.end'
+    _description = 'letter.end'
 
     name = fields.Char('Fin de lettre', required=True)
 
 
 class BeginLetter(models.Model):
     _name = 'letter.begin'
+    _description = 'letter.begin'
 
     name = fields.Char('Debut de lettre', required=True)
 
 
 class LetterType(models.Model):
     _name = 'letter.type'
+    _description = 'letter.type'
 
     name = fields.Char('Type Letter', required=True)
 
 
 class LetterModel(models.Model):
     _name = 'letter.model'
+    _description = 'letter.model'
 
     name = fields.Char('Model Letter', required=True)
     text = fields.Html('Text', required=True)
@@ -176,6 +199,7 @@ class LetterModel(models.Model):
 
 class LetterModelAvis(models.Model):
     _name = 'letter.avis.model'
+    _description = 'letter.avis.model'
 
     name = fields.Char(u'Nom du modèle', required=True)
     text = fields.Html('Avis')

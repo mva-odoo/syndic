@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.actions.client" id="action_dashboard">
+      <field name="name">Dashboard</field>
+      <field name="tag">timeline.dashboard</field>
+    </record>
+
+    <menuitem name="Dashboard" id="timeline_dashboard_menu"
+              parent='syndic_base.syndic'
+              sequence="1"
+              action="action_dashboard"/>
+
+</odoo>

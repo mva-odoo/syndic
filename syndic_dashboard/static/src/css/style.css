@@ -1,0 +1,66 @@
+.header-month{
+    color: #ffffff;
+    background: #1D2939;
+    font-weight: normal;
+    padding: 5px;
+    border-radius: 3px;
+}
+.allmonth{
+    padding: 10px;
+    background: white;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.21);
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.el_manager{
+    background: #0866C6!important;
+    color: #ffffff!important;
+    border-radius: 3px;
+}
+.col-centered{
+    text-align: center;
+}
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+.premiere_quinzaine{
+    background: #7C7BAD;
+    color: white;
+    text-align: center;
+}
+.deuxieme_quinzaine{
+    background: white;
+    color: #7C7BAD;
+    text-align: center;
+}
+.premier{
+    background: white;
+    color: #7C7BAD;
+}
+.deuxieme{
+    background: #7C7BAD;
+    color: white;
+}
+.premierli{
+    list-style:none;
+    background: white;
+    color: #7C7BAD;
+    padding:4px;
+}
+.deuxiemeli{
+    list-style:none;
+    background: #7C7BAD;
+    color: white;
+    padding:4px;
+}
+.fa-calendar-white{
+    color: white;
+}
+.fa-envelope-white{
+    color: white;
+}

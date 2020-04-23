@@ -1,6 +1,6 @@
 {
     'name': 'Syndic Tools',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Tools',
     'summary': 'Syndic Tools',
     'description': """
@@ -11,10 +11,5 @@ Syndic Tools
         'base',
     ],
     'data': [
-        'views/deduplicate.xml',
-        'security/ir.model.access.csv',
     ],
-    'installable': True,
-    'auto_install': False,
 }
-

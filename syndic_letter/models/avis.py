@@ -5,6 +5,7 @@ from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
 class LetterAvis(models.Model):
     _name = 'letter.avis'
+    _description = 'letter.avis'
     _order = 'create_date desc'
 
     name = fields.Char(u'Nom de l’avis', required=True)
@@ -30,12 +31,14 @@ class LetterAvis(models.Model):
 
 class TypeAvis(models.Model):
     _name = 'type.avis'
+    _description = 'type.avis'
 
     name = fields.Char('Type', required=True)
 
 
 class LetterReunion(models.Model):
     _name = 'letter.reunion'
+    _description = 'letter.reunion'
     _order = 'create_date desc'
             
     name = fields.Char(u'Réunion', required=True)
@@ -57,12 +60,14 @@ class LetterReunion(models.Model):
 
 class ReunionType(models.Model):
     _name = 'reunion.type'
+    _description = 'reunion.type'
 
     name = fields.Char('Type', required=True)
 
 
 class ReunionPoint(models.Model):
     _name = 'reunion.point'
+    _description = 'reunion.point'
     _order = 'sequence'
 
     name = fields.Char('Point', required=True)

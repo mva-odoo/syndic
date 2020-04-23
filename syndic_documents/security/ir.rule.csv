@@ -1,7 +1,7 @@
 id,model_id/id,name,groups/id,domain_force,perm_read,perm_write,perm_create,perm_unlink
-rule_employe_doc,model_syndic_documents,document employe,syndic_management.syndic_employe,"[(1,'=',1)]",1,1,1,1
-rule_client_doc,model_syndic_documents,document client,syndic_management.syndic_client,"['|', ('immeuble_id', '=', user.immeuble_id.id), '|', ('proprio_ids.user_id','=',user.id), '&',('all_document', '=', True),('immeuble_id', 'in', user.proprio_id.building_store_ids.ids)]",1,0,0,0
-rule_client_owner,model_syndic_owner,owner client,syndic_management.syndic_client,"[('user_id','=',user.id)]",1,0,0,0
-all_rule_client_owner,model_syndic_owner,owner all,syndic_management.syndic_employe,"[]",1,1,1,1
-rule_client_building,syndic_management.model_syndic_building,Immeuble client,syndic_management.syndic_client,"['|', ('lot_ids.proprio_id.user_id','=',user.id), ('id', '=', user.immeuble_id.id)]",1,0,0,0
-rule_employee_building,syndic_management.model_syndic_building,Immeuble client,syndic_management.syndic_employe,"[(1,'=',1)]",1,1,1,1
+rule_employe_doc,model_syndic_documents,document employe,syndic_base.syndic_employe,"[(1,'=',1)]",1,1,1,1
+rule_client_doc,model_syndic_documents,document client,syndic_base.syndic_client,"['|', ('immeuble_id', '=', user.immeuble_id.id), '|', ('proprio_ids.user_id','=',user.id), '&',('all_document', '=', True),('immeuble_id', 'in', user.partner_id.owner_building_ids.ids)]",1,0,0,0
+rule_client_owner,base.model_res_partner,owner client,syndic_base.syndic_client,"[('user_id','=',user.id)]",1,0,0,0
+all_rule_client_owner,base.model_res_partner,owner all,syndic_base.syndic_employe,"[]",1,1,1,1
+rule_client_building,syndic_base.model_syndic_building,Immeuble client,syndic_base.syndic_client,"['|', ('lot_ids.proprio_id.user_id','=',user.id), ('id', '=', user.immeuble_id.id)]",1,0,0,0
+rule_employee_building,syndic_base.model_syndic_building,Immeuble client,syndic_base.syndic_employe,"[(1,'=',1)]",1,1,1,1

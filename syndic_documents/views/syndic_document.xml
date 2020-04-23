@@ -47,8 +47,8 @@
                             <field name="immeuble_id" />
                             <field name="type_id" />
                             <field name="all_document" />
-							<separator string="Propriétaire" colspan="4" groups="syndic_management.syndic_employe,syndic_management.syndic_manager"/>
-							<field name="proprio_ids" colspan="4" nolabel="1" groups="syndic_management.syndic_employe,syndic_management.syndic_manager">
+							<separator string="Propriétaire" colspan="4" groups="syndic_base.syndic_employe,syndic_base.syndic_manager"/>
+							<field name="proprio_ids" colspan="4" nolabel="1" groups="syndic_base.syndic_employe,syndic_base.syndic_manager">
                                 <tree>
                                     <field name="name"/>
                                 </tree>
@@ -70,7 +70,7 @@
 
 
 		<!--menu -->
-		<menuitem name="Documents" id="docu"/>
+		<menuitem name="Documents" id="docu" web_icon="syndic_documents,static/description/icon.png"/>
 		<menuitem name="Documents" id="menu_sub_docu" parent="docu"/>
 		<menuitem name="Documents" id="menu_action_docu" parent="menu_sub_docu" action="action_syndic_document"/>
 

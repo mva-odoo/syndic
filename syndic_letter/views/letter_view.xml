@@ -10,10 +10,10 @@
                     <field name="sujet"/>
                     <field name="create_date"/>
                     <field name="immeuble_id"/>
-                    <field name="propr_ids" />
-                    <field name="fourn_ids" />
-                    <field name="loc_ids" />
-                    <field name="divers_ids" />
+                    <field name="owner_ids" />
+                    <field name="supplier_ids" />
+                    <field name="loaner_ids" />
+                    <field name="other_ids" />
                     <field name="contenu" />
                     <field name="letter_type_id" />
                     <group expand="0" string="Group By...">
@@ -50,7 +50,7 @@
             <field name="name">Letter form view</field>
             <field name="model">letter.letter</field>
             <field name="arch" type="xml">
-                <form string="Letter">
+                <form>
                         <header>
                             <button string="Envoyer emails" name="send_email_lettre" type="object"/>
                             <field name="state" widget="statusbar"/>
@@ -69,52 +69,39 @@
                                    colspan="8"
                                    attrs="{'required':[('is_mail', '=', True)], 'invisible':[('is_mail', '=', False)]}"/>
 
-                            <field name="piece_jointe_ids"
-                                   attrs="{'invisible':[('is_mail','=',False)]}"
-                                   colspan="8">
-                                <!-- <tree>
-                                    <field name="datas_fname"/>
-                                </tree>
-                                <form>
-                                    <group>
-                                        <field name="name"/>
-                                        <field name="datas" filename="datas_fname"/>
-                                        <field name="datas_fname" invisible="1"/>
-                                    </group>
-                                </form> -->
-                            </field>
+                            <field 
+                                name="attachment_ids"
+                                attrs="{'invisible':[('is_mail','=',False)]}" widget="many2many_binary"/>
                         </group>
                         <notebook colspan="4">
                             <page string="propriétaires">
-                                <field name="propr_ids">
-                                    <tree string="Fournisseur">
+                                <field name="owner_ids" options="{'no_create': True}">
+                                    <tree>
                                         <field name="name" string="Nom"/>
                                         <field name="street" string="Adresse"/>
                                         <field name="city_id" string="Ville"/>
                                         <field name="country_id" string="Pays"/>
                                         <field name="email"/>
-                                        <field name="building_store_ids"/>
+                                        <field name="owner_building_ids" widget="many2many_tags"/>
                                         <field name="convocation"/>
                                     </tree>
                                 </field>
 
                             </page>
                             <page string="fournisseurs">
-                                <field name="fourn_ids" />
+                                <field name="supplier_ids" />
                             </page>
                             <page string="locataires">
-                                <field name="loc_ids"/>
+                                <field name="loaner_ids"/>
                             </page>
                             <page string="Divers">
-                                <field name="divers_ids" colspan="1"/>
+                                <field name="other_ids" colspan="1"/>
                             </page>
                             <page string="Personnes jointes">
                                 <field name="partner_address_ids" colspan="1">
                                     <tree>
                                         <field name="name"/>
-                                        <field name="add_parent_id_owner"/>
-                                        <field name="add_parent_id_supplier"/>
-                                        <field name="add_parent_id_loaner"/>
+                                        <field name="parent_id"/>
                                     </tree>
                                 </field>
                             </page>
@@ -228,10 +215,10 @@
         </record>
 
         <!--menu -->
-        <menuitem name="Lettre" id="menu_letter" />
+        <menuitem name="Lettre" id="menu_letter" web_icon="syndic_letter,static/description/icon.png"/>
         <menuitem name="Lettre" id="menu_sub_letter" parent="menu_letter" sequence="1"/>
         <menuitem name="Lettre" id="menu_action_new_letter" parent="menu_sub_letter" action="action_new_letter" sequence="2"/>
-        <menuitem name="Configuration" id="menu_configuration_letter" parent="menu_letter" sequence="2" groups="syndic_management.syndic_manager"/>
+        <menuitem name="Configuration" id="menu_configuration_letter" parent="menu_letter" sequence="2" groups="syndic_base.syndic_manager"/>
         <menuitem name="Modèle de lettre" id="menu_action_model" parent="menu_configuration_letter" action="action_model" sequence="1"/>
         <menuitem name="Type de lettre" id="menu_type_letter" parent="menu_configuration_letter" action="type_letter" sequence="3"/>
         <menuitem name="Debut de lettre" id="menu_begin_letter" parent="menu_configuration_letter" action="begin_letter" sequence="4"/>

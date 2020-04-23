@@ -1,50 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <record model="ir.ui.view" id="syndic_form_event">
-            <field name="name">Syndic calendier form</field>
-            <field name="model">syndic.calendar</field>
-            <field name="arch" type="xml">
-                <form>
-                    <group>
-                        <field name="name"/>
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                        <field name="where"/>
-                        <field name="description"/>
-                        <field name="owner_id" domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"/>
-                        <field name="building_id"/>
-                        <field name="attendee_ids"
-                               widget="many2many_tags"
-                               domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"/>
-                    </group>
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="syndic_calendar_event">
-            <field name="name">Syndic calendier</field>
-            <field name="model">syndic.calendar</field>
-            <field name="arch" type="xml">
-                <calendar string="Calendrier"
-                          date_start="start_date"
-                          date_stop="end_date"
-                          color="owner_id">
-                    <field name="name"/>
-                    <field name="attendee_string"/>
-                </calendar>
-            </field>
-        </record>
-
-        <record model="ir.actions.act_window" id="action_syndic_calendar">
-            <field name="name">Syndic Calendar</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">syndic.calendar</field>
-            <field name="view_mode">calendar,tree,form</field>
-        </record>
-
-        <menuitem name="Calendrier"
-                  id="syndic_calendrier"
-                  action="action_syndic_calendar"/>
-    </data>
+    <record model="ir.ui.view" id="syndic_form_event">
+        <field name="name">Syndic calendier form</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_ids']/.." position="after">
+              <group>
+                <field name="building_id"/>
+                <field name="is_ag"/>
+              </group>
+            </xpath>
+        </field>
+    </record>
 </odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="timeline" xml:space="preserve">
+
+	<div t-name="dashboardTimeline" class='container' style='display: unset;'>
+
+		 <!-- <div class="container" style='display: unset;'> -->
+		 	 <!-- <div class="row">
+		 		 <div class="col-12">
+		 			  <div class="my-timeline"/>
+		 		 </div>
+		 	 </div> -->
+
+			 <!-- <div class="row"> -->
+		 		 <!-- <div class="col-4 col-centered premier">
+		 			 <h1>Mes Tickets</h1>
+					 <span class='my-claim'/>
+		 		 </div>
+				 <div class="col-4 col-centered deuxieme">
+		 			 <h1>Mes Lettres</h1>
+					 <span class='my-lettre'/>
+		 		 </div> -->
+				  <!-- <div class="col-4 col-centered">
+		 			 <h1 class="deuxieme">To Do</h1>
+					 <span class='my-todo'/>
+					 <div class="premier">
+					 	<span class='todo_btn'><a href="javascript:;">Ajouter une nouvelle Note</a></span>
+					</div>
+		 		 </div>
+				 <div class="col-4 col-centered">
+		 			 <h1 class="premier">Mes Immeubles</h1>
+					 <div class="deuxieme">
+					 	<span class='my-buildings'/>
+					</div>
+		 		 </div> -->
+		 	 <!-- </div>
+
+	 	 </div> -->
+
+
+
+			<div class='row allmonth'>
+			</div>
+
+		 	
+	</div>
+
+
+	<div t-name="timeline.Buttons">
+		<button class="btn btn-primary o_building_btn">Mes Immeubles</button>
+	</div>
+
+
+</templates>
