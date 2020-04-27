@@ -41,7 +41,15 @@ class CreateLetter(models.Model):
         string='Fournisseurs'
     )
     other_ids = fields.Many2many('res.partner', 'letter_other_rel', string='Divers')
-    
+
+    partner_ids = fields.Many2many('res.partner', 'res_parther_letter_rel', string="To")
+    from_id = fields.Many2one(
+        'res.users',
+        string="From",
+        default=lambda s: s.env.user,
+        domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"
+    )
+
     end_letter_id = fields.Many2one('letter.end', 'Fin de lettre', required=True)
     begin_letter_id = fields.Many2one('letter.begin', u'Début de lettre', required=True)
     letter_type_id = fields.Many2one('letter.type', 'Type de lettre', required=True)
@@ -56,16 +64,18 @@ class CreateLetter(models.Model):
     create_date = fields.Datetime(u'Date de création')
     date = fields.Date(u'Date de création', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
-    partner_address_ids = fields.Many2many('res.partner', String="Personne Jointe",
-                                           compute='_compute_join_address', store=True)
+    partner_address_ids = fields.Many2many(
+        'res.partner',
+        String="Personne Jointe",
+        compute='_get_other_address', store=True
+    )
     state = fields.Selection([('not_send', 'Pas envoyé'), ('send', 'Envoyé')], string='State', default='not_send')
     mail_server = fields.Many2one('ir.mail_server', 'Serveur email')
 
     @api.depends('date')
     def _compute_date(self):
         for letter in self:
-            if letter.date:
-                letter.date_fr = SyndicTools().french_date(letter.date)
+            letter.date_fr = SyndicTools().french_date(letter.date) if letter.date else ''
 
     @api.model
     def create(self, vals):
@@ -73,7 +83,7 @@ class CreateLetter(models.Model):
 
         # create letter template
         if res.save_letter:
-                res.env['letter.model'].create({'name': res.name_template, 'text': res.contenu})
+            res.env['letter.model'].create({'name': res.name_template, 'text': res.contenu})
 
         for supplier_id in res.supplier_ids:
             values = {
@@ -100,14 +110,13 @@ class CreateLetter(models.Model):
         self.owner_ids = self.immeuble_id.mapped('lot_ids').mapped('owner_ids') if self.all_immeuble else False
 
     @api.depends('owner_ids', 'supplier_ids', 'loaner_ids')
-    def _compute_join_address(self):
-        partner_address = self.env['res.partner']
+    def _get_other_address(self):
         for rec in self:
-            partner_address |= rec.owner_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
-            partner_address |= rec.supplier_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
-            partner_address |= rec.loaner_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
+            partner_owner = rec.owner_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
+            partner_supplier = rec.supplier_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
+            partner_loaner = rec.loaner_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
 
-            rec.partner_address_ids = partner_address
+            rec.partner_address_ids = partner_owner | partner_supplier | partner_loaner
             rec.is_fax = True if rec.supplier_ids else False
 
     def send_email_lettre(self):

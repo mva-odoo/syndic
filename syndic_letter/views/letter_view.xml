@@ -55,70 +55,55 @@
                             <button string="Envoyer emails" name="send_email_lettre" type="object"/>
                             <field name="state" widget="statusbar"/>
                         </header>
-                        <group col="16" colspan="16">
-                            <field name="sujet" colspan="8"/>
-                            <field name="letter_type_id" colspan="8"/>
-                            <field name="letter_model_id" colspan="8"/>
-                            <field name="immeuble_id" colspan="4"/>
-                            <field name="all_immeuble" colspan="4"/>
-                            <field name="date" colspan="4"/>
-                            <field name="date_fr" colspan="4"/>
-                            <field name="is_mail" colspan="4"/>
-                            <field name="is_fax" colspan="4"/>
-                            <field name="mail_server"
-                                   colspan="8"
-                                   attrs="{'required':[('is_mail', '=', True)], 'invisible':[('is_mail', '=', False)]}"/>
-
-                            <field 
-                                name="attachment_ids"
-                                attrs="{'invisible':[('is_mail','=',False)]}" widget="many2many_binary"/>
+                        <h1>
+                                <field name="sujet" placeholder="Sujet" class="oe_inline"/> - <field name="immeuble_id" placeholder="Immeuble"/> - <field name="date" placeholder="Date"/>
+                        </h1>
+                        <group>
+                            <group>
+                            <field name="letter_type_id"/>
+                                <field name="all_immeuble" />
+                            </group>
+                            <group>
+                                <field name="letter_model_id"/>
+                                <field name="from_id" options="{'no_open': True, 'no_create': True}"/>
+                            </group>
                         </group>
-                        <notebook colspan="4">
-                            <page string="propriétaires">
-                                <field name="owner_ids" options="{'no_create': True}">
-                                    <tree>
-                                        <field name="name" string="Nom"/>
-                                        <field name="street" string="Adresse"/>
-                                        <field name="city_id" string="Ville"/>
-                                        <field name="country_id" string="Pays"/>
-                                        <field name="email"/>
-                                        <field name="owner_building_ids" widget="many2many_tags"/>
-                                        <field name="convocation"/>
-                                    </tree>
-                                </field>
-
+                        <notebook>
+                            <page string="Contact">
+                                <field name="partner_ids"/>
                             </page>
-                            <page string="fournisseurs">
-                                <field name="supplier_ids" />
+                            <page string="Options">
+                                <group>
+                                    <group>
+                                        <field name="is_fax"/>
+                                    </group>
+                                    <group>
+                                        <field name="is_mail"/>
+                                    </group>
+                                </group>
                             </page>
-                            <page string="locataires">
-                                <field name="loaner_ids"/>
-                            </page>
-                            <page string="Divers">
-                                <field name="other_ids" colspan="1"/>
-                            </page>
-                            <page string="Personnes jointes">
-                                <field name="partner_address_ids" colspan="1">
-                                    <tree>
-                                        <field name="name"/>
-                                        <field name="parent_id"/>
-                                    </tree>
-                                </field>
-                            </page>
-
                         </notebook>
+                        <field 
+                                name="attachment_ids"
+                                nolabel="1"
+                                widget="many2many_binary"/>
                         <group col="4" colspan="4">
-                            <field name="save_letter" colspan="2"/>
-                            <field name="name_template"
-                                   colspan="2"
-                                   attrs="{'required':[('save_letter','=',True)],'invisible':[('save_letter','=',False)]}"/>
                             <field name="begin_letter_id" colspan="4"/>
                             <field name="contenu" nolabel="1" colspan="4" widget="html"/>
                             <field name="end_letter_id" colspan="4"/>
                             <field name="ps" colspan="4"/>
                         </group>
 
-
+                        <group>
+                            <group>
+                                <field name="save_letter"/>
+                            </group>
+                            <group>
+                                <field 
+                                    name="name_template"
+                                    attrs="{'required':[('save_letter','=',True)],'invisible':[('save_letter','=',False)]}"/>
+                            </group>
+                        </group>
                 </form>
             </field>
 
