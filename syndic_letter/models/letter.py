@@ -42,7 +42,7 @@ class CreateLetter(models.Model):
     )
     other_ids = fields.Many2many('res.partner', 'letter_other_rel', string='Divers')
 
-    partner_ids = fields.Many2many('res.partner', 'res_parther_letter_rel', string="To")
+    partner_ids = fields.Many2many('res.partner', 'letter_partner_rel', string="To")
     from_id = fields.Many2one(
         'res.users',
         string="From",
@@ -107,7 +107,7 @@ class CreateLetter(models.Model):
 
     @api.onchange('immeuble_id', 'all_immeuble')
     def onchange_immeuble(self):
-        self.owner_ids = self.immeuble_id.mapped('lot_ids').mapped('owner_ids') if self.all_immeuble else False
+        self.partner_ids = self.immeuble_id.mapped('lot_ids').mapped('owner_ids') if self.all_immeuble else False
 
     @api.depends('owner_ids', 'supplier_ids', 'loaner_ids')
     def _get_other_address(self):
