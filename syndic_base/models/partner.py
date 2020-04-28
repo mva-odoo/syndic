@@ -111,7 +111,7 @@ class Partner(models.Model):
                 partner.is_owner = False
 
             mutations = partner.mapped('lot_ids.mutation_ids').filtered(lambda s: s.state == 'done')
-            if partner.lot_ids.filtered(lambda s: not s.building_id.active) or mutations:
+            if partner.lot_ids.filtered(lambda s: not s.building_id.active) or partner.id in mutations.old_partner_ids:
                 partner.is_old = True
             else:
                 partner.is_old = False
@@ -144,8 +144,8 @@ class Partner(models.Model):
 
     def action_lot_old(self):
         self.ensure_one()
-        action = self.env.ref('syndic_base.action_lot').read()[0]
-        action['domain'] = [('id', 'in', self.old_lot_ids.ids)]
+        action = self.env.ref('syndic_base.action_mutation').read()[0]
+        action['domain'] = [('old_partner_ids', 'in', self.id)]
         return action
 
 

@@ -14,7 +14,7 @@
                 <div class="header">
                     <div class="row">
                         <div class="col-3">
-                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 165px;"/>
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 160px;" alt="Logo"/>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,6 @@
 
         <template t-name="letter" id="letter">
                 <div class="row">
-
                     <div class="col-6"><br/><br/>
                         <t t-if="o.is_fax">
                             FAX: <span t-field="prop_id.fax" style="font-size:16px;"/>

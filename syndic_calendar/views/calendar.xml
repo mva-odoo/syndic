@@ -13,4 +13,17 @@
             </xpath>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="syndic_calendar_event">
+        <field name="name">Syndic calendier</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_ids']" position="after">
+              <field name="partner_ids"/>
+            </xpath>
+        </field>
+    </record>
+
+    
 </odoo>

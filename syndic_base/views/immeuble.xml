@@ -118,6 +118,9 @@
 							</field>
 						</page>
 						<page string="Fiche technique" name="tech_profile_page">
+							<button name="open_sign"
+									string="Consulter la fiche signalétique"
+									type="object"/>
 							<group string="Fiche technique" name="tech_profile">
 								<field name="supplier_ids" attrs="{'readonly': [('is_lock', '=', True)]}" nolabel="1"/>
 							</group>
