@@ -111,7 +111,7 @@ class Partner(models.Model):
                 partner.is_owner = False
 
             mutations = partner.mapped('lot_ids.mutation_ids').filtered(lambda s: s.state == 'done')
-            if partner.lot_ids.filtered(lambda s: not s.building_id.active) or partner.id in mutations.old_partner_ids:
+            if partner.lot_ids.filtered(lambda s: not s.building_id.active) or partner in mutations.old_partner_ids:
                 partner.is_old = True
             else:
                 partner.is_old = False
