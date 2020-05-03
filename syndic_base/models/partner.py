@@ -32,6 +32,7 @@ class Partner(models.Model):
 
     loaner_lot_ids = fields.Many2many('syndic.lot', 'syndic_lot_loan_rel', string='Lots(Locataire)')
     loaner_lot_count = fields.Integer('Lots(Locataire)', compute='_get_number_lot_loaner')
+    old_lot_count = fields.Integer('Mutations', compute='_get_old_lot_loaner')
 
     owner_building_ids = fields.Many2many(
         'syndic.building',
@@ -52,6 +53,10 @@ class Partner(models.Model):
         if self._context.get('standard'):
             return super(Partner, self)._get_name()
         return self.name
+
+    def _get_old_lot_loaner(self):
+        for partner in self:
+            partner.old_lot_count = self.env['syndic.mutation'].search_count([('state', '=', 'done'), ('old_partner_ids', 'in', partner.id)])
 
     @api.depends('lot_ids')
     def _get_number_lot(self):
@@ -105,16 +110,16 @@ class Partner(models.Model):
     )
     def _get_partner_type(self):
         for partner in self:
-            if partner.lot_ids.filtered(lambda s: s.building_id.active):
-                partner.is_owner = True
-            else:
-                partner.is_owner = False
-
-            mutations = partner.mapped('lot_ids.mutation_ids').filtered(lambda s: s.state == 'done')
+            mutations = self.env['syndic.mutation'].search([('state', '=', 'done')])
             if partner.lot_ids.filtered(lambda s: not s.building_id.active) or partner in mutations.old_partner_ids:
                 partner.is_old = True
             else:
                 partner.is_old = False
+
+            if partner.lot_ids.filtered(lambda s: s.building_id.active) and not partner.is_old:
+                partner.is_owner = True
+            else:
+                partner.is_owner = False
 
             if partner.loaner_lot_ids and partner.loaner_lot_ids.mapped('building_id').active:
                 partner.is_loaner = True

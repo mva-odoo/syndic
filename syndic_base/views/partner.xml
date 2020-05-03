@@ -70,6 +70,7 @@
                         <button class="oe_stat_button" type="object"
                                 attrs="{'invisible': [('is_old', '=', False)]}"
                                 name="action_lot_old" icon="fa-building">
+                                <field name="old_lot_count" widget="statinfo"/>
                         </button>
                     </div>
 

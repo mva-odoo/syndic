@@ -109,6 +109,10 @@ class CreateLetter(models.Model):
     def onchange_immeuble(self):
         self.partner_ids = self.immeuble_id.mapped('lot_ids').mapped('owner_ids') if self.all_immeuble else False
 
+    @api.onchange('partner_ids')
+    def onchange_partner(self):
+        self.partner_ids |= self.partner_ids.child_ids.filtered(lambda s: s.is_letter)
+
     @api.depends('owner_ids', 'supplier_ids', 'loaner_ids')
     def _get_other_address(self):
         for rec in self:
@@ -147,24 +151,8 @@ width="96" height="61"/>'"""
 
         mail['body_html'] = header + body + self.ps + '<br/>'+footer if self.ps else header + body + footer
 
-        for prop in self.owner_ids.filtered(lambda s: s.email):
+        for prop in self.partner_ids.filtered(lambda s: s.email):
             mail['email_to'] = prop.email
-            self.env['mail.mail'].create(mail)
-
-        for fourn in self.supplier_ids.filtered(lambda s: s.email):
-            mail['email_to'] = fourn.email
-            self.env['mail.mail'].create(mail)
-
-        for loc in self.loaner_ids.filtered(lambda s: s.email):
-            mail['email_to'] = loc.email
-            self.env['mail.mail'].create(mail)
-
-        for div in self.other_ids.filtered(lambda s: s.email):
-            mail['email_to'] = div.email
-            self.env['mail.mail'].create(mail)
-
-        for addr in self.owner_ids.mapped('child_ids').filtered(lambda s: s.email and s.is_email):
-            mail['email_to'] = addr.email
             self.env['mail.mail'].create(mail)
 
         self.write({
