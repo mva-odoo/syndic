@@ -6,6 +6,7 @@ class Users(models.Model):
     _inherit = 'res.users'
 
     server_mail_id = fields.Many2one('ir.mail_server', 'Serveur Mail Sortant')
+    immeuble_id = fields.Many2one('syndic.building', 'immeuble_id')
 
     @api.model
     def create(self, vals):
