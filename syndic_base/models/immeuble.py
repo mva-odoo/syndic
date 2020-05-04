@@ -137,9 +137,3 @@ class Building(models.Model):
         for building in self:
             building.user_id.unlink()
         return super(Building, self).unlink()
-
-
-class BuildingUser(models.Model):
-    _inherit = 'res.users'
-
-    immeuble_id = fields.Many2one('syndic.building', 'immeuble_id')
