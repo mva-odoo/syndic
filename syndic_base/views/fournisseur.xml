@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record model="ir.ui.view" id="view_fournisseur_search">
+        <field name="name">Syndic Search view fournisseur</field>
+        <field name="model">res.partner</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="search_partner"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="job_ids"/>
+            </field>
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="view_fournisseur_tree">
         <field name="name">Syndic Tree view fournisseur</field>
         <field name="model">res.partner</field>
@@ -7,7 +19,7 @@
         <field name="inherit_id" ref="tree_partner"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="job_ids"/>
+                <field name="job_ids" widget="many2many_tags"/>
             </field>
         </field>
     </record>
