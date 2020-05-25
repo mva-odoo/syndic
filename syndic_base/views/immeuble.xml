@@ -102,8 +102,8 @@
 								<tree editable="top">
 									<!-- <field name="sequence" widget="handle"/> -->
 									<field name="name"/>
-									<field name="owner_ids" widget="many2many_tags"/>
-									<field name="loaner_ids" widget="many2many_tags"/>
+									<field name="owner_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+									<field name="loaner_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
 									<field name="type_id"/>
 									<field name="quotities"/>
 								</tree>
@@ -111,8 +111,8 @@
 								<form>
 									<group>
 										<group>
-											<field name="owner_ids" widget="many2many_tags"/>
-											<field name="loaner_ids" widget="many2many_tags"/>
+											<field name="owner_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+											<field name="loaner_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
 										</group>
 										<group>
 											<field name="type_id"/>

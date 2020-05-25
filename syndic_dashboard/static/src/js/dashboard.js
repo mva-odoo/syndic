@@ -108,8 +108,8 @@ var Dashboard = AbstractAction.extend({
 				}
 
 				var building_name = '<a href="javascript:;" class="building_btn deuxiemeli '+el_manager+'" data-id='+element["id"]+'>'+element['name']+'</a> ';
-				var calendar_icon = ' <a href="javascript:;" class="calendar_btn" data-building_id='+element["id"]+' data-name='+element["name"]+'><i class="fa fa-calendar fa-calendar-white"></i>';
-				var envelope_icon = '</a> <a href="javascript:;" class="letter_btn" data-building_id='+element["id"]+'><i class="fa fa-envelope fa-envelope-white"></i> ';			
+				var calendar_icon = ' <a href="javascript:;" class="calendar_btn" data-building_id='+element["id"]+' data-name='+element["name"]+'><i class="fa fa-calendar"></i>';
+				var envelope_icon = '</a> <a href="javascript:;" class="letter_btn" data-building_id='+element["id"]+'><i class="fa fa-envelope"></i> ';			
 				var $building2_html = '<li class="deuxiemeli '+el_manager+'"> '+calendar_icon+envelope_icon+building_name+date+'</li></a>';
 	
 				new_this.$("#deuxieme"+value.month).append($building2_html);

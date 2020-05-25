@@ -54,8 +54,8 @@
 }
 .deuxiemeli{
     list-style:none;
-    background: #7C7BAD;
-    color: white;
+    background: white;
+    color: #7C7BAD;
     padding:4px;
 }
 .fa-calendar-white{

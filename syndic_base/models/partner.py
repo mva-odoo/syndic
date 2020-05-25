@@ -33,6 +33,7 @@ class Partner(models.Model):
     loaner_lot_ids = fields.Many2many('syndic.lot', 'syndic_lot_loan_rel', string='Lots(Locataire)')
     loaner_lot_count = fields.Integer('Lots(Locataire)', compute='_get_number_lot_loaner')
     old_lot_count = fields.Integer('Mutations', compute='_get_old_lot_loaner')
+    color = fields.Integer('Color', default=8)
 
     owner_building_ids = fields.Many2many(
         'syndic.building',
@@ -111,20 +112,9 @@ class Partner(models.Model):
     def _get_partner_type(self):
         for partner in self:
             mutations = self.env['syndic.mutation'].search([('state', '=', 'done')])
-            if partner.lot_ids.filtered(lambda s: not s.building_id.active) or partner in mutations.old_partner_ids:
-                partner.is_old = True
-            else:
-                partner.is_old = False
-
-            if partner.lot_ids.filtered(lambda s: s.building_id.active) and not partner.is_old:
-                partner.is_owner = True
-            else:
-                partner.is_owner = False
-
-            if partner.loaner_lot_ids and partner.loaner_lot_ids.mapped('building_id').active:
-                partner.is_loaner = True
-            else:
-                partner.is_loaner = False
+            partner.is_owner = True if partner.lot_ids.filtered(lambda s: s.building_id.active) else False
+            partner.is_old = True if not partner.is_owner and partner.lot_ids.filtered(lambda s: not s.building_id.active) or partner in mutations.old_partner_ids else False
+            partner.is_loaner = True if partner.loaner_lot_ids and partner.loaner_lot_ids.mapped('building_id').active else False
 
     @api.onchange('zip', 'country_id')
     def _onchange_zip(self):

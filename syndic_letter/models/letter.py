@@ -22,26 +22,6 @@ class CreateLetter(models.Model):
 
     old_ids = fields.Many2many('res.partner', 'letter_old_rel', string=u'Ancien Propriétaire')
 
-    owner_ids = fields.Many2many(
-        'res.partner',
-        'letter_owner_rel',
-        domain=[('is_owner', '=', True)],
-        string=u'Propriétaire'
-    )
-    loaner_ids = fields.Many2many(
-        'res.partner',
-        'letter_loaner_rel',
-        domain=[('is_loaner', '=', True)],
-        string='Locataires'
-    )
-    supplier_ids = fields.Many2many(
-        'res.partner',
-        'letter_supplier_rel',
-        domain=[('supplier', '=', True)],
-        string='Fournisseurs'
-    )
-    other_ids = fields.Many2many('res.partner', 'letter_other_rel', string='Divers')
-
     partner_ids = fields.Many2many('res.partner', 'letter_partner_rel', string="To")
     from_id = fields.Many2one(
         'res.users',
@@ -72,6 +52,12 @@ class CreateLetter(models.Model):
     state = fields.Selection([('not_send', 'Pas envoyé'), ('send', 'Envoyé')], string='State', default='not_send')
     mail_server = fields.Many2one('ir.mail_server', 'Serveur email')
 
+    email_ids = fields.Many2many('mail.mail', compute='_get_email_letter', string='Emails')
+
+    def _get_email_letter(self):
+        for letter in self:
+            letter.email_ids = self.env['mail.mail'].search([('model', '=', 'letter.letter'), ('res_id', '=', letter.id)])
+
     @api.depends('date')
     def _compute_date(self):
         for letter in self:
@@ -85,7 +71,7 @@ class CreateLetter(models.Model):
         if res.save_letter:
             res.env['letter.model'].create({'name': res.name_template, 'text': res.contenu})
 
-        for supplier_id in res.supplier_ids:
+        for supplier_id in res.partner_ids.filtered(lambda s: s.supplier):
             values = {
                 'name': res.sujet,
                 'fournisseur_id': supplier_id.id,
@@ -113,21 +99,13 @@ class CreateLetter(models.Model):
     def onchange_partner(self):
         self.partner_ids |= self.partner_ids.child_ids.filtered(lambda s: s.is_letter)
 
-    @api.depends('owner_ids', 'supplier_ids', 'loaner_ids')
-    def _get_other_address(self):
-        for rec in self:
-            partner_owner = rec.owner_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
-            partner_supplier = rec.supplier_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
-            partner_loaner = rec.loaner_ids.mapped('child_ids').filtered(lambda s: s.is_letter)
-
-            rec.partner_address_ids = partner_owner | partner_supplier | partner_loaner
-            rec.is_fax = True if rec.supplier_ids else False
-
     def send_email_lettre(self):
         self.ensure_one()
         header = ''
 
         mail = {
+            'model': 'letter.letter',
+            'res_id': self.id,
             'mail_server_id': self.from_id.server_mail_id.id if self.from_id and self.from_id.server_mail_id else self.env.user.server_mail_id or False,
             'email_from': self.from_id.email if self.from_id else '',
             'reply_to': self.from_id.email if self.from_id else '',

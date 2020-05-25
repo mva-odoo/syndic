@@ -13,7 +13,7 @@ Site web SGImmo
         'pages/homepage.xml',
         # 'pages/gestion-de-copropriete.xml',
         # 'pages/gestion-privative.xml',
-        # 'pages/contact.xml',
+        'pages/contact.xml',
         # 'pages/consultance.xml',
         # 'pages/footer.xml',
         # 'views/res_users.xml',

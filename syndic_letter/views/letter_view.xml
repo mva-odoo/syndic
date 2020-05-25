@@ -10,10 +10,7 @@
                     <field name="sujet"/>
                     <field name="create_date"/>
                     <field name="immeuble_id"/>
-                    <field name="owner_ids" />
-                    <field name="supplier_ids" />
-                    <field name="loaner_ids" />
-                    <field name="other_ids" />
+                    <field name="partner_ids" />
                     <field name="contenu" />
                     <field name="letter_type_id" />
                     <group expand="0" string="Group By...">
@@ -87,6 +84,9 @@
                                         <field name="is_mail"/>
                                     </group>
                                 </group>
+                            </page>
+                            <page string="Emails">
+                                <field name="email_ids"/>
                             </page>
                         </notebook>
 
