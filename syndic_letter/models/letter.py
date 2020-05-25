@@ -129,8 +129,8 @@ class CreateLetter(models.Model):
 
         mail = {
             'mail_server_id': self.from_id.server_mail_id.id if self.from_id and self.from_id.server_mail_id else self.env.user.server_mail_id or False,
-            'email_from': self.from_id,
-            'reply_to': self.from_id,
+            'email_from': self.from_id.email if self.from_id else '',
+            'reply_to': self.from_id.email if self.from_id else '',
             'attachment_ids': [(6, 0, self.attachment_ids.ids)],
             'subject': self.immeuble_id.name + '-' + self.sujet if self.immeuble_id else self.sujet,
         }
