@@ -100,7 +100,6 @@
 						<page string="Lot" name="lot">
 							<field name="lot_ids" attrs="{'readonly': [('is_lock', '=', True)]}">
 								<tree editable="top">
-									<!-- <field name="sequence" widget="handle"/> -->
 									<field name="name"/>
 									<field name="owner_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
 									<field name="loaner_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>

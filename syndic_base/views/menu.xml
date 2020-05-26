@@ -8,9 +8,8 @@
                     sequence="1"
                     web_icon="syndic_base,static/description/building.png"
                 />
-                <menuitem name="Gestion de Syndic" id="syndic" parent="syndic_main" sequence="1"/> 
-                <menuitem name="Immeubles" id="simpl_immeubles" parent="syndic" action="action_simpl_building"/>
-                <menuitem name="Fiche signalitique immeuble" id="simpl_immeubles_signalitic" parent="syndic" action="action_signalitic"/>
+                <menuitem name="Immeubles" id="simpl_immeubles" parent="syndic_main" action="action_simpl_building"/>
+                <menuitem name="Fiche signalitique immeuble" id="simpl_immeubles_signalitic" parent="syndic_main" action="action_signalitic"/>
                 
                 <menuitem name="Mutation" id="mutation" parent="syndic_main" action="action_mutation" sequence="30"/>
                 
@@ -34,10 +33,8 @@
                     <field name="groups_id" eval="[(6, 0, [ref('syndic_base.syndic_manager')])]"/>
                 </record>
 
-                <record model="ir.ui.menu" id="contacts.menu_contacts">
-                    <field name="groups_id" eval="[(6, 0, [ref('syndic_base.syndic_manager')])]"/>
+                <record model="ir.ui.menu" id="contacts.res_partner_menu_contacts">
+                    <field name="groups_id" eval="[(6, 0, [ref('base.group_multi_currency')])]"/>
                 </record>
-
-                
 	</data>
 </odoo>

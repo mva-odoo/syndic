@@ -169,7 +169,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Contacts" id="menu_partner" parent="syndic_main" sequence="20"/>
+    <menuitem name="Contacts" id="menu_partner" parent="contacts.menu_contacts" sequence="20"/>
     <menuitem name="Anciens Propriétaires" id="menu_old_partner"  parent="menu_partner" action="syndic_action_old" sequence="40"/>
     <menuitem name="Tous les contacts" id="menu_old"  parent="menu_partner" action="syndic_action_partner" sequence="50"/>
 </odoo>
