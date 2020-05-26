@@ -33,8 +33,10 @@
                     <field name="groups_id" eval="[(6, 0, [ref('syndic_base.syndic_manager')])]"/>
                 </record>
 
-                <record model="ir.ui.menu" id="contacts.res_partner_menu_contacts">
+                <record model="ir.ui.menu" id="contacts.menu_contacts">
                     <field name="groups_id" eval="[(6, 0, [ref('base.group_multi_currency')])]"/>
                 </record>
+
+                
 	</data>
 </odoo>
