@@ -56,7 +56,7 @@
         <field name="view_mode">tree,form</field>
         <field name="domain">[('supplier', '=', True)]</field>
         <field name="context">{'default_supplier': 1}</field>
-        <!--<field name="search_view_id" ref="syndic_tree_fournisseur" />-->
+        <field name="search_view_id" ref="view_fournisseur_search"/>
     </record>
 
     <record id="action_view_tree_fournisseur" model="ir.actions.act_window.view">

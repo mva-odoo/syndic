@@ -2,6 +2,26 @@
 <odoo>
     <data>
         <!--search -->
+        <record model="ir.ui.view" id="letter_partner_all">
+            <field name="name">all partner view</field>
+            <field name="model">res.partner</field>
+            <field name="priority">99</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="street"/>
+                    <field name="city_id"/>
+                    <field name="zip"/>
+                    <field name="country_id"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="owner_building_ids"/>
+                    <field name="job_ids"/>
+                </search>
+            </field>
+        </record>
+
+
         <record model="ir.ui.view" id="search_letter">
             <field name="name">Letter search</field>
             <field name="model">letter.letter</field>
@@ -73,7 +93,7 @@
 
                         <notebook>
                             <page string="Contact">
-                                <field name="partner_ids"/>
+                                <field name="partner_ids" context="{'search_view_ref': 'syndic_letter.letter_partner_all'}"/>
                             </page>
                             <page string="Options">
                                 <group>
