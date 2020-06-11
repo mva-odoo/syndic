@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="syndic_honoraire_building_form">
+        <field name="name">Syndic honoraire Building</field>
+            <field name="model">syndic.building</field>
+            <field name="inherit_id" ref="syndic_base.form_simpl_building"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='comptabilite']" position="after">
+                  <page string="Honoraires et Frais Admin." name="honoraire" groups="syndic_base.syndic_manager">
+                    <group string="Honoraires et Frais Admin." name="honoraire">
+                        <field name="currency_id" invisible="1"/>
+                          <group>
+                            <field name="honoraire" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="frais_admin" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                          </group>
+                        <group>
+                          <field name="is_merge"/>
+                        </group>
+                        <field name="honoraire_ids">
+                          <tree editable="top">
+                              <field name="year_id"/>
+                              <field name="honoraire"/>
+                              <field name="frais_admin"/>
+                          </tree>
+                        </field>
+                      </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//button[@name='action_inhabitant']" position="after">
+                  <button name="get_invoice" type="object" class="oe_stat_button" icon="fa-archive" groups="syndic_base.syndic_manager">
+                      <field name="count_invoice" widget="statinfo"/>
+                  </button>
+                </xpath>
+            </field>
+    </record>
+    
+    <record id="syndic_honoraire_year_view_tree" model="ir.ui.view">
+      <field name="name">syndic.honoraire.year.view.tree</field>
+      <field name="model">syndic.honoraire.year</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="index"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="syndic_honoraire_year_view_form" model="ir.ui.view">
+      <field name="name">syndic.honoraire.year.view.form</field>
+      <field name="model">syndic.honoraire.year</field>
+      <field name="arch" type="xml">
+        <form>
+        <header>
+          <button name='set_index' string="calculer les index" type='object'/>
+        </header>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="index"/>
+          </group>
+          <field name="honoraire_ids">
+            <tree>
+              <field name="honoraire"/>
+              <field name="frais_admin"/>
+              <field name="building_id"/>
+            </tree>
+          </field>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- syndic.honoraire.year action window -->
+    <record id="model_name_action" model="ir.actions.act_window">
+      <field name="name">Index Par année</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">syndic.honoraire.year</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="syndic_honoraire_year_menu_act" name="Index Honoraire et Frais admin." parent="syndic_base.configuration_syndic" action="model_name_action"/>
+</odoo>
