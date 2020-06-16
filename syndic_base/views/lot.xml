@@ -3,7 +3,7 @@
 	<data>
 		<!--search -->
 		<record model="ir.ui.view" id="search_lot">
-			<field name="name">Letter search</field>
+			<field name="name">Lot search</field>
 			<field name="model">syndic.lot</field>
 			<field name="arch" type="xml">
 				<search string="Lot">
@@ -19,7 +19,7 @@
 		</record>
 
 		<record model="ir.ui.view" id="tree_lot">
-			<field name="name">Letter tree</field>
+			<field name="name">lot tree</field>
 			<field name="model">syndic.lot</field>
 			<field name="arch" type="xml">
 				<tree string="Lot">
@@ -27,13 +27,13 @@
                     <field name="building_id"/>
                     <field name="owner_ids" widget="many2many_tags"/>
                     <field name="loaner_ids"  widget="many2many_tags"/>
-                    <field name="quotities"/>
+					<field name="quotities"/>
 				</tree>
 			</field>
 		</record>
 
         <record model="ir.ui.view" id="form_lot">
-			<field name="name">Letter form</field>
+			<field name="name">Lot form</field>
 			<field name="model">syndic.lot</field>
 			<field name="arch" type="xml">
 				<form string="Lot">
@@ -42,6 +42,7 @@
 						<field name="building_id"/>
 						<field name="owner_ids" widget="many2many_tags"/>
 						<field name="loaner_ids"  widget="many2many_tags"/>
+						<field name="quotities"/>
 					</group>
 					<notebook>
 						<page string="Mutation">

@@ -87,7 +87,7 @@ class Partner(models.Model):
     def create(self, vals):
         partner = super(Partner, self).create(vals)
         if not self._context.get('normal_create'):
-            self.env['res.users'].with_context(normal_create=False).create({
+            self.env['res.users'].with_context(normal_create=False, no_reset_password=True).create({
                 'partner_id': partner.id,
                 'name': partner.name,
                 'login': '%s - %s' % (partner.name, partner.id),
