@@ -112,6 +112,7 @@ class OffreContrats(models.Model):
     _description = 'offre.contrat'
     _order = 'date_envoi desc'
 
+    code = fields.Char('Code')
     name = fields.Char('Type', required=True)
     fournisseur_id = fields.Many2one('res.partner', string='Nom du fournisseur', required=True)
     immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble', required=True)

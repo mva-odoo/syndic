@@ -12,6 +12,7 @@
     'website': 'http://www.odoo.com',
     'data': [
         'views/claim_view.xml',
+        'report/barecode.xml',
         'security/ir.model.access.csv',
         ],
     'installable': True,

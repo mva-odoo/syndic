@@ -220,9 +220,10 @@
 			<field name="arch" type="xml">
 				<form string="Offre et contrat">
 					<group>
-                        <field name="name" />
-                        <field name="fournisseur_id" />
-                        <field name="immeuble_id" />
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="fournisseur_id"/>
+                        <field name="immeuble_id"/>
                         <field name="demande" />
                         <field name="date_envoi" />
                         <field name="envoi_par" />
