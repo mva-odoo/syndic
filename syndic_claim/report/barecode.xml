@@ -10,6 +10,7 @@
         />
 
         <template id="barcode_offre">
+            <t t-set="web_url" t-value="docs.env['ir.config_parameter'].sudo().get_param('web.base.url', default='')"/>
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
@@ -17,12 +18,10 @@
                             <img 
                                 alt="barcode"
                                 t-if="o.code"
-                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.code, 600, 120)"
-                                style="max-height:50pt;max-width:100%;"
+                                t-att-src="'%s/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % (web_url, 'Code128', o.code, 600, 120)"
                                 align="center"
                             />
                         </div>
-                        <div t-field="o.code" style="max-height:50pt;max-width:100%;text-align: center;"/>
                     </div>
                 </t>
             </t>
