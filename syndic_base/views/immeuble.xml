@@ -146,9 +146,9 @@
 						<page string="Contrats" name="contrats">
 							<field name="contrat_ids">
 								<tree editable="bottom">
-									<field name="name"/>
 									<field name="code"/>
-									<field name="building_id"/>
+									<field name="name"/>
+									<field name="description"/>
 									<field name="supplier_id"/>
 									<field name="attachment_ids" widget="many2many_binary"/>
 								</tree>

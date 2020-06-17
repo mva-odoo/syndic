@@ -6,7 +6,7 @@ class Bank(models.Model):
     _name = 'syndic.building.contract'
     _inherit = 'barcode.import'
 
-    _barcode_type = '003'
+    _barcode_type = 'contrat'
     _building_field = 'building_id'
 
     name = fields.Char('Contrat', required=True)

@@ -113,6 +113,8 @@ class OffreContrats(models.Model):
     _description = 'offre.contrat'
     _order = 'date_envoi desc'
 
+    _barcode_type = 'offre'
+
     code = fields.Char('Code', readonly=True)
     name = fields.Char('Type', required=True)
     fournisseur_id = fields.Many2one('res.partner', string='Nom du fournisseur', required=True)
@@ -164,7 +166,7 @@ class BonCommande(models.Model):
     _description = 'bon.commande'
     _order = 'date_demande desc'
 
-    _barcode_type = '002'
+    _barcode_type = 'bdc'
 
     name = fields.Char('Type', required=True)
     immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble', required=True)

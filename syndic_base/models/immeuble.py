@@ -3,9 +3,9 @@ from odoo import models, fields, api, exceptions
 from odoo.addons.syndic_tools.syndic_tools import SyndicTools, _MONTH
 
 
-
 class Building(models.Model):
     _name = 'syndic.building'
+    _inherit = 'barcode.import'
     _description = 'syndic.building'
     _order = 'name asc'
 
