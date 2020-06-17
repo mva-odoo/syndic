@@ -109,10 +109,11 @@ class CommentHistory(models.Model):
 
 class OffreContrats(models.Model):
     _name = 'offre.contrat'
+    _inherit = ['barcode.import']
     _description = 'offre.contrat'
     _order = 'date_envoi desc'
 
-    code = fields.Char('Code')
+    code = fields.Char('Code', readonly=True)
     name = fields.Char('Type', required=True)
     fournisseur_id = fields.Many2one('res.partner', string='Nom du fournisseur', required=True)
     immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble', required=True)
@@ -132,6 +133,7 @@ class OffreContrats(models.Model):
     date_acceptation = fields.Date('Date acceptation')
     is_bon_commande = fields.Boolean('Bon de commande fait', default=False)
     is_refused = fields.Boolean('Refuser', default=False)
+    attachment_ids = fields.Many2many('ir.attachment', string='Offres')
 
     @api.onchange('reception')
     def onchange_reception(self):
@@ -158,8 +160,11 @@ class OffreContrats(models.Model):
 
 class BonCommande(models.Model):
     _name = 'bon.commande'
+    _inherit = ['barcode.import']
     _description = 'bon.commande'
     _order = 'date_demande desc'
+
+    _barcode_type = '002'
 
     name = fields.Char('Type', required=True)
     immeuble_id = fields.Many2one('syndic.building', string='Nom immeuble', required=True)

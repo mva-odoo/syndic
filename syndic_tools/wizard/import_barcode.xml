@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="form_barcode_improt">
+			<field name="name">Import barcode FORM</field>
+			<field name="model">barecode.importation</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="attachment_ids" widget="many2many_binary"/>
+					</group>
+					<footer>
+						<button string="Importer barcode" name="barcode_import" type="object"/>
+					</footer>
+				</form>
+            </field>
+        </record>
+	</data>
+</odoo>

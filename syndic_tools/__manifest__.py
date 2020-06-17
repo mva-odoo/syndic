@@ -11,5 +11,7 @@ Syndic Tools
         'base',
     ],
     'data': [
+        'wizard/import_barcode.xml',
+        'report/barecode.xml'
     ],
 }

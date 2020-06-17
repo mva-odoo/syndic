@@ -8,11 +8,11 @@
     Gestion des appels
     """,
     'author': 'SGImmo',
-    'depends': ['syndic_base'],
-    'website': 'http://www.odoo.com',
+    'depends': [
+        'syndic_base',
+    ],
     'data': [
         'views/claim_view.xml',
-        'report/barecode.xml',
         'security/ir.model.access.csv',
         ],
     'installable': True,

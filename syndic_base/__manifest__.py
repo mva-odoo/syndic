@@ -11,6 +11,7 @@
         'mail',
         'web_change',
         'base_address_city',
+        'syndic_tools',
     ],
     'website': 'http://www.sgimmo.be',
     'data': [

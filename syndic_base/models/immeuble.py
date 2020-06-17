@@ -40,6 +40,8 @@ class Building(models.Model):
     honoraire = fields.Float('Honoraire', groups='syndic_base.syndic_manager')
     frais_admin = fields.Float('Frais Administratif', groups='syndic_base.syndic_manager')
 
+    contrat_ids = fields.One2many('syndic.building.contract', 'building_id', 'Contrats')
+
     manager_id = fields.Many2one(
         'res.users', 'Manager',
         domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]")

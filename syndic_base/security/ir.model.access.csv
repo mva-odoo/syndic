@@ -6,6 +6,7 @@
 "syndic_signalitic_employe","syndic signalitic","model_building_signalitic","syndic_employe",1,1,1,0
 "syndic_lot","syndic lot","model_syndic_lot","syndic_manager",1,1,1,1
 "syndic_lot_employe","syndic lot","model_syndic_lot","syndic_employe",1,1,1,0
+"syndic_contrat_employe","syndic contrat","model_syndic_building_contract","syndic_employe",1,1,1,0
 "syndic_lot_client","syndic lot client","model_syndic_lot","syndic_client",1,0,0,0
 "syndic_type_lot","syndic type lot","model_syndic_type_lot","syndic_manager",1,1,1,1
 "syndic_type_lot_employe","syndic type lot","model_syndic_type_lot","syndic_employe",1,1,1,0
