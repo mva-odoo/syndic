@@ -26,6 +26,7 @@
             'views/locataire.xml',
             'views/fournisseur.xml',
             'views/res_users.xml',
+            'views/contract.xml',
             'views/menu.xml',
             'security/ir.model.access.csv',
             'security/groups.xml',

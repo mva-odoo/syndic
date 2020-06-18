@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!--search -->
+		<record model="ir.ui.view" id="search_contract">
+			<field name="name">contract search</field>
+			<field name="model">syndic.building.contract</field>
+			<field name="arch" type="xml">
+				<search string="contract">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="building_id"/>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="tree_contract">
+			<field name="name">contract tree</field>
+			<field name="model">syndic.building.contract</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="code"/>
+					<field name="name"/>
+					<field name="description"/>
+					<field name="supplier_id"/>
+				</tree>
+			</field>
+		</record>
+
+        <record model="ir.ui.view" id="form_contract">
+			<field name="name">contract form</field>
+			<field name="model">syndic.building.contract</field>
+			<field name="arch" type="xml">
+				<form string="contract">
+					<group>
+						<button name="barcode_import" string="Import de codebar" type="object"/>
+						<field name="code"/>
+						<field name="name"/>
+						<field name="description"/>
+						<field name="supplier_id"/>
+						<field name="building_id"/>
+						<field name="attachment_ids" widget="many2many_binary"/>
+					</group>
+				</form>
+			</field>
+		</record>
+        
+		<record model="ir.actions.act_window" id="action_building_contract">
+			<field name="name">contracts</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">syndic.building.contract</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	</data>
+</odoo>

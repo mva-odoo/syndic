@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <template id="honoraire_invoice">
+            <t t-call="web.html_container">
+                <t t-set="docs" t-value="docs.with_context({'lang':'fr_BE'})"/>
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-6"></div>
+                                <div class="col-6">
+                                    <span t-field="o.building_id.name"/> C/o SG IMMO<br/>
+                                    <span t-field="res_company.street"/><br/>
+                                    <span t-field="res_company.zip"/> <span t-field="res_company.city"/><br/>
+                                    <span t-field="res_company.country_id.name"/><br/>
+                                    <br/>
+                                    Bruxelles, le <!-- <span t-field="o.date_fr"/> --><br/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-2">
+                                    <br/>Concerne:<br/><br/><br/>
+                                    BCE:<br/>
+                                    Objet:<br/><br/><br/>
+                                </div>
+                                <div class="col-10">
+                                    <br/><span t-field="o.building_id.name"/><br/>
+                                    <span t-field="o.building_id.address_building"/><br/>
+                                    <span t-esc="o.building_id.zip_building"/> <span t-field="o.building_id.city_building.name"/><br/>
+                                    <span t-field="o.building_id.BCE"/><br/>
+                                    <span>Etats des frais et honoraires pour prestations accomplies</span><br/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-condensed" style="font-size:16px;">
+                                        <thead>
+                                            <tr style="text-align:center">
+                                                <th>Date</th>
+                                                <th>Motif</th>
+                                                <th>Quantité</th>
+                                                <th>Prix unitaire</th>
+                                                <th>Prix total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="sale_tbody">
+                                        <t t-foreach="o.invoice_line_ids" t-as="line">
+                                            <tr>
+                                                <td><span t-field="line.name"/></td>
+                                                <!-- <td><span t-field="line.type_id.name"/></td> -->
+                                                <td><span t-field="line.quantity"/></td>
+                                                <td><span t-field="line.price_unit"/>€</td>
+                                                <td><span t-field="line.price_subtotal"/></td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td>Total: <span t-field="o.amount_total"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <report
+                id="honoraire_facture_print"
+                model="account.move"
+                string="Facture Sgimmo"
+                name="syndic_honoraire.honoraire_invoice"
+                report_type="qweb-pdf"
+                />
+    </data>
+</odoo>

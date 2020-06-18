@@ -9,6 +9,7 @@ class Building(models.Model):
     _inherit = 'syndic.building'
 
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.ref('base.EUR'))
+    # TODO: clean
     honoraire = fields.Monetary('Honoraire', groups='syndic_base.syndic_manager')
     frais_admin = fields.Monetary('Frais Administratif', groups='syndic_base.syndic_manager')
 

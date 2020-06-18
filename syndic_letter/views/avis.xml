@@ -82,7 +82,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Avis" id="menu_action_avis" parent="menu_sub_letter" action="action_avis" sequence="3"/>
+        <menuitem name="Avis" id="menu_action_avis" parent="menu_letter" action="action_avis" sequence="3"/>
         <menuitem name="Modèle d avis" id="menu_action_model_avis" parent="menu_configuration_letter"
                   action="action_model_avis" sequence="2"/>
 

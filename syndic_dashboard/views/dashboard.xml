@@ -6,7 +6,7 @@
     </record>
 
     <menuitem name="Dashboard" id="timeline_dashboard_menu"
-              parent='syndic_base.syndic_main'
+              parent='calendar.mail_menu_calendar'
               sequence="1"
               action="action_dashboard"/>
 

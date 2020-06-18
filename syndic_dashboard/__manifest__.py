@@ -6,7 +6,7 @@
         Syndic dashboard
     """,
     'version': '1.0',
-    'depends': ['base', 'web', 'syndic_base'],
+    'depends': ['web', 'syndic_calendar'],
     'data': [
         'views/assets.xml',
         'views/dashboard.xml',

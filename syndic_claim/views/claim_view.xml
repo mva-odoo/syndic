@@ -257,12 +257,14 @@
 			<field name="arch" type="xml">
 				<form string="Bon de commande">
 					<group>
+						<button name="barcode_import" string="Import de codebar" type="object"/>
                         <field name="name" />
                         <field name="immeuble_id" />
                         <field name="fournisseur_id" />
                         <field name="date_demande" />
                         <field name="cloture"/>
                         <field name="date_cloture" attrs="{'required' : [('cloture','=',True)],'readonly':[('cloture','=',False)]}"/>
+						<field name="attachment_ids" widget="many2many_binary"/>
                     </group>
                 </form>
 			</field>
@@ -343,10 +345,10 @@
 
 		<!--menu -->
 		<menuitem name="Gestion d'immeuble" id="claim" web_icon="syndic_claim,static/description/icon.png"/>
-		<menuitem name="Gestion d'immeuble" id="menu_sub_claim" parent="claim"/>
-		<menuitem name="Gestion d'immeuble" id="menu_action_claim" parent="menu_sub_claim" action="action_claim"/>
-		<menuitem name="Offre et contrat" id="menu_offre_contrat" parent="menu_sub_claim" action="action_offre_contrat"/>
-		<menuitem name="Bon de commande" id="menu_bon_commande" parent="menu_sub_claim" action="action_bon_commande"/>
+
+		<menuitem name="Gestion d'immeuble" id="menu_action_claim" parent="claim" action="action_claim"/>
+		<menuitem name="Offre et contrat" id="menu_offre_contrat" parent="claim" action="action_offre_contrat"/>
+		<menuitem name="Bon de commande" id="menu_bon_commande" parent="claim" action="action_bon_commande"/>
 
 		<menuitem name="Configuration" id="menu_status_conf" parent="claim" groups="syndic_base.syndic_manager"/>
 		<menuitem name="Type" id="menu_type" parent="menu_status_conf" action="action_type_claim"/>

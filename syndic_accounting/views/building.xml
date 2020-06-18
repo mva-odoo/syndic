@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="syndic_honoraire_building_form">
+        <field name="name">Syndic honoraire Building</field>
+            <field name="model">syndic.building</field>
+            <field name="inherit_id" ref="syndic_base.form_simpl_building"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='bank_ids']/.." position="after">
+                  <group string="Comptabilité" name="accounting" groups="syndic_accounting.syndic_comptable">
+                    <group>
+                      <field name="accountant_id" options="{'no_create': True, 'no_open': True}"/>
+                      <field name="period"/>
+                      <field name="date_cloture"/>
+                    </group>
+                    <group>
+                      <field name="is_decompte_chauffage"/>
+                      <field name="is_decompte_eau"/>
+                    </group>
+                  </group>
+                </xpath>
+            </field>
+    </record>
+</odoo>

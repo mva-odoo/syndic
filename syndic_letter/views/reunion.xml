@@ -92,7 +92,7 @@
 
 
 		<!--menu -->		
-		<menuitem name="Rapports de réunions" id="menu_rapport_reunion" parent="menu_sub_letter" action="rapport_reunion" sequence="4"/>
+		<menuitem name="Rapports de réunions" id="menu_rapport_reunion" parent="menu_letter" action="rapport_reunion" sequence="4"/>
 
 	</data>
 </odoo>

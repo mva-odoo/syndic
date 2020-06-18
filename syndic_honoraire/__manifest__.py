@@ -14,6 +14,7 @@ Honoraire for building
         'views/building.xml',
         'datas/index_year.xml',
         'wizard/honoraire.xml',
+        'report/facture.xml',
         'security/ir.model.access.csv',
     ],
 

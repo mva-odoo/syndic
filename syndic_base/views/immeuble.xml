@@ -63,6 +63,9 @@
 								context="{'inhabitant_type':'loaner'}">
 							<field string="Locataires" name="loaner_count" widget="statinfo"/>
 						</button>
+						<button class="oe_stat_button" type="object" name="action_contract" icon="fa-barcode">
+							<field string="Contrats" name="contract_count" widget="statinfo"/>
+						</button>
 						<button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" string="Activation/Désactivation">
 							<!-- <field name="active" widget="boolean_button" options='{"terminology": "active"}'/> -->
 						</button>
@@ -142,17 +145,6 @@
 						</page>
 						<page string="Notes" name="notes">
 							<field name="note" attrs="{'readonly': [('is_lock', '=', True)]}"/>
-						</page>
-						<page string="Contrats" name="contrats">
-							<field name="contrat_ids">
-								<tree editable="bottom">
-									<field name="code"/>
-									<field name="name"/>
-									<field name="description"/>
-									<field name="supplier_id"/>
-									<field name="attachment_ids" widget="many2many_binary"/>
-								</tree>
-							</field>
 						</page>
 					</notebook>
 				</sheet>

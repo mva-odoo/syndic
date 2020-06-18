@@ -84,7 +84,7 @@
                                 <group string="Adresse">
                                     <field name="street"/>
                                     <field name="zip"/>
-                                    <field name="city_id" attrs="{'readonly': [('zip', '=', False)]}"/>
+                                    <field name="city_id"/>
                                     <field name="country_id" options="{'no_open': True, 'no_create': True}" />
                                 </group>
 

@@ -224,9 +224,8 @@
 
         <!--menu -->
         <menuitem name="Lettre" id="menu_letter" web_icon="syndic_letter,static/description/icon.png"/>
-        <menuitem name="Lettre" id="menu_sub_letter" parent="menu_letter" sequence="1"/>
-        <menuitem name="Lettre" id="menu_action_new_letter" parent="menu_sub_letter" action="action_new_letter" sequence="2"/>
-        <menuitem name="Configuration" id="menu_configuration_letter" parent="menu_letter" sequence="2" groups="syndic_base.syndic_manager"/>
+        <menuitem name="Lettre" id="menu_action_new_letter" parent="menu_letter" action="action_new_letter" sequence="2"/>
+        <menuitem name="Configuration" id="menu_configuration_letter" parent="menu_letter" sequence="99" groups="syndic_base.syndic_manager"/>
         <menuitem name="Modèle de lettre" id="menu_action_model" parent="menu_configuration_letter" action="action_model" sequence="1"/>
         <menuitem name="Type de lettre" id="menu_type_letter" parent="menu_configuration_letter" action="type_letter" sequence="3"/>
         <menuitem name="Debut de lettre" id="menu_begin_letter" parent="menu_configuration_letter" action="begin_letter" sequence="4"/>

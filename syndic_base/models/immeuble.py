@@ -9,6 +9,8 @@ class Building(models.Model):
     _description = 'syndic.building'
     _order = 'name asc'
 
+    _print_barcode = False
+
     name = fields.Char('Immeuble', required=True)
     lot_ids = fields.One2many('syndic.lot', 'building_id', 'Lots')
     BCE = fields.Char('BCE')
@@ -37,6 +39,10 @@ class Building(models.Model):
 
     owner_count = fields.Integer(compute='_get_quotity', string='Nombre de Propriétaires')
     loaner_count = fields.Integer(compute='_get_quotity', string='Nombre de Locataires')
+
+    contract_count = fields.Integer(compute='_get_contract', string='Nombre de Contrat')
+
+    # TODO: remove after honoraire
     honoraire = fields.Float('Honoraire', groups='syndic_base.syndic_manager')
     frais_admin = fields.Float('Frais Administratif', groups='syndic_base.syndic_manager')
 
@@ -108,6 +114,17 @@ class Building(models.Model):
             building.lot_count = len(building.lot_ids)
             building.owner_count = len(building.mapped('lot_ids.owner_ids'))
             building.loaner_count = len(building.mapped('lot_ids.loaner_ids'))
+
+    def _get_contract(self):
+        for building in self:
+            building.contract_count = len(building.contrat_ids)
+
+    def action_contract(self):
+        self.ensure_one()
+        action = self.env.ref('syndic_base.action_building_contract').read()[0]
+        action['domain'] = [('building_id', '=', self.id)]
+        action['context'] = {'default_building_id': self.id}
+        return action
 
     @api.model
     def create(self, vals):

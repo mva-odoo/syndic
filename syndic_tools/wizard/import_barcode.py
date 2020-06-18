@@ -9,7 +9,7 @@ class ImportBarcode(models.TransientModel):
     attachment_ids = fields.Many2many('ir.attachment', string='Fichier à importer')
 
     def barcode_import(self):
-        active_model = self.env.context.get('active_model')
+        active_model = self.env.context.get('child_model') or self.env.context.get('active_model')
         for attachment in self.attachment_ids:
             self.env[active_model].search(
                 [('code', '=', attachment.name[:-4])],

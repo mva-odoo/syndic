@@ -42,6 +42,7 @@ class SuiviFacture(models.TransientModel):
                 invoices |= self.env['account.move'].create({
                     'type': 'out_invoice',
                     'date': self.date,
+                    'building_id': immeuble.id,
                     'partner_id': immeuble.user_id.partner_id.id,
                     'invoice_line_ids': [(0, 0, frais_admin_vals), (0, 0, honoraire_vals)]
                 })
@@ -50,6 +51,7 @@ class SuiviFacture(models.TransientModel):
                 invoices |= self.env['account.move'].create({
                     'type': 'out_invoice',
                     'date': self.date,
+                    'building_id': immeuble.id,
                     'partner_id': immeuble.user_id.partner_id.id,
                     'invoice_line_ids': [(0, 0, frais_admin_vals)]
                 })
@@ -57,6 +59,7 @@ class SuiviFacture(models.TransientModel):
                 invoices |= self.env['account.move'].create({
                     'type': 'out_invoice',
                     'date': self.date,
+                    'building_id': immeuble.id,
                     'partner_id': immeuble.user_id.partner_id.id,
                     'invoice_line_ids': [(0, 0, honoraire_vals)]
                 })
