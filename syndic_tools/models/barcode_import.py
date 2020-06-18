@@ -75,7 +75,7 @@ class BarcodeImport(models.AbstractModel):
                     new_code = 'barcode-import-%s-%s' % (self._name, buillding.name)
                     seq = self.env['ir.sequence'].next_by_code(new_code)
                     no_code.write({
-                        'code': self._get_sequence(buillding, self._barcode_type, seq)
+                        'code': self._get_sequence(buillding, self._barcode_type, seq, no_code.create_date)
                     })
 
             # create report
@@ -109,8 +109,10 @@ class BarcodeImport(models.AbstractModel):
     def _get_building(self):
         return self if self._name =='syndic.building' else self[self._building_field]
 
-    def _get_sequence(self, building, type_seq, sequence):
-        return '%03d-%s%s-%s' % (building.num_building, date.today().year, type_seq, sequence)
+    def _get_sequence(self, building, type_seq, sequence, old_date=False):
+        date = old_date.year if old_date else date.today().year
+        
+        return '%03d-%s%s-%s' % (building.num_building, date, type_seq, sequence)
 
     @api.model
     def create(self, vals):
