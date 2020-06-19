@@ -47,11 +47,20 @@ class BarcodeImport(models.AbstractModel):
                 [table],
             )
             return cr.fetchone() 
+        
+        def column_exist(cr, table, column):
+            cr.execute(
+                """
+                    SELECT column_name FROM information_schema.columns WHERE table_name=%s and column_name=%s;
+            """,
+                [table, column]
+            )
+            return cr.fetchone()
 
         if self._name != 'barcode.import':
             # create column when init the model
-            if table_exists(self.env.cr, self._table):
-                self.env.cr.execute("""ALTER TABLE "%s" ADD COLUMN IF NOT EXISTS "code" varchar""" % (self._table))
+            if table_exists(self.env.cr, self._table) and not column_exist(self.env.cr, self._table, 'code'):
+                self.env.cr.execute("""ALTER TABLE "%s" ADD COLUMN "code" varchar""" % (self._table))
 
             # create new sequence
             buildings = self.env['syndic.building'].search_read(['|', ('active', '=', False), ('active', '=', True)], ['name'])
