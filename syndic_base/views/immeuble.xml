@@ -107,7 +107,7 @@
 									<field name="owner_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
 									<field name="loaner_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
 									<field name="type_id"/>
-									<field name="quotities"/>
+									<field name="quotities" sum="Quotitées Total"/>
 								</tree>
 								
 								<form>

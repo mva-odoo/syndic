@@ -9,6 +9,8 @@
 			<field name="arch" type="xml">
 				<search string="mutation">
                     <field name="mutation_date"/>
+					<field name="old_partner_ids"/>
+					<field name="new_partner_ids"/>
                     <field name="immeuble_id"/>
 				</search>
 			</field>
