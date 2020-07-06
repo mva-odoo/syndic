@@ -27,20 +27,3 @@ class WebsiteDocument(http.Controller):
             'types': doc_types,
             'immeubles': building_ids
         })
-
-
-class Website(odoo.addons.web.controllers.main.Home):
-    @http.route(website=True, auth="public")
-    def web_login(self, *args, **kw):
-        values = {}
-        res = super(Website, self).web_login(*args, **kw)
-        if request.httprequest.method == 'POST':
-            old_uid = request.uid
-            uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
-            if uid is not False:
-                user = request.env['res.users'].browse(uid)
-                return http.redirect_with_hash(user.login_path)
-            request.uid = old_uid
-            values['error'] = "Wrong login/password"
-            res = request.render('web.login', values)
-        return res
