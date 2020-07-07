@@ -31,6 +31,7 @@
             'security/ir.model.access.csv',
             'security/groups.xml',
             'report/immeuble.xml',
+            'datas/res.city.csv',
         ],
     'application': True,
 }
