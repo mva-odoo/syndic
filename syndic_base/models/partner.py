@@ -131,14 +131,14 @@ class Partner(models.Model):
             partner.is_loaner = True if partner.loaner_lot_ids and partner.loaner_lot_ids.mapped('building_id').active else False
 
     # TODO : clean
-    # @api.onchange('zip', 'country_id')
-    # def _onchange_zip(self):
-    #     domain = [('country_id', '=', self.country_id.id)]
-    #     if self.country_id.id == self.env.ref('base.be').id:
-    #         domain.append(('zipcode', '=', self.zip))
-    #     return {
-    #         'domain': {'city_id': domain}
-    #     }
+    @api.onchange('zip', 'country_id')
+    def _onchange_zip(self):
+        domain = [('country_id', '=', self.country_id.id)]
+        if self.country_id.id == self.env.ref('base.be').id:
+            domain.append(('zipcode', '=', self.zip))
+        return {
+            'domain': {'city_id': domain}
+        }
 
     def action_lot(self):
         self.ensure_one()
