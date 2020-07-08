@@ -19,8 +19,15 @@ class SuiviFacture(models.TransientModel):
         self.ensure_one()
         invoices = self.env['account.move']
 
-        for immeuble in self.year_id.mapped('honoraire_ids.building_id'):
-            frais = self.env['syndic.honoraire'].search([('year_id', '=', self.year_id.id), ('building_id', '=', immeuble.id)], limit=1)
+        active_buildings = self.env['syndic.building'].browse(self._context.get('active_ids'))
+        buildings = active_buildings & self.year_id.mapped('honoraire_ids.building_id')
+
+
+        for building in buildings:
+            frais = self.env['syndic.honoraire'].search([
+                ('year_id', '=', self.year_id.id),
+                ('building_id', '=', building.id)
+            ], limit=1)
 
             frais_admin_vals = {
                 'name': 'Frais administratifs %s - %s' % (self.year_id.name, self.trimestre),
@@ -38,12 +45,12 @@ class SuiviFacture(models.TransientModel):
 
             }
             
-            if immeuble.is_merge:
+            if building.is_merge:
                 invoices |= self.env['account.move'].create({
                     'type': 'out_invoice',
                     'date': self.date,
-                    'building_id': immeuble.id,
-                    'partner_id': immeuble.user_id.partner_id.id,
+                    'building_id': building.id,
+                    'partner_id': building.user_id.partner_id.id,
                     'invoice_line_ids': [(0, 0, frais_admin_vals), (0, 0, honoraire_vals)]
                 })
 
@@ -51,16 +58,16 @@ class SuiviFacture(models.TransientModel):
                 invoices |= self.env['account.move'].create({
                     'type': 'out_invoice',
                     'date': self.date,
-                    'building_id': immeuble.id,
-                    'partner_id': immeuble.user_id.partner_id.id,
+                    'building_id': building.id,
+                    'partner_id': building.user_id.partner_id.id,
                     'invoice_line_ids': [(0, 0, frais_admin_vals)]
                 })
 
                 invoices |= self.env['account.move'].create({
                     'type': 'out_invoice',
                     'date': self.date,
-                    'building_id': immeuble.id,
-                    'partner_id': immeuble.user_id.partner_id.id,
+                    'building_id': building.id,
+                    'partner_id': building.user_id.partner_id.id,
                     'invoice_line_ids': [(0, 0, honoraire_vals)]
                 })
 
