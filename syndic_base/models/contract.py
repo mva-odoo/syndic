@@ -4,6 +4,7 @@ from odoo import api, fields, models
 
 class Bank(models.Model):
     _name = 'syndic.building.contract'
+    _description = 'syndic.building.contract'
     _inherit = 'barcode.import'
 
     _barcode_type = 'contrat'
