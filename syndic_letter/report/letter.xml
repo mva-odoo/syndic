@@ -24,10 +24,29 @@
                 </div>
 
                 <div class="footer" style="text-align:center;color:#01559D;font-size:13px;">
-                    <p class="footer" style="border-top: solid 1px black; width: 100%"/>
-                    <p>Tél : 02 / 242.89.86  &amp;nbsp;-&amp;nbsp; Fax : 02 / 241.32.55  &amp;nbsp;&amp;nbsp;-&amp;nbsp;  Numéro d'entreprise : 0894 523 013 &amp;nbsp;-&amp;nbsp; Email : info@sgimmo.be</p>
-                    <p>I.P.I n° 501528  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Assurance professionnelle : AXA 730290350  &amp;nbsp;&amp;nbsp;-&amp;nbsp;&amp;nbsp;  Compte bancaire : 001 - 5423024 - 24</p>
-                </div>  
+                    <div class="row">
+                    <div class="col-4">
+                        <img alt="" 
+                            src="http://www.sogis-serveur45.com/sgimmo949/syndic/soft/userfiles/images/SGIMMO_LOGO_HORIZONTAL_RVB.jpg" style="height:69px; width:250px"/>
+                    </div>
+                    <div class="col-4" style="text-align:left">
+                        SG IMMO SRL<br/>
+                        Rue François Vander Elst, 38/1<br/>
+                        1950 Kraainem<br/>
+                        Tél: 02/242.89.86
+                    </div>
+                    <div class="col-4" style="text-align:left">
+                        <br/>Avenue Wilmart, 4-6<br/>
+                        1360 Perwez<br/>
+                        Tél: 081/31.02.21<br/>
+                    </div>
+                    </div>
+                    <div class='row' style='margin-top:20px'>
+                        <div class='col-12'>
+                            I.P.I n° 501528 - BCE : 0894 523 013 - RC: FORTIS 03/99.525.489/01 - IBAN : BE81 0015 4230 2424 (GEBABEBB)
+                        </div>
+                    </div>
+                </div>   
 
         </template>
 
@@ -83,7 +102,6 @@
                             <br/>
                             <p><span t-field="o.ps"/></p>
                         </t>
-           
                     </div>
                 </div>
             <p style="page-break-after:always;"></p>

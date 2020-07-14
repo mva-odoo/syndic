@@ -119,9 +119,11 @@ class BarcodeImport(models.AbstractModel):
         return self if self._name =='syndic.building' else self[self._building_field]
 
     def _get_sequence(self, building, type_seq, sequence, old_date=False):
-        date = old_date.year if old_date else date.today().year
-        
-        return '%03d-%s%s-%s' % (building.num_building, date, type_seq, sequence)
+        return '%03d-%s%s-%s' % (
+            building.num_building,
+            old_date.year if old_date else date.today().year,
+            type_seq, sequence
+        )
 
     @api.model
     def create(self, vals):

@@ -33,7 +33,6 @@ class Partner(models.Model):
     loaner_lot_ids = fields.Many2many('syndic.lot', 'syndic_lot_loan_rel', string='Lots(Locataire)')
     loaner_lot_count = fields.Integer('Lots(Locataire)', compute='_get_number_lot_loaner')
     old_lot_count = fields.Integer('Mutations', compute='_get_old_lot_loaner')
-    color = fields.Integer('Color', default=8)
 
     owner_building_ids = fields.Many2many(
         'syndic.building',

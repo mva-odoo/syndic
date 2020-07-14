@@ -12,6 +12,7 @@ class SyndicHonoraire(models.Model):
     frais_admin = fields.Float(string='Frais admin.')
     
     building_id = fields.Many2one('syndic.building', string='Immeuble')
+    manager_id = fields.Many2one(related='building_id.manager_id', store=True)
 
 
 class SyndicHonoraireYear(models.Model):

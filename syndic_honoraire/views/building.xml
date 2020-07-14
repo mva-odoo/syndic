@@ -74,13 +74,21 @@
 
 
     <!-- syndic.honoraire.year action window -->
-    <record id="model_name_action" model="ir.actions.act_window">
+    <record id="syndic_honoraire_year_action" model="ir.actions.act_window">
       <field name="name">Index Par année</field>
       <field name="type">ir.actions.act_window</field>
       <field name="res_model">syndic.honoraire.year</field>
       <field name="view_mode">tree,form</field>
     </record>
 
+    <record id="syndic_honoraire_action" model="ir.actions.act_window">
+      <field name="name">Années</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">syndic.honoraire</field>
+      <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="syndic_honoraire_year_menu_act" name="Index Honoraire et Frais admin." parent="syndic_base.configuration_syndic" action="model_name_action"/>
+    <menuitem id="syndic_honoraire_year_menu_act" name="Index Honoraire et Frais admin." parent="syndic_base.configuration_syndic" action="syndic_honoraire_year_action"/>
+    <menuitem id="syndic_honoraire_year_menu_act" name="Années" parent="syndic_base.configuration_syndic" action="syndic_honoraire_action"/>
 </odoo>

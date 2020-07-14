@@ -27,14 +27,14 @@ class Building(models.Model):
         self.ensure_one()
         action = self.env.ref('account.action_move_out_invoice_type').read()[0]
         action['domain'] = [
-            #('partner_id', '=', self.company_id.partner_id.id)
+            ('partner_id', '=', self.user_id.partner_id.id)
         ]
         return action
 
     def _get_count_invoice(self):
         for record in self:
             record.count_invoice = self.sudo().env['account.move'].search_count([
-                #('partner_id', '=', record.company_id.partner_id.id)
+                ('partner_id', '=', self.user_id.partner_id.id)
             ])
 
     @api.model

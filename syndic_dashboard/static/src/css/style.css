@@ -64,3 +64,8 @@
 .fa-envelope-white{
     color: white;
 }
+.o_tag_color_0 {
+    color: #FFFFFF !important;
+    background-color: #475577 !important;
+    box-shadow: inset 0 0 0 0 #777777 !important;
+}

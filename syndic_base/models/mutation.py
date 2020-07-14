@@ -7,6 +7,7 @@ class Mutation(models.Model):
     _description = 'syndic.mutation'
     _order = 'immeuble_id'
 
+    name = fields.Char('Mutation', compute='_get_name', store=True)
     mutation_date = fields.Date('Date de mutation', required=True)
     old_partner_ids = fields.Many2many(
         'res.partner',
@@ -23,6 +24,14 @@ class Mutation(models.Model):
     lot_ids = fields.Many2many('syndic.lot', string='Lot', required=True)
     state = fields.Selection([('draft', 'brouillon'), ('done', 'terminé')], 'Etat', default='draft')
     immeuble_id = fields.Many2one('syndic.building', related='lot_ids.building_id', store=True, string="Immeuble")
+
+    @api.depends('old_partner_ids', 'new_partner_ids')
+    def _get_name(self):
+        for mutation in self:
+            mutation.name = 'Mutation de %s vers %s' % (
+                ''.join(mutation.old_partner_ids.mapped('name') or []),
+                ''.join(mutation.new_partner_ids.mapped('name') or []),
+            )
 
     @api.onchange('old_partner_ids')
     def onchange_old_owner(self):
