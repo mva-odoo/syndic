@@ -258,16 +258,22 @@
 			<field name="name">Bon de commande</field>
 			<field name="model">bon.commande</field>
 			<field name="arch" type="xml">
-				<form string="Bon de commande">
-					<group>
+				<form>
+					<header>
 						<button name="barcode_import" string="Import de codebar" type="object"/>
-                        <field name="name" />
-                        <field name="immeuble_id" />
-                        <field name="fournisseur_id" />
-                        <field name="date_demande" />
-                        <field name="cloture"/>
-                        <field name="date_cloture" attrs="{'required' : [('cloture','=',True)],'readonly':[('cloture','=',False)]}"/>
-						<field name="attachment_ids" widget="many2many_binary"/>
+					</header>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="immeuble_id" />
+							<field name="fournisseur_id" />
+							<field name="date_demande" />
+						</group>
+						<group>
+							<field name="cloture"/>
+							<field name="date_cloture" attrs="{'required' : [('cloture','=',True)],'readonly':[('cloture','=',False)]}"/>
+							<field name="attachment_ids" widget="many2many_binary"/>
+						</group>
                     </group>
                 </form>
 			</field>

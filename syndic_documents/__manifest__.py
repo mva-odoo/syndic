@@ -9,9 +9,9 @@
     """,
     'author': 'odoo SA',
     'depends': ['syndic_base'],
-    'website': 'http://www.odoo.com',
     'data': [
         'views/syndic_document.xml',
+        'views/syndic_building.xml',
         'security/ir.model.access.csv',
         'security/ir.rule.csv',
         ],
