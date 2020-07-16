@@ -1,5 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"sgimmo_syndic_facturation","syndic syndic.facturation","model_syndic_facturation_syndic","syndic_facturation.syndic_facturation_group",1,1,1,1
-"sgimmo_syndic_facturation_line","syndic facturation line","model_syndic_facturation_syndic_ligne","syndic_facturation.syndic_facturation_group",1,1,1,1
-"sgimmo_syndic_syndic_facturation_type","syndic.facturation.type","model_syndic_facturation_syndic_year","syndic_facturation.syndic_facturation_group",1,1,1,1
-"access_syndic_facturation_syndic_ligne_type","access_syndic_facturation_syndic_ligne_type","model_syndic_facturation_syndic_ligne_type","syndic_facturation.syndic_facturation_group",1,1,1,1
