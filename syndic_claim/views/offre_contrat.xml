@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="tree_offre_contrat">
+			<field name="name">Offre de contrat tree</field>
+			<field name="model">offre.contrat</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="fournisseur_id" />
+					<field name="immeuble_id" />
+					<field name="demande" />
+					<field name="date_envoi" />
+					<field name="envoi_par" />
+					<field name="reception" />
+					<field name="date_reception" />
+					<field name="transmition" />
+					<field name="date_transmition" />
+					<field name="accept" />
+					<field name="date_acceptation" />
+                </tree>
+			</field>
+        </record>
+
+        <record model="ir.ui.view" id="search_offre_contrat">
+			<field name="name">Offre de contrat search</field>
+			<field name="model">offre.contrat</field>
+			<field name="arch" type="xml">
+				<search>
+                    <field name="name" />
+					<field name="fournisseur_id" />
+					<field name="immeuble_id" />
+					<field name="demande" />
+					<field name="date_envoi" />
+					<field name="envoi_par" />
+					<field name="reception" />
+					<field name="date_reception" />
+					<field name="transmition" />
+					<field name="date_transmition" />
+					<field name="accept" />
+					<field name="date_acceptation" />
+                </search>
+			</field>
+        </record>
+
+        <record model="ir.ui.view" id="form_offre_contrat">
+			<field name="name">Offre de contrat</field>
+			<field name="model">offre.contrat</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="barcode_import" string="Import de codebar" type="object"/>
+						<button name="transform_bon_commande" string="Faire un bon de commande" type="object" attrs="{'invisible': [('is_bon_commande','=',True)]}"/>
+					</header>
+					<group>
+						<group>
+							<field name="code"/>
+							<field name="name"/>
+							<field name="fournisseur_id"/>
+							<field name="immeuble_id"/>
+							<field name="demande" />
+							<field name="date_envoi" />
+							<field name="envoi_par" />
+							<field name="attachment_ids" widget="many2many_binary"/>
+						</group>
+						<group>
+							<field name="reception"/>
+							<field name="date_reception" attrs="{'required' : [('reception','=',True)],'readonly':[('reception','=',False)]}"/>
+							<field name="transmition"/>
+							<field name="date_transmition" attrs="{'required' : [('transmition','=',True)],'readonly':[('transmition','=',False)]}"/>
+							<field name="is_bon_commande" invisible="1"/>
+							<field name="accept"/>
+							<field name="date_acceptation" attrs="{'required' : [('accept','=','accepté')],'readonly':[('accept','=',False)]}"/>
+							<field name="is_refused"/>
+						</group>
+					</group>
+                </form>
+			</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_offre_contrat">
+            <field name="name">Offre et contrat</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">offre.contrat</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Offre et contrat" id="menu_offre_contrat" parent="claim" action="action_offre_contrat"/>
+    </data>
+</odoo>

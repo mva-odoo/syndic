@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="form_bon_commande">
+			<field name="name">Bon de commande</field>
+			<field name="model">bon.commande</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="barcode_import" string="Import de codebar" type="object"/>
+					</header>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="immeuble_id" />
+							<field name="fournisseur_id" />
+							<field name="date_demande" />
+						</group>
+						<group>
+							<field name="cloture"/>
+							<field name="date_cloture" attrs="{'required' : [('cloture','=',True)],'readonly':[('cloture','=',False)]}"/>
+							<field name="attachment_ids" widget="many2many_binary"/>
+						</group>
+                    </group>
+                </form>
+			</field>
+        </record>
+
+        <record model="ir.ui.view" id="tree_bon_commande">
+			<field name="name">Bon de commande</field>
+			<field name="model">bon.commande</field>
+			<field name="arch" type="xml">
+				<tree string="Bon de commande">
+                        <field name="name" />
+                        <field name="immeuble_id" />
+                        <field name="fournisseur_id" />
+                        <field name="date_demande" />
+                        <field name="cloture"/>
+                        <field name="date_cloture"/>
+                </tree>
+			</field>
+        </record>
+
+        <record model="ir.ui.view" id="search_bon_commande">
+			<field name="name">Bon de commande</field>
+			<field name="model">bon.commande</field>
+			<field name="arch" type="xml">
+				<search string="Bon de commande">
+                        <field name="name" />
+                        <field name="immeuble_id" />
+                        <field name="fournisseur_id" />
+                        <field name="date_demande" />
+                        <field name="cloture"/>
+                        <field name="date_cloture"/>
+                        <group expand="0" string="Group By...">
+                            <filter string="cloture" domain="[('cloture','=',False)]" name="cloture_filter" context="{}"/>
+                        </group>
+                </search>
+			</field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_bon_commande">
+			<field name="name">Bon de commande</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">bon.commande</field>
+			<field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_cloture_filter':1 }</field>
+        </record>
+
+        <menuitem name="Bon de commande" id="menu_bon_commande" parent="claim" action="action_bon_commande"/>
+    </data>
+</odoo>

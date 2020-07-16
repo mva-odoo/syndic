@@ -67,9 +67,11 @@
 				<field name="supplier_ids" widget="many2many_tags"/>
 				<field name="other_ids" widget="many2many_tags"/>
 				<field name="building_id" options="{'no_open': True, 'no_create': True}"/>
-				<field name="manager_id" colspan="2" widget="selection"
-					   required="1"
-					   domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"/>
+				<field 
+					name="manager_id" colspan="2" widget="selection"
+					required="1"
+					domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"
+				/>
 				<field name="importance" colspan="2" widget="priority"/>	
 				<field name="claim_status_id" colspan="2"/>
 				<field name="color" colspan="2" invisible='1'/>
@@ -111,206 +113,69 @@
 		
 		
 		<record model="ir.ui.view" id="view_openacad_session_kanban">
-	      <field name="name">claim.kanban</field>
-	      <field name="model">syndic.claim</field>
-	      <field name="type">kanban</field>
-	      <field name="arch" type="xml">
-	        <kanban default_group_by="claim_status_id" class="oe_notes oe_kanban_quickcreate_textarea">
-	          <field name="color"/>
-	          <field name="subject"/>
-	          <field name="claim_status_id"/>
-	          <field name="building_id"/>
-	          <field name="write_date"/>
-	          <templates>
-	            <t t-name="kanban-box">
-	              <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click_edit oe_semantic_html_override oe_kanban_card #{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}">
-	              <div class="oe_dropdown_kanban">
+			<field name="name">claim.kanban</field>
+			<field name="model">syndic.claim</field>
+			<field name="type">kanban</field>
+			<field name="arch" type="xml">
+			<kanban default_group_by="claim_status_id" class="oe_notes oe_kanban_quickcreate_textarea">
+				<field name="color"/>
+				<field name="subject"/>
+				<field name="claim_status_id"/>
+				<field name="building_id"/>
+				<field name="write_date"/>
+				<templates>
+				<t t-name="kanban-box">
+					<div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click_edit oe_semantic_html_override oe_kanban_card #{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}">
+					<div class="oe_dropdown_kanban">
 
-                  <!-- dropdown menu -->
-                  <div class="oe_dropdown_toggle">
-                    <span class="oe_e">í</span>
-                    <ul class="oe_dropdown_menu">
-                      <li><a type="delete">Delete</a></li>
-                      <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
-                    </ul>
-                  </div>
+					<!-- dropdown menu -->
+					<div class="oe_dropdown_toggle">
+					<span class="oe_e">í</span>
+					<ul class="oe_dropdown_menu">
+						<li><a type="delete">Delete</a></li>
+						<li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+					</ul>
+					</div>
 
-                  <div class="oe_clear"></div>
-                </div>
-                                  <div t-attf-class="oe_kanban_content">
-                  <!-- title -->
-                  sujet : <field name="subject"/> <br/>
-                  immeuble : <field name="building_id"/>  <br/>
-                  derniere modification : <field name="write_date"/>
-                </div>
-                 </div>
+					<div class="oe_clear"></div>
+				</div>
+									<div t-attf-class="oe_kanban_content">
+					<!-- title -->
+					sujet : <field name="subject"/> <br/>
+					immeuble : <field name="building_id"/>  <br/>
+					derniere modification : <field name="write_date"/>
+				</div>
+					</div>
 
-	            </t>
-	          </templates>  
-   
-	        </kanban>
-	      </field>
-	    </record>
+				</t>
+				</templates>  
+
+			</kanban>
+			</field>
+		</record>
 
 
-        <record model="ir.ui.view" id="view_openacad_session_graph">
-	      <field name="name">claim.graph</field>
-	      <field name="model">syndic.claim</field>
-	      <field name="arch" type="xml">
-	        <graph>
-                <field name="type_id" />
-                <field name="building_id"/>
-            </graph>
-	      </field>
-	    </record>
+		<record model="ir.ui.view" id="view_openacad_session_graph">
+			<field name="name">claim.graph</field>
+			<field name="model">syndic.claim</field>
+			<field name="arch" type="xml">
+			<graph>
+				<field name="type_id" />
+				<field name="building_id"/>
+			</graph>
+			</field>
+		</record>
 
 		<record model="ir.ui.view" id="view_openacad_session_pivot">
-	      <field name="name">claim.pivot</field>
-	      <field name="model">syndic.claim</field>
-	      <field name="arch" type="xml">
-	        <pivot>
+			<field name="name">claim.pivot</field>
+			<field name="model">syndic.claim</field>
+			<field name="arch" type="xml">
+			<pivot>
 				<field name="building_id"/>
 				<field name="type_id" />
-            </pivot>
-	      </field>
-	    </record>
-		
-			<record model="ir.ui.view" id="tree_offre_contrat">
-			<field name="name">Offre de contrat tree</field>
-			<field name="model">offre.contrat</field>
-			<field name="arch" type="xml">
-				<tree string="Offre et contrat">
-					<field name="name" />
-					<field name="fournisseur_id" />
-					<field name="immeuble_id" />
-					<field name="demande" />
-					<field name="date_envoi" />
-					<field name="envoi_par" />
-					<field name="reception" />
-					<field name="date_reception" />
-					<field name="transmition" />
-					<field name="date_transmition" />
-					<field name="accept" />
-					<field name="date_acceptation" />
-                </tree>
+			</pivot>
 			</field>
-        </record>
-
-        <record model="ir.ui.view" id="search_offre_contrat">
-			<field name="name">Offre de contrat search</field>
-			<field name="model">offre.contrat</field>
-			<field name="arch" type="xml">
-				<search string="Offre et contrat">
-                    <field name="name" />
-					<field name="fournisseur_id" />
-					<field name="immeuble_id" />
-					<field name="demande" />
-					<field name="date_envoi" />
-					<field name="envoi_par" />
-					<field name="reception" />
-					<field name="date_reception" />
-					<field name="transmition" />
-					<field name="date_transmition" />
-					<field name="accept" />
-					<field name="date_acceptation" />
-                </search>
-			</field>
-        </record>
-
-        <record model="ir.ui.view" id="form_offre_contrat">
-			<field name="name">Offre de contrat</field>
-			<field name="model">offre.contrat</field>
-			<field name="arch" type="xml">
-				<form string="Offre et contrat">
-					<header>
-						<button name="barcode_import" string="Import de codebar" type="object"/>
-						<button name="transform_bon_commande" string="Faire un bon de commande" type="object" attrs="{'invisible': [('is_bon_commande','=',True)]}"/>
-					</header>
-					<group>
-						<group>
-							<field name="code"/>
-							<field name="name"/>
-							<field name="fournisseur_id"/>
-							<field name="immeuble_id"/>
-							<field name="demande" />
-							<field name="date_envoi" />
-							<field name="envoi_par" />
-							<field name="attachment_ids" widget="many2many_binary"/>
-						</group>
-						<group>
-							<field name="reception"/>
-							<field name="date_reception" attrs="{'required' : [('reception','=',True)],'readonly':[('reception','=',False)]}"/>
-							<field name="transmition"/>
-							<field name="date_transmition" attrs="{'required' : [('transmition','=',True)],'readonly':[('transmition','=',False)]}"/>
-							<field name="is_bon_commande" invisible="1"/>
-							<field name="accept"/>
-							<field name="date_acceptation" attrs="{'required' : [('accept','=','accepté')],'readonly':[('accept','=',False)]}"/>
-							<field name="is_refused"/>
-						</group>
-					</group>
-					
-                </form>
-			</field>
-        </record>
-
-
-        <record model="ir.ui.view" id="form_bon_commande">
-			<field name="name">Bon de commande</field>
-			<field name="model">bon.commande</field>
-			<field name="arch" type="xml">
-				<form>
-					<header>
-						<button name="barcode_import" string="Import de codebar" type="object"/>
-					</header>
-					<group>
-						<group>
-							<field name="name" />
-							<field name="immeuble_id" />
-							<field name="fournisseur_id" />
-							<field name="date_demande" />
-						</group>
-						<group>
-							<field name="cloture"/>
-							<field name="date_cloture" attrs="{'required' : [('cloture','=',True)],'readonly':[('cloture','=',False)]}"/>
-							<field name="attachment_ids" widget="many2many_binary"/>
-						</group>
-                    </group>
-                </form>
-			</field>
-        </record>
-
-        <record model="ir.ui.view" id="tree_bon_commande">
-			<field name="name">Bon de commande</field>
-			<field name="model">bon.commande</field>
-			<field name="arch" type="xml">
-				<tree string="Bon de commande">
-                        <field name="name" />
-                        <field name="immeuble_id" />
-                        <field name="fournisseur_id" />
-                        <field name="date_demande" />
-                        <field name="cloture"/>
-                        <field name="date_cloture"/>
-                </tree>
-			</field>
-        </record>
-
-        <record model="ir.ui.view" id="search_bon_commande">
-			<field name="name">Bon de commande</field>
-			<field name="model">bon.commande</field>
-			<field name="arch" type="xml">
-				<search string="Bon de commande">
-                        <field name="name" />
-                        <field name="immeuble_id" />
-                        <field name="fournisseur_id" />
-                        <field name="date_demande" />
-                        <field name="cloture"/>
-                        <field name="date_cloture"/>
-                        <group expand="0" string="Group By...">
-                            <filter string="cloture" domain="[('cloture','=',False)]" name="cloture_filter" context="{}"/>
-                        </group>
-                </search>
-			</field>
-        </record>
+		</record>
 
 		<!--action -->
 		<record model="ir.actions.act_window" id="action_claim">
@@ -321,43 +186,26 @@
 			<field name="view_id" ref="tree_claim" />
 			<field name="search_view_id" ref="search_claim" />
 			<field name="context">{'search_default_status' : 'draft' }</field>
- 		</record>
+		</record>
 
 		<record model="ir.actions.act_window" id="action_claim_status">
 			<field name="name">Status</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">claim.status</field>
 			<field name="view_mode">tree,form</field>
- 		</record>
+		</record>
 
 		<record model="ir.actions.act_window" id="action_type_claim">
 			<field name="name">Type</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">claim.type</field>
 			<field name="view_mode">tree,form</field>
- 		</record>
-
-        <record model="ir.actions.act_window" id="action_offre_contrat">
-			<field name="name">Offre et contrat</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">offre.contrat</field>
-			<field name="view_mode">tree,form</field>
- 		</record>
-
-        <record model="ir.actions.act_window" id="action_bon_commande">
-			<field name="name">Bon de commande</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">bon.commande</field>
-			<field name="view_mode">tree,form</field>
-            <field name="context">{'search_default_cloture_filter':1 }</field>
- 		</record>
+		</record>
 
 		<!--menu -->
 		<menuitem name="Gestion d'immeuble" id="claim" web_icon="syndic_claim,static/description/icon.png"/>
 
 		<menuitem name="Gestion d'immeuble" id="menu_action_claim" parent="claim" action="action_claim"/>
-		<menuitem name="Offre et contrat" id="menu_offre_contrat" parent="claim" action="action_offre_contrat"/>
-		<menuitem name="Bon de commande" id="menu_bon_commande" parent="claim" action="action_bon_commande"/>
 
 		<menuitem name="Configuration" id="menu_status_conf" parent="claim" groups="syndic_base.syndic_manager"/>
 		<menuitem name="Type" id="menu_type" parent="menu_status_conf" action="action_type_claim"/>
