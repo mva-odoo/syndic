@@ -39,6 +39,9 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="claim" layout="manual">
+					<header>
+						<button name="barcode_import" string="Import de codebar" type="object"/>
+					</header>
 					<sheet string="Sales Order" layout="auto">
 						<group col="4" colspan="4">
 							<field name="nom_document" colspan="2"/>

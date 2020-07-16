@@ -6,6 +6,7 @@ class Document(models.Model):
     _name = 'syndic.documents'
     _description = 'syndic.documents'
     _rec_name = 'nom_document'
+    _inherit = ['barcode.import']
 
     nom_document = fields.Char('nom du document', required=True)
     create_date = fields.Datetime(u'Date de création')
