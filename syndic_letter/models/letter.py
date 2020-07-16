@@ -42,7 +42,7 @@ class CreateLetter(models.Model):
     is_fax = fields.Boolean('Envoi par fax')
     attachment_ids = fields.Many2many('ir.attachment', 'letter_letter_ir_attachment_rel', string='Piece Jointe')
     create_date = fields.Datetime(u'Date de création')
-    date = fields.Date(u'Date de création', default=lambda *a: fields.date.today(), copy=False)
+    date = fields.Date(u'Date de la lettre', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     partner_address_ids = fields.Many2many(
         'res.partner',

@@ -51,7 +51,7 @@ class FacturationSyndicLigne(models.Model):
                                     ('administration', 'ADMINISTRATION'),
                                     ('suivi', 'SUIVI SYNDIC')], 'Description', required=False)
 
-    type_id = fields.Many2one('syndic.facturation.syndic.ligne.type', 'Description', required=True)
+    type_id = fields.Many2one('syndic.facturation.syndic.ligne.type', 'Type', required=True)
     qty = fields.Float(u'Quantité', required=True)
     prix = fields.Float('Prix', required=True)
     prix_tot = fields.Float('Prix tot', compute='_compute_tot_hours', readonly=True)

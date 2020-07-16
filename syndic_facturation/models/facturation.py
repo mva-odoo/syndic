@@ -25,7 +25,7 @@ class SuiviFacture(models.Model):
     facture_type2 = fields.Selection([
         ('fraisadmin', 'Frais Administratifs'),
         ('honoraire', 'Honoraires'),
-    ], 'Type de facture')
+    ], 'Type de la facture')
 
     trimestre = fields.Selection([
         ('1', '1'),
@@ -81,7 +81,7 @@ class SyndicFacturationLine(models.Model):
     facture_id = fields.Many2one('syndic.facturation', string='facture')
     nombre = fields.Float('Nombre', default=1.00)
     prix = fields.Float('Prix de la prestation', required=True)
-    prix_tot = fields.Float('Prix de la prestation', compute='_compute_tot_hours', store=True)
+    prix_tot = fields.Float('Prix Total de la prestation', compute='_compute_tot_hours', store=True)
     qty_id = fields.Many2one('syndic.qty.type', u'Unité')
 
     @api.onchange('type_id')

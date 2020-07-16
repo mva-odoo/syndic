@@ -143,8 +143,8 @@ class Extincteur(models.Model):
     _name = 'extincteur'
     _description = 'extincteur'
     extincteur_marque = fields.Char('Marque')
-    extincteur_contrat = fields.Many2one('res.partner', string='Contrat d\'entretien')
-    extincteur_contrat_date = fields.Date('date anniversaire du contrat')
+    extincteur_contrat = fields.Many2one('res.partner', string='Contrat d\'entretien extincteur')
+    extincteur_contrat_date = fields.Date('date anniversaire du contrat extincteur')
     signalitic_id = fields.Many2one('building.signalitic', string='signalitic')
 
 
@@ -172,7 +172,7 @@ class SignalitiqueImmeuble(models.Model):
     _description = 'building.signalitic'
     _inherits = {'syndic.building': 'building_id'}
 
-    building_id = fields.Many2one('syndic.building', string='Immeuble', required=True, ondelete="cascade")
+    building_id = fields.Many2one('syndic.building', string='Fiche Immeuble', required=True, ondelete="cascade")
     # info general---------------------------------------
     construction_date = fields.Integer('Date de construction')
 
@@ -207,7 +207,7 @@ class SignalitiqueImmeuble(models.Model):
     incendie_name_courier = fields.Char('Nom du courtier')
     incendie_num_police = fields.Char(u'N° de la police')
     incendie_franchise = fields.Selection([('legal', 'Legal'), ('extra_legal', 'Extra Legal')], 'Franchise')
-    incendie_expire = fields.Date('Expire le')
+    incendie_expire = fields.Date('Expiration Incendie')
     incendie_couverture = fields.Text('Couverture')
 
     loi = fields.Boolean('Assurance loi')
@@ -223,30 +223,30 @@ class SignalitiqueImmeuble(models.Model):
     certif_chauf = fields.Many2one('res.partner', 'Certificateur chauffage')
     juridique = fields.Many2one('res.partner', 'Avocat')
     environnement_date = fields.Date(u'Délivré le')
-    environnement_expire = fields.Date('Expire le')
+    environnement_expire = fields.Date('Expiration Environnement')
     environnement_objet = fields.Text('Objets')
 
     # sol
     sol_inscription = fields.Boolean(u'Classé en zone pollué')
     sol_date = fields.Date(u'Etude de sol établi le')
-    sol_expire = fields.Date('Expire le')
+    sol_expire = fields.Date('Sol Expire le')
     # inventaire amiante
-    amiente_etabli_par = fields.Many2one('res.partner', 'Etabli par')
-    amiente_etabli_le = fields.Date('Etabli le')
+    amiente_etabli_par = fields.Many2one('res.partner', 'Amiente Etabli par')
+    amiente_etabli_le = fields.Date('Amiente Etabli le')
     amiente_ids = fields.One2many('building.desamientage', 'signalitic_id', u'Désamientage')
     # citerne
-    citerne_par = fields.Many2one('res.partner', 'Etabli par')
+    citerne_par = fields.Many2one('res.partner', 'Citerne Etabli par')
     citerne_le = fields.Date(u'Établi le')
-    citerne_expirt = fields.Date('Expire le')
+    citerne_expirt = fields.Date('Citerne Expire le')
     citerne_neutralise = fields.Boolean(u'Citerne neutralisé')
     # electricité
-    elec_par = fields.Many2one('res.partner', 'Etabli par')
-    elec_le = fields.Date(u'Établi le')
-    elec_expirt = fields.Date('Expire le')
+    elec_par = fields.Many2one('res.partner', 'Electricite Etabli par')
+    elec_le = fields.Date(u'Electrecite Établi le')
+    elec_expirt = fields.Date('Electrecite Expire le')
     # risque
-    risque_ascensseur_par = fields.Many2one('res.partner', 'Etabli par')
-    risque_le = fields.Date(u'Établi le')
-    risque_expirt = fields.Date('Expire le')
+    risque_ascensseur_par = fields.Many2one('res.partner', 'Risque Ascensseur Etabli par')
+    risque_le = fields.Date(u'Risque Établi le')
+    risque_expirt = fields.Date('Risque Expire le')
     # ascensseur
     anne_ascensseur = fields.Integer(u"Année de construction de l'assensseur")
     ascensseur_par = fields.Many2one('res.partner', u'Executé par')
@@ -268,17 +268,17 @@ class SignalitiqueImmeuble(models.Model):
     garden_firm = fields.Char('Nom')
     garden_day = fields.Date('Date')
     garden_tree = fields.Text(u'Arbre à abattre')
-    garden_travaux = fields.Text('Travaux')
+    garden_travaux = fields.Text('Travaux jardin')
     garden_more = fields.Text('description travaux')
     # nettoyage
     entretien_nettoyage = fields.Selection([('individuel', 'indivuduel'), ('collectif', 'Collectif')])
     firm_name_netoyage = fields.Char('Nom de la firme')
-    firm_netoyage_date = fields.Datetime('Jour de passage')
-    prepose_netoyage = fields.Char('Jour de passage')
+    firm_netoyage_date = fields.Datetime('Date Jour de passage')
+    prepose_netoyage = fields.Char('Preposé Jour de passage')
     descriptif_tache = fields.Char('Descriptif des taches')
     last_peint_date = fields.Date(u'Dernière mise en peinture')
     travaux_realise = fields.Text(u'Travaux réalisés ')
-    nettoyage_more = fields.Text(u'Informations supplémentaires')
+    nettoyage_more = fields.Text(u'Informations supplémentaires Nettoyage')
     # 3-------------------------------------------------------------------------------------
     # info immeuble
     # abord
@@ -295,10 +295,10 @@ class SignalitiqueImmeuble(models.Model):
     chassis_vitrage = fields.Selection([('simple', 'simple'), ('double', 'double')], string='Vitrage')
     chassis_vitrage_four = fields.Char('Fabricant')
     chassis_color = fields.Char('Couleur')
-    chassis_more = fields.Text(u'Informations supplémentaires et observations particulières')
+    chassis_more = fields.Text(u'Informations supplémentaires et observations particulières chassis')
     # terasse
     terasse_ids = fields.One2many('building.terasse', 'signalitic_id', string='Terasse')
-    terasse_repeir_ids = fields.One2many('building.repeir.terasse', 'signalitic_id', string='Terasse')
+    terasse_repeir_ids = fields.One2many('building.repeir.terasse', 'signalitic_id', string='Réparation Terasse')
     # access
     access_info = fields.Text(u'Porte d’entrée: informations et descriptions')
     access_where = fields.Many2one('res.partner', u'Certificat pour la reproduction de clé')
@@ -308,28 +308,28 @@ class SignalitiqueImmeuble(models.Model):
     plaquette_supplier = fields.Many2one('res.partner', u'Société de plaquettes')
     parlophone_description = fields.Text('Parlophonie: informations et descriptions')
     parlophone_date = fields.Date(u'Dernière mise à jour des plaquettes')
-    parlophone_more = fields.Text(u'Informations supplémentaires et observations particulières ')
+    parlophone_more = fields.Text(u'Informations supplémentaires et observations particulières parlophone')
     boite_bool = fields.Boolean('Plaquettes boites')
     ascenseur_bool = fields.Boolean('Plaquettes ascensseur')
     appartements_bool = fields.Boolean('Plaquettes appartements')
     parlophone_bool = fields.Boolean('Plaquettes parlophone')
 
     # toiture
-    toiture_type = fields.Char('Type')
-    toiture_contract = fields.Char("Contrat d'entretien")
-    toiture_obs = fields.One2many('observation.toiture', 'signalitic_id', string='Observation')
-    toiture_isolation = fields.Boolean('Isolation')
+    toiture_type = fields.Char('Type de toiture')
+    toiture_contract = fields.Char("Contrat d'entretien toiture")
+    toiture_obs = fields.One2many('observation.toiture', 'signalitic_id', string='Observation Toiture')
+    toiture_isolation = fields.Boolean('Isolation Toiture')
     toiture_repa = fields.One2many('repeir.toiture', 'signalitic_id', string='Observation')
 
     # jardin
-    jardin_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien')
+    jardin_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien jardin')
     date_jardin = fields.Date('Date anniversaire du contrat jardin')
     jardin_onservation = fields.One2many('jardin.observation', 'signalitic_id', string='Observation jardin')
-    jardin_more = fields.Text(u'Informations supplémentaires')
+    jardin_more = fields.Text(u'Informations supplémentaires Jardin')
 
     # ascensseur
-    ascensseur_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien')
-    ascensseur_date = fields.Date('Date anniversaire du contrat')
+    ascensseur_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien ascensseur')
+    ascensseur_date = fields.Date('Date anniversaire du contrat ascensseur')
     nbr_passage = fields.Integer('Nombre de passage par an')
     ascensseur_ids = fields.One2many('ascensseurs', 'signalitic_id', string='Ascenseurs')
     repeir_ascensseur_ids = fields.One2many('repeir.ascensseur', 'signalitic_id', string=u'Réparation ascensseur')
@@ -343,7 +343,7 @@ class SignalitiqueImmeuble(models.Model):
         [('janvier', 'Janvier'), ('fevrier', 'Fevrier'), ('mars', 'Mars'), ('avril', 'Avril'), ('mai', 'Mai'),
          ('juin', 'Juin'), ('juillet', 'Juillet'), ('aout', 'Aout'), ('septembre', 'Septembre'),
          ('octobre', 'Octobre'), ('novembre', 'Novembre'), ('decembre', 'Decembre')], 'mois')
-    date_contrat_compteur = fields.Date('Date anniversaire du contrat')
+    date_contrat_compteur = fields.Date('Date anniversaire du contrat compteur')
 
     # chauffage
     chauffage_type = fields.Selection([('individuel', 'Individuel'),
@@ -352,13 +352,13 @@ class SignalitiqueImmeuble(models.Model):
                                         ('collectif', 'Collectif')], 'Production eau chaude')
     type_chauffage = fields.Selection([('gaz', 'Gaz'),
                                        ('mazoutb', 'Mazout type b'),
-                                       ('mazoutc', 'Mazout type c')], 'Type')
+                                       ('mazoutc', 'Mazout type c')], 'Type de chauffage(Mazout,gaz)')
     condensation_chauffage = fields.Boolean(u'A condensation ')
     type_chauffages = fields.Char('Autre type')
     situation_chauffage = fields.Text('Situation')
     nbr_chaudiere = fields.Integer('Nombre de chaudiere')
     chauffage_cascade = fields.Boolean(u'Chaudière en cascade')
-    contrat_chaudiere = fields.Many2one('res.partner', 'Contrat d\'entretien')
+    contrat_chaudiere = fields.Many2one('res.partner', 'Contrat d\'entretien chaudiere')
     chaudiere_entretien_date = fields.Date('Date anniversaire d\'entretien chaudiere')
     chaudiere_omnium = fields.Boolean('Contrat omnium')
     chaudiere_tubage = fields.Boolean(u'Tubage de la cheminée')
@@ -374,34 +374,34 @@ class SignalitiqueImmeuble(models.Model):
     marque_adoucisseur = fields.Char('Marque adoucisseur')
     numeros_adoucisseur = fields.Char('Numeros adoucisseur')
     annee_adoucisseur = fields.Integer(u'Année de construction')
-    supplier_adoucisseur = fields.Many2one('res.partner', 'Contrat d\'entretien')
+    supplier_adoucisseur = fields.Many2one('res.partner', 'Contrat d\'entretien adoucisseur')
     qte_adoucisseur = fields.Integer(u'Quantité généralement commandées')
     adoucisseur_more = fields.Text('Observations')
 
     # Citerne
     marque_citerne = fields.Char('Marque')
-    type_citerne = fields.Char('Type')
+    type_citerne = fields.Char('Type de citerne')
     annee_citerne = fields.Date(u'Date du contrôle')
     qte_citerne = fields.Integer(u'Capacité de la citerne')
 
     # egoutage
-    egoutage_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien')
-    egoutage_contrat_date = fields.Date('Date anniversaire du contrat')
+    egoutage_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien egoutage')
+    egoutage_contrat_date = fields.Date('Date anniversaire du contrat egoutage')
     obs_egoutage_ids = fields.One2many('egoutage.observation', 'signalitic_id', string=u"Réparations egoutages")
-    egoutage_more = fields.Text(u"Informations supplémentaires et observations particulières")
+    egoutage_more = fields.Text(u"Informations supplémentaires et observations particulières egoutage")
 
     # extincteur
     extincteur_ids = fields.One2many('extincteur', 'signalitic_id', 'Extincteurs')
     extincteur_more = fields.Text(u'observations particulières')
 
     # instal elec
-    elec_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien')
+    elec_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien electricité')
     elec_building = fields.Many2one('res.partner', u'electricien du bâtiment')
     elec_releve_by = fields.Char(u'Relevé par')
 
     # garage
-    garage_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien')
-    garage_contrat_date = fields.Date('date anniversaire du contrat')
+    garage_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien garage')
+    garage_contrat_date = fields.Date('date anniversaire du contrat garage')
     garage_repeir_ids = fields.One2many('repeir.garage', 'signalitic_id', string=u'Réparation garage')
     garage_description = fields.Text(u'Observations complémentaires')
 

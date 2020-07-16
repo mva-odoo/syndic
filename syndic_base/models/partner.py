@@ -31,7 +31,7 @@ class Partner(models.Model):
     lot_count = fields.Integer('Quotitees Totales', compute='_get_number_lot')
 
     loaner_lot_ids = fields.Many2many('syndic.lot', 'syndic_lot_loan_rel', string='Lots(Locataire)')
-    loaner_lot_count = fields.Integer('Lots(Locataire)', compute='_get_number_lot_loaner')
+    loaner_lot_count = fields.Integer('nombre Lots(Locataire)', compute='_get_number_lot_loaner')
     old_lot_count = fields.Integer('Mutations', compute='_get_old_lot_loaner')
 
     owner_building_ids = fields.Many2many(

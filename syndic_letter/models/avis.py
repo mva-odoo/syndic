@@ -13,7 +13,7 @@ class LetterAvis(models.Model):
     immeuble_id = fields.Many2one('syndic.building', 'Immeuble')
     create_date = fields.Datetime(u'Date de création', readonly=True)
     write_date = fields.Datetime('Write Date', readonly=True)
-    date = fields.Date(u'Date de création', default=lambda *a: fields.date.today(), copy=False)
+    date = fields.Date(u'Date de l\'avis', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     type_id = fields.Many2one('type.avis', "Type d'avis", required=True)
     avis_model_id = fields.Many2one("letter.avis.model", "Modele d'avis")
@@ -48,7 +48,7 @@ class LetterReunion(models.Model):
     create_date = fields.Datetime(u'Date de création', readonly=True)
     write_date = fields.Datetime('Write Date', readonly=True)
     type_id = fields.Many2one('reunion.type', 'Type', required=True)
-    date = fields.Date(u'Date de création', default=lambda *a: fields.date.today(), copy=False)
+    date = fields.Date(u'Date de la réunion', default=lambda *a: fields.date.today(), copy=False)
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
 
     @api.depends('date')
@@ -73,4 +73,4 @@ class ReunionPoint(models.Model):
     name = fields.Char('Point', required=True)
     sequence = fields.Integer(u'Numéros de point')
     reunion_id = fields.Many2one('letter.reunion', 'Reunion')
-    descriptif = fields.Html('Point')
+    descriptif = fields.Html('Description')

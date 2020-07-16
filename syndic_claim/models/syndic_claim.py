@@ -35,7 +35,7 @@ class Claim(models.Model):
                                    ('3', 'ultra important')],
                                   string='Importance')
     color = fields.Integer('Color')
-    status = fields.Selection([('draft', 'Ouvert'), ('done', 'Cloturer')], 'Status', default='draft')
+    status = fields.Selection([('draft', 'Ouvert'), ('done', 'Cloturer')], 'Etat', default='draft')
     type_id = fields.Many2one('claim.type', 'Type')
 
     def action_done(self):
@@ -101,8 +101,8 @@ class CommentHistory(models.Model):
 
     create_date = fields.Datetime(u'Date de création', readonly=True)
     write_date = fields.Datetime('Date de modification', readonly=True)
-    create_uid = fields.Many2one('res.users', string="User", readonly=True)
-    write_uid = fields.Many2one('res.users', string="User", readonly=True)
+    create_uid = fields.Many2one('res.users', string="Create User", readonly=True)
+    write_uid = fields.Many2one('res.users', string="Last Update User", readonly=True)
     description = fields.Text('Texte')
     current_status = fields.Many2one('claim.status', string='Current status')
     claim_ids = fields.Many2one('syndic.claim', string='Claim')
@@ -130,7 +130,7 @@ class OffreContrats(models.Model):
     date_reception = fields.Date('Date reception')
     transmition = fields.Boolean('Transmition')
     date_transmition = fields.Date('Date transmition')
-    acceptation = fields.Boolean('Acceptation')
+    acceptation = fields.Boolean('Est Acceptate')
     accept = fields.Selection([('accepte', 'Accepté'),
                                ('non_accpet', 'Pas accepté')], 'Acceptation')
     date_acceptation = fields.Date('Date acceptation')

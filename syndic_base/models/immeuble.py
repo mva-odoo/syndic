@@ -72,7 +72,7 @@ class Building(models.Model):
             'context': self._context,
         }
 
-    @api.onchange('zip')
+    @api.onchange('zip_building')
     def _onchange_zip(self):
         return {
             'domain': {'city_id': [('zipcode', '=', self.zip)]}
