@@ -127,7 +127,7 @@ class Partner(models.Model):
             mutations = self.env['syndic.mutation'].search([('state', '=', 'done')])
             partner.is_owner = True if partner.lot_ids.filtered(lambda s: s.building_id.active) else False
             partner.is_old = True if not partner.is_owner and partner.lot_ids.filtered(lambda s: not s.building_id.active) or partner in mutations.old_partner_ids else False
-            partner.is_loaner = True if partner.loaner_lot_ids and partner.loaner_lot_ids.mapped('building_id').active else False
+            partner.is_loaner = True if partner.loaner_lot_ids and partner.loaner_lot_ids.filtered(lambda s: s.building_id.active) else False
 
     # TODO : clean
     @api.onchange('zip', 'country_id')
