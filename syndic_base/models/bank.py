@@ -7,11 +7,9 @@ class Bank(models.Model):
 
     building_id = fields.Many2one('syndic.building', 'Immeuble')
 
-    def create(self, values):
-        building = self.env['syndic.building'].browse(values.get('building_id'))
-        # if building:
-            # self.env.user.company_ids |= building.company_id
-            # values['company_id'] = building.company_id.id
-            # values['partner_id'] = building.partner_id.id
-
-        return super(Bank, self.sudo()).create(values)
+    @api.model
+    def create(self, vals):
+        building = self.env['syndic.building'].browse(vals.get('building_id'))
+        if building:
+            vals['partner_id'] = building.user_id.partner_id.id
+        return super(Bank, self.sudo()).create(vals)

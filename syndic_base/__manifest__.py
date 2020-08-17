@@ -11,10 +11,13 @@
         'mail',
         'web_change',
         'base_address_city',
+        'contacts',
         'syndic_tools',
     ],
     'website': 'http://www.sgimmo.be',
     'data': [
+            'security/groups.xml',
+            'security/ir.model.access.csv',
             'views/fiche_signalitic.xml',
             'views/immeuble.xml',
             'views/metier.xml',
@@ -28,10 +31,12 @@
             'views/res_users.xml',
             'views/contract.xml',
             'views/menu.xml',
-            'security/ir.model.access.csv',
-            'security/groups.xml',
             'report/immeuble.xml',
             'datas/res.city.csv',
         ],
+    'demo': [
+        'demos/users.xml',
+        'demos/building.xml',
+    ],
     'application': True,
 }

@@ -29,10 +29,6 @@
                     <field name="active" eval="0"/>
                 </record>
 
-                <record model="ir.ui.menu" id="website.menu_website_configuration">
-                    <field name="groups_id" eval="[(6, 0, [ref('syndic_base.syndic_manager')])]"/>
-                </record>
-
                 <record model="ir.ui.menu" id="contacts.menu_contacts">
                     <field name="groups_id" eval="[(6, 0, [ref('base.group_multi_currency')])]"/>
                 </record>
