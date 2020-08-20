@@ -16,11 +16,11 @@ addons:
 
 install:
     - wget https://raw.githubusercontent.com/odoo/odoo/13.0/requirements.txt -O requirements.txt
+    - wget http://nightly.odoo.com/13.0/nightly/deb/odoo_13.0.latest.tar.xz -C ../
+
     - pip3 install -r requirements.txt
     - pip3 install coverage
     - pip3 install codecov
-    - mkdir ../src
-    - git clone --single-branch -b 13.0 https://github.com/odoo/odoo ../src/odoo
 
 script:
     - python3 -m coverage run ../src/odoo/odoo-bin --addons-path=../src/odoo/addons,/home/travis/build/mva-odoo/syndic -d test --stop-after-init --test-enable --init syndic_base
