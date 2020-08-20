@@ -23,7 +23,7 @@ install:
     - pip3 install codecov
 
 script:
-    - python3 -m coverage run ../src/odoo/odoo-bin --addons-path=../src/addons,/home/travis/build/mva-odoo/syndic -d test --stop-after-init --test-enable --init syndic_base
+    - python3 -m coverage run ../src/odoo-bin --addons-path=../src/addons,/home/travis/build/mva-odoo/syndic -d test --stop-after-init --test-enable --init syndic_base
 
 after_success:
     - codecov
