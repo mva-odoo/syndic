@@ -75,7 +75,7 @@ class Building(models.Model):
     @api.onchange('zip_building')
     def _onchange_zip(self):
         return {
-            'domain': {'city_id': [('zipcode', '=', self.zip)]}
+            'domain': {'city_id': [('zipcode', '=', self.zip_building)]}
         }
 
     def toggle_active(self):

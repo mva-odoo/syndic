@@ -77,6 +77,7 @@ class TestBuildingFlow(TestSyndicCommon):
         self.aloys.with_context(inhabitant_type='owner').action_inhabitant()
         self.aloys.with_context(inhabitant_type='loaner').action_inhabitant()
         self.aloys.action_contract()
+        self.aloys._onchange_zip()
         self.aloys.action_lot()
         self.aloys.open_sign()
 
