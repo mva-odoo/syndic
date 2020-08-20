@@ -17,7 +17,7 @@ addons:
 install:
     - wget https://raw.githubusercontent.com/odoo/odoo/13.0/requirements.txt -O requirements.txt
     - pip3 install -r requirements.txt
-    - git clone -b 13.0 https://github.com/odoo/odoo
+    - git clone --single-branch -b 13.0 https://github.com/odoo/odoo
     - sudo -u postgres createuser -s $USER
 
 script:
