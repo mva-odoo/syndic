@@ -19,6 +19,7 @@
             <field name="name">Syndic/Manager</field>
             <field name="category_id" ref="module_category_syndic_base"/>
             <field name="implied_ids" eval="[(6,0,[ref('syndic_client'),ref('syndic_employe')])]"/>
+            <field name="users" eval="[(4,ref('base.user_admin'))]"/>
         </record>
     </data>
 </odoo>

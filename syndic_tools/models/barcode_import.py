@@ -63,18 +63,19 @@ class BarcodeImport(models.AbstractModel):
                 self.env.cr.execute("""ALTER TABLE "%s" ADD COLUMN "code" varchar""" % (self._table))
 
             # create new sequence
-            buildings = self.env['syndic.building'].search_read(['|', ('active', '=', False), ('active', '=', True)], ['name'])
-            for building in buildings:
-                name = 'barcode-import-%s-%s' % (self._barcode_type, building['name']) 
-                if not self.env['ir.sequence'].search([
-                    ('name', '=', name),
-                    ('code', '=', name)
-                ]):
-                    self.env['ir.sequence'].create({
-                        'name': name,
-                        'code': name,
-                        'padding': 3,
-                    })
+            if self._name != 'syndic.building':
+                buildings = self.env['syndic.building'].search_read(['|', ('active', '=', False), ('active', '=', True)], ['name'])
+                for building in buildings:
+                    name = 'barcode-import-%s-%s' % (self._barcode_type, building['name']) 
+                    if not self.env['ir.sequence'].search([
+                        ('name', '=', name),
+                        ('code', '=', name)
+                    ]):
+                        self.env['ir.sequence'].sudo().create({
+                            'name': name,
+                            'code': name,
+                            'padding': 3,
+                        })
 
             # create sequence for old datas
             if table_exists(self.env.cr, self._table):
@@ -134,7 +135,7 @@ class BarcodeImport(models.AbstractModel):
                 inherit = model._inherit
                 if isinstance(inherit, list) and 'barcode.import' in inherit or isinstance(inherit, str) and 'barcode.import' == inherit:
                     name = 'barcode-import-%s-%s' % (model._name, rec.name)
-                    self.env['ir.sequence'].create({
+                    self.env['ir.sequence'].sudo().create({
                         'name': name,
                         'code': name,
                         'padding': 3,

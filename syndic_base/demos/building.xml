@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="syndic.building" id="syndic_demo_building_gemini">
+        <field name="name">Gemini</field>
+        <field name="num_building">1</field>
+        <field name="zip_building">1300</field>
+        <field name="address_building">Rue du test</field>
+        <field name="city_building" ref="syndic_base.2150"/>
+    </record>
+
+    <record model="res.partner" id="syndic_partner_gemini_owner">
+        <field name="name">SGImmo</field>
+    </record>
+
+    <record model="res.partner" id="syndic_partner_syndic_owner">
+        <field name="name">Syndic</field>
+    </record>
+
+    <record model="syndic.lot" id="syndic_gemini_lot1">
+        <field name="name">Lot A1</field>
+        <field name="building_id" ref="syndic_demo_building_gemini"/>
+        <field name="owner_ids" eval="[(4, ref('syndic_partner_gemini_owner'))]"/>
+        <field name="quotities">30</field>
+    </record>
+
+    <record model="syndic.lot" id="syndic_gemini_lot2">
+        <field name="name">Lot A2</field>
+        <field name="building_id" ref="syndic_demo_building_gemini"/>
+        <field name="owner_ids" eval="[(4, ref('syndic_partner_syndic_owner'))]"/>
+        <field name="quotities">50</field>
+    </record>
+
+    <record model="syndic.lot" id="syndic_gemini_garage">
+        <field name="name">Garage A1</field>
+        <field name="building_id" ref="syndic_demo_building_gemini"/>
+        <field name="owner_ids" eval="[(4, ref('syndic_partner_gemini_owner'))]"/>
+        <field name="quotities">20</field>
+    </record>
+</odoo>

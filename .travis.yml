@@ -1,0 +1,29 @@
+language: python
+python:
+    - "3.6"
+
+cache:
+    apt: true
+    directories:
+    - $HOME/.cache/pip
+
+addons:
+    postgresql: "9.6"
+    apt:
+        packages:
+            - expect-dev
+            - python-lxml
+
+install:
+    - wget https://raw.githubusercontent.com/odoo/odoo/13.0/requirements.txt -O requirements.txt
+    - wget http://nightly.odoo.com/13.0/nightly/deb/odoo_13.0.latest.tar.xz
+    - tar -xf odoo_13.0.latest.tar.xz -C ../
+    - pip3 install -r requirements.txt
+    - pip3 install coverage
+    - pip3 install codecov
+
+script:
+    - python3 -m coverage run ../src/odoo-bin --addons-path=../src/odoo/addons,/home/travis/build/mva-odoo/syndic -d test --stop-after-init --test-enable --init syndic_base
+
+after_success:
+    - codecov

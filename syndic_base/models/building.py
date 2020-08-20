@@ -154,5 +154,5 @@ class Building(models.Model):
 
     def unlink(self):
         for building in self:
-            building.user_id.unlink()
+            building.user_id.active = False
         return super(Building, self).unlink()

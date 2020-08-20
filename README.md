@@ -1,0 +1,2 @@
+[![codecov](https://codecov.io/gh/mva-odoo/syndic/branch/13.0/graph/badge.svg)](https://codecov.io/gh/mva-odoo/syndic)
+[![Build Status](https://travis-ci.com/mva-odoo/syndic.svg?branch=13.0)](https://travis-ci.com/mva-odoo/syndic)
