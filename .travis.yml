@@ -19,9 +19,7 @@ install:
     - pip3 install -r requirements.txt
     - pip3 install coverage
     - mkdir ../src
-    - mv * ../src
-    - mv ../src ./src
-    - git clone --single-branch -b 13.0 https://github.com/odoo/odoo src/odoo
+    - git clone --single-branch -b 13.0 https://github.com/odoo/odoo ../src/odoo
 
 script:
-    - python3 -m coverage run src/odoo/odoo-bin --addons-path=src/odoo/addons,src/syndic -d test --stop-after-init --test-enable --init syndic_base
+    - python3 -m coverage run ../src/odoo/odoo-bin --addons-path=../src/odoo/addons,/home/travis/build/mva-odoo/syndic -d test --stop-after-init --test-enable --init syndic_base
