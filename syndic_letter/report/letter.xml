@@ -24,29 +24,35 @@
                 </div>
 
                 <div class="footer" style="text-align:center;color:#01559D;font-size:13px;">
+                    <hr/>
                     <div class="row">
-                    <div class="col-4">
-                        <img alt="" 
-                            src="http://www.sogis-serveur45.com/sgimmo949/syndic/soft/userfiles/images/SGIMMO_LOGO_HORIZONTAL_RVB.jpg" style="height:69px; width:250px"/>
-                    </div>
-                    <div class="col-4" style="text-align:left">
-                        SG IMMO SRL<br/>
-                        Rue François Vander Elst, 38/1<br/>
-                        1950 Kraainem<br/>
-                        Tél: 02/242.89.86
-                    </div>
-                    <div class="col-4" style="text-align:left">
-                        <br/>Avenue Wilmart, 4-6<br/>
-                        1360 Perwez<br/>
-                        Tél: 081/31.02.21<br/>
-                    </div>
-                    </div>
-                    <div class='row' style='margin-top:20px'>
-                        <div class='col-12'>
-                            I.P.I n° 501528 - BCE : 0894 523 013 - RC: FORTIS 03/99.525.489/01 - IBAN : BE81 0015 4230 2424 (GEBABEBB)
+                        <div class="col-12" style="font-size:18px;">
+                        <b>SG IMMO SRL</b>
                         </div>
                     </div>
-                </div>   
+                    <div class="row">
+                        <div class="col-4" style="text-align:left;">
+                        <div>Rue François Vander Elst, 38/1</div>
+                        <div>1950 Kraainem</div>
+                        <div>Tél : 02/242.89.86</div>
+                        <div>N° IPI : 501528</div>
+                        </div>
+                        
+                        <div class="col-4">
+                        <div>Avenue Wilmart, 4-6</div>
+                        <div>1360 Perwez</div>
+                        <div>Tél: 081/31.02.21</div>
+                        <div>www.sgimmo.be</div>
+                        </div>
+                        
+                        <div class="col-4" style="text-align:right;">
+                        <div>BCE : 0894 523 013</div>
+                        <div>RC : AXA - 730290350</div>
+                        <div>IBAN : BE81 0015 4230 2424</div>
+                        <div>GEBABEBB</div>
+                        </div>
+                    </div>
+                </div>
 
         </template>
 
