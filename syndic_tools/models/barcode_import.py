@@ -82,10 +82,17 @@ class BarcodeImport(models.AbstractModel):
                 no_codes = self.search([('code', '=', False)])
                 for no_code in no_codes:
                     buillding = no_code._get_building()
-                    new_code = 'barcode-import-%s-%s' % (self._name, buillding.name)
+                    building_read = buillding.read(['name', 'num_building'])[0]
+                    new_code = 'barcode-import-%s-%s' % (self._name, building_read['name'])
                     seq = self.env['ir.sequence'].next_by_code(new_code)
+
                     no_code.write({
-                        'code': self._get_sequence(buillding, self._barcode_type, seq, no_code.create_date)
+                        'code': self._get_sequence(
+                            building_read,
+                            self.with_context(prefetch_fields=False)._barcode_type,
+                            seq,
+                            no_code.with_context(prefetch_fields=False).create_date
+                        )
                     })
 
             # create report
@@ -117,11 +124,11 @@ class BarcodeImport(models.AbstractModel):
         return super(BarcodeImport, self)._auto_init()
 
     def _get_building(self):
-        return self if self._name =='syndic.building' else self[self._building_field]
+        return self if self._name == 'syndic.building' else self[self._building_field]
 
     def _get_sequence(self, building, type_seq, sequence, old_date=False):
         return '%03d-%s%s-%s' % (
-            building.num_building,
+            building['num_building'],
             old_date.year if old_date else date.today().year,
             type_seq, sequence
         )
