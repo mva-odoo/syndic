@@ -88,8 +88,8 @@ class Building(models.Model):
 
     def action_inhabitant(self):
         self.ensure_one()
-        owner = self.mapped('lot_ids').mapped('owner_ids')
-        loaner = self.mapped('lot_ids').mapped('loaner_ids')
+        owner = self.mapped('lot_ids.owner_id')
+        loaner = self.mapped('lot_ids.loaner_ids')
         if self._context.get('inhabitant_type') == 'owner':
             action = self.env.ref('syndic_base.action_proprietaire').read()[0]
             action['domain'] = [('id', 'in', owner.ids)]
@@ -112,7 +112,7 @@ class Building(models.Model):
     def _get_quotity(self):
         for building in self:
             building.lot_count = len(building.lot_ids)
-            building.owner_count = len(building.mapped('lot_ids.owner_ids'))
+            building.owner_count = len(building.mapped('lot_ids.owner_id'))
             building.loaner_count = len(building.mapped('lot_ids.loaner_ids'))
 
     def _get_contract(self):

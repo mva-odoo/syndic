@@ -93,7 +93,7 @@ class CreateLetter(models.Model):
 
     @api.onchange('immeuble_id', 'all_immeuble')
     def onchange_immeuble(self):
-        self.partner_ids = self.immeuble_id.mapped('lot_ids').mapped('owner_ids') if self.all_immeuble else False
+        self.partner_ids = self.immeuble_id.mapped('lot_ids.owner_id') if self.all_immeuble else False
 
     @api.onchange('partner_ids')
     def onchange_partner(self):

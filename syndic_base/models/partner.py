@@ -27,7 +27,7 @@ class Partner(models.Model):
     is_letter = fields.Boolean('Par Lettre')
     is_email = fields.Boolean('Par Email')
 
-    lot_ids = fields.Many2many('syndic.lot', 'syndic_lot_res_partner_rel', string='Lots')
+    lot_ids = fields.One2many('syndic.lot', 'owner_id', 'Lots')
     lot_count = fields.Integer('Quotitees Totales', compute='_get_number_lot')
 
     loaner_lot_ids = fields.Many2many('syndic.lot', 'syndic_lot_loan_rel', string='Lots(Locataire)')

@@ -15,35 +15,30 @@ class Mutation(models.Model):
         string=u'Ancien Propriétaire',
         required=True
     )
-    new_partner_ids = fields.Many2many(
-        'res.partner',
-        'new_mutation_rel',
-        string=u'Nouveaux Propriétaire',
-        required=True
-    )
+    new_owner_id = fields.Many2one('res.partner', 'Nouveau Propriétaire', required=True)
     lot_ids = fields.Many2many('syndic.lot', string='Lot', required=True)
     state = fields.Selection([('draft', 'brouillon'), ('done', 'terminé')], 'Etat', default='draft')
     immeuble_id = fields.Many2one('syndic.building', related='lot_ids.building_id', store=True, string="Immeuble")
 
-    @api.depends('old_partner_ids', 'new_partner_ids')
+    @api.depends('old_partner_ids', 'new_owner_id')
     def _get_name(self):
         for mutation in self:
             mutation.name = 'Mutation de %s vers %s' % (
                 ''.join(mutation.old_partner_ids.mapped('name') or []),
-                ''.join(mutation.new_partner_ids.mapped('name') or []),
+                mutation.new_owner_id.name or '',
             )
 
     @api.onchange('old_partner_ids')
     def onchange_old_owner(self):
         return {
-            'domain': {'lot_ids': [('owner_ids', 'in',  self.old_partner_ids.ids)]}
+            'domain': {'lot_ids': [('owner_id', 'in',  self.old_partner_ids.ids)]}
         }
 
     def mutation(self):
         self.ensure_one()
-        self.lot_ids.write({'owner_ids': [(6, 0, self.new_partner_ids.ids)]})
+        self.lot_ids.write({'owner_id': self.new_owner_id.id})
 
-        if not self.old_partner_ids.mapped('lot_ids.owner_ids'):
+        if not self.old_partner_ids.mapped('lot_ids.owner_id'):
             self.old_partner_ids.mapped('user_id').write({'active': False})
 
         self.state = 'done'

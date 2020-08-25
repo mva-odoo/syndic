@@ -32,9 +32,7 @@
                             <tr>
                                 <td><span t-field="lot.name"/></td>
                                 <td>
-                                    <t t-foreach="lot.owner_ids" t-as="proprietaire">
-                                        <span t-field="proprietaire.name"/>
-                                    </t>
+                                    <span t-field="lot.owner_id.name"/>
                                 </td>
                                 <td>
                                     <t t-foreach="lot.loaner_ids" t-as="locataire">

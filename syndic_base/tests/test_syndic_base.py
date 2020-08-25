@@ -114,8 +114,8 @@ class TestBuildingFlow(TestSyndicCommon):
         lot = self.env['syndic.lot'].browse(self.A2)
         new_mutation = self.env['syndic.mutation'].create({
             'mutation_date': datetime.now(),
-            'old_partner_ids': [(6, 0, lot.owner_ids.ids)],
-            'new_partner_ids': [(0, 0, {'name': 'mutation_owner'})],
+            'old_partner_ids': [(6, 0, [lot.owner_id.id])],
+            'new_owner_id': self.env['res.partner'].create({'name': 'NEW mutation'}).id,
             'lot_ids': [(6, 0, [lot.id])],
         })
 

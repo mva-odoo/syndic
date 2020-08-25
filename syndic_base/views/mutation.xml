@@ -10,7 +10,7 @@
 				<search string="mutation">
                     <field name="mutation_date"/>
 					<field name="old_partner_ids"/>
-					<field name="new_partner_ids"/>
+					<field name="new_owner_id"/>
                     <field name="immeuble_id"/>
 				</search>
 			</field>
@@ -25,7 +25,7 @@
 				<tree string="mutation">
                     <field name="mutation_date"/>
 					<field name="old_partner_ids" widget="many2many_tags"/>
-					<field name="new_partner_ids" widget="many2many_tags"/>
+					<field name="new_owner_id"/>
 					<field name="immeuble_id"/>
 				</tree>
 			</field>
@@ -53,7 +53,7 @@
 							widget="many2many_tags"
 							domain="['|', ('is_owner', '=', True), ('is_old', '=', True)]"
 						/>
-						<field name="new_partner_ids" attrs="{'readonly':[('state','=','done')]}" widget="many2many_tags"/>
+						<field name="new_owner_id" attrs="{'readonly':[('state','=','done')]}"/>
                     </group>
 					<notebook>
 						<page string="Lots modifiés">

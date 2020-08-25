@@ -19,21 +19,21 @@
     <record model="syndic.lot" id="syndic_gemini_lot1">
         <field name="name">Lot A1</field>
         <field name="building_id" ref="syndic_demo_building_gemini"/>
-        <field name="owner_ids" eval="[(4, ref('syndic_partner_gemini_owner'))]"/>
+        <field name="owner_id" ref="syndic_partner_gemini_owner"/>
         <field name="quotities">30</field>
     </record>
 
     <record model="syndic.lot" id="syndic_gemini_lot2">
         <field name="name">Lot A2</field>
         <field name="building_id" ref="syndic_demo_building_gemini"/>
-        <field name="owner_ids" eval="[(4, ref('syndic_partner_syndic_owner'))]"/>
+        <field name="owner_id" ref="syndic_partner_syndic_owner"/>
         <field name="quotities">50</field>
     </record>
 
     <record model="syndic.lot" id="syndic_gemini_garage">
         <field name="name">Garage A1</field>
         <field name="building_id" ref="syndic_demo_building_gemini"/>
-        <field name="owner_ids" eval="[(4, ref('syndic_partner_gemini_owner'))]"/>
+        <field name="owner_id" eval="syndic_partner_gemini_owner"/>
         <field name="quotities">20</field>
     </record>
 </odoo>

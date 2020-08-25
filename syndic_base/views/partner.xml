@@ -138,8 +138,8 @@
                                     
                             </group>
                         </page>
-                        <page string="Information Technique">
-                            <group>
+                        <page string="Information Technique" name="techPage">
+                            <group name="techGroup">
                                 <field name="user_ids"/>
                                 <field name="is_owner"/>
                                 <field name="is_loaner"/>

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        
+        <record id="private_management_form" model="ir.ui.view">
+            <field name="name">private.management.inherit.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="syndic_base.form_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='techPage']" position="before">
+                    <page string="Lot" name="lot">
+                        <field name="lot_ids" context="{'default_is_private': True}">
+                            <tree>
+                                <field name="name"/>
+                                <field name="building_id"/>
+                                <field name="loaner_ids"/>
+                                <field name="type_id"/>
+                                <button name="remove_private_gestion" string="Retirer la gestion privative" type="object"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="building_id"/>
+                                    <field name="type_id"/>
+                                </group>
+                                <field name="loaner_ids"/>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//group[@name='techGroup']" position="inside">
+                    <field name="is_private"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="private_management_action" model="ir.actions.act_window">
+            <field name="name">Gestion Privative</field>
+            <field name="res_model">res.partner</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_private', '=', True)]</field>
+        </record>
+
+        <menuitem
+            id="private_management_menu"
+            name="Gestion Privative"
+            action="private_management_action"
+            web_icon="syndic_private_management,static/description/icon.png"
+            sequence="10"/>
+    </data>
+</odoo>
