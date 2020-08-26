@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record id="private_management_build_form_view" model="ir.ui.view">
+            <field name="name">syndic.building.private.inherit.view.form</field>
+            <field name="model">syndic.building</field>
+            <field name="inherit_id" ref="syndic_base.form_simpl_building"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='tech_profile_page']" position="inside">
+                    <group>
+                        <field name="is_private"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="syndic_base.action_simpl_building">
+			<field name="domain">[('is_private', '=', False)]</field>
+		</record>
+
+    </data>
+</odoo>
