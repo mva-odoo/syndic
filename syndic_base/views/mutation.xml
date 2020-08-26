@@ -66,6 +66,7 @@
 							</field>
 						</page>
 					</notebook>
+					<field name="note"/>
                 </form>
 			</field>
 		</record>

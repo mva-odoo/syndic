@@ -19,6 +19,12 @@ class Mutation(models.Model):
     lot_ids = fields.Many2many('syndic.lot', string='Lot', required=True)
     state = fields.Selection([('draft', 'brouillon'), ('done', 'terminé')], 'Etat', default='draft')
     immeuble_id = fields.Many2one('syndic.building', related='lot_ids.building_id', store=True, string="Immeuble")
+    note = fields.Text('Note')
+    new_partner_ids = fields.Many2many(
+            'res.partner',
+            'new_mutation_rel',
+            string=u'Nouveaux Propriétaire',
+    )
 
     @api.depends('old_partner_ids', 'new_owner_id')
     def _get_name(self):

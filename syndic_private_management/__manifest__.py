@@ -11,5 +11,6 @@
     'website': 'http://www.sgimmo.be',
     'data': [
         'views/private_management.xml',
+        'views/building.xml',
     ],
 }
