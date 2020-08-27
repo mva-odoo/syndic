@@ -30,6 +30,7 @@
                             <field name="date_fr" />
 							<field name="immeuble_id"/>
 							<field name="type_id" />
+							<field name="survey_id" />
 		                </group>
 						<group string="Descriptif">
 							<field name="descriptif" nolabel="1"/>
@@ -77,22 +78,10 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="avis_type_model">
-			<field name="name">Type d'avis</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">type.avis</field>
-			
-			<field name="view_mode">tree,form</field>
-		</record>
-
-
 		<!--menu -->
-		<menuitem name="Type de rapport" id="menu_rapport_type" parent="menu_configuration_letter" action="rapport_type_model" />
-		<menuitem name="Type d'avis" id="menu_avis_type" parent="menu_configuration_letter" action="avis_type_model" />
-
-
-		<!--menu -->		
-		<menuitem name="Rapports de réunions" id="menu_rapport_reunion" parent="menu_letter" action="rapport_reunion" sequence="4"/>
+		<menuitem name="Rapports de réunions" id="root_rapport_reunion" web_icon="syndic_meeting,static/description/icon.png"/>
+		<menuitem name="Rapports de réunions" id="menu_rapport_reunion" parent="root_rapport_reunion" action="rapport_reunion" sequence="4"/>
+		<menuitem name="Type de rapport" id="menu_rapport_type" parent="root_rapport_reunion" action="rapport_type_model" />
 
 	</data>
 </odoo>

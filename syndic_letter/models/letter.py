@@ -170,11 +170,3 @@ class LetterModel(models.Model):
 
     name = fields.Char('Model Letter', required=True)
     text = fields.Html('Text', required=True)
-
-
-class LetterModelAvis(models.Model):
-    _name = 'letter.avis.model'
-    _description = 'letter.avis.model'
-
-    name = fields.Char(u'Nom du modèle', required=True)
-    text = fields.Html('Avis')

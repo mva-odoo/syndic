@@ -82,9 +82,21 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Avis" id="menu_action_avis" parent="menu_letter" action="action_avis" sequence="3"/>
-        <menuitem name="Modèle d avis" id="menu_action_model_avis" parent="menu_configuration_letter"
-                  action="action_model_avis" sequence="2"/>
+        <record model="ir.actions.act_window" id="avis_type_model">
+			<field name="name">Type d'avis</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">type.avis</field>
+			
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!--menu -->
+        <menuitem name="Avis" id="root_avis" web_icon="syndic_avis,static/description/icon.png"/>
+		<menuitem name="Type d'avis" id="menu_avis_type" parent="root_avis" action="avis_type_model" sequence="30"/>
+        <menuitem name="Avis" id="menu_action_avis" parent="root_avis" action="action_avis" sequence="10"/>
+        <menuitem name="Modèle d avis" id="menu_model_avis" parent="root_avis"
+                  action="action_model_avis" sequence="20"/>
 
     </data>
 </odoo>

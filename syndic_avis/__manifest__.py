@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Syndic Letter',
+    'name': 'Syndic Avis',
     'version': '0.5',
     "category": 'Syndic',
     'description': """
-    Syndic Lettre
+    Syndic Avis
     """,
-    'author': 'odoo SA',
-    'depends': ['syndic_base', 'mail', 'syndic_tools', 'pdf_viewer'],
+    'author': 'SGImmo SRL',
+    'depends': ['syndic_base'],
     'website': 'https://www.sgimmo.be',
     'data': [
-        'views/letter_view.xml',
-        'report/letter.xml',
+        'views/avis.xml',
+        'report/avis.xml',
         'security/ir.model.access.csv',
     ],
+    'installable': True,
+    'application': True,
 }

@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"syndic_avis_model","syndic lettre avis","model_letter_avis","syndic_base.syndic_manager",1,1,1,1
+"syndic_avis_type","syndic type avis","model_type_avis","syndic_base.syndic_manager",1,1,1,1
+"syndic_avis_model_employe","syndic lettre avis","model_letter_avis","syndic_base.syndic_employe",1,1,1,0
+"syndic_avis_modele_employe","syndic lettre model avis","model_letter_avis_model","syndic_base.syndic_employe",1,1,1,0
+"syndic_avis_modele_manager","syndic lettre model avis manager","model_letter_avis_model","syndic_base.syndic_manager",1,1,1,0
+"syndic_avis_type_employe","syndic type avis","model_type_avis","syndic_base.syndic_employe",1,1,1,0

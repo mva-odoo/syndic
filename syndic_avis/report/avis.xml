@@ -2,12 +2,11 @@
 <odoo>
     <data>
         <report
-          id="avis_print"
-          string="avis"
-          model="letter.avis"
-          name="syndic_letter.avis_impression"
-          file="name"
-          report_type="qweb-pdf"
+            id="avis_print"
+            string="avis"
+            model="letter.avis"
+            name="syndic_avis.avis_impression"
+            report_type="qweb-pdf"
         />
 
         <template id="avis_impression">
