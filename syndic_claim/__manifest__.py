@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Appel',
-    'version': '0.5',
+    'version': '0.6',
     "category": 'Syndic',
-    'complexity': "easy",
     'description': """
     Gestion des appels
     """,
