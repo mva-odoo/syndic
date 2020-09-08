@@ -11,26 +11,14 @@ class Claim(models.Model):
     _order = 'create_date desc'
 
     subject = fields.Char('Sujet', required=True)
-    email = fields.Char('Email')
-    phone = fields.Char('Telephone')
-    create_date = fields.Datetime(string=u'Date de création', readonly=True)
-    write_date = fields.Datetime(string='Update Date', readonly=True)
-    create_uid = fields.Many2one('res.users', string="Createur", readonly=True)
-    write_uid = fields.Many2one('res.users', string="Modifieur", readonly=True)
     manager_id = fields.Many2one(
         'res.users',
-        string='Manager de la plainte',
+        string='Gestionnaire de la plainte',
         domain=['!', ('groups_id.name', 'ilike', 'Syndic/Client')],
         default=lambda self: self.env.uid
     )
-    main_owner = fields.Many2one('res.partner', string=u'Contact propriétaires')
-    owner_ids = fields.Many2many('res.partner', 'syndic_claim_owner_rel', string=u'Autres propriétaires')
-    supplier_ids = fields.Many2many('res.partner',  'syndic_claim_supplier_rel', string='Fournisseurs')
-    loaner_ids = fields.Many2many('res.partner',  'syndic_claim_loaner_rel', string='Locataires')
-    other_ids = fields.Many2many('res.partner', string='Divers')
-    lot_ids = fields.Many2many('syndic.lot', string='Lot')
-    claim_status_id = fields.Many2one('claim.status', string='Status')
-    description_ids = fields.One2many('comment.history', 'claim_ids', string='historique')
+    partner_ids = fields.Many2many('res.partner', string='Contacts')
+    claim_status_id = fields.Many2one('claim.status', string='Status', tracking=True)
     building_id = fields.Many2one('syndic.building', 'Immeuble')
     importance = fields.Selection([
         ('0', 'pas important'),
@@ -38,31 +26,26 @@ class Claim(models.Model):
         ('2', 'tres important'),
         ('3', 'ultra important')
     ], string='Importance')
-    color = fields.Integer('Color')
-    status = fields.Selection([('draft', 'Ouvert'), ('done', 'Cloturer')], 'Etat', default='draft')
+    color = fields.Integer('Color', compute="_get_color")
     type_id = fields.Many2one('claim.type', 'Type')
 
-    def action_done(self):
-        self.ensure_one()
-        self.status = 'done'
+    @api.depends('importance')
+    def _get_color(self):
+        for rec in self:
+            rec.color = rec.importance
 
-    def action_reopen(self):
-        self.ensure_one()
-        self.status = 'draft'
-
-    @api.onchange('importance')
-    def onchange_color(self):
-        self.color = self.importance
-
-    @api.onchange('main_owner')
-    def on_change_partner(self):
-        self.email = self.main_owner.email
-        self.phone = self.main_owner.phone
+    def write(self, vals):
+        res = super(Claim, self).write(vals)
+        for rec in self:
+            rec.message_subscribe(
+                partner_ids=(rec.partner_ids | rec.manager_id.partner_id).ids
+            )
+        return res
 
     @api.model
     def create(self, vals):
-
         res = super(Claim, self).create(vals)
+        res.message_subscribe(partner_ids=(res.partner_ids | res.manager_id.partner_id).ids)
 
         if res.manager_id.id != res.create_uid.id:
             body = """
@@ -96,17 +79,3 @@ class ClaimType(models.Model):
     _description = 'claim.type'
 
     name = fields.Char('Status', required=True)
-
-
-class CommentHistory(models.Model):
-    _name = 'comment.history'
-    _description = 'comment.history'
-    _rec_name = 'description'
-
-    create_date = fields.Datetime(u'Date de création', readonly=True)
-    write_date = fields.Datetime('Date de modification', readonly=True)
-    create_uid = fields.Many2one('res.users', string="Create User", readonly=True)
-    write_uid = fields.Many2one('res.users', string="Last Update User", readonly=True)
-    description = fields.Text('Texte')
-    current_status = fields.Many2one('claim.status', string='Current status')
-    claim_ids = fields.Many2one('syndic.claim', string='Claim')

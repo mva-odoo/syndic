@@ -75,6 +75,13 @@
                                 </group>
                             </group>
                         </page>
+                        <page string="Accès">
+                            <group>
+                                <field name="access_more"/>
+                                <field name="access_info"/>
+                                <field name="access_where"/>
+                            </group>
+                        </page>
                         <page string="Renseignements utiles">
 							<group>
                                 <group string="Experts">
@@ -191,11 +198,6 @@
                                             <field name='terasse_what_repeir' />
                                         </tree>
                                     </field>
-                                </group>
-                                <group string="Accès">
-                                    <field name="access_more"/>
-                                    <field name="access_info"/>
-                                    <field name="access_where"/>
                                 </group>
 
                                 <group string="Parlophone et boite aux lettres">

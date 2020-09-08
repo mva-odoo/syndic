@@ -10,11 +10,8 @@
 				<search string="Invitee">
                     <field name="create_date" />
 					<field name="subject" />
-					<field name="email" />
-					<field name="phone" />
 					<field name="manager_id"/>
 					<field name="building_id"/>
-					<field name="status"/>
 					<group expand="0" string="Group By...">
 						<filter string="Immeuble" domain="[]" name="group_immeuble" context="{'group_by':'building_id'}"/>
 						<filter string="Manager de la plainte" domain="[]" name="group_manager" context="{'group_by':'manager_id'}"/>
@@ -33,8 +30,6 @@
 				<tree string="Gestion d'immeuble">
 					<field name="create_date" />
                     <field name="subject" />
-					<field name="email" />
-					<field name="phone" />
 					<field name="manager_id"/>
 					<field name="building_id"/>
 					<field name="claim_status_id"/>
@@ -50,61 +45,30 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Gestion d'immeuble" layout="manual">
-				<header>
-				<button string="Cloture" name="action_done" type="object" />
-				<button string="Réouvrir l'appel" name="action_reopen" type="object" />
-				<field name="status" widget="statusbar"/>
-				</header>
-				<sheet string="Sales Order" layout="auto">
-				<group col="4" colspan="4">
-				<field name="subject" />
-				<field name="type_id" />
-				<field name="main_owner"/>
-				<field name="phone"/>
-				<field name="email"/>
-				<field name="owner_ids" widget="many2many_tags"/>
-				<field name="loaner_ids" widget="many2many_tags"/>
-				<field name="supplier_ids" widget="many2many_tags"/>
-				<field name="other_ids" widget="many2many_tags"/>
-				<field name="building_id" options="{'no_open': True, 'no_create': True}"/>
-				<field 
-					name="manager_id" colspan="2" widget="selection"
-					required="1"
-					domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"
-				/>
-				<field name="importance" colspan="2" widget="priority"/>	
-				<field name="claim_status_id" colspan="2"/>
-				<field name="color" colspan="2" invisible='1'/>
-				</group>
-				<notebook colspan="4">
-                    <page string="Descriptions">
-                        <field name="description_ids" nolabel="1" colspan="4">
-                            <tree>
-                                <field name="description" />
-                                <field name="create_date" />
-                            </tree>
-							<form>
-								<group>
-									<field name="description" />
-								</group>
-							</form>
-                        </field>
-                    </page>
-                    
-                    <page string="Details">
+					<header>
+						<field name="claim_status_id" widget="statusbar" options="{'clickable': '1'}"/>
+					</header>
+					<sheet>
 						<group>
-							<field name="create_uid"/>
-							<field name="create_date"/>
-							<field name="write_uid"/>
-							<field name="write_date"/>
+						<field name="subject" />
+						<field name="type_id" />
+						<field name="building_id" options="{'no_open': True, 'no_create': True}"/>
+						<field 
+							name="manager_id" widget="selection"
+							required="1"
+							domain="[('groups_id.name','in',['Syndic/Employe','Syndic/Manager'])]"
+						/>
+						<field name="importance" widget="priority"/>	
+						<field name="color" invisible='1'/>
 						</group>
-                    </page>
-                </notebook>
-				</sheet>
-					<!-- <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-                        <field name="message_ids" widget="mail_thread"/>
-                    </div> -->
+						<group string="Contacts">
+								<field name="partner_ids" nolabel="1"/>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
 				</form>
 			</field>
 		</record>
@@ -124,32 +88,28 @@
 				<field name="building_id"/>
 				<field name="write_date"/>
 				<templates>
-				<t t-name="kanban-box">
-					<div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click_edit oe_semantic_html_override oe_kanban_card #{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}">
-					<div class="oe_dropdown_kanban">
-
-					<!-- dropdown menu -->
-					<div class="oe_dropdown_toggle">
-					<span class="oe_e">í</span>
-					<ul class="oe_dropdown_menu">
-						<li><a type="delete">Delete</a></li>
-						<li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
-					</ul>
-					</div>
-
-					<div class="oe_clear"></div>
-				</div>
-									<div t-attf-class="oe_kanban_content">
-					<!-- title -->
-					sujet : <field name="subject"/> <br/>
-					immeuble : <field name="building_id"/>  <br/>
-					derniere modification : <field name="write_date"/>
-				</div>
-					</div>
-
-				</t>
+					<t t-name="kanban-box">
+						<div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
+							<div class="o_dropdown_kanban dropdown" t-if="!selection_mode" groups="base.group_user">
+								<a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+									<span class="fa fa-ellipsis-v"/>
+								</a>
+								<div class="dropdown-menu" role="menu">
+									<a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">Edit Task</a>
+									<a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Delete</a>
+									<div role="separator" class="dropdown-divider"/>
+									<ul class="oe_kanban_colorpicker" data-field="color"/>
+								</div>
+							</div>
+							<div t-attf-class="oe_kanban_content">
+								<!-- title -->
+								sujet : <field name="subject"/> <br/>
+								immeuble : <field name="building_id"/>  <br/>
+								derniere modification : <field name="write_date"/>
+							</div>
+						</div>
+					</t>
 				</templates>  
-
 			</kanban>
 			</field>
 		</record>
@@ -185,7 +145,6 @@
 			<field name="view_mode">tree,form,kanban,graph,pivot</field>
 			<field name="view_id" ref="tree_claim" />
 			<field name="search_view_id" ref="search_claim" />
-			<field name="context">{'search_default_status' : 'draft' }</field>
 		</record>
 
 		<record model="ir.actions.act_window" id="action_claim_status">

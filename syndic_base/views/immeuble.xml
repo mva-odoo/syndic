@@ -66,9 +66,16 @@
 						<button class="oe_stat_button" type="object" name="action_contract" icon="fa-barcode">
 							<field string="Contrats" name="contract_count" widget="statinfo"/>
 						</button>
-						<button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" string="Activation/Désactivation">
-							<!-- <field name="active" widget="boolean_button" options='{"terminology": "active"}'/> -->
-						</button>
+						<button name="toggle_active"
+								type="object"
+								class="oe_stat_button"
+								icon="fa-archive"
+								string="Activation/Désactivation"/>
+						<button name="open_sign"
+								string="Consulter la fiche signalétique"
+								class="oe_stat_button"
+								icon="fa-archive"
+								type="object"/>
 					</div>
 					
 				
@@ -125,11 +132,19 @@
 							</field>
 						</page>
 						<page string="Fiche technique" name="tech_profile_page">
-							<button name="open_sign"
-									string="Consulter la fiche signalétique"
-									type="object"/>
 							<group string="Fiche technique" name="tech_profile">
-								<field name="supplier_ids" attrs="{'readonly': [('is_lock', '=', True)]}" nolabel="1"/>
+								<field name="supplier_ids" attrs="{'readonly': [('is_lock', '=', True)]}" nolabel="1">
+									<tree>
+										<field name="name"/>
+										<field name="job_ids" widget="many2many_tags"/>
+										<field name="street"/>
+										<field name="zip"/>
+										<field name="city_id"/>
+										<field name="country_id"/>
+										<field name="phone"/>
+										<field name="email"/>
+									</tree>
+								</field>
 							</group>
 						</page>
 						<page string="Comptabilité" name="comptabilite">
