@@ -10,6 +10,13 @@ class Claim(models.Model):
     _rec_name = 'subject'
     _order = 'create_date desc'
 
+    def _default_statut(self):
+        return self.env['claim.status'].search(
+            [],
+            order='sequence asc',
+            limit=1
+        ).id
+
     subject = fields.Char('Sujet', required=True)
     manager_id = fields.Many2one(
         'res.users',
@@ -22,6 +29,7 @@ class Claim(models.Model):
         'claim.status',
         string='Status',
         tracking=True,
+        default='_default_statut',
         group_expand='_read_group_stage_ids'
     )
     building_id = fields.Many2one('syndic.building', 'Immeuble')
