@@ -29,7 +29,7 @@ class Claim(models.Model):
         'claim.status',
         string='Status',
         tracking=True,
-        default='_default_statut',
+        default=_default_statut,
         group_expand='_read_group_stage_ids'
     )
     building_id = fields.Many2one('syndic.building', 'Immeuble')
