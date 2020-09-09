@@ -34,7 +34,8 @@ class Claim(models.Model):
     color = fields.Integer('Color')
     type_id = fields.Many2one('claim.type', 'Type')
 
-    def _read_group_stage_ids(self):
+    @api.model
+    def _read_group_stage_ids(self, stages, domain, order):
         return self.env['claim.status'].search([])
 
     def add_follower_claim(self):
