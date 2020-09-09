@@ -26,26 +26,18 @@ class Claim(models.Model):
         ('2', 'tres important'),
         ('3', 'ultra important')
     ], string='Importance')
-    color = fields.Integer('Color', compute="_get_color")
+    color = fields.Integer('Color')
     type_id = fields.Many2one('claim.type', 'Type')
 
-    @api.depends('importance')
-    def _get_color(self):
-        for rec in self:
-            rec.color = rec.importance
-
-    def write(self, vals):
-        res = super(Claim, self).write(vals)
-        for rec in self:
-            rec.message_subscribe(
-                partner_ids=(rec.partner_ids | rec.manager_id.partner_id).ids
-            )
-        return res
+    def add_follower_claim(self):
+        self.ensure_one()
+        self.message_subscribe(
+                partner_ids=(self.partner_ids | self.manager_id.partner_id).ids
+        )
 
     @api.model
     def create(self, vals):
         res = super(Claim, self).create(vals)
-        res.message_subscribe(partner_ids=(res.partner_ids | res.manager_id.partner_id).ids)
 
         if res.manager_id.id != res.create_uid.id:
             body = """

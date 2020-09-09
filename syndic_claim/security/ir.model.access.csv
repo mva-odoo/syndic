@@ -3,7 +3,7 @@
 "syndic_claim_status","syndic claim_status","model_claim_status","syndic_base.syndic_manager",1,1,1,1
 "syndic_type","syndic type","model_claim_type","syndic_base.syndic_manager",1,1,1,1
 "syndic_claim_employe","syndic syndic.claim","model_syndic_claim","syndic_base.syndic_employe",1,1,1,0
-"syndic_claim_status_employe","syndic claim_status","model_claim_status","syndic_base.syndic_employe",1,1,1,0
+"syndic_claim_status_employe","syndic claim_status","model_claim_status","syndic_base.syndic_employe",1,0,0,0
 "syndic_type_employe","syndic type","model_claim_type","syndic_base.syndic_employe",1,1,1,0
 "syndic_offre_contrat_employe","syndic offre contrat","model_offre_contrat","syndic_base.syndic_employe",1,1,1,1
 "syndic_offre_contrat_manager","syndic offre contrat manager","model_offre_contrat","syndic_base.syndic_manager",1,1,1,1
