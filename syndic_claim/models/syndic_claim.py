@@ -18,7 +18,12 @@ class Claim(models.Model):
         default=lambda self: self.env.uid
     )
     partner_ids = fields.Many2many('res.partner', string='Contacts')
-    claim_status_id = fields.Many2one('claim.status', string='Status', tracking=True)
+    claim_status_id = fields.Many2one(
+        'claim.status',
+        string='Status',
+        tracking=True,
+        group_expand='_read_group_stage_ids'
+    )
     building_id = fields.Many2one('syndic.building', 'Immeuble')
     importance = fields.Selection([
         ('0', 'pas important'),
@@ -28,6 +33,9 @@ class Claim(models.Model):
     ], string='Importance')
     color = fields.Integer('Color')
     type_id = fields.Many2one('claim.type', 'Type')
+
+    def _read_group_stage_ids(self):
+        return self.env['claim.status'].search([])
 
     def add_follower_claim(self):
         self.ensure_one()
