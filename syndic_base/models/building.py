@@ -17,7 +17,6 @@ class Building(models.Model):
     num_building = fields.Integer(u"N°", required=True)
     supplier_ids = fields.Many2many('res.partner', 'syndic_building_supplier_rel', string="Fiche technique")
 
-    bank_ids = fields.One2many('res.partner.bank', 'building_id', 'Compte Bancaire')
     total_quotites = fields.Float(compute='_get_total_quotites', string='Total Quotites')
     active = fields.Boolean(default=True)
     fiche_signalitic_ids = fields.One2many(
