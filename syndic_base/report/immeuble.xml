@@ -12,8 +12,8 @@
                  <h1><span t-field="o.name"/>:</h1>
 
                 <div style="font-size:16px">
-                    <div><span t-field="o.address_building"/></div>
-                    <div>Code Postal: <span t-esc="o.zip_building"/>Ville:  <span t-field="o.city_building.name"/></div>
+                    <div><span t-field="o.street"/></div>
+                    <div>Code Postal: <span t-esc="o.zip"/>Ville:  <span t-field="o.city_id.name"/></div>
                     <div>BCE: <span t-field="o.BCE"/></div>
                     <!-- <div>Compte: <span t-field="o.compte"/></div> -->
                     <div>Date de l'assemblée générale: <span t-field="o.ag_fortnight"/>semaine du mois de <span t-field="o.ag_month"/></div>

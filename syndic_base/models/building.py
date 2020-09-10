@@ -6,18 +6,15 @@ from odoo.addons.syndic_tools.syndic_tools import SyndicTools, _MONTH
 class Building(models.Model):
     _name = 'syndic.building'
     _inherit = 'barcode.import'
+    _inherits = {'res.partner': 'partner_id'}
     _description = 'syndic.building'
     _order = 'name asc'
 
     _print_barcode = False
 
-    name = fields.Char('Immeuble', required=True)
     lot_ids = fields.One2many('syndic.lot', 'building_id', 'Lots')
     BCE = fields.Char('BCE')
     num_building = fields.Integer(u"N°", required=True)
-    address_building = fields.Char('Rue', required=True)
-    zip_building = fields.Integer('Code Postal', required=True)
-    city_building = fields.Many2one('res.city', 'Commune', required=True)
     supplier_ids = fields.Many2many('res.partner', 'syndic_building_supplier_rel', string="Fiche technique")
 
     bank_ids = fields.One2many('res.partner.bank', 'building_id', 'Compte Bancaire')
@@ -33,9 +30,10 @@ class Building(models.Model):
     ag_month = fields.Selection(_MONTH, string='Mois')
     ag_fortnight = fields.Selection([('1', '1'), ('2', '2')], string='Quinzaine')
     note = fields.Text('Notes')
-    user_id = fields.Many2one('res.users', 'Utilisateur', required=True)
     password = fields.Char('Mot de Passe')
     lot_count = fields.Integer(compute='_get_quotity', string='Nombre de lots')
+
+    partner_id = fields.Many2one('res.partner', 'Contact', ondelete='cascade', required=True)
 
     owner_count = fields.Integer(compute='_get_quotity', string='Nombre de Propriétaires')
     loaner_count = fields.Integer(compute='_get_quotity', string='Nombre de Locataires')
@@ -72,10 +70,10 @@ class Building(models.Model):
             'context': self._context,
         }
 
-    @api.onchange('zip_building')
+    @api.onchange('zip')
     def _onchange_zip(self):
         return {
-            'domain': {'city_id': [('zipcode', '=', self.zip_building)]}
+            'domain': {'city_id': [('zipcode', '=', self.zip)]}
         }
 
     def toggle_active(self):
@@ -128,31 +126,9 @@ class Building(models.Model):
 
     @api.model
     def create(self, vals):
-        passwd = vals.get('password') or SyndicTools().pass_generator()
-
-        vals['user_id'] = self.env['res.users'].sudo().create({
-            'name': vals['name'],
-            'login': vals['name'],
-            'password': passwd,
-            'groups_id': [(6, 0, self.env['res.groups'].search([('name', 'ilike', 'Syndic/Client')]).ids)],
-        }).id
-
-        vals['password'] = passwd
         res = super(Building, self).create(vals)
+        res.partner_id.write({
+            'title': self.env.ref('syndic_base.title_acp').id,
+        })
         self.env['building.signalitic'].create({'building_id': res.id})
-        res.user_id.immeuble_id = res.id
         return res
-
-    def write(self, vals):
-        if vals.get('name'):
-            self.user_id.name = self.user_id.login = vals['name']
-
-        if vals.get('password') and self.user_id:
-            self.user_id.password = vals.get('password')
-
-        return super(Building, self).write(vals)
-
-    def unlink(self):
-        for building in self:
-            building.user_id.active = False
-        return super(Building, self).unlink()

@@ -10,9 +10,9 @@
                     <field name="name"/>
                     <field name="BCE"/>
                     <field name="num_building"/>
-                    <field name="address_building"/>
-                    <field name="zip_building"/>
-                    <field name="city_building"/>
+                    <field name="street"/>
+                    <field name="zip"/>
+                    <field name="city_id"/>
                     <field name="manager_id"/>
                     <filter name="old_building" string="Anciens batiments" domain="[('active', '=', False)]"/>
 				</search>
@@ -28,9 +28,9 @@
 				<tree string="Immeubles">
 					<field name="num_building"/>
 					<field name="name" />
-					<field name="address_building" />
-					<field name="city_building" />
-					<field name="zip_building" />
+					<field name="street" />
+					<field name="city_id" />
+					<field name="zip" />
 					<field name="BCE"/>
 				</tree>
 			</field>
@@ -83,15 +83,15 @@
 					<field name="num_building" class="oe_inline" placeholder="Numéros d'immeuble"
 						attrs="{'readonly': [('is_lock', '=', True)]}"/> -
 					<field name="name" class="oe_inline" placeholder="Nom d'immeuble"
-						attrs="{'readonly': [('is_lock', '=', True)]}"/>
+						attrs="{'readonly': [('is_lock', '=', True)]}" required="1"/>
 				</h1>
 				<widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
 				<field name="is_lock" invisible="1"/>
 
 				<group string="Adresse:" name="address">
-					<field name="address_building" attrs="{'readonly': [('is_lock', '=', True)]}"/>
-					<field name="zip_building" widget="raw-field-integer" attrs="{'readonly': [('is_lock', '=', True)]}"/>
-					<field name="city_building" context="{'default_zip_building': zip_building}" attrs="{'readonly': [('is_lock', '=', True)]}" options="{'no_open': True, 'no_create': True}"/>
+					<field name="street" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+					<field name="zip" widget="raw-field-integer" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+					<field name="city_id" context="{'default_zip': zip}" attrs="{'readonly': [('is_lock', '=', True)]}" options="{'no_open': True, 'no_create': True}"/>
 				</group>
 				<group>
 					<group string="Information Divers:" name="divers">

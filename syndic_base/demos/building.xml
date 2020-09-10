@@ -3,9 +3,9 @@
     <record model="syndic.building" id="syndic_demo_building_gemini">
         <field name="name">Gemini</field>
         <field name="num_building">1</field>
-        <field name="zip_building">1300</field>
-        <field name="address_building">Rue du test</field>
-        <field name="city_building" ref="syndic_base.2150"/>
+        <field name="zip">1300</field>
+        <field name="street">Rue du test</field>
+        <field name="city_id" ref="syndic_base.2150"/>
     </record>
 
     <record model="res.partner" id="syndic_partner_gemini_owner">

@@ -30,8 +30,8 @@
                                 </div>
                                 <div class="col-10">
                                     <br/><span t-field="o.building_id.name"/><br/>
-                                    <span t-field="o.building_id.address_building"/><br/>
-                                    <span t-esc="o.building_id.zip_building"/> <span t-field="o.building_id.city_building.name"/><br/>
+                                    <span t-field="o.building_id.street"/><br/>
+                                    <span t-esc="o.building_id.zip"/> <span t-field="o.building_id.city_id.name"/><br/>
                                     <span t-field="o.building_id.BCE"/><br/>
                                     <span>Etats des frais et honoraires pour prestations accomplies</span><br/>
                                 </div>

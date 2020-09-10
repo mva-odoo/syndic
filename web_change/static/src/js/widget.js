@@ -6,8 +6,8 @@ var fieldRegistry = require('web.field_registry');
 
     var RawFieldInteger = basicFields.FieldInteger.extend({
 
-        _formatValue: function (value) {
-            return value;
+        _formatValue: function (value) {            
+            return value || null;
         },
     });
 

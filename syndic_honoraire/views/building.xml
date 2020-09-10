@@ -8,13 +8,8 @@
                 <xpath expr="//page[@name='comptabilite']" position="after">
                   <page string="Honoraires et Frais Admin." name="honoraire" groups="syndic_base.syndic_manager">
                     <group string="Honoraires et Frais Admin." name="honoraire">
-                        <!-- TODO: Remove the unuse view -->
                         <field name="currency_id" invisible="1"/>
-                          <!-- <group>
-                            <field name="honoraire" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <field name="frais_admin" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                          </group> -->
-                        <group>
+                        <group col="4">
                           <field name="is_merge"/>
                         </group>
                         <field name="honoraire_ids">

@@ -33,6 +33,7 @@
             'views/menu.xml',
             'report/immeuble.xml',
             'datas/res.city.csv',
+            'datas/title.xml',
         ],
     'demo': [
         'demos/users.xml',

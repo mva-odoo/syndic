@@ -115,9 +115,9 @@ class CreateLetter(models.Model):
 
         if self.immeuble_id:
             header = "Concerne %s<br/>%s<br/>%s %s<br/><br/>" % (self.immeuble_id.name,
-                                                                 self.immeuble_id.address_building,
-                                                                 str(self.immeuble_id.zip_building),
-                                                                 str(self.immeuble_id.city_building.name))
+                                                                 self.immeuble_id.street,
+                                                                 str(self.immeuble_id.zip),
+                                                                 str(self.immeuble_id.city_id.name))
 
         body = "%s<br/>%s<br/>Cordialement.<br/><br/>" % (self.begin_letter_id.name, self.contenu)
 

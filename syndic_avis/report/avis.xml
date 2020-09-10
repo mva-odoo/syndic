@@ -18,8 +18,8 @@
                             <div class="page">
                                 <div class="col-xs-12" style="font-size:16px;">
                                     <br/><span t-field="o.immeuble_id.name"/><br/>
-                                    <span t-field="o.immeuble_id.address_building"/><br/>
-                                    <span t-esc="o.immeuble_id.zip_building"/> <span t-field="o.immeuble_id.city_building.name"/><br/>
+                                    <span t-field="o.immeuble_id.street"/><br/>
+                                    <span t-esc="o.immeuble_id.zip"/> <span t-field="o.immeuble_id.city_id.name"/><br/>
                                     BCE: <span t-field="o.immeuble_id.BCE"/><br/><br/>
                                 </div>
                                 <div style="text-align:right;font-size:18px;">
