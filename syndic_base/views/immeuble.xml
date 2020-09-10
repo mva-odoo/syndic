@@ -44,12 +44,13 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form>
-				
+					<header>
+						<button name="toggle_lock" string="Bloquer" type="object" icon="fa-lock"
+								attrs="{'invisible': [('is_lock', '=', True)]}"/>
+					</header>
 					<sheet>
 						<field name="active" invisible="1"/>
 						<div class="oe_button_box" name="button_box">
-						<button name="toggle_lock" string="Bloquer" type="object" icon="fa-lock"
-								attrs="{'invisible': [('is_lock', '=', True)]}"/>
 						<button name="toggle_lock" string="Débloquer" type="object" icon="fa-unlock"
 								attrs="{'invisible': [('is_lock', '=', False)]}"/>
 						<button class="oe_stat_button" type="object" name="action_lot" icon="fa-building">
@@ -66,13 +67,9 @@
 						<button class="oe_stat_button" type="object" name="action_contract" icon="fa-barcode">
 							<field string="Contrats" name="contract_count" widget="statinfo"/>
 						</button>
-						<button name="toggle_active"
-								type="object"
-								class="oe_stat_button"
-								icon="fa-archive"
-								string="Activation/Désactivation"/>
+
 						<button name="open_sign"
-								string="Consulter la fiche signalétique"
+								string="Fiche signalétique"
 								class="oe_stat_button"
 								icon="fa-archive"
 								type="object"/>

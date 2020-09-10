@@ -5,7 +5,7 @@
             <field name="model">syndic.building</field>
             <field name="inherit_id" ref="syndic_base.form_simpl_building"/>
             <field name="arch" type="xml">
-                <xpath expr="//button[@name='toggle_active']" position="before">
+                <xpath expr="//button[@name='open_sign']" position="before">
                     <button name="get_document" type="object" class="oe_stat_button" icon="fa-archive" string="Documents"/>
                 </xpath>
             </field>
