@@ -11,6 +11,8 @@ class Building(models.Model):
     _order = 'name asc'
 
     _print_barcode = False
+    _building_field = 'id'
+    _barcode_type = 'immeuble'
 
     lot_ids = fields.One2many('syndic.lot', 'building_id', 'Lots')
     BCE = fields.Char('BCE')
