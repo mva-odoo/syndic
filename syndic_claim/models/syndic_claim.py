@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api, exceptions
-from datetime import date
+from odoo import models, fields, api, exceptions, _
 
 
 class Claim(models.Model):
@@ -49,8 +48,11 @@ class Claim(models.Model):
     def add_follower_claim(self):
         self.ensure_one()
         self.message_subscribe(
-                partner_ids=(self.partner_ids | self.manager_id.partner_id).ids
+                partner_ids=self.partner_ids.ids
         )
+
+    def _get_creation_message(self):
+        return 'Creation du ticket'
 
     @api.model
     def create(self, vals):
@@ -63,14 +65,8 @@ Bonjour,
 une tâche t'attends sur : <a href='https://sgimmo.be/web#id=%i&view_type=form&model=syndic.claim&menu_id=128&action=119'>Odoo</a>
 """ % res.id
 
-            self.env['mail.mail'].create({
-                'mail_server_id':  self.env.user.server_mail_id.id or False,
-                'email_from': self.env.user.email,
-                'reply_to': self.env.user.email,
-                'body_html': body,
-                'subject': 'Une tâche t\'attends dans Odoo',
-                'email_to': self.env['res.users'].browse(vals.get('manager_id')).email
-            })
+            res.message_subscribe(partner_ids=res.manager_id.partner_id.ids)
+            res.message_post(body=_(body), partner_ids=res.manager_id.partner_id.ids)
 
         return res
 

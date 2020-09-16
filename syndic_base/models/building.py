@@ -56,6 +56,9 @@ class Building(models.Model):
 
     is_building = fields.Boolean('Est un immeuble', default=True)
 
+    def name_get(self):
+        return [[rec.id, '%s-%s' % (rec.num_building, rec.name)] for rec in self]
+
     def _get_total_quotites(self):
         for building in self:
             building.total_quotites = sum(building.lot_ids.mapped('quotities'))

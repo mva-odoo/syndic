@@ -73,7 +73,7 @@
                             <field name="state" widget="statusbar"/>
                         </header>
                         <h1>
-                                <field name="sujet" placeholder="Sujet" class="oe_inline"/> - <field name="immeuble_id" placeholder="Immeuble"/> - <field name="date" placeholder="Date"/>
+                                <field name="sujet" placeholder="Sujet" class="oe_inline"/> - <field name="immeuble_id" placeholder="Immeuble" options="{'no_create': True}"/> - <field name="date" placeholder="Date"/>
                         </h1>
                         <group>
                             <group>

@@ -12,6 +12,7 @@
     'website': 'http://www.sgimmo.be',
     'data': [
         'views/reunion.xml',
+        'views/ag.xml',
         'report/reunion.xml',
         'security/ir.model.access.csv',
     ],
