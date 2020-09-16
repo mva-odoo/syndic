@@ -10,9 +10,9 @@
                     <field name="name"/>
                     <field name="BCE"/>
                     <field name="num_building"/>
-                    <field name="address_building"/>
-                    <field name="zip_building"/>
-                    <field name="city_building"/>
+                    <field name="street"/>
+                    <field name="zip"/>
+                    <field name="city_id"/>
                     <field name="manager_id"/>
                     <filter name="old_building" string="Anciens batiments" domain="[('active', '=', False)]"/>
 				</search>
@@ -28,9 +28,9 @@
 				<tree string="Immeubles">
 					<field name="num_building"/>
 					<field name="name" />
-					<field name="address_building" />
-					<field name="city_building" />
-					<field name="zip_building" />
+					<field name="street" />
+					<field name="city_id" />
+					<field name="zip" />
 					<field name="BCE"/>
 				</tree>
 			</field>
@@ -44,12 +44,13 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form>
-				
+					<header>
+						<button name="toggle_lock" string="Bloquer" type="object" icon="fa-lock"
+								attrs="{'invisible': [('is_lock', '=', True)]}"/>
+					</header>
 					<sheet>
 						<field name="active" invisible="1"/>
 						<div class="oe_button_box" name="button_box">
-						<button name="toggle_lock" string="Bloquer" type="object" icon="fa-lock"
-								attrs="{'invisible': [('is_lock', '=', True)]}"/>
 						<button name="toggle_lock" string="Débloquer" type="object" icon="fa-unlock"
 								attrs="{'invisible': [('is_lock', '=', False)]}"/>
 						<button class="oe_stat_button" type="object" name="action_lot" icon="fa-building">
@@ -66,13 +67,9 @@
 						<button class="oe_stat_button" type="object" name="action_contract" icon="fa-barcode">
 							<field string="Contrats" name="contract_count" widget="statinfo"/>
 						</button>
-						<button name="toggle_active"
-								type="object"
-								class="oe_stat_button"
-								icon="fa-archive"
-								string="Activation/Désactivation"/>
+
 						<button name="open_sign"
-								string="Consulter la fiche signalétique"
+								string="Fiche signalétique"
 								class="oe_stat_button"
 								icon="fa-archive"
 								type="object"/>
@@ -83,15 +80,15 @@
 					<field name="num_building" class="oe_inline" placeholder="Numéros d'immeuble"
 						attrs="{'readonly': [('is_lock', '=', True)]}"/> -
 					<field name="name" class="oe_inline" placeholder="Nom d'immeuble"
-						attrs="{'readonly': [('is_lock', '=', True)]}"/>
+						attrs="{'readonly': [('is_lock', '=', True)]}" required="1"/>
 				</h1>
 				<widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
 				<field name="is_lock" invisible="1"/>
 
 				<group string="Adresse:" name="address">
-					<field name="address_building" attrs="{'readonly': [('is_lock', '=', True)]}"/>
-					<field name="zip_building" widget="raw-field-integer" attrs="{'readonly': [('is_lock', '=', True)]}"/>
-					<field name="city_building" context="{'default_zip_building': zip_building}" attrs="{'readonly': [('is_lock', '=', True)]}" options="{'no_open': True, 'no_create': True}"/>
+					<field name="street" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+					<field name="zip" widget="raw-field-integer" attrs="{'readonly': [('is_lock', '=', True)]}"/>
+					<field name="city_id" context="{'default_zip': zip}" attrs="{'readonly': [('is_lock', '=', True)]}" options="{'no_open': True, 'no_create': True}"/>
 				</group>
 				<group>
 					<group string="Information Divers:" name="divers">

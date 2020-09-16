@@ -412,7 +412,6 @@ class SignalitiqueImmeuble(models.Model):
     def _onchange_check_exist(self):
         if self.search([('building_id', '=', self.building_id.id)]):
             return {'warning': {'message': 'Attention: Ce bâtiment à deja une fiche signalitique'}}
-        return {}
 
     _sql_constraints = [
         ('model_id_field_id_uniq', 'unique (building_id)', ("Ce bâtiment à deja une fiche signalitique!"))

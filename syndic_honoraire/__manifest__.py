@@ -7,8 +7,7 @@ Honoraire for building
     """,
     'category': 'Syndic',
     'depends': [
-        'syndic_base',
-        'l10n_be',
+        'syndic_invoice',
     ],
     'data': [
         'views/building.xml',

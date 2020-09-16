@@ -42,9 +42,9 @@ class TestBuildingFlow(TestSyndicCommon):
         vals = {
             'name': 'ADFL',
             'num_building': '46',
-            'zip_building': 1300,
-            'city_building': self.wavre,
-            'address_building': 'Rue Edouard Olivier, 27',
+            'zip': 1300,
+            'city_id': self.wavre,
+            'street': 'Rue Edouard Olivier, 27',
         }
         with self.assertRaises(AccessError):
             self.Building.with_user(self.serge).create(vals)
@@ -53,9 +53,9 @@ class TestBuildingFlow(TestSyndicCommon):
         self.aloys = self.Building.with_user(self.florence).create({
             'name': 'ALOYS',
             'num_building': '140',
-            'zip_building': 1300,
-            'city_building': self.wavre,
-            'address_building': 'Boulevard du Souverain 338',
+            'zip': 1300,
+            'city_id': self.wavre,
+            'street': 'Boulevard du Souverain 338',
             'bank_ids': [(
                 0,
                 0,
@@ -80,7 +80,7 @@ class TestBuildingFlow(TestSyndicCommon):
         self.aloys._onchange_zip()
         self.aloys.action_lot()
         self.aloys.open_sign()
-
+        self.aloys.fiche_signalitic_ids._onchange_check_exist()
         self.aloys.toggle_lock()
 
         self.aloys.toggle_active()
