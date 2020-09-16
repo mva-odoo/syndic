@@ -13,6 +13,7 @@
         'base_address_city',
         'contacts',
         'syndic_tools',
+        'web_widget_x2many_2d_matrix',
     ],
     'website': 'http://www.sgimmo.be',
     'data': [
@@ -31,6 +32,7 @@
             'views/res_users.xml',
             'views/contract.xml',
             'views/menu.xml',
+            'views/quotity.xml',
             'report/immeuble.xml',
             'datas/res.city.csv',
             'datas/title.xml',

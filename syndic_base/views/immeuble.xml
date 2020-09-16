@@ -158,6 +158,27 @@
 						<page string="Notes" name="notes">
 							<field name="note" attrs="{'readonly': [('is_lock', '=', True)]}"/>
 						</page>
+						<page string="Quotitées" name="quotities">
+							<group>
+								<field name="quotity_type_ids" widget="many2many_tags"/>
+								<button name="get_quotities" string="Calculer quotitées" type="object" icon="fa-lock"/>
+							</group>
+							
+							<field
+								name="quotity_ids"
+								widget="x2many_2d_matrix"
+								field_x_axis="quotity_type_id"
+								field_y_axis="lot_id"
+								field_value="quotities"
+								show_row_totals="0"
+							>
+								<tree>
+									<field name="quotity_type_id"/>
+									<field name="lot_id"/>
+									<field name="quotities"/>
+								</tree>
+							</field>
+						</page>
 					</notebook>
 				</sheet>
                 </form>

@@ -41,3 +41,5 @@
 "syndic_ir_model_data_employe","syndic ir.model.data","base.model_ir_model_data","syndic_employe",1,1,1,1
 "syndic_country_employe","syndic country","base.model_res_country","syndic_employe",1,0,0,0
 "syndic_group_employe","syndic res group","base.model_res_groups","syndic_employe",1,1,1,0
+"syndic_quotity_employe","syndic_quotity_employe","model_syndic_building_quotities","syndic_employe",1,1,1,0
+"syndic_quotity_type_employe","syndic_quotity_type_employe","model_syndic_building_quotities_type","syndic_employe",1,1,1,0

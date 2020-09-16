@@ -55,6 +55,25 @@ class Building(models.Model):
 
     is_building = fields.Boolean('Est un immeuble', default=True)
 
+    quotity_type_ids = fields.Many2many('syndic.building.quotities.type', string='Type de quotitées')
+    quotity_ids = fields.Many2many(
+        'syndic.building.quotities',
+        string='Quotitées',
+    )
+
+    def get_quotities(self):
+        quotity = self.env['syndic.building.quotities']
+        for rec in self:
+            rec.quotity_ids = quotity.browse([
+                quotity.new({
+                    'lot_id': lot.id,
+                    'quotity_type_id': quotity_type.id,
+                    'quotities': lot.quotities
+                }).id
+                for lot in rec.lot_ids
+                for quotity_type in rec.quotity_type_ids
+            ])
+
     def name_get(self):
         return [[rec.id, '%s-%s' % (rec.num_building, rec.name)] for rec in self]
 

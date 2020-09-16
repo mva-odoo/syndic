@@ -7,3 +7,4 @@ from . import partner
 from . import users
 from . import job
 from . import contract
+from . import quotity
