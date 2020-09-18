@@ -7,6 +7,10 @@
             <field name="model">survey.question</field>
             <field name="inherit_id" ref="survey.survey_question_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='question_type']" position="after">
+                    <field name="quotity_type_id" domain="[('building_ids', 'in', building_id)]" options="{'no_create': True}"/>
+                    <field name="building_id" invisible="1"/>
+                </xpath>
                 <xpath expr="//page[last()]" position="after">
                     <page string="Description" name="description">
                         <field name="description"/>

@@ -55,6 +55,7 @@
                                 <field name="presence"/>
                                 <field name="presence_with" attrs="{'readonly': [('presence', '!=', 'represente')], 'required': [('presence', '=', 'represente')]}"/>
                                 <field name="quotities" sum="Quotitées"/>
+                                <field name="answer_state"/>
                             </tree>
                         </field>
                     </page>

@@ -15,3 +15,4 @@ class QuotityType(models.Model):
     _description = 'Quotities'
 
     name = fields.Char(string='Name')
+    building_ids = fields.Many2many('syndic.building', string="Immeubles")
