@@ -28,6 +28,7 @@ class Building(models.Model):
         readonly=True
     )  # One2many but it is a relation o2o
 
+    diu_ids = fields.One2many('syndic.building.diu', 'diu_id', 'DIU')
     ag_month = fields.Selection(_MONTH, string='Mois')
     ag_fortnight = fields.Selection([('1', '1'), ('2', '2')], string='Quinzaine')
     note = fields.Text('Note')
@@ -60,6 +61,11 @@ class Building(models.Model):
         'syndic.building.quotities',
         string='Quotitées',
     )
+
+    # access
+    access_info = fields.Text(u'Porte d’entrée: informations et descriptions')
+    access_where = fields.Many2one('res.partner', u'Certificat pour la reproduction de clé')
+    access_more = fields.Text('Informations et descriptions')
 
     def get_quotities(self):
         quotity = self.env['syndic.building.quotities']

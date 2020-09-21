@@ -144,6 +144,22 @@
 								</field>
 							</group>
 						</page>
+						<page string="Accès">
+                            <group>
+                                <field name="access_more"/>
+                                <field name="access_info"/>
+                                <field name="access_where"/>
+                            </group>
+                        </page>
+						<page string="DIU">
+							<field name="diu_ids">
+								<tree editable="top">
+									<field name="supplier_id"/>
+									<field name="diu_date"/>
+									<field name="diu_concerne"/>
+								</tree>
+							</field>
+                        </page>
 						<page string="Comptabilité" name="comptabilite">
 							<group string="Compte en Banque" name="bank">
 								<field name="bank_ids" attrs="{'readonly': [('is_lock', '=', True)]}" nolabel="1">

@@ -9,7 +9,6 @@
                     web_icon="syndic_base,static/description/building.png"
                 />
                 <menuitem name="Immeubles" id="simpl_immeubles" parent="syndic_main" action="action_simpl_building"/>
-                <menuitem name="Fiche signalitique immeuble" id="simpl_immeubles_signalitic" parent="syndic_main" action="action_signalitic"/>
                 
                 <menuitem name="Mutation" id="mutation" parent="syndic_main" action="action_mutation" sequence="30"/>
                 

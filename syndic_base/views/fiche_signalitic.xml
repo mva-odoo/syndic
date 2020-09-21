@@ -75,13 +75,7 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="Accès">
-                            <group>
-                                <field name="access_more"/>
-                                <field name="access_info"/>
-                                <field name="access_where"/>
-                            </group>
-                        </page>
+
                         <page string="Renseignements utiles">
 							<group>
                                 <group string="Experts">
@@ -133,16 +127,6 @@
                                     <field name="ascensseur_par"/>
                                     <field name="ascensseur_le"/>
                                     <field name="anne_ascensseur"/>
-                                </group>
-
-                                <group string="DIU">
-                                    <field name="diu" nolabel="1" colspan="4">
-                                        <tree editable="top">
-                                            <field name="diu_par"/>
-                                            <field name="diu_le"/>
-                                            <field name="diu_concerne"/>
-                                        </tree>
-                                    </field>
                                 </group>
 
                                 <group string="PEB">
@@ -388,13 +372,4 @@
                 </form>
 			</field>
 		</record>
-
-		<record model="ir.actions.act_window" id="action_signalitic">
-			<field name="name">Fiche signalitique immeuble</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">building.signalitic</field>
-			
-			<field name="view_mode">tree,form</field>
-		</record>
-
 </odoo>

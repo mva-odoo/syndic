@@ -11,15 +11,6 @@ class Desamientage(models.Model):
     signalitic_id = fields.Many2one('building.signalitic', string='signalitique')
 
 
-class DIU(models.Model):
-    _name = 'building.diu'
-    _description = 'building.diu'
-    diu_par = fields.Many2one('res.partner', string='DIU par')
-    diu_le = fields.Date('DIU le')
-    diu_concerne = fields.Char('Concerne')
-    diu_id = fields.Many2one('building.signalitic', string='DIU')
-
-
 class ObservationFacade(models.Model):
     _name = 'building.facade'
     _description = 'building.facade'
@@ -252,7 +243,6 @@ class SignalitiqueImmeuble(models.Model):
     ascensseur_par = fields.Many2one('res.partner', u'Executé par')
     ascensseur_le = fields.Date(u'Attestation de conformité établi le')
     # chauffage
-    diu = fields.One2many('building.diu', 'diu_id', 'DIU')
     anne_chaudiere = fields.Integer(u'Année de construction de la chaudière')
     peb_immeuble = fields.Boolean("Existance d'un audit de chauffage de plus de 15ans")
     # info service
@@ -299,10 +289,7 @@ class SignalitiqueImmeuble(models.Model):
     # terasse
     terasse_ids = fields.One2many('building.terasse', 'signalitic_id', string='Terasse')
     terasse_repeir_ids = fields.One2many('building.repeir.terasse', 'signalitic_id', string='Réparation Terasse')
-    # access
-    access_info = fields.Text(u'Porte d’entrée: informations et descriptions')
-    access_where = fields.Many2one('res.partner', u'Certificat pour la reproduction de clé')
-    access_more = fields.Text('Informations et descriptions')
+    
 
     # parlophone et boite
     plaquette_supplier = fields.Many2one('res.partner', u'Société de plaquettes')
@@ -407,12 +394,3 @@ class SignalitiqueImmeuble(models.Model):
 
     # travaux
     travaux_ids = fields.One2many('repeir.general', 'signalitic_id', string='Travaux')
-
-    @api.onchange('building_id')
-    def _onchange_check_exist(self):
-        if self.search([('building_id', '=', self.building_id.id)]):
-            return {'warning': {'message': 'Attention: Ce bâtiment à deja une fiche signalitique'}}
-
-    _sql_constraints = [
-        ('model_id_field_id_uniq', 'unique (building_id)', ("Ce bâtiment à deja une fiche signalitique!"))
-    ]

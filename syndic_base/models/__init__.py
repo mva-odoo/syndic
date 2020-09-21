@@ -8,3 +8,4 @@ from . import users
 from . import job
 from . import contract
 from . import quotity
+from . import diu

@@ -80,7 +80,6 @@ class TestBuildingFlow(TestSyndicCommon):
         self.aloys._onchange_zip()
         self.aloys.action_lot()
         self.aloys.open_sign()
-        self.aloys.fiche_signalitic_ids._onchange_check_exist()
         self.aloys.toggle_lock()
 
         self.aloys.toggle_active()

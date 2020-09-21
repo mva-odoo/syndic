@@ -22,7 +22,7 @@
 "syndic_city_employe","syndic city","base_address_city.model_res_city","syndic_employe",1,0,1,0
 "syndic_personne_employe","syndic personne","base.model_res_partner","syndic_employe",1,1,1,1
 "syndic_building_desamientage_employe","syndic building desamientage","model_building_desamientage","syndic_employe",1,1,1,1
-"syndic_building_diu_employe","syndic building.diu","model_building_diu","syndic_employe",1,1,1,1
+"syndic_building_diu_employe","syndic building.diu","model_syndic_building_diu","syndic_employe",1,1,1,1
 "syndic_building_facade_employe","syndicbuilding.facade","model_building_facade","syndic_employe",1,1,1,1
 "syndic_facade_repair_employe","syndic facade.repair","model_facade_repair","syndic_employe",1,1,1,1
 "syndic_building_terasse_employe","syndic building.terasse","model_building_terasse","syndic_employe",1,1,1,1
