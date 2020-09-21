@@ -30,11 +30,11 @@ class Building(models.Model):
 
     ag_month = fields.Selection(_MONTH, string='Mois')
     ag_fortnight = fields.Selection([('1', '1'), ('2', '2')], string='Quinzaine')
-    note = fields.Text('Notes')
+    note = fields.Text('Note')
     password = fields.Char('Mot de Passe')
     lot_count = fields.Integer(compute='_get_quotity', string='Nombre de lots')
 
-    partner_id = fields.Many2one('res.partner', 'Contact', ondelete='cascade', required=True)
+    partner_id = fields.Many2one('res.partner', 'Contact Immeuble', ondelete='cascade', required=True)
 
     owner_count = fields.Integer(compute='_get_quotity', string='Nombre de Propriétaires')
     loaner_count = fields.Integer(compute='_get_quotity', string='Nombre de Locataires')

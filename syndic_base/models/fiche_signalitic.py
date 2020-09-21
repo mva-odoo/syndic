@@ -266,7 +266,7 @@ class SignalitiqueImmeuble(models.Model):
     # jardins
     garden_contract = fields.Boolean('Contrats d entretien des espaces vert')
     garden_firm = fields.Char('Nom')
-    garden_day = fields.Date('Date')
+    garden_day = fields.Date("Date d'entretien")
     garden_tree = fields.Text(u'Arbre à abattre')
     garden_travaux = fields.Text('Travaux jardin')
     garden_more = fields.Text('description travaux')
