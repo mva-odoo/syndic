@@ -167,45 +167,6 @@ class SignalitiqueImmeuble(models.Model):
     # info general---------------------------------------
     construction_date = fields.Integer('Date de construction')
 
-    lieu_assemble = fields.Char('Lieu de la tenue de l assemblee generale')
-    compte = fields.Char('Compte bancaire')
-    compta = fields.Selection([('trimestrielle', 'Trimestrielle'), ('annuelle', 'Annuelle')], 'Comptabilite')
-    date_cloture = fields.Selection(
-        [('janvier', 'Janvier'), ('fevrier', 'Fevrier'), ('mars', 'Mars'), ('avril', 'Avril'), ('mai', 'Mai'),
-         ('juin', 'Juin'), ('juillet', 'Juillet'), ('aout', 'Aout'), ('septembre', 'Septembre'),
-         ('octobre', 'Octobre'), ('novembre', 'Novembre'), ('decembre', 'Decembre')],
-        u'Date de cloture de la comptabilite')
-    # acte de base
-    notaire_building = fields.Char('Notaire')
-    lieu_acte_building = fields.Char('Lieu de transcription')
-    date_acte_building = fields.Date('Date de transcription')
-    # plan
-    plan_sous_sol = fields.Boolean('Plan sous sol')
-    plan_facade = fields.Boolean('Plan facade')
-    plan_appartement = fields.Boolean('Plan appartement')
-    plan_egout = fields.Boolean(u'Plan réseaux d\'egoutage')
-
-    # nombres lots
-    number_appartement = fields.Integer("Nombre d appartements")
-    number_garage = fields.Integer("Nombre de boxes garages")
-    number_cave = fields.Integer("Nombre de caves")
-    number_chambres = fields.Integer("Nombre de chambres de bonnes")
-    number_parking = fields.Integer("Nombre d'emplacements")
-    conciergerie = fields.Boolean('Conciergerie')
-    # assurances
-    # incendie
-    incendie_name = fields.Char('Nom de la compagnie')
-    incendie_name_courier = fields.Char('Nom du courtier')
-    incendie_num_police = fields.Char(u'N° de la police')
-    incendie_franchise = fields.Selection([('legal', 'Legal'), ('extra_legal', 'Extra Legal')], 'Franchise')
-    incendie_expire = fields.Date('Expiration Incendie')
-    incendie_couverture = fields.Text('Couverture')
-
-    loi = fields.Boolean('Assurance loi')
-    justice = fields.Boolean(u'Assurance défense en justice')
-    ass_concierge = fields.Boolean(u'Assurance concièrge')
-    rec_creance = fields.Boolean(u'Assurance recouvrement de créance')
-
     # 2-------------------------------------------------------------------------------------
     # expert technique
     technique = fields.Many2one('res.partner', 'Expert technique')

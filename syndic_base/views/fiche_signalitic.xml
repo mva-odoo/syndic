@@ -31,51 +31,6 @@
                         <field name="name" class="oe_inline" readonly="True" placeholder="Nom d'immeuble"/>
                     </h1>
                     <notebook colspan="4">
-                        <page string="Information générale" >
-							<group>
-                                <group string="Assemblée">
-                                    <field name="lieu_assemble"/>
-                                </group>
-                                <group string="Finance du bâtiment">
-                                    <field name="compte"/>
-                                    <field name="compta"/>
-                                    <field name="date_cloture"/>
-                                </group>
-                                <group string="Acte de base">
-                                    <field name="construction_date"/>
-                                    <field name="notaire_building"/>
-                                    <field name="lieu_acte_building"/>
-                                    <field name="date_acte_building"/>
-                                    <field name="plan_sous_sol"/>
-                                    <field name="plan_facade"/>
-                                    <field name="plan_appartement"/>
-                                    <field name="plan_egout"/>
-                                </group>
-                                <group string="Composition du bâtiment">
-                                    <field name="number_appartement"/>
-                                    <field name="number_cave"/>
-                                    <field name="number_chambres"/>
-                                    <field name="number_garage"/>
-                                    <field name="number_parking"/>
-                                    <field name="conciergerie"/>
-                                </group>
-                                <group string="Assurances">
-                                    <field name="incendie_name"/>
-                                    <field name="incendie_name_courier"/>
-                                    <field name="incendie_num_police"/>
-                                    <field name="incendie_franchise"/>
-                                    <field name="incendie_expire"/>
-                                    <field name="incendie_couverture"/>
-                                </group>
-                                <group string="Assurances">
-                                    <field name="loi"/>
-                                    <field name="justice"/>
-                                    <field name="ass_concierge"/>
-                                    <field name="rec_creance"/>
-                                </group>
-                            </group>
-                        </page>
-
                         <page string="Renseignements utiles">
 							<group>
                                 <group string="Experts">
@@ -138,12 +93,13 @@
                         <page string='Information immeuble'>
                             <group>
                                 <group string="Information">
+                                    <field name="construction_date"/>
                                     <field name="trotoire"/>
                                     <field name="mur_mitoyens"/>
                                     <field name="more_info"/>
                                 </group>
                                 <group string="Façade">
-                                     <field name="facade_id">
+                                    <field name="facade_id">
                                         <tree string='facade' editable='top'>
                                             <field name='observation' />
                                             <field name='date_observation' />
@@ -229,7 +185,7 @@
                                         <field name="jardin_more"/>
                                     </group>
                                     <group string="Ascenseur">
-                                         <field name="ascensseur_contrat"/>
+                                        <field name="ascensseur_contrat"/>
                                         <field name="ascensseur_date"/>
                                         <field name="nbr_passage"/>
                                     </group>
