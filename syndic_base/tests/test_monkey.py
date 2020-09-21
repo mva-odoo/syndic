@@ -1,4 +1,5 @@
 from odoo.addons.l10n_be_edi.tests.test_ubl import TestUBL
+from odoo.addons.web.tests.test_js import WebSuite
 
 
 class NewTestUBL(TestUBL):
@@ -10,5 +11,11 @@ class NewTestUBL(TestUBL):
         pass
 
 
+class NewWebSuite(WebSuite):
+    def test_js(self):
+        pass
+
+
 TestUBL.setUp = NewTestUBL.setUp
 TestUBL.test_ubl_invoice_import = NewTestUBL.test_ubl_invoice_import
+WebSuite.test_js = NewWebSuite.test_js
