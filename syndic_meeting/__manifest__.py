@@ -12,7 +12,6 @@
     'website': 'http://www.sgimmo.be',
     'data': [
         'views/reunion.xml',
-        'views/ag.xml',
         'views/survey.xml',
         'report/reunion.xml',
         'security/ir.model.access.csv',

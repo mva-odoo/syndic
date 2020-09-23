@@ -5,5 +5,4 @@
 "syndic_reunion_point_employe","syndic point reunion","model_reunion_point","syndic_base.syndic_employe",1,1,1,0
 "syndic_reunion_type","syndic type reunion","model_reunion_type","syndic_base.syndic_employe",1,1,1,0
 "syndic_reunion_type_employe","syndic type reunion","model_reunion_type","syndic_base.syndic_manager",1,1,1,1
-"syndic_ag_employe","syndic AG","model_syndic_ag","syndic_base.syndic_manager",1,1,1,1
 "syndic_ag_presence_employe","syndic AG presence","model_syndic_ag_presence","syndic_base.syndic_manager",1,1,1,1
