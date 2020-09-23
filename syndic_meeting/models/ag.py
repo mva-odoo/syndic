@@ -30,8 +30,10 @@ class SyndicAGPresence(models.Model):
     def _get_answer(self):
         for rec in self:
             reponse = rec.survey_id.user_input_ids.filtered(lambda s: s.partner_id == rec.owner_id)
-
-            rec.answer_state = reponse.state if reponse else 'Non envoyé'
+            if len(reponse) > 1:
+                rec.answer_state = 'Plusieurs reponses'
+            else:
+                rec.answer_state = reponse.state if reponse else 'Non envoyé'
 
 
 

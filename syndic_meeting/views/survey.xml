@@ -29,6 +29,9 @@
             <field name="model">survey.survey</field>
             <field name="inherit_id" ref="survey.survey_form"/>
             <field name="arch" type="xml">
+                <xpath expr="header" position="inside">
+                    <button name='action_get_result' type="object" string='Resultat'/>
+                </xpath>
 
                 <xpath expr="//div[@class='oe_title']" position='after'>
                     <div class="oe_title" style="width: 100%;">
@@ -46,6 +49,11 @@
                             <field name="send_ag"/>
                         </group>
                     </group>
+                </xpath>
+
+                <xpath expr="//field[@name='question_and_page_ids']/tree" position="inside">
+                    <field name='quotities_score'/>
+                    <field name='percent_quotities_score'/>
                 </xpath>
 
                 <xpath expr="//field[@name='question_and_page_ids']/.." position="before">
@@ -72,6 +80,31 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="syndic_survey_user_input_line_pivot" model="ir.ui.view">
+            <field name="name">synidc.user_input.view.pivot</field>
+            <field name="model">survey.user_input_line</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="quotities_score" type="measure"/>
+                    <field name="percent_quotities_score" type="measure"/>
+                    <field name="question_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+
+        <record id="syndic_ag_survey_user_input_form" model="ir.ui.view">
+            <field name="name">survey.user_input.inherit.view.form</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='answer_score']" position='replace'>
+                    <field name="quotities_score" />
+                </xpath>
+            </field>
+        </record>
+        
 
         <record id="syndic_ag_action" model="ir.actions.act_window">
             <field name="name">AG</field>
