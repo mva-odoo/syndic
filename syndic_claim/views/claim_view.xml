@@ -62,9 +62,29 @@
 						<field name="importance" widget="priority"/>	
 						<field name="color" invisible='1'/>
 						</group>
-						<group string="Contacts">
+
+						<notebook>
+							<page name="contact" string="Contact">
 								<field name="partner_ids" nolabel="1"/>
-						</group>
+							</page>
+							<page name="sinistre" string="Sinistre">
+								<group>
+									<group>
+										<field name='date_sinistre'/>
+										<field name='cause_sinistre'/>
+										<field name='origin_sinistre'/>
+										
+									</group>
+									<group>
+										<field name='courtier_sinistre'/>
+										<field name='company_sinistre'/>
+										<field name='is_invoice'/>
+									</group>
+									<field name='attachment_ids' widget="many2many_binary"/>
+								</group>
+								<field name="sinistre_ids" />
+							</page>
+						</notebook>
 					</sheet>
 					<div class="oe_chatter">
 						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>

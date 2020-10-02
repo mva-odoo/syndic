@@ -41,6 +41,16 @@ class Claim(models.Model):
     color = fields.Integer('Color')
     type_id = fields.Many2one('claim.type', 'Type')
 
+    # sinistre
+    date_sinistre = fields.Date('Date du sinistre')
+    cause_sinistre = fields.Char('Cause du sinistre')
+    origin_sinistre = fields.Selection([('commun', 'commun'), ('privatif', 'privatif')], 'Origine du sinistre')
+    courtier_sinistre = fields.Char('référence courtier')
+    company_sinistre = fields.Char('référence compagnie')
+    attachment_ids = fields.Many2many('ir.attachment', string="PV d'expertise")
+    is_invoice = fields.Boolean('facture emise')
+    sinistre_ids = fields.One2many('syndic.claim.sinistre.repair', 'claim_id', 'Sinistres')
+
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
         return self.env['claim.status'].search([])

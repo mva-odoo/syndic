@@ -9,6 +9,7 @@
     'author': 'SGImmo',
     'depends': [
         'syndic_base',
+        'account'
     ],
     'data': [
         'views/claim_view.xml',

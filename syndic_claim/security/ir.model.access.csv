@@ -9,3 +9,4 @@
 "syndic_offre_contrat_manager","syndic offre contrat manager","model_offre_contrat","syndic_base.syndic_manager",1,1,1,1
 "syndic_bon_commande_manager","syndic bon commande manager","model_bon_commande","syndic_base.syndic_manager",1,1,1,1
 "syndic_bon_commande_employe","syndic bon commande employe","model_bon_commande","syndic_base.syndic_employe",1,1,1,1
+"syndic.claim.sinistre.repair.acl","syndic.claim.sinistre.repair employe","model_syndic_claim_sinistre_repair","syndic_base.syndic_employe",1,1,1,1
