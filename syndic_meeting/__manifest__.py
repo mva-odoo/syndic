@@ -14,6 +14,7 @@
         'views/reunion.xml',
         'views/survey.xml',
         'report/reunion.xml',
+        'report/ag.xml',
         'security/ir.model.access.csv',
     ],
 }

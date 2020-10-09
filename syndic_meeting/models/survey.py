@@ -78,7 +78,35 @@ class SurveyQuestion(models.Model):
         compute='_get_score',
         store=True
     )
-    @api.depends('user_input_line_ids')
+
+    template_selection = fields.Selection([
+        ('0', 'Vide'),
+        ('1', '1 Propositions'),
+        ('3', '3 Propositions'),
+    ], default='0', string='Modèle')
+
+    @api.onchange('template_selection')
+    def _onchange_template_selection(self):
+        if self.template_selection == '1':
+            resp = [
+                (6, 0, []),
+                (0, 0, {'value': "J'ai lu l'information", 'type_answer': 'ok'})
+            ]
+        elif self.template_selection == '3':
+            resp = [
+                (6, 0, []),
+                (0, 0, {'value': "Je valide cette proposition", 'type_answer': 'ok'}),
+                (0, 0, {'value': "Je ne valide pas cette proposition", 'type_answer': 'notok'}),
+                (0, 0, {'value': "Je m'abstiens", 'type_answer': 'abstention'}),
+            ]
+        else:
+            resp = [
+                (6, 0, [])
+            ]
+
+        self.labels_ids = resp
+
+    @api.depends('user_input_line_ids.value_suggested.type_answer')
     def _get_score(self):
         for rec in self:
             rec.quotities_score = sum(rec.user_input_line_ids.mapped('quotities_score'))
@@ -129,32 +157,33 @@ class SurveyUserInputLine(models.Model):
         'survey_id.presence_ids.lot_ids'
     )
     def _get_score(self):
+        answer = {
+            'ok': 1,
+            'notok': 0,
+            'abstention': -1,
+        }
         for rec in self:
-            if rec.value_suggested.type_answer == 'ok':
-                coeff = 1
-            elif rec.value_suggested.type_answer == 'not':
-                coeff = 0
-            elif rec.value_suggested.type_answer == 'abstention':
-                coeff = -1
+            coeff = answer.get(rec.value_suggested.type_answer, 'Nope')
+
+            if coeff == 'Nope':
+                rec.quotities_score = 0.0
+                rec.percent_quotities_score = 0.0
             else:
-                rec.quotities_score = 0
-                continue
+                type_id = rec.question_id.quotity_type_id
+                lot_ids = rec.survey_id.presence_ids.filtered(
+                    lambda s: s.owner_id == rec.user_input_id.partner_id
+                ).mapped('lot_ids')
 
-            type_id = rec.question_id.quotity_type_id
-            lot_ids = rec.survey_id.presence_ids.filtered(
-                lambda s: s.owner_id == rec.user_input_id.partner_id
-            ).mapped('lot_ids')
+                quotities = sum(self.env['syndic.building.quotities'].search([
+                    ('lot_id', 'in', lot_ids.ids),
+                    ('quotity_type_id', '=', type_id.id),
+                ]).mapped('quotities'))
 
-            quotities = sum(self.env['syndic.building.quotities'].search([
-                ('lot_id', 'in', lot_ids.ids),
-                ('quotity_type_id', '=', type_id.id),
-            ]).mapped('quotities'))
+                all_quotities = sum(self.env['syndic.building.quotities'].search([
+                    ('quotity_type_id', '=', type_id.id),
+                    ('lot_id.building_id', '=', rec.survey_id.building_id.id),
+                ]).mapped('quotities'))
 
-            all_quotities = sum(self.env['syndic.building.quotities'].search([
-                ('quotity_type_id', '=', type_id.id),
-                ('lot_id.building_id', '=', rec.survey_id.building_id.id),
-            ]).mapped('quotities'))
-            if coeff in [-1, 0, 1]:
                 total = quotities * coeff
                 rec.quotities_score = total
-                rec.percent_quotities_score = (total / all_quotities) * 100 if all_quotities else 0
+                rec.percent_quotities_score = (total / all_quotities) * 100 if all_quotities else 0.0

@@ -25,15 +25,14 @@ class SyndicAGPresence(models.Model):
     quotities = fields.Float(compute="_get_quotities", string='Quotitées')
     survey_id = fields.Many2one('survey.survey', 'AG')
     answer_state = fields.Char('Réponse', compute="_get_answer")
+    answer_id = fields.Many2one('survey.user_input', 'Réponse', compute="_get_answer")
 
     @api.depends('survey_id.user_input_ids')
     def _get_answer(self):
         for rec in self:
             reponse = rec.survey_id.user_input_ids.filtered(lambda s: s.partner_id == rec.owner_id)
-            if len(reponse) > 1:
-                rec.answer_state = 'Plusieurs reponses'
-            else:
-                rec.answer_state = reponse.state if reponse else 'Non envoyé'
+            rec.answer_state = reponse.state if reponse else 'Non envoyé'
+            rec.answer_id = reponse
 
 
 
