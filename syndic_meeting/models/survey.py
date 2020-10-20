@@ -50,11 +50,27 @@ class Survey(models.Model):
         return super(Survey, self.with_context(context)).action_send_survey()
 
     def action_get_result(self):
+        domain = [('survey_id', '=', self.id)]
+        user_input = self.env['survey.user_input_line'].search(domain)
+
+        self.env.add_to_compute(user_input._fields['quotities_score'], user_input)
+        self.env.add_to_compute(user_input._fields['percent_quotities_score'], user_input)
+        self.env.add_to_compute(user_input._fields['percent_total'], user_input)
+
+        user_input.recompute()
+
+        survey_question = self.env['survey.question'].search([])
+
+        self.env.add_to_compute(survey_question._fields['quotities_score'], survey_question)
+        self.env.add_to_compute(survey_question._fields['percent_quotities_score'], survey_question)
+
+        survey_question.recompute()
+
         return {
                 'name': _('Resultat'),
                 'view_mode': 'pivot,graph',
                 'res_model': 'survey.user_input_line',
-                'domain': [('survey_id', '=', self.id)],
+                'domain': domain,
                 'type': 'ir.actions.act_window',
                 'context': self._context,
         }
@@ -84,6 +100,11 @@ class SurveyQuestion(models.Model):
         ('1', '1 Propositions'),
         ('3', '3 Propositions'),
     ], default='0', string='Modèle')
+
+    def get_result(self):
+        action = self.env.ref('syndic_meeting.syndic_ag_question_action').read()[0]
+        action['domain'] = [('question_id', '=', self.id)]
+        return action
 
     @api.onchange('template_selection')
     def _onchange_template_selection(self):
@@ -145,6 +166,12 @@ class SurveyUserInputLine(models.Model):
         store=True
     )
 
+    percent_total = fields.Float(
+        string='Total Quotité',
+        compute='_get_score',
+        store=True
+    )
+
     partner_id = fields.Many2one(
         string='Propriétaire',
         related='user_input_id.partner_id',
@@ -154,22 +181,43 @@ class SurveyUserInputLine(models.Model):
     @api.depends(
         'value_suggested.type_answer',
         'question_id.quotity_type_id',
+        'survey_id.presence_ids',
+        'survey_id.presence_ids.presence',
         'survey_id.presence_ids.lot_ids'
     )
+
+    def _get_lot(self, survey):
+        return {
+            presence.owner_id: {
+                'lot_ids': presence.lot_ids,
+                'quotities': presence.quotities
+                } for presence in survey.presence_ids
+            }
+
+
     def _get_score(self):
         answer = {
             'ok': 1,
             'notok': 0,
             'abstention': -1,
         }
+
         for rec in self:
             coeff = answer.get(rec.value_suggested.type_answer, 'Nope')
 
             if coeff == 'Nope':
                 rec.quotities_score = 0.0
                 rec.percent_quotities_score = 0.0
+                rec.percent_total = 0.0
+
             else:
+                if coeff == -1:
+                    rec.percent_total = 0.0
+                    rec.percent_quotities_score = 0.0
+                    rec.quotities_score = 0.0
+
                 type_id = rec.question_id.quotity_type_id
+
                 lot_ids = rec.survey_id.presence_ids.filtered(
                     lambda s: s.owner_id == rec.user_input_id.partner_id
                 ).mapped('lot_ids')
@@ -179,11 +227,14 @@ class SurveyUserInputLine(models.Model):
                     ('quotity_type_id', '=', type_id.id),
                 ]).mapped('quotities'))
 
-                all_quotities = sum(self.env['syndic.building.quotities'].search([
-                    ('quotity_type_id', '=', type_id.id),
-                    ('lot_id.building_id', '=', rec.survey_id.building_id.id),
-                ]).mapped('quotities'))
+                rec.quotities_score = quotities * coeff
 
-                total = quotities * coeff
-                rec.quotities_score = total
-                rec.percent_quotities_score = (total / all_quotities) * 100 if all_quotities else 0.0
+                all_quotities = rec.read_group(
+                    [('question_id', '=', rec.question_id.id)],
+                    ['percent_total'],
+                    ['question_id']
+                )[0]['percent_total']
+
+                if coeff != -1:
+                    rec.percent_total = quotities
+                    rec.percent_quotities_score = (rec.quotities_score / all_quotities) * 100 if all_quotities else 0.0
