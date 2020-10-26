@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="building_id" />
+                    <button name="upload_sogis" string="sogis" type="object"/>
                 </xpath>
             </field>
         </record>
