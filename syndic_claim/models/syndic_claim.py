@@ -19,7 +19,7 @@ class Claim(models.Model):
     subject = fields.Char('Sujet', required=True)
     manager_id = fields.Many2one(
         'res.users',
-        string='Gestionnaire de la plainte',
+        string="Gestionnaire de l'immeuble",
         domain=['!', ('groups_id.name', 'ilike', 'Syndic/Client')],
         default=lambda self: self.env.uid
     )

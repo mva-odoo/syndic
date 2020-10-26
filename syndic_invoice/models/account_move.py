@@ -7,7 +7,7 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     building_id = fields.Many2one('syndic.building', 'Immeuble')
-    sougis_ref = fields.Char('Sogis ref.')
+    sogis_ref = fields.Char('Sogis ref.')
 
     def _get_building(self, num_building):
         user = 'sgimmo_api'
@@ -41,11 +41,18 @@ class AccountMove(models.Model):
         from datetime import datetime
         for rec in self:
             params['id_fournisseur'] = '618'
+            params['id_facture'] = '999999999998'
             params['id_copropriete'] = self._get_building(rec.building_id.num_building)
             params['ref_facture'] = rec.name
             params['trimestre'] = '4'
-            params['com_vcs'] = rec.invoice_payment_ref
-            params['id_cle'] = '9509051'
+            # params['com_vcs'] = rec.invoice_payment_ref
+            params['id_cle'] = '23'
+            params['classe_compta'] = '61300'
+            params['id_pcmn'] = '17467'
+            params['montant_ht'] = str(rec.amount_untaxed)
+            params['montant_tva'] = str(rec.amount_tax)
+            params['update'] = '1'
+            params['tva_valeur'] = '21'
             params['montant_ttc'] = str(rec.amount_total)
             params['date_facture'] = datetime.strftime(rec.invoice_date, "%Y-%m-%d")
             # params['nom_fichier'] = 
@@ -58,5 +65,5 @@ class AccountMove(models.Model):
             )
             datas = response.json().get('data')
             print(response.json().get('error'))
-            import ipdb; ipdb.set_trace()
+            
             rec.sogis_ref = datas.get('ref_interne')
