@@ -2,6 +2,8 @@
 from odoo import models, fields, api, exceptions
 from odoo.addons.syndic_tools.syndic_tools import SyndicTools
 
+from jinja2 import Template
+
 
 class PieceJointe(models.Model):
     _inherit = 'ir.attachment'
@@ -62,6 +64,9 @@ class CreateLetter(models.Model):
     def _compute_date(self):
         for letter in self:
             letter.date_fr = SyndicTools().french_date(letter.date) if letter.date else ''
+
+    def _get_jinja_template(self, contenu, vals):
+        return Template(contenu).render(**vals)
 
     @api.model
     def create(self, vals):

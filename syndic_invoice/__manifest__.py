@@ -12,6 +12,7 @@ Facture
     ],
     'data': [
         'views/account_move.xml',
+        'datas/datas.xml',
     ],
 
 }

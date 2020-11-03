@@ -97,7 +97,9 @@
                         <span t-field="o.begin_letter_id.name"/>
                         <br/>
                         <br/>
-                        <span t-field="o.contenu"/>
+                        <!-- <span t-field="o.contenu"/> -->
+                        <t t-set="render_vals" t-value="o._get_jinja_template(o.contenu, {'partner': prop_id, 'letter': o})"/>
+                        <t t-raw="render_vals"/>
                         <br/>
                         <span t-field="o.end_letter_id.name"/>
                         <br/>
