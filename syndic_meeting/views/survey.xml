@@ -7,10 +7,10 @@
             <field name="model">survey.question</field>
             <field name="inherit_id" ref="survey.survey_question_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='labels_ids']" position="before">
+                <xpath expr="//field[@name='suggested_answer_ids']" position="before">
                     <field name="template_selection" widget='radio'/>
                 </xpath>
-                <xpath expr="//field[@name='labels_ids']/tree" position="inside">
+                <xpath expr="//field[@name='suggested_answer_ids']/tree" position="inside">
                     <field name="type_answer"/>
                 </xpath>
 
@@ -29,8 +29,8 @@
 
         <record id="syndic_survey_response_line_tree" model="ir.ui.view">
             <field name="name">survey.survey.inherit.view.form</field>
-            <field name="model">survey.user_input_line</field>
-            <field name="inherit_id" ref="survey.survey_response_line_tree"/>
+            <field name="model">survey.user_input.line</field>
+            <field name="inherit_id" ref="survey.survey_response_line_view_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="replace">
                     <tree string="Survey Answer Line" create="false">
@@ -38,7 +38,7 @@
                         <field name="user_input_id"/>
                         <field name="question_id"/>
                         <field name="partner_id"/>
-                        <field name="value_suggested"/>
+                        <field name="suggested_answer_id"/>
                         <field name="percent_total"/>
                         <field name="quotities_score"/>
                         <field name="percent_quotities_score" sum="percentage"/>
@@ -107,7 +107,7 @@
 
         <record id="syndic_survey_user_input_line_pivot" model="ir.ui.view">
             <field name="name">synidc.user_input.view.pivot</field>
-            <field name="model">survey.user_input_line</field>
+            <field name="model">survey.user_input.line</field>
             <field name="arch" type="xml">
                 <pivot>
                     <field name="quotities_score" type="measure"/>
@@ -141,11 +141,15 @@
         <record id="syndic_ag_question_action" model="ir.actions.act_window">
             <field name="name">AG Question</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">survey.user_input_line</field>
+            <field name="res_model">survey.user_input.line</field>
             <field name="view_mode">tree,form,graph</field>
         </record>
         
-        <menuitem id="syndic_ag_menu_act" name="AG" parent="syndic_base.syndic_main" action="syndic_ag_action" sequence=""/>
+        <menuitem 
+            id="syndic_ag_menu_act"
+            name="AG"
+            parent="syndic_base.syndic_main"
+            action="syndic_ag_action" />
         
     </data>
 </odoo>
