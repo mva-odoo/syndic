@@ -51,7 +51,7 @@ class Survey(models.Model):
 
     def action_get_result(self):
         domain = [('survey_id', '=', self.id)]
-        user_input = self.env['survey.user_input_line'].search(domain)
+        user_input = self.env['survey.user_input.line'].search(domain)
 
         self.env.add_to_compute(user_input._fields['quotities_score'], user_input)
         self.env.add_to_compute(user_input._fields['percent_quotities_score'], user_input)
@@ -69,7 +69,7 @@ class Survey(models.Model):
         return {
                 'name': _('Resultat'),
                 'view_mode': 'pivot,graph',
-                'res_model': 'survey.user_input_line',
+                'res_model': 'survey.user_input.line',
                 'domain': domain,
                 'type': 'ir.actions.act_window',
                 'context': self._context,
@@ -125,9 +125,9 @@ class SurveyQuestion(models.Model):
                 (6, 0, [])
             ]
 
-        self.labels_ids = resp
+        self.suggested_answer_ids = resp
 
-    @api.depends('user_input_line_ids.value_suggested.type_answer')
+    @api.depends('user_input_line_ids.suggested_answer_id.type_answer')
     def _get_score(self):
         for rec in self:
             rec.quotities_score = sum(rec.user_input_line_ids.mapped('quotities_score'))
@@ -142,7 +142,7 @@ class SurveyQuestion(models.Model):
 
 
 class SurveyLabel(models.Model):
-    _inherit = 'survey.label'
+    _inherit = 'survey.question.answer'
 
     type_answer = fields.Selection([
         ('abstention', 'Abstention'),
@@ -152,7 +152,7 @@ class SurveyLabel(models.Model):
 
 
 class SurveyUserInputLine(models.Model):
-    _inherit = 'survey.user_input_line'
+    _inherit = 'survey.user_input.line'
 
     quotities_score = fields.Float(
         string='Score Quotité',
@@ -179,7 +179,7 @@ class SurveyUserInputLine(models.Model):
     )
 
     @api.depends(
-        'value_suggested.type_answer',
+        'suggested_answer_id.type_answer',
         'question_id.quotity_type_id',
         'survey_id.presence_ids',
         'survey_id.presence_ids.presence',
@@ -194,7 +194,6 @@ class SurveyUserInputLine(models.Model):
                 } for presence in survey.presence_ids
             }
 
-
     def _get_score(self):
         answer = {
             'ok': 1,
@@ -203,7 +202,7 @@ class SurveyUserInputLine(models.Model):
         }
 
         for rec in self:
-            coeff = answer.get(rec.value_suggested.type_answer, 'Nope')
+            coeff = answer.get(rec.suggested_answer_id.type_answer, 'Nope')
 
             if coeff == 'Nope':
                 rec.quotities_score = 0.0
