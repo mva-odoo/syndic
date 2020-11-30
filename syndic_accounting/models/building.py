@@ -21,7 +21,6 @@ class Building(models.Model):
     _inherit = 'syndic.building'
 
     period = fields.Selection([
-        ('mensuel', 'Mensuel'),
         ('trimestrielle', 'Trimestriel'),
         ('annuel', 'Annuel'),
     ], 'Période')
