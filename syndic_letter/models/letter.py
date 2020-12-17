@@ -117,14 +117,12 @@ class CreateLetter(models.Model):
             'attachment_ids': [(6, 0, self.attachment_ids.ids)],
             'subject': self.immeuble_id.name + '-' + self.sujet if self.immeuble_id else self.sujet,
         }
-
+        
         if self.immeuble_id:
             header = "Concerne %s<br/>%s<br/>%s %s<br/><br/>" % (self.immeuble_id.name,
                                                                  self.immeuble_id.street,
                                                                  str(self.immeuble_id.zip),
                                                                  str(self.immeuble_id.city_id.name))
-
-        body = "%s<br/>%s<br/>Cordialement.<br/><br/>" % (self.begin_letter_id.name, self.contenu)
 
         footer = """<br/>L'&eacute;quipe SG IMMO<br/>
 Rue Fran&ccedil;ois Vander Elst, 38/1<br/>
@@ -132,10 +130,11 @@ Rue Fran&ccedil;ois Vander Elst, 38/1<br/>
 '<img src="https://lh6.googleusercontent.com/-7QA8bP7oscU/UUrXkQ1-rHI/AAAAAAAAAAk/WhbiGpLAUCQ/s270/Logo_SG%2520immo.JPG"
 width="96" height="61"/>'"""
 
-        mail['body_html'] = header + body + self.ps + '<br/>'+footer if self.ps else header + body + footer
-
         for prop in self.partner_ids.filtered(lambda s: s.email):
+            body = "%s<br/>%s<br/>Cordialement.<br/><br/>" % (self.begin_letter_id.name, self._get_jinja_template(self.contenu, {'partner': prop, 'letter': self}))
+            mail['body_html'] = header + body + self.ps + '<br/>'+footer if self.ps else header + body + footer
             mail['email_to'] = prop.email
+
             self.env['mail.mail'].create(mail)
 
         self.write({
