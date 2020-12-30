@@ -38,28 +38,3 @@ class AccountMove(models.Model):
         for data in datas:
             if int(data['num_copropriete']) == num_building:
                 return data['id_copropriete']
-
-    def upload_sogis(self):
-        for rec in self:
-            params = {}
-            params['id_fournisseur'] = '618'
-            params['id_facture'] = '999999999998'
-            params['id_copropriete'] = self._get_building(rec.building_id.num_building)
-            params['ref_facture'] = rec.name
-            params['trimestre'] = rec.sogis_trimestre
-            # params['com_vcs'] = rec.invoice_payment_ref
-            params['id_cle'] = '23'
-            params['classe_compta'] = '61300'
-            params['id_pcmn'] = '17467'
-            params['montant_ht'] = str(rec.amount_untaxed)
-            params['montant_tva'] = str(rec.amount_tax)
-            # params['update'] = '1'
-            params['tva_valeur'] = '21'
-            # params['montant_ttc'] = str(rec.amount_total)
-            params['date_facture'] = fields.datetime.to_string(rec.invoice_date)
-            # params['nom_fichier'] = 
-            # params['fichier_facture'] = 
-
-            datas = self._call_sogis('/api/insertUpdateFacture', params)
-
-            rec.sogis_ref = datas.get('ref_interne')
