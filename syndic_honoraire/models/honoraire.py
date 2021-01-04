@@ -19,21 +19,27 @@ class SyndicHonoraireYear(models.Model):
     _name = 'syndic.honoraire.year'
     _description = 'Honoraire Year'
 
-    name = fields.Char(string='Année', required=True)
+    name = fields.Integer(string='Année', required=True)
     index = fields.Float('Index')
 
     honoraire_ids = fields.One2many('syndic.honoraire', 'year_id', string='Honoraires')
 
     def set_index(self):
-        for year in self:
-            old_year = self.search([('id', '!=', year.id)], limit=1, order='id desc')
-            for honoraire in old_year.honoraire_ids:
-                print(honoraire.honoraire * (1 + (year.index)/100) if year.index else honoraire.honoraire)
-                self.env['syndic.honoraire'].create({
-                    'year_id': year.id,
-                    'building_id': honoraire.building_id.id,
-                    'honoraire': honoraire.honoraire * (1 + (year.index)/100) if year.index else honoraire.honoraire,
-                    'frais_admin': honoraire.frais_admin * (1 + (year.index)/100) if year.index else honoraire.frais_admin,
-                })
-                
-                
+        self.ensure_one()
+
+        old_year = self.search([('name', '=', self.name-1)])
+        coeff = self.index/old_year.index
+
+        for honoraire in old_year.honoraire_ids:
+            self.env['syndic.honoraire'].create({
+                'year_id': self.id,
+                'building_id': honoraire.building_id.id,
+                'honoraire': honoraire.honoraire * coeff,
+                'frais_admin': honoraire.frais_admin * coeff,
+            })
+
+    _sql_constraints = [(
+            'name_unique',
+            'UNIQUE(name)',
+            "Année unique"
+    )]

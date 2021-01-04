@@ -21,7 +21,7 @@ class Building(models.Model):
     )
 
     count_invoice = fields.Integer('N° de factures', compute='_get_count_invoice')
-    is_merge = fields.Boolean('Fusionner les frais administratifs avec les honoraires')
+    is_merge = fields.Boolean('Fusionner les frais administratifs avec les honoraires', default=True)
 
     def get_invoice(self):
         self.ensure_one()
