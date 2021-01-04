@@ -1,3 +1,4 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 "acl_syndic_manager_honoraire","syndic Manager honoraire","model_syndic_honoraire","syndic_base.syndic_manager",1,1,1,1
 "acl_syndic_manager_honoraire_year","syndic Manager honoraire Year","model_syndic_honoraire_year","syndic_base.syndic_manager",1,1,1,1
+"acl_syndic_facturation_creation","syndic Manager syndic_facturation_creation","model_syndic_facturation_creation","syndic_base.syndic_manager",1,1,1,1
