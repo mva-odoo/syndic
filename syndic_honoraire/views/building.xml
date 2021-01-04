@@ -84,6 +84,6 @@
     </record>
 
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="syndic_honoraire_year_menu_act" name="Index Honoraire et Frais admin." parent="syndic_base.configuration_syndic" action="syndic_honoraire_year_action"/>
+    <menuitem id="syndic_index_menu_act" name="Index Honoraire et Frais admin." parent="syndic_base.configuration_syndic" action="syndic_honoraire_year_action"/>
     <menuitem id="syndic_honoraire_year_menu_act" name="Années" parent="syndic_base.configuration_syndic" action="syndic_honoraire_action"/>
 </odoo>
