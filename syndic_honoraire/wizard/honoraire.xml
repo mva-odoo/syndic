@@ -26,10 +26,10 @@
 
         <record id="act_window_generate_invoice" model="ir.actions.act_window">
             <field name="name">Généré facture</field>
-            <field name="model">syndic.facturation.creation</field>
+            <field name="res_model">syndic.facturation.creation</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
             <field name="binding_model_id" ref="syndic_base.model_syndic_building"/>
-            <!-- <field name="groups" ref="syndic_base.syndic_manager"/> -->
+            <field name="groups" ref="syndic_base.syndic_manager"/>
         </record>
 </odoo>
