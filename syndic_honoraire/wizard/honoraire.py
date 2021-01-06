@@ -53,7 +53,7 @@ class SuiviFacture(models.TransientModel):
 
                 if building.is_merge:
                     invoices |= self.env['account.move'].create({
-                        'type': 'out_invoice',
+                        'move_type': 'out_invoice',
                         'date': self.date,
                         'building_id': building.id,
                         'partner_id': building.partner_id.id,
@@ -62,7 +62,7 @@ class SuiviFacture(models.TransientModel):
 
                 else:
                     invoices |= self.env['account.move'].create({
-                        'type': 'out_invoice',
+                        'move_type': 'out_invoice',
                         'date': self.date,
                         'building_id': building.id,
                         'partner_id': building.partner_id.id,
@@ -70,7 +70,7 @@ class SuiviFacture(models.TransientModel):
                     })
 
                     invoices |= self.env['account.move'].create({
-                        'type': 'out_invoice',
+                        'move_type': 'out_invoice',
                         'date': self.date,
                         'building_id': building.id,
                         'partner_id': building.partner_id.id,
@@ -78,7 +78,7 @@ class SuiviFacture(models.TransientModel):
                     })
             else:
                 invoices |= self.env['account.move'].create({
-                    'type': 'out_invoice',
+                    'move_type': 'out_invoice',
                     'date': self.date,
                     'building_id': building.id,
                     'partner_id': building.partner_id.id,
