@@ -43,7 +43,7 @@ odoo.define('odoo.pdf_viewer', function (require) {
       },
 
       _updateControlPanel: function () {
-          this.updateControlPanel();
+          // this.updateControlPanel();
       },
 
   });
