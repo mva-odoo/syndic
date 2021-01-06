@@ -1,8 +1,14 @@
 from odoo import models, fields, api, exceptions, _
 
+import random
+
 
 class Survey(models.Model):
     _inherit = 'survey.survey'
+
+    @api.model
+    def _default_jitsi_code(self):
+        return random.randint(3, 1000000)
 
     building_id = fields.Many2one('syndic.building', 'Immeuble', required=True)
     date = fields.Datetime("Date de l'AG", required=True)
@@ -25,6 +31,15 @@ class Survey(models.Model):
 
     access_mode = fields.Selection(default='token')
     is_attempts_limited = fields.Boolean(default=True)
+    jitsi_code = fields.Char('Jitsi code', default=_default_jitsi_code)
+    jitsi_url = fields.Char('Jitsi URL', compute='_get_jitsi_url')
+
+    @api.depends('title', 'jitsi_code')
+    def _get_jitsi_url(self):
+        for survey in self:
+            survey.jitsi_url = 'https://meet.jit.si/%s_%s' % (survey.title, survey.jitsi_code) if survey.title else ''
+
+    
 
     @api.depends('presence_ids')
     def _get_presence_presence(self):

@@ -70,6 +70,15 @@
                         <group string="Information AG">
                             <field name="type_ag"/>
                             <field name="send_ag"/>
+
+                            <div class="o_td_label">
+                                <label for="jitsi_code" string="JITSI Code" class="oe_edit_only o_form_label"/>
+                                <label for="jitsi_url" string="JITSI Link" class="oe_read_only o_form_label"/>
+                            </div>
+                            <div class="d-flex">
+                                <field name="jitsi_code" nolabel="1" class="mr-2 oe_edit_only"/>
+                                <field name="jitsi_url" nolabel="1" widget="CopyClipboardChar" class="oe_read_only"/>
+                            </div>
                         </group>
                     </group>
                 </xpath>
@@ -117,6 +126,37 @@
             </field>
         </record>
 
+        survey_page_fill
+
+        <template id="syndic_survey_page_fill" name="syndic_survey_page_fill" inherit_id="survey.survey_page_fill">
+            <xpath expr="//t[@t-call='survey.survey_fill_header']" position="after">
+                <t t-if="survey.jitsi_url">
+                    <iframe allow="camera; microphone; fullscreen; display-capture" t-att-src="survey.jitsi_url" style="height: 700px; width: 100%; border: 0px;"></iframe>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="syndic_user_input_session_open" name="syndic_user_input_session_open" inherit_id="survey.user_input_session_open">
+            <xpath expr="//t[@t-call='survey.user_input_session']" position="before">
+                <t t-if="survey.jitsi_url">
+                    <iframe allow="camera; microphone; fullscreen; display-capture" t-att-src="survey.jitsi_url" style="height: 500px; width: 80%;"></iframe>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="syndic_survey_fill_form_done" name="syndic_survey_fill_form_done" inherit_id="survey.survey_fill_form_done">
+            <xpath expr="//h1" position="after">
+                <div class="o_portal_signature_form"
+                        call_url="sgimmo.be"
+                t-att-data-default-name="default_name"
+                t-att-data-mode="mode"
+                t-att-data-send-label="send_label"
+                t-att-data-signature-ratio="signature_ratio"
+                t-att-data-signature-type="signature_type"
+                t-att-data-font-color="font_color"
+                />
+            </xpath>
+        </template>
 
         <record id="syndic_ag_survey_user_input_form" model="ir.ui.view">
             <field name="name">survey.user_input.inherit.view.form</field>
