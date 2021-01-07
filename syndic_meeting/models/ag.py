@@ -26,6 +26,7 @@ class SyndicAGPresence(models.Model):
     survey_id = fields.Many2one('survey.survey', 'AG')
     answer_state = fields.Char('Réponse', compute="_get_answer")
     answer_id = fields.Many2one('survey.user_input', 'Réponse', compute="_get_answer")
+    is_sign = fields.Boolean('A signé?', compute="_get_answer")
 
     @api.depends('survey_id.user_input_ids')
     def _get_answer(self):
@@ -33,6 +34,7 @@ class SyndicAGPresence(models.Model):
             reponse = rec.survey_id.user_input_ids.filtered(lambda s: s.partner_id == rec.owner_id)
             rec.answer_state = reponse.state if reponse else 'Non envoyé'
             rec.answer_id = reponse
+            rec.is_sign = True if reponse.sign_bin else False
 
 
 

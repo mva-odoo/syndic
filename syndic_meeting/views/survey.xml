@@ -107,6 +107,7 @@
                                 <field name="presence_with" attrs="{'readonly': [('presence', '!=', 'represente')], 'required': [('presence', '=', 'represente')]}"/>
                                 <field name="quotities" sum="Quotitées"/>
                                 <field name="answer_state"/>
+                                <field name="is_sign"/>
                             </tree>
                         </field>
                     </page>
@@ -126,8 +127,6 @@
             </field>
         </record>
 
-        survey_page_fill
-
         <template id="syndic_survey_page_fill" name="syndic_survey_page_fill" inherit_id="survey.survey_page_fill">
             <xpath expr="//t[@t-call='survey.survey_fill_header']" position="after">
                 <t t-if="survey.jitsi_url">
@@ -136,18 +135,52 @@
             </xpath>
         </template>
 
-        <template id="syndic_user_input_session_open" name="syndic_user_input_session_open" inherit_id="survey.user_input_session_open">
-            <xpath expr="//t[@t-call='survey.user_input_session']" position="before">
-                <t t-if="survey.jitsi_url">
-                    <iframe allow="camera; microphone; fullscreen; display-capture" t-att-src="survey.jitsi_url" style="height: 500px; width: 80%;"></iframe>
-                </t>
+        <template id="syndic_survey_fill_form_done" name="syndic_survey_fill_form_done" inherit_id="survey.survey_fill_form_done">
+            <xpath expr="//div[@class='col']" position="replace">
+                <div class="col">
+                    <div t-if="survey.scoring_type != 'scoring_without_answers'">
+                        Vous pouvez signer <a target='_blank' t-att-href="'/survey/print/%s?answer_token=%s&amp;review=True' % (survey.access_token, answer.access_token)">ici</a>
+                    </div>
+                </div>
             </xpath>
         </template>
 
-        <template id="syndic_survey_fill_form_done" name="syndic_survey_fill_form_done" inherit_id="survey.survey_fill_form_done">
-            <xpath expr="//h1" position="after">
+        <!-- <template id="syndic_user_input_session_open" name="syndic_user_input_session_open" inherit_id="survey.user_input_session_open">
+            <xpath expr="//t[@t-call='survey.user_input_session']" position="replace">
+                <t t-call="survey.user_input_session">
+            <div class="o_survey_session_open o_survey_session_manage"
+                t-att-data-survey-access-token="survey.access_token"
+                t-att-data-survey-id="survey.id"
+                t-att-data-is-start-screen="True">
+                    <iframe allow="camera; microphone; fullscreen; display-capture" t-att-src="survey.jitsi_url" style="position: relative;top: 50px;height: 600px; width: 100%;"></iframe>
+                </t>
+                <div class="w-75 p-4">
+                    <div class="text-center">
+                        <h1 class="mb-4" t-field="survey.title" />
+                        <h2 class="mb-5 font-weight-normal">
+                            <span>Go to <a t-att-href="survey.session_link" t-esc="survey.session_link" target="_blank" /></span>
+                            <i class="fa fa-copy font-weight-normal ml-3 o_survey_session_copy" />
+                            <input class="o_survey_session_copy_url d-none" type="text" t-att-value="survey.session_link" />
+                        </h2>
+                        <h2 class="font-weight-normal"><span>Waiting for attendees...</span>
+                            <span class="ml-1 font-weight-bold o_survey_session_attendees_count" t-esc="survey.session_answer_count" />
+                        </h2>
+                    </div>
+                    <a role="button"
+                        class="font-weight-bold fa fa-chevron-right o_survey_session_navigation o_survey_session_navigation_next" style="top:0px"/>
+                </div>
+            </div>
+        </t>
+            </xpath>
+        </template> -->
+
+        <template id="syndic_survey_page_print" name="syndic_survey_page_print" inherit_id="survey.survey_page_print">
+            <!-- <xpath expr="//div[@role='form']" position="before">
+                <iframe allow="camera; microphone; fullscreen; display-capture" t-att-src="survey.jitsi_url" style="height: 500px; width: 80%;"></iframe>
+            </xpath> -->
+            <xpath expr="//div[@role='form']" position="after">
                 <div class="o_portal_signature_form"
-                        call_url="sgimmo.be"
+                t-att-data-call-url="'/sign/ag/%s' % answer.id"
                 t-att-data-default-name="default_name"
                 t-att-data-mode="mode"
                 t-att-data-send-label="send_label"
@@ -158,11 +191,21 @@
             </xpath>
         </template>
 
+        <!-- <template id="syndic_user_input_session_manage_content" name="syndic_user_input_session_manage_content" inherit_id="survey.user_input_session_manage_content">
+            <xpath expr="//div[@class='container px-4 pb-3 pt96 d-flex flex-column o_survey_session_manage_container']" position="replace">
+                <iframe allow="camera; microphone; fullscreen; display-capture" t-att-src="survey.jitsi_url" style="height: 500px; width: 80%;"></iframe>
+            </xpath>
+        </template> -->
+
         <record id="syndic_ag_survey_user_input_form" model="ir.ui.view">
             <field name="name">survey.user_input.inherit.view.form</field>
             <field name="model">survey.user_input</field>
             <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_date']" position='replace'>    
+                    <field name="sign_name" />
+                    <field name="sign_bin" />
+                </xpath>
                 <xpath expr="//field[@name='answer_score']" position='replace'>
                     <field name="quotities_score" />
                 </xpath>

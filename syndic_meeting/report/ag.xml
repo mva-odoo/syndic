@@ -3,7 +3,7 @@
     <data>
         <report
             id="ag_print"
-            string="AG"
+            string="Odre du Jour"
             model="survey.survey"
             name="syndic_meeting.rapport_ag_print"
             report_type="qweb-pdf"
@@ -41,11 +41,89 @@
                                                 <li><div t-field="question.title"/></li>
                                             </t>
                                             <t t-else="">
-                                                <ul style="list-style-type: none;"><li><div t-field="question.title"/></li></ul>
+                                                <ul style="list-style-type: none;">
+                                                    <li>
+                                                        <div t-field="question.title"/>
+                                                        <div t-field="question.description"/>
+                                                    </li>
+                                                </ul>
                                             </t>
                                         </ul>
                                     </t>
                                 </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="pv_print"
+            string="PV AG"
+            model="survey.survey"
+            name="syndic_meeting.rapport_pv_print"
+            report_type="qweb-pdf"
+        />
+        <template id="rapport_pv_print">
+            <t t-call="web.html_container">
+                <t t-name="ag_qweb">
+                    <t t-set="docs" t-value="docs.with_context({'lang':'fr_BE'})" />
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="web.external_layout">
+                            <div class="page">
+                                <div>
+                                    <table width="100%" style="font-size:x-large;text-align:center; border: 1px solid #333;" >
+                                        <tr>
+                                            <td>
+                                                Proces Verbal DE L’<span t-field="o.title"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div>
+                                    <ul>
+                                        <li>
+                                            Constitution du bureau et vérification du quorum
+                                        </li>
+                                    </ul>
+                                    Après vérification du quorum, il sera demandé aux propriétaires de délibérer sur<br/>
+                                    L'ORDRE DU JOUR SUIVANT:
+                                </div>
+                                <div>
+                                    <t t-foreach="o.question_and_page_ids" t-as="question">
+                                        <ul style="list-style-type: none;">
+                                            <t t-if="question.is_page">
+                                                <li><div t-field="question.title"/></li>
+                                            </t>
+                                            <t t-else="">
+                                                <ul style="list-style-type: none;">
+                                                    <li>
+                                                        <div t-field="question.title"/>
+                                                        <div t-field="question.description"/>
+                                                        <t t-foreach="question.user_input_line_ids" t-as="vote">
+                                                        <div>
+                                                            <span t-field="vote.user_input_id.sign_name"/> <span t-field="vote.user_input_id.partner_id.name"/> - <span t-field="vote.suggested_answer_id.value"/>
+                                                        </div>
+                                                        </t>
+                                                    </li>
+                                                </ul>
+                                            </t>
+                                        </ul>
+                                    </t>
+                                </div>
+                                <p style="page-break-after:always;"></p>
+                                    <h1>
+                                        Présence:
+                                    </h1>
+                                    <t t-foreach="o.user_input_ids" t-as="input">
+                                        <t t-if="input.sign_name">
+                                            <div>
+                                                <span t-field="input.sign_name"/> - <img t-if="input.sign_bin" t-att-src="'data:image/png;base64,%s' % to_text(input.sign_bin)" height="120" border="1" width="120"/>
+                                            </div>
+                                        </t>
+                                    </t>
                             </div>
                         </t>
                     </t>

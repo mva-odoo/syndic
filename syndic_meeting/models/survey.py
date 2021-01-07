@@ -37,9 +37,7 @@ class Survey(models.Model):
     @api.depends('title', 'jitsi_code')
     def _get_jitsi_url(self):
         for survey in self:
-            survey.jitsi_url = 'https://meet.jit.si/%s_%s' % (survey.title, survey.jitsi_code) if survey.title else ''
-
-    
+            survey.jitsi_url = 'https://meet.jit.si/%s_%s' % (survey.title, survey.jitsi_code) if survey.title and survey.jitsi_code else ''
 
     @api.depends('presence_ids')
     def _get_presence_presence(self):
@@ -166,6 +164,13 @@ class SurveyLabel(models.Model):
     ], 'Type de Reponse')
 
 
+class SurveyUserInput(models.Model):
+    _inherit = 'survey.user_input'
+
+    sign_bin = fields.Binary('Signature')
+    sign_name = fields.Char('Nom du Signataire')
+
+
 class SurveyUserInputLine(models.Model):
     _inherit = 'survey.user_input.line'
 
@@ -200,7 +205,6 @@ class SurveyUserInputLine(models.Model):
         'survey_id.presence_ids.presence',
         'survey_id.presence_ids.lot_ids'
     )
-
     def _get_lot(self, survey):
         return {
             presence.owner_id: {
