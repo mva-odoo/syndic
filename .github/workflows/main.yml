@@ -1,0 +1,46 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the 13.0 branch
+  push:
+    branches: [ 14.0 ]
+  pull_request:
+    branches: [ 14.0 ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: '11
+
+      # Runs a set of commands using the runners shell
+      - name: Install depends
+        run: |
+          wget https://raw.githubusercontent.com/odoo/odoo/14.0/requirements.txt -O requirements.txt
+          wget http://nightly.odoo.com/13.0/nightly/deb/odoo_13.0.latest.tar.xz
+          tar -xf odoo_14.0.latest.tar.xz -C ../
+          git clone https://github.com/OCA/web.git ../web
+          pip3 install -r requirements.txt
+          pip3 install websocket_client
+          pip3 install coverage
+          pip3 install codecov
+          
+      - name: Start Odoo
+        run: python3 -m coverage run ../src/odoo-bin --addons-path=../web,../src/odoo/addons,/home/travis/build/mva-odoo/syndic -d test --stop-after-init --test-enable --init syndic_base,syndic_accounting,syndic_calendar,syndic_claim,syndic_dashboard,syndic_documents,syndic_invoice,syndic_honoraire,syndic_letter,syndic_meeting,web_change
+
+      - name: codecov
+        run: codecov
