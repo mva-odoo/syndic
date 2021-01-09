@@ -30,3 +30,6 @@ jobs:
         pip3 install websocket_client
         pip3 install coverage
         pip3 install codecov
+        
+    - name: start ODOO
+      run: python odoo/odoo-bin
