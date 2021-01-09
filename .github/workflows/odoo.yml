@@ -20,6 +20,7 @@ jobs:
 
     - name: Install depends
       run: |
+        sudo apt install python-lxml
         wget https://raw.githubusercontent.com/odoo/odoo/13.0/requirements.txt -O requirements.txt
         wget http://nightly.odoo.com/13.0/nightly/deb/odoo_13.0.latest.tar.xz
         tar -xf odoo_13.0.latest.tar.xz -C ../
