@@ -34,13 +34,4 @@ jobs:
           wget http://nightly.odoo.com/13.0/nightly/deb/odoo_13.0.latest.tar.xz
           tar -xf odoo_14.0.latest.tar.xz -C ../
           git clone https://github.com/OCA/web.git ../web
-          pip3 install -r requirements.txt
-          pip3 install websocket_client
-          pip3 install coverage
-          pip3 install codecov
-          
-      - name: Start Odoo
-        run: python3 -m coverage run ../src/odoo-bin --addons-path=../web,../src/odoo/addons,/home/travis/build/mva-odoo/syndic -d test --stop-after-init --test-enable --init syndic_base,syndic_accounting,syndic_calendar,syndic_claim,syndic_dashboard,syndic_documents,syndic_invoice,syndic_honoraire,syndic_letter,syndic_meeting,web_change
 
-      - name: codecov
-        run: codecov
