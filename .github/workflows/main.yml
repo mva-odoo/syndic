@@ -38,4 +38,13 @@ jobs:
           pip3 install websocket_client
           pip3 install coverage
           pip3 install codecov
+                    pip3 install -r requirements.txt
+          pip3 install websocket_client
+          pip3 install coverage
+          pip3 install codecov
           
+      - name: Start Odoo
+        run: python3 -m coverage run ../src/odoo-bin --addons-path=../web,../src/odoo/addons,/home/travis/build/mva-odoo/syndic -d test --stop-after-init --test-enable --init syndic_base,syndic_accounting,syndic_calendar,syndic_claim,syndic_dashboard,syndic_documents,syndic_invoice,syndic_honoraire,syndic_letter,syndic_meeting,web_change
+
+      - name: codecov
+        run: codecov
