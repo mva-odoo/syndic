@@ -17,3 +17,14 @@ jobs:
     # You can test your matrix by printing the current Python version
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
+
+    - name: Install depends
+      run: |
+        wget https://raw.githubusercontent.com/odoo/odoo/13.0/requirements.txt -O requirements.txt
+        wget http://nightly.odoo.com/13.0/nightly/deb/odoo_13.0.latest.tar.xz
+        tar -xf odoo_13.0.latest.tar.xz -C ../
+        git clone https://github.com/OCA/web.git ../web
+        pip3 install -r requirements.txt
+        pip3 install websocket_client
+        pip3 install coverage
+        pip3 install codecov
