@@ -28,6 +28,8 @@ class Survey(models.Model):
     survey_id = fields.Many2one('survey.survey', 'Questionaire')
     presence_percentage = fields.Float('Presence (%)', compute="_get_presence_presence")
     presence_quotities = fields.Float('Presence (Tot.)', compute="_get_presence_presence")
+    present = fields.Integer('Present', compute="_get_presence_presence")
+    presence_tot = fields.Integer('Presence (Tot.)', compute="_get_presence_presence")
 
     access_mode = fields.Selection(default='token')
     is_attempts_limited = fields.Boolean(default=True)
@@ -42,11 +44,13 @@ class Survey(models.Model):
     @api.depends('presence_ids')
     def _get_presence_presence(self):
         for rec in self:
-            present = sum(rec.presence_ids.filtered(lambda s: s.presence in ['present', 'represente']).mapped('quotities'))
+            present = rec.presence_ids.filtered(lambda s: s.presence in ['present', 'represente'])
             total = sum(rec.presence_ids.mapped('quotities')) or 1.0
 
-            rec.presence_quotities = present
-            rec.presence_percentage = (present/total)*100
+            rec.presence_quotities = sum(present.mapped('quotities'))
+            rec.presence_percentage = (rec.presence_quotities/total)*100
+            rec.presence_tot = len(rec.presence_ids)
+            rec.present = len(present)
 
     @api.depends('building_id')
     def _get_presence(self):
@@ -100,7 +104,7 @@ class SurveyQuestion(models.Model):
     quotities_score = fields.Float(
         string='Score Quotité',
         compute='_get_score',
-        store=True
+        store=False
     )
     percent_quotities_score = fields.Float(
         string='Score Quotité (%)',
@@ -177,7 +181,7 @@ class SurveyUserInputLine(models.Model):
     quotities_score = fields.Float(
         string='Score Quotité',
         compute='_get_score',
-        store=True
+        store=False
     )
 
     percent_quotities_score = fields.Float(
@@ -239,6 +243,16 @@ class SurveyUserInputLine(models.Model):
                 lot_ids = rec.survey_id.presence_ids.filtered(
                     lambda s: s.owner_id == rec.user_input_id.partner_id
                 ).mapped('lot_ids')
+
+                if rec.user_input_id.partner_id.name == 'LOUMAYE':
+                    own = rec.survey_id.presence_ids.filtered(
+                        lambda s: s.owner_id == rec.user_input_id.partner_id
+                    )
+                    test = self.env['syndic.building.quotities'].search([
+                        ('lot_id', 'in', lot_ids.ids),
+                        ('quotity_type_id', '=', type_id.id),
+                    ])
+                    import ipdb; ipdb.set_trace()
 
                 quotities = sum(self.env['syndic.building.quotities'].search([
                     ('lot_id', 'in', lot_ids.ids),

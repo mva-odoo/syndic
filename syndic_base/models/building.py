@@ -70,15 +70,31 @@ class Building(models.Model):
     def get_quotities(self):
         quotity = self.env['syndic.building.quotities']
         for rec in self:
-            rec.quotity_ids = quotity.browse([
-                quotity.new({
-                    'lot_id': lot.id,
-                    'quotity_type_id': quotity_type.id,
-                    'quotities': lot.quotities
-                }).id
-                for lot in rec.lot_ids
-                for quotity_type in rec.quotity_type_ids
-            ])
+            # rec.quotity_ids = quotity.browse([
+            #     quotity.new({
+            #         'lot_id': lot.id,
+            #         'quotity_type_id': quotity_type.id,
+            #         'quotities': lot.quotities
+            #     }).id
+            #     for lot in rec.lot_ids
+            #     for quotity_type in rec.quotity_type_ids
+            # ])
+
+
+            # diff = rec.quotity_ids.mapped('quotity_type_id') - rec.quotity_type_ids
+            # diff.sudo().unlink()
+
+            for lot in rec.lot_ids:
+                for quotity_type in rec.quotity_type_ids:
+                    # import ipdb; ipdb.set_trace()
+                    # if not quotity.search([('lot_id', '=', lot.id), ('quotity_type_id', '=', quotity_type.id)]):
+                    quotity |= quotity.new({
+                                            'lot_id': lot.id,
+                                            'quotity_type_id': quotity_type.id,
+                                            'quotities': lot.quotities
+                                        })
+
+            rec.quotity_ids = quotity
 
     def name_get(self):
         return [[rec.id, '%s-%s' % (rec.num_building, rec.name)] for rec in self]

@@ -99,6 +99,12 @@
                                 <field name="presence_quotities"/>
                             </group>
                         </group>
+                        <group>
+                            <label for="presence_tot"/>
+                            <div>
+                                <field name="present" class="oe_inline"/>&#47;<field name="presence_tot" class="oe_inline"/>
+                            </div>
+                        </group>
                         <field name="presence_ids">
                             <tree editable="top" delete="0" create="0">
                                 <field name="owner_id" force_save="1"/>
