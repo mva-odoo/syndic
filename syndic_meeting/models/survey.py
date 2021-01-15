@@ -244,16 +244,6 @@ class SurveyUserInputLine(models.Model):
                     lambda s: s.owner_id == rec.user_input_id.partner_id
                 ).mapped('lot_ids')
 
-                if rec.user_input_id.partner_id.name == 'LOUMAYE':
-                    own = rec.survey_id.presence_ids.filtered(
-                        lambda s: s.owner_id == rec.user_input_id.partner_id
-                    )
-                    test = self.env['syndic.building.quotities'].search([
-                        ('lot_id', 'in', lot_ids.ids),
-                        ('quotity_type_id', '=', type_id.id),
-                    ])
-                    import ipdb; ipdb.set_trace()
-
                 quotities = sum(self.env['syndic.building.quotities'].search([
                     ('lot_id', 'in', lot_ids.ids),
                     ('quotity_type_id', '=', type_id.id),
