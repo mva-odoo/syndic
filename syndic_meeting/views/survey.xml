@@ -211,6 +211,8 @@
                 <xpath expr="//field[@name='create_date']" position='replace'>    
                     <field name="sign_name" />
                     <field name="sign_bin" />
+                    <field name="ip_address" />
+                    <field name="date" />
                 </xpath>
                 <xpath expr="//field[@name='answer_score']" position='replace'>
                     <field name="quotities_score" />

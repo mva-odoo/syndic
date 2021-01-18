@@ -82,7 +82,8 @@ class Survey(models.Model):
         self.env.add_to_compute(survey_question._fields['percent_quotities_score'], survey_question)
 
         survey_question.recompute()
-
+        print(user_input)
+        print(survey_question)
         return {
                 'name': _('Resultat'),
                 'view_mode': 'pivot,graph',
@@ -173,6 +174,8 @@ class SurveyUserInput(models.Model):
 
     sign_bin = fields.Binary('Signature')
     sign_name = fields.Char('Nom du Signataire')
+    ip_address = fields.Char('Adresse IP')
+    date = fields.Char('Date de signature')
 
 
 class SurveyUserInputLine(models.Model):
