@@ -97,6 +97,8 @@
                             </group>
                             <group>
                                 <field name="presence_quotities"/>
+                                <field name="owner_ids" invisible="1"/>
+                                <field name="presidence_id" domain="[('id', 'in', owner_ids)]" options="{'no_create': True}"/>
                             </group>
                         </group>
                         <group>
@@ -184,7 +186,11 @@
             <!-- <xpath expr="//div[@role='form']" position="before">
                 <iframe allow="camera; microphone; fullscreen; display-capture" t-att-src="survey.jitsi_url" style="height: 500px; width: 80%;"></iframe>
             </xpath> -->
+
             <xpath expr="//div[@role='form']" position="after">
+                <h1>Proces Verbal</h1>
+                <iframe src="/report/pdf/syndic_meeting.rapport_pv_print/48" style="height: 800px; width: 80%;"></iframe>
+
                 <div class="o_portal_signature_form"
                 t-att-data-call-url="'/sign/ag/%s' % answer.id"
                 t-att-data-default-name="default_name"

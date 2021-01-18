@@ -28,6 +28,7 @@ class Survey(models.Model):
     survey_id = fields.Many2one('survey.survey', 'Questionaire')
     presence_percentage = fields.Float('Presence (%)', compute="_get_presence_presence")
     presence_quotities = fields.Float('Presence (Tot.)', compute="_get_presence_presence")
+    presence_quotities_tot = fields.Float('Presence (Tot.)', compute="_get_presence_presence")
     present = fields.Integer('Present', compute="_get_presence_presence")
     presence_tot = fields.Integer('Presence (Tot.)', compute="_get_presence_presence")
 
@@ -35,6 +36,14 @@ class Survey(models.Model):
     is_attempts_limited = fields.Boolean(default=True)
     jitsi_code = fields.Char('Jitsi code', default=_default_jitsi_code)
     jitsi_url = fields.Char('Jitsi URL', compute='_get_jitsi_url')
+
+    presidence_id = fields.Many2one('res.partner', 'President')
+    owner_ids = fields.Many2many('res.partner', string='proprietaire', compute="_get_owner")
+
+    @api.depends('building_id', 'building_id.lot_ids')
+    def _get_owner(self):
+        for survey in self:
+            survey.owner_ids = survey.building_id.lot_ids.mapped('owner_id')
 
     @api.depends('title', 'jitsi_code')
     def _get_jitsi_url(self):
@@ -46,7 +55,7 @@ class Survey(models.Model):
         for rec in self:
             present = rec.presence_ids.filtered(lambda s: s.presence in ['present', 'represente'])
             total = sum(rec.presence_ids.mapped('quotities')) or 1.0
-
+            rec.presence_quotities_tot = total
             rec.presence_quotities = sum(present.mapped('quotities'))
             rec.presence_percentage = (rec.presence_quotities/total)*100
             rec.presence_tot = len(rec.presence_ids)

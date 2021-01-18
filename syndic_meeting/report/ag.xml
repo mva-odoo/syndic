@@ -100,19 +100,49 @@
                                     </table>
                                 </div>
                                 <div>
-                                    Le <span t-field="o.date"/>, l'association des copropriétaires de la résidence <span t-field="o.building_id.name"/> se sont réunis en assemblée générale <span t-field="o.type_ag"/>
-
+                                    Le <span t-field="o.date"/>, les copropriétaires de l'immeuble <span t-field="o.building_id.name"/> se sont réunis en assemblée générale <span t-field="o.type_ag"/> sur convocation régulière adressée par le syndic à tous les copropriétaires.
                                 </div>
+
                                 <div>
-                                    <ul>
+
+                                    <ul style="list-style-type: none;">
                                         <li>
-                                            Constitution du bureau et vérification du quorum
+                                        0. Constitution du bureau et vérification du quorum
+                                        </li>
+                                        <li>
+                                            <p>
+                                                Les <span t-field="o.present"/> copropriétaires présents et/ou valablement représentés, sur <span t-field="o.presence_tot"/> forment <span t-field="o.presence_quotities"/>/<span t-field="o.presence_quotities_tot"/>èmes de la copropriété. L’assemblée générale est valablement constituée et habilitée à délibérer. La liste des présences et procurations est déposée sur le bureau et restera annexée au livre des procès-verbaux. 
+                                            </p>
+                                            <p>
+                                                Tableau présence Odoo:
+                                            </p>
+                                            <p>
+                                                <table>
+                                                <tr>
+                                                    <td>Propriétaire</td>
+                                                    <td>Lots</td>
+                                                    <td>Présence</td>
+                                                    <td>Représenté</td>
+                                                    <td>Quotitées</td>
+                                                </tr>
+                                                <t t-foreach="o.presence_ids" t-as="presence_id">
+                                                <tr>
+                                                    <td><span t-field="presence_id.owner_id.name"/></td>
+                                                    <td><span t-field="presence_id.lot_ids"/></td>
+                                                    <td><span t-field="presence_id.presence"/></td>
+                                                    <td><span t-field="presence_id.presence_with"/></td>
+                                                    <td><span t-field="presence_id.quotities"/></td>
+                                                </tr>
+                                                    
+                                                </t>
+                                                </table>
+                                            </p>
+                                            <p>
+                                                La copropriété Désigne comme président de séance: <span t-field="o.presidence_id.name"/>
+                                            </p>
                                         </li>
                                     </ul>
-                                    Après vérification du quorum, il sera demandé aux propriétaires de délibérer sur<br/>
-                                    L'ORDRE DU JOUR SUIVANT:
-                                </div>
-                                <div>
+
                                     <t t-foreach="o.question_and_page_ids" t-as="question">
                                         <ul style="list-style-type: none;">
                                             <t t-if="question.is_page">
