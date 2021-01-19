@@ -158,6 +158,17 @@
                                                             <span t-field="vote.user_input_id.sign_name"/> <span t-field="vote.user_input_id.partner_id.name"/> - <span t-field="vote.suggested_answer_id.value"/>
                                                         </div>
                                                         </t>
+                                                        <p>
+                                                            Pour valider cette question il faut une majorité de <span t-field="question.acceptation"/><span t-esc="question.acceptation"/> actuellement cette tache a récolté <span t-field="question.percent_quotities_score"/>%
+                                                        </p>
+                                                        <p>
+                                                            <t t-if="question.is_accept">
+                                                                cette question est ACCEPTE
+                                                            </t>
+                                                            <t t-else="">
+                                                                cette question est PAS ACCEPTE
+                                                            </t>
+                                                        </p>
                                                     </li>
                                                 </ul>
                                             </t>
