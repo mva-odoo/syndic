@@ -128,6 +128,23 @@ class SurveyQuestion(models.Model):
         ('3', '3 Propositions'),
     ], default='0', string='Modèle')
 
+    acceptation = fields.Selection(
+        [
+            ('50', '50'),
+            ('66.6', '2/3'),
+            ('80', '4/5'),
+            ('100', '100'),
+        ],
+        '% pour acceptation'
+    )
+
+    is_accept = fields.Boolean('Accepté', compute='_get_accept')
+
+    def _get_accept(self):
+        for question in self:
+            question.is_accept = True if question.percent_quotities_score > float(question.acceptation) else False
+            print(question.is_accept)
+
     def get_result(self):
         action = self.env.ref('syndic_meeting.syndic_ag_question_action').read()[0]
         action['domain'] = [('question_id', '=', self.id)]

@@ -8,6 +8,7 @@
             <field name="inherit_id" ref="survey.survey_question_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='suggested_answer_ids']" position="before">
+                    <field name="acceptation"/>
                     <field name="template_selection" widget='radio'/>
                 </xpath>
                 <xpath expr="//field[@name='suggested_answer_ids']/tree" position="inside">
@@ -199,7 +200,7 @@
         <template id="syndic_survey_page_print" name="syndic_survey_page_print" inherit_id="survey.survey_page_print">
             <xpath expr="//div[@role='form']" position="after">
                 <h1>Proces Verbal</h1>
-                <iframe src="/report/pdf/syndic_meeting.rapport_pv_print/48" style="height: 800px; width: 80%;"></iframe>
+                <iframe t-att-src="'/report/pdf/syndic_meeting.rapport_pv_print/%s'%survey.id" style="height: 800px; width: 80%;"></iframe>
 
                 <div class="o_portal_signature_form"
                 t-att-data-call-url="'/sign/ag/%s' % answer.id"
