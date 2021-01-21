@@ -8,16 +8,17 @@
             <field name="inherit_id" ref="survey.survey_question_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='suggested_answer_ids']" position="before">
-                    <field name="acceptation"/>
-                    <field name="template_selection" widget='radio'/>
+                    <group>
+                        <field name="acceptation"/>
+                        <field name="quotity_type_id" domain="[('building_ids', 'in', building_id)]" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="building_id" invisible="1"/>
+                        <field name="template_selection" widget='radio'/>
+                    </group>
                 </xpath>
                 <xpath expr="//field[@name='suggested_answer_ids']/tree" position="inside">
                     <field name="type_answer"/>
-                </xpath>
-
-                <xpath expr="//field[@name='question_type']" position="after">
-                    <field name="quotity_type_id" domain="[('building_ids', 'in', building_id)]" options="{'no_create': True}"/>
-                    <field name="building_id" />
                 </xpath>
 
                 <xpath expr="//page[last()]" position="after">
@@ -165,7 +166,7 @@
             },
             userInfo: {
                 email: 'email@jitsiexamplemail.com',
-                displayName: 'John Doe'
+                displayName: '<t t-esc="answer.partner_id.name"/>'
             }
         }
         var api = new JitsiMeetExternalAPI(domain, options);
@@ -214,6 +215,20 @@
             </xpath>
         </template>
 
+        <template id="syndic_survey_thank_you_sign" name="syndic_survey_thank_you_sign">
+            <!-- <t t-call="website.layout"> -->
+                <div class="wrap">
+                    <div class="oe_structure">
+                        <div class="container">
+                            <h1>
+                                Merci de votre participtation
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            <!-- </t> -->
+        </template>
+
 
         <record id="syndic_ag_survey_user_input_form" model="ir.ui.view">
             <field name="name">survey.user_input.inherit.view.form</field>
@@ -226,8 +241,19 @@
                     <field name="ip_address" />
                     <field name="date" />
                 </xpath>
-                <xpath expr="//field[@name='answer_score']" position='replace'>
-                    <field name="quotities_score" />
+                <xpath expr="//field[@name='user_input_line_ids']/tree" position='replace'>
+                    <tree editable="top" create="false">
+                        <field name="question_sequence" invisible="1"/>
+                        <field name="question_id" readonly="1"/>
+                        <field name="suggested_answer_id" domain="[('question_id', '=', question_id)]"/>
+                        <field name="page_id" readonly="1"/>
+                        <field name="answer_type" readonly="1"/>
+                        <field name="skipped" invisible="1"/>
+                        <field name="create_date"/>
+                        <field name="answer_is_correct" invisible="1"/>
+                        <field name="answer_score" invisible="1"/>
+                        <field name="quotities_score" />
+                    </tree>
                 </xpath>
             </field>
         </record>

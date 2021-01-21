@@ -37,7 +37,7 @@ class Survey(models.Model):
     jitsi_code = fields.Char('Jitsi code', default=_default_jitsi_code)
     jitsi_url = fields.Char('Jitsi URL', compute='_get_jitsi_url')
 
-    presidence_id = fields.Many2one('res.partner', 'President')
+    presidence_id = fields.Many2one('res.partner', 'President', required=True)
     owner_ids = fields.Many2many('res.partner', string='proprietaire', compute="_get_owner")
 
     @api.depends('building_id', 'building_id.lot_ids')
@@ -231,13 +231,6 @@ class SurveyUserInputLine(models.Model):
         store=True
     )
 
-    @api.depends(
-        'suggested_answer_id.type_answer',
-        'question_id.quotity_type_id',
-        'survey_id.presence_ids',
-        'survey_id.presence_ids.presence',
-        'survey_id.presence_ids.lot_ids'
-    )
     def _get_lot(self, survey):
         return {
             presence.owner_id: {
@@ -246,13 +239,19 @@ class SurveyUserInputLine(models.Model):
                 } for presence in survey.presence_ids
             }
 
+    @api.depends(
+        'suggested_answer_id.type_answer',
+        'question_id.quotity_type_id',
+        'survey_id.presence_ids',
+        'survey_id.presence_ids.presence',
+        'survey_id.presence_ids.lot_ids'
+    )
     def _get_score(self):
         answer = {
             'ok': 1,
             'notok': 0,
             'abstention': -1,
         }
-
         for rec in self:
             coeff = answer.get(rec.suggested_answer_id.type_answer, 'Nope')
 

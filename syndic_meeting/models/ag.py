@@ -1,3 +1,4 @@
+from werkzeug import responder
 from odoo import models, fields, api, exceptions, _
 
 
@@ -32,11 +33,11 @@ class SyndicAGPresence(models.Model):
     def _get_answer(self):
         for rec in self:
             reponse = rec.survey_id.user_input_ids.filtered(lambda s: s.partner_id == rec.owner_id)
+            if len(reponse) > 1:
+                reponse = reponse[0]
             rec.answer_state = reponse.state if reponse else 'Non envoyé'
             rec.answer_id = reponse
             rec.is_sign = True if reponse.sign_bin else False
-
-
 
     @api.depends('lot_ids')
     def _get_quotities(self):
