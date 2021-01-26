@@ -2,7 +2,7 @@
 {
     'name': 'Syndic Management',
     'version': '1.4.2.5',
-    "category": 'Syndic',
+    "category": 'Syndic/Syndic',
     'description': """
     Syndic management:
     """,

@@ -6,4 +6,4 @@ class ResPartnerJob(models.Model):
     _description = 'res.partner.job'
     _order = 'name'
 
-    name = fields.Char(u'Métier', requiered=True)
+    name = fields.Char(u'Métier', required=True)
