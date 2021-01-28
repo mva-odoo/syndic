@@ -32,14 +32,14 @@ class Survey(models.Model):
     access_mode = fields.Selection(default='token')
     is_attempts_limited = fields.Boolean(default=True)
     is_jitsi = fields.Boolean('Jitsi')
-    jitsi_code = fields.Char('Jitsi code')
+    jitsi_code = fields.Char('Jitsi code', compute='_get_jitsi', store=True, readonly=False)
     jitsi_url = fields.Char('Jitsi URL', compute='_get_jitsi_url')
 
     presidence_id = fields.Many2one('res.partner', 'President')
     owner_ids = fields.Many2many('res.partner', string='proprietaire', compute="_get_owner")
 
-    @api.onchange('is_jitsi')
-    def _onchange_jitsi_code(self):
+    @api.depends('is_jitsi')
+    def _get_jitsi(self):
         self.jitsi_code = random.randint(3, 1000000) if self.is_jitsi else False
 
     @api.depends('building_id', 'building_id.lot_ids')
