@@ -144,6 +144,7 @@
                     <field name="date" string="Date de l'envoi"/>
                     <field name="all_immeuble" />
                     <field name="is_mail"/>
+                    <field name="activity_ids" widget="list_activity"/>
                 </tree>
             </field>
 
@@ -185,8 +186,7 @@
             <field name="name">lettres</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">letter.letter</field>
-            
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,activity</field>
             <field name="target">current</field>
         </record>
 

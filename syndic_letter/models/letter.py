@@ -13,6 +13,7 @@ class PieceJointe(models.Model):
 
 class CreateLetter(models.Model):
     _name = 'letter.letter'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'letter.letter'
     _rec_name = 'sujet'
     _order = 'date desc'

@@ -61,17 +61,18 @@
                 <xpath expr="//div[@class='oe_title']" position='after'>
                     <div class="oe_title" style="width: 100%;">
                         <h1>
-                            <field name="building_id" class="oe_inline"  placeholder="Immeuble" options="{'no_create': True}"/>
+                            <field name="building_id" class="oe_inline"  placeholder="Immeuble" options="{'no_create': True}" required="1"/>
                         </h1>
                     </div>
                     <group>
                         <group string="Date/lieu de l'AG">
-                            <field name="date"/>
-                            <field name="where"/>
+                            <field name="date" required="1"/>
+                            <field name="where" required="1"/>
                         </group>
                         <group string="Information AG">
                             <field name="type_ag"/>
                             <field name="send_ag"/>
+                            <field name="is_jitsi"/>
 
                             <div class="o_td_label">
                                 <label for="jitsi_code" string="JITSI Code" class="oe_edit_only o_form_label"/>
@@ -100,7 +101,7 @@
                             <group>
                                 <field name="presence_quotities"/>
                                 <field name="owner_ids" invisible="1"/>
-                                <field name="presidence_id" domain="[('id', 'in', owner_ids)]" options="{'no_create': True}"/>
+                                <field name="presidence_id" domain="[('id', 'in', owner_ids)]" options="{'no_create': True}" required="1"/>
                             </group>
                         </group>
                         <group>

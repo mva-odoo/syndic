@@ -4,7 +4,7 @@ from odoo import models, fields, api, exceptions, _
 
 class Claim(models.Model):
     _name = 'syndic.claim'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'syndic.claim'
     _rec_name = 'subject'
     _order = 'create_date desc'
