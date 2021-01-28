@@ -10,9 +10,9 @@ class Survey(models.Model):
     def _default_jitsi_code(self):
         return random.randint(3, 1000000)
 
-    building_id = fields.Many2one('syndic.building', 'Immeuble', required=True)
-    date = fields.Datetime("Date de l'AG", required=True)
-    where = fields.Char("Lieu de l'AG", required=True)
+    building_id = fields.Many2one('syndic.building', 'Immeuble')
+    date = fields.Datetime("Date de l'AG")
+    where = fields.Char("Lieu de l'AG")
     type_ag = fields.Selection([
         ('extra', 'extra-ordinaire'),
         ('statutaire', 'statutaire')], 'Type')
@@ -37,7 +37,7 @@ class Survey(models.Model):
     jitsi_code = fields.Char('Jitsi code', default=_default_jitsi_code)
     jitsi_url = fields.Char('Jitsi URL', compute='_get_jitsi_url')
 
-    presidence_id = fields.Many2one('res.partner', 'President', required=True)
+    presidence_id = fields.Many2one('res.partner', 'President')
     owner_ids = fields.Many2many('res.partner', string='proprietaire', compute="_get_owner")
 
     @api.depends('building_id', 'building_id.lot_ids')

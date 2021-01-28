@@ -32,7 +32,7 @@ class Survey(Survey):
         # check if the user is in the AG presence to be sure a owner can not access to an other building AG
         survey_sudo, answer_sudo = self._fetch_from_access_token(survey_token, answer_token)
         user = http.request.env['res.users'].browse(http.request._uid)
-        if user.partner_id not in survey_sudo.presence_ids.owner_id:
+        if (user.partner_id not in survey_sudo.presence_ids.owner_id) and survey_sudo.building_id:
             return 'answer_deadline'
 
-        return super(Survey, self)._check_validity(self, survey_token, answer_token, ensure_token)
+        return super(Survey, self)._check_validity(survey_token, answer_token, ensure_token)
