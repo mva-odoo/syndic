@@ -40,7 +40,8 @@ class Survey(models.Model):
 
     @api.depends('is_jitsi')
     def _get_jitsi(self):
-        self.jitsi_code = random.randint(3, 1000000) if self.is_jitsi else False
+        for survey in self:
+            survey.jitsi_code = random.randint(3, 1000000) if survey.is_jitsi else False
 
     @api.depends('building_id', 'building_id.lot_ids')
     def _get_owner(self):
