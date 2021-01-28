@@ -6,9 +6,6 @@ import random
 class Survey(models.Model):
     _inherit = 'survey.survey'
 
-    @api.model
-    def _default_jitsi_code(self):
-        return random.randint(3, 1000000)
 
     building_id = fields.Many2one('syndic.building', 'Immeuble')
     date = fields.Datetime("Date de l'AG")
@@ -34,11 +31,16 @@ class Survey(models.Model):
 
     access_mode = fields.Selection(default='token')
     is_attempts_limited = fields.Boolean(default=True)
-    jitsi_code = fields.Char('Jitsi code', default=_default_jitsi_code)
+    is_jitsi = fields.Boolean('Jitsi')
+    jitsi_code = fields.Char('Jitsi code')
     jitsi_url = fields.Char('Jitsi URL', compute='_get_jitsi_url')
 
     presidence_id = fields.Many2one('res.partner', 'President')
     owner_ids = fields.Many2many('res.partner', string='proprietaire', compute="_get_owner")
+
+    @api.onchange('is_jitsi')
+    def _onchange_jitsi_code(self):
+        self.jitsi_code = random.randint(3, 1000000) if self.is_jitsi else False
 
     @api.depends('building_id', 'building_id.lot_ids')
     def _get_owner(self):

@@ -72,6 +72,7 @@
                         <group string="Information AG">
                             <field name="type_ag"/>
                             <field name="send_ag"/>
+                            <field name="is_jitsi"/>
 
                             <div class="o_td_label">
                                 <label for="jitsi_code" string="JITSI Code" class="oe_edit_only o_form_label"/>
