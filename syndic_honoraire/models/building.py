@@ -25,7 +25,7 @@ class Building(models.Model):
 
     def get_invoice(self):
         self.ensure_one()
-        action = self.env.ref('account.action_move_out_invoice_type').read()[0]
+        action = self.env.ref('account.action_move_out_invoice_type').sudo().read()[0]
         action['domain'] = [
             ('partner_id', '=', self.partner_id.id)
         ]

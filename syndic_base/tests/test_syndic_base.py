@@ -64,7 +64,7 @@ class TestBuildingFlow(TestSyndicCommon):
                 }
             )],
         })
-        
+
         self.aloys.read([
             'total_quotites',
             'lot_count',

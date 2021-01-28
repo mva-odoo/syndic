@@ -146,7 +146,7 @@ class SurveyQuestion(models.Model):
             print(question.is_accept)
 
     def get_result(self):
-        action = self.env.ref('syndic_meeting.syndic_ag_question_action').read()[0]
+        action = self.env.ref('syndic_meeting.syndic_ag_question_action').sudo().read()[0]
         action['domain'] = [('question_id', '=', self.id)]
         return action
 

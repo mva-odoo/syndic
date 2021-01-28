@@ -145,19 +145,19 @@ class Partner(models.Model):
 
     def action_lot(self):
         self.ensure_one()
-        action = self.env.ref('syndic_base.action_lot').read()[0]
+        action = self.env.ref('syndic_base.action_lot').sudo().read()[0]
         action['domain'] = [('id', 'in', self.lot_ids.ids)]
         return action
 
     def action_lot_loaner(self):
         self.ensure_one()
-        action = self.env.ref('syndic_base.action_lot').read()[0]
+        action = self.env.ref('syndic_base.action_lot').sudo().read()[0]
         action['domain'] = [('id', 'in', self.loaner_lot_ids.ids)]
         return action
 
     def action_lot_old(self):
         self.ensure_one()
-        action = self.env.ref('syndic_base.action_mutation').read()[0]
+        action = self.env.ref('syndic_base.action_mutation').sudo().read()[0]
         action['domain'] = [('old_partner_ids', 'in', self.id)]
         return action
 

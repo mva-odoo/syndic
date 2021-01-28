@@ -9,7 +9,7 @@ class Buiilding(models.Model):
 
     def get_document(self):
         self.ensure_one()
-        action = self.env.ref('syndic_documents.action_syndic_document').read()[0]
+        action = self.env.ref('syndic_documents.action_syndic_document').sudo().read()[0]
         action['domain'] = [('immeuble_id', '=', self.id)]
         action['context'] = {}
         return action
