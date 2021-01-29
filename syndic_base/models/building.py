@@ -124,13 +124,13 @@ class Building(models.Model):
         owner = self.mapped('lot_ids.owner_id')
         loaner = self.mapped('lot_ids.loaner_ids')
         if self._context.get('inhabitant_type') == 'owner':
-            action = self.env.ref('syndic_base.action_proprietaire').read()[0]
+            action = self.env.ref('syndic_base.action_proprietaire').sudo().read()[0]
             action['domain'] = [('id', 'in', owner.ids)]
         elif self._context.get('inhabitant_type') == 'loaner':
-            action = self.env.ref('syndic_base.action_locataire').read()[0]
+            action = self.env.ref('syndic_base.action_locataire').sudo().read()[0]
             action['domain'] = [('id', 'in', loaner.ids)]
         else:
-            action = self.env.ref('base.action_partner_form').read()[0]
+            action = self.env.ref('base.action_partner_form').sudo().read()[0]
             action['domain'] = [('id', 'in', (owner | loaner).ids)]
             action['context'] = False
 
@@ -138,7 +138,7 @@ class Building(models.Model):
 
     def action_lot(self):
         self.ensure_one()
-        action = self.env.ref('syndic_base.action_lot').read()[0]
+        action = self.env.ref('syndic_base.action_lot').sudo().read()[0]
         action['domain'] = [('id', '=', self.lot_ids.ids)]
         return action
 
@@ -154,7 +154,7 @@ class Building(models.Model):
 
     def action_contract(self):
         self.ensure_one()
-        action = self.env.ref('syndic_base.action_building_contract').read()[0]
+        action = self.env.ref('syndic_base.action_building_contract').sudo().read()[0]
         action['domain'] = [('building_id', '=', self.id)]
         action['context'] = {'default_building_id': self.id}
         return action

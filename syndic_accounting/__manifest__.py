@@ -6,8 +6,8 @@
         'syndic_base',
     ],
     'data': [
-        'views/building.xml',
         'security/groups.xml',
+        'views/building.xml',
     ],
     'installable': True,
 }
