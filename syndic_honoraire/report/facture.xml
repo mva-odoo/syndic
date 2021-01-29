@@ -87,12 +87,16 @@
                 </t>
             </t>
     </template>
-    <report
-            id="honoraire_facture_print"
-            model="account.move"
-            string="Facture Sgimmo"
-            name="syndic_honoraire.honoraire_invoice"
-            report_type="qweb-pdf"
-            />
+
+    <record id="honoraire_facture_print" model="ir.actions.report">
+            <field name="name">Facture Sgimmo</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">syndic_honoraire.honoraire_invoice</field>
+            <field name="report_file">syndic_honoraire.honoraire_invoice</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
     </data>
 </odoo>

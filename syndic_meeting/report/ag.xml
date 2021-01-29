@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <report
-            id="ag_print"
-            string="Odre du Jour"
-            model="survey.survey"
-            name="syndic_meeting.rapport_ag_print"
-            report_type="qweb-pdf"
-        />
+        <record id="ag_print" model="ir.actions.report">
+            <field name="name">Odre du Jour</field>
+            <field name="model">survey.survey</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">syndic_meeting.rapport_ag_print</field>
+            <field name="report_file">syndic_meeting.rapport_ag_print</field>
+            <field name="binding_model_id" ref="survey.model_survey_survey"/>
+            <field name="binding_type">report</field>
+        </record>
+
         <template id="rapport_ag_print">
             <t t-call="web.html_container">
                 <t t-name="ag_qweb">
@@ -74,6 +77,17 @@
             name="syndic_meeting.rapport_pv_print"
             report_type="qweb-pdf"
         />
+        
+        <record id="pv_print" model="ir.actions.report">
+            <field name="name">PV AG</field>
+            <field name="model">survey.survey</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">syndic_meeting.rapport_pv_print</field>
+            <field name="report_file">syndic_meeting.rapport_pv_print</field>
+            <field name="binding_model_id" ref="survey.model_survey_survey"/>
+            <field name="binding_type">report</field>
+        </record>
+
         <template id="rapport_pv_print">
             <t t-call="web.html_container">
                 <t t-name="ag_qweb">

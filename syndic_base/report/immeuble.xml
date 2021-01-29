@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-     <report id="action_print_immeuble"
-             model="syndic.building"
-             string="Presentation Immeuble"
-             name="syndic_base.immeuble_presentation"
-             report_type="qweb-html"/>
+    <record id="action_print_immeuble" model="ir.actions.report">
+        <field name="name">Facture Sgimmo</field>
+        <field name="model">syndic.building</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">syndic_base.immeuble_presentation</field>
+        <field name="report_file">syndic_base.immeuble_presentation</field>
+        <field name="binding_model_id" ref="model_syndic_building"/>
+        <field name="binding_type">report</field>
+    </record>
 
-     <template id="immeuble_presentation" name="Presantation Immeuble">
+    <template id="immeuble_presentation" name="Presantation Immeuble">
         <t t-foreach="docs" t-as="o">
             <div class="page">
-                 <h1><span t-field="o.name"/>:</h1>
+                <h1><span t-field="o.name"/>:</h1>
 
                 <div style="font-size:16px">
                     <div><span t-field="o.street"/></div>
@@ -28,7 +32,7 @@
                             <td width="10%"><b>Quotités</b></td>
                             <td width="20%"><b>Type de Lot</b></td>
                         </tr>
-                         <t t-foreach="o.lot_ids" t-as="lot">
+                        <t t-foreach="o.lot_ids" t-as="lot">
                             <tr>
                                 <td><span t-field="lot.name"/></td>
                                 <td>
@@ -43,14 +47,12 @@
                                 <td><span t-field="lot.type_id.name"/></td>
                             </tr>
 
-                         </t>
+                        </t>
                     </table>
 
                 </div>
             </div>
         </t>
-     </template>
-
-
- </odoo>
+    </template>
+</odoo>
 

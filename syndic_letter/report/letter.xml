@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <report
-                id="letter_print"
-                model="letter.letter"
-                string="lettre"
-                name="syndic_letter.letter_qweb"
-                file="name"
-                report_type="qweb-pdf"
-                />
+        <record id="letter_print" model="ir.actions.report">
+            <field name="name">Lettre</field>
+            <field name="model">letter.letter</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">syndic_letter.letter_qweb</field>
+            <field name="report_file">syndic_letter.letter_qweb</field>
+            <field name="binding_model_id" ref="model_letter_letter"/>
+            <field name="binding_type">report</field>
+        </record>
 
         <template id="external_layout_syndic">
                 <div class="header">

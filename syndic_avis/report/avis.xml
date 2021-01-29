@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <report
-            id="avis_print"
-            string="avis"
-            model="letter.avis"
-            name="syndic_avis.avis_impression"
-            report_type="qweb-pdf"
-        />
+        <record id="avis_print" model="ir.actions.report">
+            <field name="name">Avis</field>
+            <field name="model">letter.avis</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">syndic_avis.avis_impression</field>
+            <field name="report_file">syndic_avis.avis_impression</field>
+            <field name="binding_model_id" ref="model_letter_avis"/>
+            <field name="binding_type">report</field>
+        </record>
 
         <template id="avis_impression">
             <t t-call="web.html_container">
