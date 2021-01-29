@@ -25,9 +25,9 @@ class Survey(models.Model):
     survey_id = fields.Many2one('survey.survey', 'Questionaire')
     presence_percentage = fields.Float('Presence (%)', compute="_get_presence_presence")
     presence_quotities = fields.Float('Presence (Tot.)', compute="_get_presence_presence")
-    presence_quotities_tot = fields.Float('Presence (Tot.)', compute="_get_presence_presence")
+    presence_quotities_tot = fields.Float('Presence (Total)', compute="_get_presence_presence")
     present = fields.Integer('Present', compute="_get_presence_presence")
-    presence_tot = fields.Integer('Presence (Tot.)', compute="_get_presence_presence")
+    presence_tot = fields.Integer('Presence Total', compute="_get_presence_presence")
 
     access_mode = fields.Selection(default='token')
     is_attempts_limited = fields.Boolean(default=True)

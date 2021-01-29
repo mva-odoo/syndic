@@ -49,7 +49,7 @@ class CreateLetter(models.Model):
     date_fr = fields.Char(string='Date', compute='_compute_date', store=True)
     partner_address_ids = fields.Many2many(
         'res.partner',
-        String="Personne Jointe",
+        string="Personne Jointe",
         compute='_get_other_address', store=True
     )
     state = fields.Selection([('not_send', 'Pas envoyé'), ('send', 'Envoyé')], string='State', default='not_send')

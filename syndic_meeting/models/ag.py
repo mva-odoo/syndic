@@ -25,7 +25,7 @@ class SyndicAGPresence(models.Model):
     presence_with = fields.Char('Représenté par')
     quotities = fields.Float(compute="_get_quotities", string='Quotitées')
     survey_id = fields.Many2one('survey.survey', 'AG')
-    answer_state = fields.Char('Réponse', compute="_get_answer")
+    answer_state = fields.Char('A Répondu', compute="_get_answer")
     answer_id = fields.Many2one('survey.user_input', 'Réponse', compute="_get_answer")
     is_sign = fields.Boolean('A signé?', compute="_get_answer")
 
