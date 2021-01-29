@@ -58,7 +58,7 @@
                     <button name='action_get_result' type="object" string='Resultat'/>
                 </xpath>
 
-                <xpath expr="//div[@class='oe_title']" position='after'>
+                <xpath expr="//div[hasclass('oe_title')]" position='after'>
                     <div class="oe_title" style="width: 100%;">
                         <h1>
                             <field name="building_id" class="oe_inline"  placeholder="Immeuble" options="{'no_create': True}" required="1"/>
@@ -189,7 +189,7 @@
         </template>
 
         <template id="syndic_survey_fill_form_done" name="syndic_survey_fill_form_done" inherit_id="survey.survey_fill_form_done">
-            <xpath expr="//div[@class='col']" position="replace">
+            <xpath expr="//div[hasclass('col')]" position="replace">
                 <div class="col">
                     <div t-if="survey.scoring_type != 'scoring_without_answers'">
                         Vous pouvez signer <a target='_blank' t-att-href="'/survey/print/%s?answer_token=%s&amp;review=True' % (survey.access_token, answer.access_token)">ici</a>
