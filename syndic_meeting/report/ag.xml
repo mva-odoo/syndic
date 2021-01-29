@@ -70,14 +70,6 @@
             </t>
         </template>
 
-        <report
-            id="pv_print"
-            string="PV AG"
-            model="survey.survey"
-            name="syndic_meeting.rapport_pv_print"
-            report_type="qweb-pdf"
-        />
-        
         <record id="pv_print" model="ir.actions.report">
             <field name="name">PV AG</field>
             <field name="model">survey.survey</field>
