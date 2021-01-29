@@ -116,7 +116,7 @@ class SurveyQuestion(models.Model):
     quotities_score = fields.Float(
         string='Score Quotité',
         compute='_get_score',
-        store=False
+        store=True
     )
     percent_quotities_score = fields.Float(
         string='Score Quotité (%)',
