@@ -33,6 +33,6 @@ class Survey(Survey):
         survey_sudo, answer_sudo = self._fetch_from_access_token(survey_token, answer_token)
         user = http.request.env['res.users'].browse(http.request._uid)
         if not user.has_group('base.group_user') and (user.partner_id not in survey_sudo.presence_ids.owner_id) and survey_sudo.building_id:
-            return 'answer_deadline'
+            return 'survey_auth'
 
         return super(Survey, self)._check_validity(survey_token, answer_token, ensure_token)
