@@ -36,3 +36,18 @@ class Survey(Survey):
             return 'survey_auth'
 
         return super(Survey, self)._check_validity(survey_token, answer_token, ensure_token)
+
+    # def survey_display_page(self, survey_token, answer_token, **post):
+    #     print('----------->')
+    #     return super().survey_display_page(survey_token, answer_token, **post)
+
+    @http.route('/survey/start/<string:survey_token>', type='http', auth='public', website=True)
+    def survey_start(self, survey_token, answer_token=None, email=False, **post):
+        survey = http.request.env['survey.survey'].sudo().search([('access_token', '=', survey_token)], limit=1)
+
+        present = survey.presence_ids.filtered(lambda s: s.owner_id == http.request.env.user.partner_id)
+        present.write({
+            'date_connexion': datetime.now()
+        })
+
+        return super().survey_start(survey_token, answer_token, email, **post)

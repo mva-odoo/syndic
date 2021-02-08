@@ -119,6 +119,7 @@
                                 <field name="quotities" sum="Quotitées"/>
                                 <field name="answer_state"/>
                                 <field name="is_sign"/>
+                                <field name="date_connexion" readonly="1"/>
                             </tree>
                         </field>
                     </page>
@@ -138,18 +139,43 @@
             </field>
         </record>
 
+        <template id="syndic_user_input_session_manage_content" name="syndic_user_input_session_manage_content" inherit_id="survey.user_input_session_manage_content">
+            <xpath expr="//div//div[last()]" position="replace">
+                ----------------------->
+                
+            </xpath>
+        </template>
+        
+        <template id="syndic_user_input_session_open" name="syndic_user_input_session_open" inherit_id="survey.user_input_session_open">
+            <xpath expr="//h2" position="after">
+                <h2>
+                    Video Conférence Administrateur: <a t-att-href="survey.jitsi_url" t-esc="survey.jitsi_url" target="new" />
+                </h2>
+
+            </xpath>
+            <xpath expr="//h2[last()]" position="after">
+                    <t t-foreach="survey.presence_ids" t-as="presence">
+                        <div>
+                            <t t-esc="presence.owner_id.name" /> - <t t-esc="presence.date_connexion" />
+                        </div>
+                    </t>
+            </xpath>
+        </template>
+
+
         <template id="syndic_survey_page_fill" name="syndic_survey_page_fill" inherit_id="survey.survey_page_fill">
-            <xpath expr="//t[@t-call='survey.survey_fill_header']" position="after">
+            <xpath expr="//t[@t-call='survey.layout']/div" position="inside">
                 <t t-if="survey.jitsi_url">
-                    <div id="meeting"></div> 
+                    <t t-set="room" t-value="'%s_%s' % (survey.title, survey.jitsi_code)"/>
+                    <div id="meeting" class="container d-flex flex-column col-8"></div> 
                     <script src="https://meet.jit.si/external_api.js"></script>
                     <script>
         var domain = "meet.jit.si";
 
         var options = {
-            roomName: "01024",
+            roomName: '<t t-esc="room"/>',
             width: '100%',
-            height: '400px',
+            height: '100%',
             parentNode: document.querySelector('#meeting'),
             interfaceConfigOverwrite: {
                 SHOW_CHROME_EXTENSION_BANNER: false,
@@ -158,7 +184,7 @@
                 SHOW_JITSI_WATERMARK: false,
                 SHOW_WATERMARK_FOR_GUESTS : false,
                 TOOLBAR_BUTTONS: [
-                    'microphone', 'camera', 'hangup', 'raisehand', 'videoquality', 
+                    'microphone', 'camera', 'hangup', 'raisehand', 'videoquality', 'chat'
                 ],
             },
             configOverwrite: { 
@@ -172,17 +198,7 @@
         }
         var api = new JitsiMeetExternalAPI(domain, options);
 
-        // set new password for channel
-        api.addEventListener('participantRoleChanged', function(event) {
-        if (event.role === "moderator") {
-            api.executeCommand('password', 'The Password');
-        }
-        });
-        // join a protected channel
-        api.on('passwordRequired', function ()
-        {
-        api.executeCommand('password', 'The Password');
-        });
+        
     </script>
                 </t>
             </xpath>
