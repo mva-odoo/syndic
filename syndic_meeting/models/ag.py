@@ -28,6 +28,7 @@ class SyndicAGPresence(models.Model):
     answer_state = fields.Char('A Répondu', compute="_get_answer")
     answer_id = fields.Many2one('survey.user_input', 'Réponse', compute="_get_answer")
     is_sign = fields.Boolean('A signé?', compute="_get_answer")
+    date_connexion = fields.Datetime('Connexion')
 
     @api.depends('survey_id.user_input_ids')
     def _get_answer(self):
