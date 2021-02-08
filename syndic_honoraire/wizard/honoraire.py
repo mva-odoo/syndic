@@ -39,7 +39,7 @@ class SuiviFacture(models.TransientModel):
                     'name': 'Frais administratifs %s - %s' % (self.year_id.name, self.trimestre),
                     'price_unit': frais.frais_admin,
                     'quantity': 1,
-                    'account_id': self.env.ref('l10n_be.1_a7010').id,
+                    # 'account_id': self.env.ref('l10n_be.1_a7010').id,
 
                 }
 
@@ -47,7 +47,7 @@ class SuiviFacture(models.TransientModel):
                     'name': 'Honoraires %s - %s' % (self.year_id.name, self.trimestre),
                     'price_unit': frais.honoraire,
                     'quantity': 1,
-                    'account_id': self.env.ref('l10n_be.1_a7010').id,
+                    # 'account_id': self.env.ref('l10n_be.1_a7010').id,
 
                 }
 
@@ -86,7 +86,7 @@ class SuiviFacture(models.TransientModel):
                         'name': self.description,
                         'price_unit': self.amount,
                         'quantity': 1,
-                        'account_id': self.env.ref('l10n_be.1_a7010').id,
+                        # 'account_id': self.env.ref('l10n_be.1_a7010').id,
                     })]
                     })
         action = self.env.ref('account.action_move_out_invoice_type').sudo().read()[0]

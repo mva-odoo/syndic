@@ -66,8 +66,8 @@
                     </div>
                     <group>
                         <group string="Date/lieu de l'AG">
-                            <field name="date" required="1"/>
-                            <field name="where" required="1"/>
+                            <field name="date"/>
+                            <field name="where"/>
                         </group>
                         <group string="Information AG">
                             <field name="type_ag"/>
@@ -101,7 +101,7 @@
                             <group>
                                 <field name="presence_quotities"/>
                                 <field name="owner_ids" invisible="1"/>
-                                <field name="presidence_id" domain="[('id', 'in', owner_ids)]" options="{'no_create': True}" required="1"/>
+                                <field name="presidence_id" domain="[('id', 'in', owner_ids)]" options="{'no_create': True}"/>
                             </group>
                         </group>
                         <group>
