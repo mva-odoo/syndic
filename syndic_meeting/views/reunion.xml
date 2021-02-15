@@ -79,7 +79,7 @@
 		</record>
 
 		<!--menu -->
-		<menuitem name="Rapports de réunions" id="root_rapport_reunion" web_icon="syndic_meeting,static/description/icon.png"/>
+		<menuitem name="Rapports de réunions" id="root_rapport_reunion" parent="survey.menu_surveys"/>
 		<menuitem name="Rapports de réunions" id="menu_rapport_reunion" parent="root_rapport_reunion" action="rapport_reunion" sequence="4"/>
 		<menuitem name="Type de rapport" id="menu_rapport_type" parent="root_rapport_reunion" action="rapport_type_model" />
 

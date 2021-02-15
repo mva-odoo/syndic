@@ -2,7 +2,7 @@
 <odoo>
 	<data>
                 <menuitem 
-                    name="Syndic"
+                    name="Immeubles"
                     id="syndic_main"
                     groups="syndic_base.syndic_employe,syndic_base.syndic_manager"
                     sequence="1"

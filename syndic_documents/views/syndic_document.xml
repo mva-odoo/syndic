@@ -73,7 +73,7 @@
 
 
 		<!--menu -->
-		<menuitem name="Documents" id="docu" web_icon="syndic_documents,static/description/icon.png"/>
+		<menuitem name="Portail" id="docu" web_icon="syndic_documents,static/description/icon.png"/>
 		<menuitem name="Documents" id="menu_sub_docu" parent="docu"/>
 		<menuitem name="Documents" id="menu_action_docu" parent="menu_sub_docu" action="action_syndic_document"/>
 

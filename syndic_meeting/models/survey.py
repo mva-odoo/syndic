@@ -6,7 +6,6 @@ import random
 class Survey(models.Model):
     _inherit = 'survey.survey'
 
-
     building_id = fields.Many2one('syndic.building', 'Immeuble')
     date = fields.Datetime("Date de l'AG")
     where = fields.Char("Lieu de l'AG")
@@ -28,6 +27,8 @@ class Survey(models.Model):
     presence_quotities_tot = fields.Float('Presence (Total)', compute="_get_presence_presence")
     present = fields.Integer('Present', compute="_get_presence_presence")
     presence_tot = fields.Integer('Presence Total', compute="_get_presence_presence")
+
+    which_type = fields.Selection([('papier', 'Papier'), ('video', 'Vidéo conférence')], string='Présence', default="papier")
 
     access_mode = fields.Selection(default='token')
     is_attempts_limited = fields.Boolean(default=True)

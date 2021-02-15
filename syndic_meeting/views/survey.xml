@@ -72,13 +72,17 @@
                         <group string="Information AG">
                             <field name="type_ag"/>
                             <field name="send_ag"/>
-                            <field name="is_jitsi"/>
+                        </group>
 
-                            <div class="o_td_label">
+                        <group string="Type de réunion">
+                            <field name="which_type"/>
+                            <field name="is_jitsi" attrs="{'invisible': [['which_type','=','papier']], 'required': [['which_type','=','video']]}"/>
+
+                            <div class="o_td_label" attrs="{'invisible': [['which_type','=','papier']], 'required': [['which_type','=','video']]}">
                                 <label for="jitsi_code" string="JITSI Code" class="oe_edit_only o_form_label"/>
                                 <label for="jitsi_url" string="JITSI Link" class="oe_read_only o_form_label"/>
                             </div>
-                            <div class="d-flex">
+                            <div class="d-flex" attrs="{'invisible': [['which_type','=','papier']], 'required': [['which_type','=','video']]}">
                                 <field name="jitsi_code" nolabel="1" class="mr-2 oe_edit_only"/>
                                 <field name="jitsi_url" nolabel="1" widget="CopyClipboardChar" class="oe_read_only"/>
                             </div>
@@ -97,6 +101,10 @@
                         <group>
                             <group>
                                 <field name="presence_percentage" widget="progressbar"/>
+                                <label for="presence_tot"/>
+                                <div>
+                                    <field name="present" class="oe_inline"/>&#47;<field name="presence_tot" class="oe_inline"/>
+                                </div>
                             </group>
                             <group>
                                 <field name="presence_quotities"/>
@@ -105,10 +113,7 @@
                             </group>
                         </group>
                         <group>
-                            <label for="presence_tot"/>
-                            <div>
-                                <field name="present" class="oe_inline"/>&#47;<field name="presence_tot" class="oe_inline"/>
-                            </div>
+                            
                         </group>
                         <field name="presence_ids">
                             <tree editable="top" delete="0" create="0">
@@ -139,12 +144,11 @@
             </field>
         </record>
 
-        <template id="syndic_user_input_session_manage_content" name="syndic_user_input_session_manage_content" inherit_id="survey.user_input_session_manage_content">
+        <!-- <template id="syndic_user_input_session_manage_content" name="syndic_user_input_session_manage_content" inherit_id="survey.user_input_session_manage_content">
             <xpath expr="//div//div[last()]" position="replace">
-                ----------------------->
                 
             </xpath>
-        </template>
+        </template> -->
         
         <template id="syndic_user_input_session_open" name="syndic_user_input_session_open" inherit_id="survey.user_input_session_open">
             <xpath expr="//h2" position="after">
@@ -291,12 +295,20 @@
             <field name="view_mode">tree,form,graph</field>
         </record>
         
-        <menuitem 
+        <!-- <menuitem 
             id="syndic_ag_menu_act"
             name="AG"
             parent="syndic_base.syndic_main"
-            action="syndic_ag_action" />
+            action="syndic_ag_action" /> -->
         
+        <record id="survey.menu_survey_form" model="ir.ui.menu">
+            <field name="name">Assemblée générale</field>
+        </record>
+
+        <record id="survey.menu_surveys" model="ir.ui.menu">
+            <field name="name">Réunions</field>
+        </record>
+
     </data>
 </odoo>
 
