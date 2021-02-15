@@ -146,7 +146,6 @@
 
         <!-- <template id="syndic_user_input_session_manage_content" name="syndic_user_input_session_manage_content" inherit_id="survey.user_input_session_manage_content">
             <xpath expr="//div//div[last()]" position="replace">
-                
             </xpath>
         </template> -->
         
