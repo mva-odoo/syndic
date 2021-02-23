@@ -67,6 +67,47 @@ class Building(models.Model):
     access_where = fields.Many2one('res.partner', u'Certificat pour la reproduction de clé')
     access_more = fields.Text('Informations et descriptions')
 
+    expert_tech_id = fields.Many2one('res.partner', 'Expert technique', domain=[('supplier', '=', True)])
+    expert_chauffage_id = fields.Many2one('res.partner', 'Expert chauffage', domain=[('supplier', '=', True)])
+    expert_ascenseur_id = fields.Many2one('res.partner', 'Expert ascenseur', domain=[('supplier', '=', True)])
+    conseiller_tech_id = fields.Many2one('res.partner', 'Conseiller technique', domain=[('supplier', '=', True)])
+    conseiller_juridique_id = fields.Many2one('res.partner', 'Conseiller juridique', domain=[('supplier', '=', True)])
+
+    amiante_date = fields.Date('Inventaire établi le')
+    amiante_partner_id = fields.Many2one('res.partner', 'Inventaire établi le', domain=[('supplier', '=', True)])
+    amiante_done = fields.Boolean('Désamiantage réalisé')
+    amiante_description = fields.Text('Informations supplémentaires (amiante)')
+
+    status_update = fields.Boolean('Statuts mis à jour')
+    roi_update = fields.Boolean('ROI mis à jour')
+    status_description = fields.Text('Informations supplémentaires (status)')
+
+    permis_delivre = fields.Date('Délivré le')
+    env_validity = fields.Date('Valide jusqu\'au')
+    env_description = status_description = fields.Text('Informations supplémentaires (permis d\'environnement)')
+
+    citerne_description = status_description = fields.Char('Contenance et informations')
+    citerne_date = status_description = fields.Date('Certificat de conformité établi le')
+    citerne_validity = status_description = fields.Date('Certificat de conformité valide jusqu\'au')
+    citerne_partner_id = status_description = fields.Many2one('res.partner', 'Certificat de conformité établi par', domain=[('supplier', '=', True)])
+    amiante_neutralise = fields.Boolean('Citerne neutralisée')
+    pollution_zone = fields.Boolean('Sol en zone polluée')
+    depollution = fields.Text('Dépollution')
+
+    analyse_date = fields.Date('Analyse de risque établi le')
+    analys_validaty_date = fields.Date('Analyse de risque établi le')
+    analyse_partner_id = fields.Many2one('res.partner', 'Analyse de risque établi par', domain=[('supplier', '=', True)])
+    ascenseur_conformite = fields.Boolean('Ascenseur mis en conformité')
+    attestation_conformite = fields.Boolean('Attestation de conformité reçue')
+    attestation_partner_id = fields.Many2one('res.partner', 'Analyse de risque établi par', domain=[('supplier', '=', True)])
+
+    elec_recue = fields.Boolean('Conformité reçue')
+    elec_partner_id = fields.Many2one('res.partner', 'Rapport établi par', domain=[('supplier', '=', True)])
+    elec_date = fields.Date('Analyse de risque établi le')
+    elec_validity = fields.Date('Date echeance')
+
+    peb = fields.Char('Chauffage au norme')
+
     def get_quotities(self):
         quotity = self.env['syndic.building.quotities']
         for rec in self:
@@ -100,6 +141,34 @@ class Building(models.Model):
             'name': 'Ouvrir fiche signalétique',
             'view_type': 'form',
             'view_mode': 'form',
+            'res_model': 'building.signalitic',
+            'type': 'ir.actions.act_window',
+            'context': self._context,
+        }
+
+    def open_description(self):
+        res_id = self.env['building.signalitic'].search([('building_id', '=', self.id)])
+        view_id = self.env.ref('syndic_base.form_description_building').id
+        return {
+            'res_id': res_id.id,
+            'name': 'Description immeuble',
+            'view_mode': 'form',
+            'views': [(view_id, 'form')],
+            'view_id': view_id,
+            'res_model': 'building.signalitic',
+            'type': 'ir.actions.act_window',
+            'context': self._context,
+        }
+
+    def open_tech(self):
+        res_id = self.env['building.signalitic'].search([('building_id', '=', self.id)])
+        view_id = self.env.ref('syndic_base.form_tech_building').id
+        return {
+            'res_id': res_id.id,
+            'name': 'Description immeuble',
+            'view_mode': 'form',
+            'views': [(view_id, 'form')],
+            'view_id': view_id,
             'res_model': 'building.signalitic',
             'type': 'ir.actions.act_window',
             'context': self._context,

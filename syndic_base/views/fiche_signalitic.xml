@@ -21,6 +21,106 @@
 			</field>
 		</record>
 
+        <record model="ir.ui.view" id="form_description_building">
+            <field name="name">Description immeuble</field>
+            <field name="model">building.signalitic</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false">
+                    <sheet>
+                        <group>
+                            <group string="Information immeuble">
+                                <field name="construction_date" widget="raw-field-integer"/>
+                                <field name="more_info"/>
+                            </group>
+
+                            <group string="Façades">
+                                <field name="facade_description" />
+                            </group>
+
+                            <group string="Chassis">
+                                <field name="chassis_more" />
+                            </group>
+
+                            <group string="Terrasses et balcons">
+                                <field name="terasse_description" />
+                            </group>
+
+                            <group string="Parlophones">
+                                <field name="parlophone_more" />
+                            </group>
+
+                            <group string="Boites aux lettres et plaquettes">
+                                <field name="boite_bool" />
+                                <field name="ascenseur_bool" />
+                                <field name="appartements_bool" />
+                                <field name="parlophone_bool" />
+                                <field name="plaquette_description" />
+                                <field name="plaquette_description" />
+                            </group>
+
+                            <group string="Toiture">
+                                <field name="toiture_more"/>
+                            </group>
+
+                            <group string="Jardin">
+                                <field name="jardin_more"/>
+                            </group>
+
+                            <group string="Réseaux dégouts">
+                                <field name="egoutage_more" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="form_tech_building">
+            <field name="name">Installtions techniques</field>
+            <field name="model">building.signalitic</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false">
+                    <sheet>
+                        <group>
+                            <group string="Ascenseur">
+                                <field name="ascenseur_more"/>
+                            </group>
+                            <group string="Ventillation">
+                                <field name="ventillation_more"/>
+                            </group>
+                            <group string="Compteurs et calorimètres">
+                                <field name="compteur_owner"/>
+                                <field name="calo_owner"/>
+                                <field name="calo_type"/>
+                                <field name="calo_compteur"/>
+                                <field name="month_compteur"/>
+                                <field name="month_calo"/>
+                                <field name="compteur_more"/>
+                            </group>
+                            <group string="Chauffage">
+                                <field name="chauffage_type"/>
+                                <field name="eau_chaude_type"/>
+                                <field name="type_chauffage"/>
+                                <field name="chaudiere_more"/>
+                            </group>
+                            <group string="Adoucisseur">
+                                <field name="adoucisseur_more"/>
+                            </group>
+                            <group string="Surpresseur">
+                                <field name="surpresseur_more"/>
+                            </group>
+                            <group string="Extincteurs">
+                                <field name="extincteur_more"/>
+                            </group>
+                            <group string="Autres">
+                                <field name="more"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
 		<record model="ir.ui.view" id="form_building_signalitic">
 			<field name="name">Letter form view</field>
 			<field name="model">building.signalitic</field>

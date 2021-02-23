@@ -92,7 +92,7 @@
 
 
 		<!--menu -->
-        <menuitem name="Avis" id="root_avis" web_icon="syndic_avis,static/description/icon.png"/>
+        <menuitem name="Avis" id="root_avis" parent="syndic_letter.menu_letter"/>
 		<menuitem name="Type d'avis" id="menu_avis_type" parent="root_avis" action="avis_type_model" sequence="30"/>
         <menuitem name="Avis" id="menu_action_avis" parent="root_avis" action="action_avis" sequence="10"/>
         <menuitem name="Modèle d avis" id="menu_model_avis" parent="root_avis"
