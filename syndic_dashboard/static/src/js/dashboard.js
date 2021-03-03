@@ -5,7 +5,50 @@ var AbstractAction = require('web.AbstractAction');
 var core = require('web.core');
 var session = require('web.session');
 
+// var App = require('syndic.dashboard.components');
+const { Component, useState, mount } = owl;
+const { xml } = owl.tags;
+
 var qweb = core.qweb;
+
+
+
+class Cell extends Component {
+    static template = xml`
+        <div id="2021 - Janvier" class="col-12" style="text-align: center;">
+            <h2 class="header-month"><t t-esc="props.id"/> --- <t t-esc="state.year"/> - <t t-esc="state.month"/></h2>
+        </div>
+    `;
+    
+    state = useState({
+        year: 2020,
+        month: 'Janvier',
+    });
+
+	mounted() {
+		this.state.year = 2021
+	}
+
+	getData() {
+		return 2021
+	}
+
+}
+
+class App extends Component {
+    static template = xml`
+    <div class="col-lg-2">
+        <div class="row month">
+            <Cell id="10"/>
+            <Cell />
+        </div>
+    </div>`;
+
+    static components = { Cell };
+}
+
+
+
 
 // var Dashboard = AbstractAction.extend(ControlPanelMixin, {
 var Dashboard = AbstractAction.extend({
@@ -24,25 +67,28 @@ var Dashboard = AbstractAction.extend({
             self.stats = stats;
         });
 
-		var buildingsDef = this._rpc({route: '/dashboard/buildings'}).then(function (buildings) {
-			self.buildings = buildings;
-			self.buildings_len = buildings.buildings.length;
-		});
+		// var buildingsDef = this._rpc({route: '/dashboard/buildings'}).then(function (buildings) {
+		// 	self.buildings = buildings;
+		// 	self.buildings_len = buildings.buildings.length;
+		// });
 
         var superDef = this._super.apply(this, arguments);
 
-        return $.when(buildingsDef, statsDef, superDef);
+        // return $.when(buildingsDef, statsDef, superDef);
+		return Promise.all([
+			statsDef,
+			superDef
+		])
 	},
 
 	start: function(){
         var superDef = this._super.apply(this, arguments);
         this._renderButtons();
 
-        return superDef.then(
-					this._updateControlPanel()).then(
-							this._render_building.bind(this)).then(
-								this._render_meetings.bind(this)
-							);
+        return superDef
+			.then(this._updateControlPanel())
+			// .then(this._render_building.bind(this))
+			.then(this._render_meetings.bind(this));
 	},
 
 	_render_building: function(){
@@ -55,6 +101,7 @@ var Dashboard = AbstractAction.extend({
 	},
 
 	_render_meetings: function(){
+		mount(App, { target: document.body });
 		var new_this = this;
 		this.stats.myEvents.forEach(function(value) {
 			var $div2 = $("<div>", {"class": "col-lg-2"});
