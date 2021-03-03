@@ -1,3 +1,11 @@
+.dashboard-content{
+    padding: 10px;
+    background: white;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.21);
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
 .header-month{
     color: #ffffff;
     background: #1D2939;

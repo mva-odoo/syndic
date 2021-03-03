@@ -40,8 +40,27 @@ class OrderRoute(http.Controller):
 
         return '%s %s' % (calendar.start.day, _Mois_fr.get(calendar.start.month)) if calendar else False
 
+    @http.route('/ag/months', type="json", auth="user")
+    def get_month_ag(self, *args, **kwargs):
+        building_model = http.request.env['syndic.building']
+        buildings = building_model.search([
+                ('ag_month', '!=', False),
+                ('ag_fortnight', '!=', False),
+        ])
+
+        by_month = {str(month): {'name': _Mois_fr.get(month), 'first': [], 'last': []} for month in range(1, 13)}
+        for building in buildings:
+            if building.ag_fortnight == '1':
+                by_month[building.ag_month]['first'].append(building.name)
+
+            else:
+                by_month[building.ag_month]['last'].append(building.name)
+
+        return by_month
+
+
     @http.route('/timeline/statistics', type='json', auth='user')
-    def get_timeline(self):
+    def get_timeline(self, *args, **kwargs):
         today = date.today()
 
         dates = []

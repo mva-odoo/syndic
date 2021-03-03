@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="timeline" xml:space="preserve">
 
+	<t t-name="dashboard.cell">
+		<div id="test1" style="text-align: center;">
+			<t t-foreach="props.first" t-as="first_building">
+				<div>
+					<t t-esc="first_building.name"/>
+				</div>    
+			</t>
+			<hr/>
+			<t t-foreach="props.last" t-as="last_building">
+				<div>
+					<t t-esc="last_building.name"/>
+				</div>    
+			</t>
+		</div>
+	</t>
+
 	<div t-name="dashboardTimeline" class='container' style='display: unset;'>
 
 		 <!-- <div class="container" style='display: unset;'> -->
