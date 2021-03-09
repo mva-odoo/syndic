@@ -6,7 +6,7 @@ from odoo.addons.syndic_tools.syndic_tools import SyndicTools, _MONTH
 class Building(models.Model):
     _name = 'syndic.building'
     _inherit = 'barcode.import'
-    _inherits = {'res.partner': 'partner_id'}
+    _inherits = {'res.company': 'company_id'}
     _description = 'syndic.building'
     _order = 'name asc'
 
@@ -35,7 +35,9 @@ class Building(models.Model):
     password = fields.Char('Mot de Passe')
     lot_count = fields.Integer(compute='_get_quotity', string='Nombre de lots')
 
-    partner_id = fields.Many2one('res.partner', 'Contact Immeuble', ondelete='cascade', required=True)
+    partner_id = fields.Many2one('res.partner', 'Contact Immeuble',)
+    city_id = fields.Many2one(related='partner_id.city_id', string='Ville')
+    company_id = fields.Many2one('res.company', 'Société Immeuble', ondelete='cascade', required=True)
 
     owner_count = fields.Integer(compute='_get_quotity', string='Nombre de Propriétaires')
     loaner_count = fields.Integer(compute='_get_quotity', string='Nombre de Locataires')
