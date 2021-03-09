@@ -235,6 +235,13 @@ class SurveyUserInputLine(models.Model):
         store=True
     )
 
+    def write(self, vals):
+        # TODO: this is a work around to fix the standard
+        for input_line in self:
+            if not vals.get('question_id') and input_line.question_id:
+                vals['question_id'] = input_line.question_id.id
+        return super().write(vals)
+
     def _get_lot(self, survey):
         return {
             presence.owner_id: {

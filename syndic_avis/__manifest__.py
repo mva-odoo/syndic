@@ -8,7 +8,7 @@
     Syndic Avis
     """,
     'author': 'SGImmo SRL',
-    'depends': ['syndic_base'],
+    'depends': ['syndic_letter'],
     'website': 'https://www.sgimmo.be',
     'data': [
         'views/avis.xml',
@@ -16,5 +16,4 @@
         'security/ir.model.access.csv',
     ],
     'installable': True,
-    'application': True,
 }

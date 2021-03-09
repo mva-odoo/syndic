@@ -68,10 +68,16 @@
 							<field string="Contrats" name="contract_count" widget="statinfo"/>
 						</button>
 
-						<button name="open_sign"
-								string="Fiche signalétique"
+						<button name="open_description"
+								string="Description immeuble"
 								class="oe_stat_button"
-								icon="fa-archive"
+								icon="fa-clipboard"
+								type="object"/>
+
+						<button name="open_tech"
+								string="Installtions techniques"
+								class="oe_stat_button"
+								icon="fa-wrench"
 								type="object"/>
 					</div>
 					
@@ -194,6 +200,68 @@
 									<field name="quotities"/>
 								</tree>
 							</field>
+						</page>
+
+						<page string="Renseignement utile" name="info">
+							<group>
+								<group string="Experts">
+									<field name="expert_tech_id" context="{'default_supplier': True}"/>
+									<field name="expert_chauffage_id" context="{'default_supplier': True}"/>
+									<field name="expert_ascenseur_id" context="{'default_supplier': True}"/>
+									<field name="conseiller_tech_id" context="{'default_supplier': True}"/>
+									<field name="conseiller_juridique_id" context="{'default_supplier': True}"/>
+								</group>
+
+								<group string="Inventaire amiante">
+									<field name="amiante_date"/>
+									<field name="amiante_partner_id" context="{'default_supplier': True}"/>
+									<field name="amiante_done"/>
+									<field name="amiante_description"/>
+								</group>
+
+								<group string="Statuts">
+									<field name="status_update"/>
+									<field name="roi_update"/>
+									<field name="status_description"/>
+								</group>
+
+								<group string="Permis d'environnement">
+									<field name="permis_delivre" />
+									<field name="env_validity" />
+									<field name="env_description" />
+								</group>
+
+								<group string="Citerne et pollution de sol">
+									<field name="citerne_description" />
+									<field name="citerne_date" />
+									<field name="citerne_validity" />
+									<field name="citerne_partner_id" />
+									<field name="amiante_neutralise" />
+									<field name="pollution_zone" />
+									<field name="depollution" />
+								</group>
+
+								<group string="Conformité ascenseur et analyse de risque">
+									<field name="analyse_date" />
+									<field name="analys_validaty_date" />
+									<field name="analyse_partner_id" context="{'default_supplier': True}"/>
+									<field name="ascenseur_conformite" />
+									<field name="attestation_conformite" />
+									<field name="attestation_partner_id" context="{'default_supplier': True}"/>
+								</group>
+
+								<group string="Conformité électrique">
+									<field name="elec_recue" />
+									<field name="elec_partner_id" context="{'default_supplier': True}"/>
+									<field name="elec_date" />
+									<field name="elec_validity" />
+								</group>
+
+								<group string="PEB">
+									<field name="peb" />
+								</group>
+
+							</group>
 						</page>
 					</notebook>
 				</sheet>

@@ -46,14 +46,31 @@ let getMonth = function(datas, month_int){
             var n = d.getMonth();
 
             // var month_int = [-1, 0, 1, 2, 3, 4]
-            
-            for (let selected_month of month_int){
-                let d = new Date();
-                d.setMonth(d.getMonth() + selected_month);
 
-                let i = d.getMonth()
-                new_vals[i] = datas[i]
+            
+            let today = new Date()
+            let current_month = today.getMonth()
+            let start_month = new Date();
+            start_month.setMonth(current_month - 2);
+            let end_month = new Date();
+            end_month.setMonth(current_month + 3);
+            
+            let size = end_month.getMonth() - start_month.getMonth()
+
+            let year_list = [...Array(size+1).keys()].map(i => i + start_month.getMonth())
+            console.log(year_list)
+            for (let i of year_list){
+                new_vals[i+1] = datas[i+1]
             }
+            
+
+            // for (let selected_month of month_int){
+            //     let d = new Date();
+            //     d.setMonth(d.getMonth() + selected_month);
+
+            //     let i = d.getMonth()
+            //     new_vals[i] = datas[i]
+            // }
 
             return new_vals
 }
@@ -90,8 +107,7 @@ class App extends Component {
 
 
     changeMonth(ev) {
-        var self = this
-        self.state.months = getMonth(self.state.allMonths, [-1, 0, 1, 2, 3, 5])
+        this.state.months = getMonth(this.state.allMonths, [5, 6, 7 ])
     }
 }
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, exceptions
+from odoo.addons.syndic_tools.syndic_tools import SyndicTools, _MONTH
 
 
 class Desamientage(models.Model):
@@ -241,26 +242,37 @@ class SignalitiqueImmeuble(models.Model):
     facade_id = fields.One2many('building.facade', 'signalitic_id', string='Facade')
     facade_isolation = fields.Boolean('Isolation')
     facade_repeir_id = fields.One2many('facade.repair', 'signalitic_id', string='Reparation facade')
+    # TODO: keep just this one
+    facade_description = fields.Text('Description des façades et de leur isolation')
     # chassis
     chassis_type = fields.Selection([('bois', 'bois'), ('pvc', 'pvc'), ('alu', 'alu')], string='Type de chassis')
     chassis_vitrage = fields.Selection([('simple', 'simple'), ('double', 'double')], string='Vitrage')
     chassis_vitrage_four = fields.Char('Fabricant')
     chassis_color = fields.Char('Couleur')
-    chassis_more = fields.Text(u'Informations supplémentaires et observations particulières chassis')
+    # TODO: keep just this one
+    chassis_more = fields.Text('type de châssis, vitrage, fabricant, couleur, ...')
+
     # terasse
     terasse_ids = fields.One2many('building.terasse', 'signalitic_id', string='Terasse')
     terasse_repeir_ids = fields.One2many('building.repeir.terasse', 'signalitic_id', string='Réparation Terasse')
-    
+
+    # TODO: keep just this one
+    terasse_description = fields.Text('description et état')
 
     # parlophone et boite
     plaquette_supplier = fields.Many2one('res.partner', u'Société de plaquettes')
     parlophone_description = fields.Text('Parlophonie: informations et descriptions')
     parlophone_date = fields.Date(u'Dernière mise à jour des plaquettes')
-    parlophone_more = fields.Text(u'Informations supplémentaires et observations particulières parlophone')
+    # TODO: keep just this one
+    parlophone_more = fields.Text('parlo/vidéophone, marque, installateur,...')
+
+    # TODO: keep just this
     boite_bool = fields.Boolean('Plaquettes boites')
     ascenseur_bool = fields.Boolean('Plaquettes ascensseur')
     appartements_bool = fields.Boolean('Plaquettes appartements')
     parlophone_bool = fields.Boolean('Plaquettes parlophone')
+    plaquette_description = fields.Text('Plaquettes parlophone')
+    # ---------------------------------------------
 
     # toiture
     toiture_type = fields.Char('Type de toiture')
@@ -269,11 +281,15 @@ class SignalitiqueImmeuble(models.Model):
     toiture_isolation = fields.Boolean('Isolation Toiture')
     toiture_repa = fields.One2many('repeir.toiture', 'signalitic_id', string='Observation')
 
+    # TODO: keep just this one
+    toiture_more = fields.Text('type de toiture, isolattion, état, ...')
+
     # jardin
     jardin_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien jardin')
     date_jardin = fields.Date('Date anniversaire du contrat jardin')
     jardin_onservation = fields.One2many('jardin.observation', 'signalitic_id', string='Observation jardin')
-    jardin_more = fields.Text(u'Informations supplémentaires Jardin')
+    # TODO: keep just this one
+    jardin_more = fields.Text('Information et descriptions Jardin')
 
     # ascensseur
     ascensseur_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien ascensseur')
@@ -324,7 +340,7 @@ class SignalitiqueImmeuble(models.Model):
     annee_adoucisseur = fields.Integer(u'Année de construction')
     supplier_adoucisseur = fields.Many2one('res.partner', 'Contrat d\'entretien adoucisseur')
     qte_adoucisseur = fields.Integer(u'Quantité généralement commandées')
-    adoucisseur_more = fields.Text('Observations')
+    adoucisseur_more = fields.Text('Descriptions et informations (adoucisseur)')
 
     # Citerne
     marque_citerne = fields.Char('Marque')
@@ -336,11 +352,13 @@ class SignalitiqueImmeuble(models.Model):
     egoutage_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien egoutage')
     egoutage_contrat_date = fields.Date('Date anniversaire du contrat egoutage')
     obs_egoutage_ids = fields.One2many('egoutage.observation', 'signalitic_id', string=u"Réparations egoutages")
-    egoutage_more = fields.Text(u"Informations supplémentaires et observations particulières egoutage")
+
+    # TODO: keep just this one
+    egoutage_more = fields.Text("Information et descriptions egoutage")
 
     # extincteur
     extincteur_ids = fields.One2many('extincteur', 'signalitic_id', 'Extincteurs')
-    extincteur_more = fields.Text(u'observations particulières')
+    extincteur_more = fields.Text(u'Descriptions et informations (extincteur)')
 
     # instal elec
     elec_contrat = fields.Many2one('res.partner', 'Contrat d\'entretien electricité')
@@ -355,3 +373,26 @@ class SignalitiqueImmeuble(models.Model):
 
     # travaux
     travaux_ids = fields.One2many('repeir.general', 'signalitic_id', string='Travaux')
+
+    ascenseur_more = fields.Text('Description et information (ascensseur)')
+    ventillation_more = fields.Text('Ventillation, extraction, conduits de cheminée')
+    compteur_owner = fields.Selection([
+        ('location', 'Location'),
+        ('achat', 'Achat')], 'Propriété compteur')
+    calo_owner = fields.Selection([
+        ('location', 'Location'),
+        ('achat', 'Achat')], 'Propriété calorimètre')
+    calo_type = fields.Selection([
+        ('manuel', 'Manuel'),
+        ('radio', 'Radiofréquence')], 'Type calorimètre')
+    calo_compteur = fields.Selection([
+        ('manuel', 'Manuel'),
+        ('radio', 'Radiofréquence')], 'Type compteur')
+
+    month_compteur = fields.Selection(_MONTH, 'Mois relevé compteur')
+    month_calo = fields.Selection(_MONTH, 'Mois relevé calorimètre')
+
+    compteur_more = fields.Text('Description et information (compteur et calorimètres)')
+
+    surpresseur_more = fields.Text('Description et information (surpresseur)')
+    more = fields.Text('Description et information (Autres)')
